@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Parent">
+        <item name="android:id">@id/parent</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@color/app_background</item>
+    </style>
+
+
+    <style name="LL">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="LL.H">
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="LL.V">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Aggregator">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="RestoreFocus">
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">0px</item>
+    </style>
+
+    <style name="LineDiv">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider_color</item>
+    </style>
+
+    <style name="LineDivV">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@color/divider_color</item>
+    </style>
+
+
+</resources>
