@@ -23,4 +23,9 @@ public class TestSchedulers implements SchedulersProvider {
 	public Scheduler computation() {
 		return Schedulers.immediate();
 	}
+
+	@Override
+	public Scheduler immediate() {
+		return Schedulers.immediate();
+	}
 }

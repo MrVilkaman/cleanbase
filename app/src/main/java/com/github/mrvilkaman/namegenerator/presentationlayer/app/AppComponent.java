@@ -1,8 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.app;
 
-import android.support.annotation.NonNull;
-
-import com.github.mrvilkaman.namegenerator.datalayer.providers.ProvidersModule;
+import com.github.mrvilkaman.namegenerator.datalayer.modules.ProvidersModule;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProvider;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.MainActivity;
@@ -22,8 +20,7 @@ public interface AppComponent {
 
 	SchedulersProvider getSchedulersProvider();
 
+	void inject(App app);
 
-	void inject(@NonNull App app);
-
-	void inject(@NonNull MainActivity mainActivity);
+	void inject(MainActivity mainActivity);
 }

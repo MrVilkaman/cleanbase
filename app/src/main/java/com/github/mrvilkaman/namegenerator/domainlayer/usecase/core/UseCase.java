@@ -1,12 +1,9 @@
-package com.github.mrvilkaman.namegenerator.domainlayer.usecase;
-
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
+package com.github.mrvilkaman.namegenerator.domainlayer.usecase.core;
 
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
@@ -39,4 +36,5 @@ public abstract class UseCase<T> {
 			subscription.unsubscribe();
 		}
 	}
+
 }

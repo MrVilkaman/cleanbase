@@ -9,7 +9,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Zahar on 22.01.2016.
  */
-class MainSchedulersProvider implements SchedulersProvider {
+public class MainSchedulersProvider implements SchedulersProvider {
 
 	@Override
 	public Scheduler mainThread() {
@@ -24,5 +24,10 @@ class MainSchedulersProvider implements SchedulersProvider {
 	@Override
 	public Scheduler computation() {
 		return Schedulers.computation();
+	}
+
+	@Override
+	public Scheduler immediate() {
+		return Schedulers.immediate();
 	}
 }

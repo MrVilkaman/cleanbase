@@ -1,6 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.utils;
 
-import com.github.mrvilkaman.namegenerator.datalayer.providers.DefaultSubscriber;
+import com.github.mrvilkaman.namegenerator.datalayer.subscriber.DefaultSubscriber;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.BaseView;
 
 import java.lang.ref.WeakReference;
@@ -24,6 +24,7 @@ public class LoadSubscriber<T> extends DefaultSubscriber<T> {
 
 	@Override
 	public void onCompleted() {
-		viewRef.get().hideProgress();
+		viewRef.get()
+				.hideProgress();
 	}
 }

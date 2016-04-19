@@ -12,4 +12,6 @@ public interface SchedulersProvider {
 	Scheduler io();
 
 	Scheduler computation();
+
+	Scheduler immediate();
 }

@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.domainlayer.usecase;
+package com.github.mrvilkaman.namegenerator.domainlayer.usecase.core;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 
@@ -7,7 +7,7 @@ import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvi
  */
 public abstract class LoadUseCase<T> extends UseCase<T> {
 
-	public LoadUseCase(SchedulersProvider provider){
+	public LoadUseCase(SchedulersProvider provider) {
 		super(provider.io(), provider.mainThread());
 	}
 }

@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.datalayer.providers;
+package com.github.mrvilkaman.namegenerator.datalayer.subscriber;
 
 /**
  * Created by root on 15.03.16.

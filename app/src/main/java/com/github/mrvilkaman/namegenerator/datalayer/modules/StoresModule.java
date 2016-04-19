@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.datalayer.store;
+package com.github.mrvilkaman.namegenerator.datalayer.modules;
 
 import dagger.Module;
 

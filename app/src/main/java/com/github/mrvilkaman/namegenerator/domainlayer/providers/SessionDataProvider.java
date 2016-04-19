@@ -6,5 +6,6 @@ package com.github.mrvilkaman.namegenerator.domainlayer.providers;
 public interface SessionDataProvider {
 
 	String getToken();
+
 	void saveToken(String token);
 }

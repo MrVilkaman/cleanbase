@@ -1,8 +1,10 @@
-package com.github.mrvilkaman.namegenerator.datalayer.providers;
+package com.github.mrvilkaman.namegenerator.datalayer.modules;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.github.mrvilkaman.namegenerator.datalayer.providers.MainSchedulersProvider;
+import com.github.mrvilkaman.namegenerator.datalayer.providers.SessionDataProviderImpl;
 import com.github.mrvilkaman.namegenerator.datalayer.store.LocalStorage;
 import com.github.mrvilkaman.namegenerator.datalayer.store.LocalStorageImpl;
 import com.github.mrvilkaman.namegenerator.datalayer.store.MemoryStorage;
