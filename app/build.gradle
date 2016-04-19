@@ -29,6 +29,11 @@ android {
         }
     }
 
+    sourceSets {
+        // Integration tests live in src/integrationTest.
+        test.java.srcDir 'src/integrationTests/java'
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
