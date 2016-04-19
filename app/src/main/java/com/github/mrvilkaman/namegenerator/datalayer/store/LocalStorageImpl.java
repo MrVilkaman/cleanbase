@@ -13,6 +13,7 @@ public class LocalStorageImpl implements LocalStorage {
 	private static final String PREF = "pref";
 	private static final String TOKEN = "token";
 	private Context context;
+
 	@Inject
 	public LocalStorageImpl(Context context) {
 		this.context = context.getApplicationContext();
@@ -25,9 +26,7 @@ public class LocalStorageImpl implements LocalStorage {
 
 	@Override
 	public void saveToken(String token) {
-		context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
-				.edit()
-				.putString(TOKEN, token)
-				.apply();
+		context.getSharedPreferences(PREF, Context.MODE_PRIVATE).edit().putString(TOKEN, token)
+			   .apply();
 	}
 }

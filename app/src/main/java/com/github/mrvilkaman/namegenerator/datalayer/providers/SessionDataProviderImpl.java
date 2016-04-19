@@ -12,7 +12,7 @@ public class SessionDataProviderImpl implements SessionDataProvider {
 	private final LocalStorage localStorage;
 	private final MemoryStorage memoryStorage;
 
-	public SessionDataProviderImpl(LocalStorage localStorage,MemoryStorage memoryStorage) {
+	public SessionDataProviderImpl(LocalStorage localStorage, MemoryStorage memoryStorage) {
 		this.localStorage = localStorage;
 		this.memoryStorage = memoryStorage;
 	}
@@ -20,7 +20,8 @@ public class SessionDataProviderImpl implements SessionDataProvider {
 	@Override
 	public String getToken() {
 		String token = memoryStorage.get(LocalCacheItemType.TOKEN);
-		if (token != null) return token;
+		if (token != null)
+			return token;
 		token = localStorage.getToken();
 		memoryStorage.save(LocalCacheItemType.TOKEN, token);
 		return token;
@@ -29,6 +30,6 @@ public class SessionDataProviderImpl implements SessionDataProvider {
 	@Override
 	public void saveToken(String token) {
 		localStorage.saveToken(token);
-		memoryStorage.save(LocalCacheItemType.TOKEN,token);
+		memoryStorage.save(LocalCacheItemType.TOKEN, token);
 	}
 }

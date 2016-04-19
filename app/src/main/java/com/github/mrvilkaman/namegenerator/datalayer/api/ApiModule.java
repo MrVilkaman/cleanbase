@@ -27,21 +27,19 @@ public class ApiModule {
 	@NonNull
 	@Singleton
 	public Gson provideGson() {
-		return new GsonBuilder().setDateFormat(DATE_FORMAT)
-				.create();
+		return new GsonBuilder().setDateFormat(DATE_FORMAT).create();
 	}
 
 	@Provides
 	@NonNull
 	@Singleton
 	public RestApi provideApi(@NonNull OkHttpClient okHttpClient, @NonNull Gson gson) {
-		return new Retrofit.Builder()
-				.baseUrl(RestApi.URL_API)
-				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create(gson))
-				.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-				.validateEagerly(BuildConfig.DEBUG)// Fail early: check Retrofit configuration at creation time in Debug build.
-				.build()
-				.create(RestApi.class);
+		return new Retrofit.Builder().baseUrl(RestApi.URL_API).client(okHttpClient)
+									 .addConverterFactory(GsonConverterFactory.create(gson))
+									 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+									 .validateEagerly(
+											 BuildConfig.DEBUG)// Fail early: check Retrofit
+									 // configuration at creation time in Debug build.
+									 .build().create(RestApi.class);
 	}
 }

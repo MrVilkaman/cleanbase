@@ -26,7 +26,8 @@ public class ProvidersModule {
 
 	@Singleton
 	@Provides
-	SessionDataProvider provideSessionDataProvider(LocalStorage localStorage, MemoryStorage memoryStorage) {
+	SessionDataProvider provideSessionDataProvider(LocalStorage localStorage,
+												   MemoryStorage memoryStorage) {
 		return new SessionDataProviderImpl(localStorage, memoryStorage);
 	}
 

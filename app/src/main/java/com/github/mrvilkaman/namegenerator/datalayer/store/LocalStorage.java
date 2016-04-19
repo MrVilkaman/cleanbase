@@ -6,5 +6,6 @@ package com.github.mrvilkaman.namegenerator.datalayer.store;
 public interface LocalStorage {
 
 	String getToken();
+
 	void saveToken(String token);
 }
