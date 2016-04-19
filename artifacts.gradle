@@ -2,7 +2,7 @@ android.applicationVariants.all { variant ->;
     def appName
     //Check if an applicationName property is supplied; if not use the name of the parent project.
     if (project.hasProperty("applicationName")) {
-        appName = applicationName
+        appName = applicationName // add in gradle.properties
     } else {
         appName = name
     }
@@ -11,9 +11,9 @@ android.applicationVariants.all { variant ->;
         def newApkName
         //If there's no ZipAlign task it means that our artifact will be unaligned and we need to mark it as such.
         if (output.zipAlign) {
-            newApkName = "${appName}_${output.baseName}_${variant.versionName}.apk"
+            newApkName = "${appName}_${output.baseName}_${variant.versionName}(${variant.versionCode}).apk"
         } else {
-            newApkName = "${appName}_${output.baseName}_${variant.versionName}-unaligned.apk"
+            newApkName = "${appName}_${output.baseName}_${variant.versionName}-unaligned(${variant.versionCode}).apk"
         }
         output.outputFile = new File(output.outputFile.parent, newApkName)
     }
