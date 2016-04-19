@@ -3,6 +3,8 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.app;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.github.mrvilkaman.namegenerator.presentationlayer.utils.StorageUtils;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -15,16 +17,24 @@ import dagger.Provides;
 @Singleton
 public class AppModule {
 
-	@NonNull
-	private Context context;
+	@NonNull private Context context;
 
 	public AppModule(@NonNull Context context) {
 		this.context = context;
 	}
 
-	@Provides @NonNull @Singleton
+	@Provides
+	@NonNull
+	@Singleton
 	public Context provideContext() {
 		return context;
+	}
+
+	@Provides
+	@NonNull
+	@Singleton
+	public StorageUtils provideStorageUtils() {
+		return new StorageUtils();
 	}
 
 }
