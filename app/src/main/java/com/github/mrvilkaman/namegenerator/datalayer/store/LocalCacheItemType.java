@@ -5,6 +5,5 @@ package com.github.mrvilkaman.namegenerator.datalayer.store;
  */
 public enum  LocalCacheItemType {
 	TOKEN,
-	FRIENDS,
-	FRIENDS_LIST
+	USER
 }
