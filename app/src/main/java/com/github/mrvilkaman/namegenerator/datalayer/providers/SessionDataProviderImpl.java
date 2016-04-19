@@ -20,7 +20,10 @@ public class SessionDataProviderImpl implements SessionDataProvider {
 	@Override
 	public String getToken() {
 		String token = memoryStorage.get(LocalCacheItemType.TOKEN);
-		return token != null ? token : localStorage.getToken();
+		if (token != null) return token;
+		token = localStorage.getToken();
+		memoryStorage.save(LocalCacheItemType.TOKEN, token);
+		return token;
 	}
 
 	@Override
