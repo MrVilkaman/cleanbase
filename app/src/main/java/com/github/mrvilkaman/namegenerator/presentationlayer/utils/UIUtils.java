@@ -68,4 +68,16 @@ public class UIUtils {
 	public static void runInUi(Runnable callback) {
 		new Handler(Looper.getMainLooper()).post(callback);
 	}
+
+
+	public static void openLink(Activity activity, String link) {
+		final String url;
+		if (!link.startsWith("http://") && !link.startsWith("https://"))
+			url = "http://" + link;
+		else
+			url = link;
+
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		activity.startActivity(browserIntent);
+	}
 }
