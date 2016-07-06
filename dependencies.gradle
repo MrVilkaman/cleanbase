@@ -1,23 +1,27 @@
 ext.versions = [
 
+        code                         : 1,
+        name                         : '1.0',
+
         minSdk            : 15,
         targetSdk         : 22,
         compileSdk        : 23,
         buildTools        : '23.0.3',
 
 
-        dagger            : '2.2',
+        dagger            : '2.5',
         javaxInject       : '1',
         javaxAnnotationApi: '1.2',
-        rxJava            : '1.1.0',
+        rxJava            : '1.1.6',
+        rxandroid         : '1.2.1',
 
-        supportLibs       : '23.3.0',
+        supportLibs       : '23.1.1',
         gcm               : '8.4.0',
-        butterKnife       : '7.0.1',
+        butterKnife       : '8.1.0',
         picasso           : '2.5.2',
 
         retrofit          : '1.9.0',
-        retrofit2         : '2.0.1',
+        retrofit2         : '2.1.0',
 
         okhttp            : '2.5.0',
         okHttp3           : '3.2.0',
@@ -26,8 +30,8 @@ ext.versions = [
         photoView         : '1.2.4',
         simplecropview    : '1.0.16',
         rxLocation        : '0.8',
-        rxBinding         : '0.3.0',
-        materialDialog    : '0.8.5.6',
+        rxBinding         : '0.4.0',
+        materialDialog    : '0.8.6.1',
         materialProgress  : '1.5',
         zlog              : '1.0',
         crashlytics       : '2.5.5',
@@ -35,15 +39,15 @@ ext.versions = [
 
         storio            : '1.8.0',
 
-        powermock         : '1.6.4',
+        powermock         : '1.6.5',
         junit             : '4.12',
-        robolectric       : '3.0',
-        assertJ           : '2.3.0',
+        robolectric       : '3.1',
+        assertJ           : '3.5.1',
         assertJandroid    : '1.1.1',
         mockito           : '1.10.19',
-        supportTestRunner : '0.4.1',
+        supportTestRunner : '0.5',
         hamcrest          : '1.3',
-        espresso          : '2.2.1',
+        espresso          : '2.2.2',
         gson              : '2.4',
         moxy              : '0.4.2',
 
@@ -86,7 +90,7 @@ ext.libraries = [
         gson                      : "com.google.code.gson:gson:$versions.gson",
 
         rxJava                    : "io.reactivex:rxjava:$versions.rxJava",
-        rxAndroid                 : "io.reactivex:rxandroid:$versions.rxJava",
+        rxAndroid                 : "io.reactivex:rxandroid:$versions.rxandroid",
         rxBindingAppcompat        : "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$versions.rxBinding",
 
         otto                      : "com.squareup:otto:$versions.otto",

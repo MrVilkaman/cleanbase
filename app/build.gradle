@@ -3,7 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../artifacts.gradle'
 apply from: '../dependencies.gradle'
-
+apply plugin: 'com.github.ben-manes.versions'
 android {
     // Declared in dependencies.gradle in the root of the project.
     compileSdkVersion versions.compileSdk
@@ -13,8 +13,8 @@ android {
         applicationId "com.github.mrvilkaman.namegenerator"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "0.1"
+        versionCode versions.code
+        versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -48,6 +48,7 @@ configurations.all {
     resolutionStrategy {
         // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
         force libraries.supportAnnotations
+        force libraries.supportAppCompat
     }
 }
 
