@@ -38,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
 
-		launchApi();
 
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
@@ -51,8 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	protected int getActivityLayoutResourceID() {
 		return R.layout.activity_main;
 	}
-
-	protected abstract void launchApi();
 
 	private void configureProgressBar() {
 		progress = (ProgressWheel) findViewById(R.id.progress_wheel);

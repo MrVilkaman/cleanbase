@@ -10,11 +10,6 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
 public class MainActivity extends BaseActivity {
 
 	@Override
-	protected void launchApi() {
-
-	}
-
-	@Override
 	protected BaseFragment createStartFragment() {
 		return HelloScreenFragment.open();
 	}
