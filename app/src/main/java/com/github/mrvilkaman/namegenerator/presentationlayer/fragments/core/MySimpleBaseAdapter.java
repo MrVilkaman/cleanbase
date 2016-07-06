@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Zahar on 17.01.2016.
  */
-public abstract class MySimpleBaseAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class MySimpleBaseAdapter<T,VH extends BaseVH<T>> extends RecyclerView.Adapter<VH> {
 
 	protected OnClickListener<T> onClick;
 
@@ -24,16 +25,18 @@ public abstract class MySimpleBaseAdapter<T,VH extends RecyclerView.ViewHolder> 
 		final LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = layoutInflater.inflate(getLayoutId(), parent, false);
 
-		return getHolder(view);
+		return getHolder(view,onClick);
 	}
 
-	protected abstract VH getHolder(View view);
+	protected abstract VH getHolder(View view, OnClickListener<T> onClick);
 
 	protected abstract int getLayoutId();
 
 	@Override
 	public void onBindViewHolder(VH holder, int position) {
-		holder.itemView.setTag(position);
+		T item = getItem(position);
+		holder.itemView.setTag(item);
+		holder.bind(item);
 	}
 
 	public T getItem(int pos){
@@ -54,7 +57,7 @@ public abstract class MySimpleBaseAdapter<T,VH extends RecyclerView.ViewHolder> 
 	}
 
 	public void setItems(List<T> items) {
-		this.items = items;
+		this.items = new ArrayList<>(items);
 		notifyDataSetChanged();
 	}
 

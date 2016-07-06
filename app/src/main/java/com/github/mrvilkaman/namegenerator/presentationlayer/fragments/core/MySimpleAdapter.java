@@ -1,48 +1,36 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Zahar on 17.01.2016.
  */
-public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.ViewHolder> {
+public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.ViewHolder<T>> {
 
 	@Override
-	protected ViewHolder getHolder(View view) {
-
-		ViewHolder holder = new ViewHolder(view);
-		view.setOnClickListener(view1 -> {
-			int position = (int) view1.getTag();
-			if (onClick != null) {
-				onClick.click(items.get(position));
-			}
-		});
-		return holder;
-	}
-
-	@Override
-	public void onBindViewHolder(ViewHolder holder, int position) {
-		super.onBindViewHolder(holder, position);
-		holder.textView.setText(getItem(position).toString());
+	protected ViewHolder<T> getHolder(View view, OnClickListener<T> onClick) {
+		return new ViewHolder<>(view,onClick);
 	}
 
 	protected int getLayoutId() {
 		return android.R.layout.simple_list_item_1;
 	}
 
-	protected static class ViewHolder extends RecyclerView.ViewHolder {
+	static class ViewHolder<T> extends BaseVH<T> {
 
 		@Bind(android.R.id.text1)
 		TextView textView;
 
-		public ViewHolder(View view) {
-			super(view);
-			ButterKnife.bind(this, view);
+		ViewHolder(View view, OnClickListener<T> onClick) {
+			super(view, onClick);
+		}
+
+		@Override
+		public void bind(T item) {
+			textView.setText(item.toString());
 		}
 	}
 }

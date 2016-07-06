@@ -14,6 +14,7 @@ public interface BaseView {
 
     void showError(Throwable throwable);
 
+    @SuppressWarnings("SameParameterValue")
     void showMessage(int testId);
     void showMessage(String text);
 
