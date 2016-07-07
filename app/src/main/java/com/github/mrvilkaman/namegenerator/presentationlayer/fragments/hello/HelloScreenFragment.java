@@ -10,12 +10,12 @@ import android.widget.Button;
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> implements HelloScreenView {
 
-	@Bind(R.id.hello_login_btn)
+	@BindView(R.id.hello_login_btn)
 	Button btnLogin;
 
 	public static HelloScreenFragment open() {

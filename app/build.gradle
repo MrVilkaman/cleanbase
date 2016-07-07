@@ -63,6 +63,7 @@ dependencies {
     compile libraries.supportRecyclerView
 
     compile libraries.butterKnife
+    apt libraries.butterKnifeCompiler
 
     compile libraries.retrofit2
     compile libraries.retrofit2rxjava

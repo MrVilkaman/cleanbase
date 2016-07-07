@@ -19,9 +19,11 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.utils.UIUtils;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTouch;
+import butterknife.Optional;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
 
@@ -33,8 +35,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	P relationPresenter;
 
 	@Nullable
-	@Bind(R.id.progress_wheel)
+	@BindView(R.id.progress_wheel)
 	View progressBar;
+	private Unbinder bind;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 			if (toolbar != null) {
 				toolbar.clear();
 			}
-			ButterKnife.bind(this, view);
+			bind = ButterKnife.bind(this, view);
 			getPresenter().setView(this);
 			onCreateView(view, savedInstanceState);
 		}
@@ -75,7 +78,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 				.getAppComponent();
 	}
 
-	@Nullable
+	@Optional
 	@OnTouch(R.id.parent)
 	boolean onTouchParent() {
 		hideKeyboard();
@@ -84,7 +87,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void onDestroyView() {
-		ButterKnife.unbind(this);
+		bind.unbind();
 		getPresenter().setView(null);
 		super.onDestroyView();
 	}

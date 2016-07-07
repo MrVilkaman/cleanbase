@@ -3,7 +3,7 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Zahar on 17.01.2016.
@@ -21,7 +21,7 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.Vi
 
 	static class ViewHolder<T> extends BaseVH<T> {
 
-		@Bind(android.R.id.text1)
+		@BindView(android.R.id.text1)
 		TextView textView;
 
 		ViewHolder(View view, OnClickListener<T> onClick) {
