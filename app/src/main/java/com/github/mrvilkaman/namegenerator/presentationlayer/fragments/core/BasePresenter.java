@@ -2,13 +2,21 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core;
 
 import android.content.Context;
 
-import rx.android.schedulers.AndroidSchedulers;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.core.UseCase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class BasePresenter<V extends BaseView> {
 
 	private V view;
 
-	protected void onViewBeforeDetached() {
+
+	private List<UseCase> useCaseList = new ArrayList<>();
+
+	protected void addUseCases(UseCase... useCases){
+		useCaseList.addAll(Arrays.asList(useCases));
 	}
 
 	protected void onViewAttached() {
@@ -16,6 +24,12 @@ public abstract class BasePresenter<V extends BaseView> {
 	}
 
 	protected void onViewDetached() {
+		for (UseCase useCase : useCaseList) {
+			useCase.unsubscribe();
+		}
+	}
+
+	protected void onViewBeforeDetached() {
 	}
 
 	public final V view() {
