@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.listsample.ListSampleScreenFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,6 +49,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	public void goToMainScreen() {
-		showMessage("goToMainScreen");
+		showFragment(ListSampleScreenFragment.open());
 	}
 }

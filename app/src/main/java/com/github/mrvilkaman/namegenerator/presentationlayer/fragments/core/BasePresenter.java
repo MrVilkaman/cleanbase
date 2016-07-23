@@ -54,7 +54,6 @@ public abstract class BasePresenter<V extends BaseView> {
 	}
 
 	public void handleError(Throwable throwable) {
-
 		view().hideProgress();
 		// Use in Retrofit
 //		if (throwable instanceof RetrofitError) {
