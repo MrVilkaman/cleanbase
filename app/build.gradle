@@ -10,7 +10,7 @@ android {
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        applicationId "com.github.mrvilkaman.namegenerator"
+        applicationId "ru.fixapp.fooproject"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode versions.code

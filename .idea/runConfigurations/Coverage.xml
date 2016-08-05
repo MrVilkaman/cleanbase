@@ -2,7 +2,7 @@
   <configuration default="false" name="Coverage" type="JUnit" factoryName="JUnit" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="jacoco">
       <pattern>
-        <option name="PATTERN" value="com.github.mrvilkaman.namegenerator.*" />
+        <option name="PATTERN" value="ru.fixapp.fooproject.domainlayer.providers.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
