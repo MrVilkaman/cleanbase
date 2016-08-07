@@ -8,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnTouch;
+import butterknife.Optional;
+import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
@@ -16,14 +23,6 @@ import ru.fixapp.fooproject.presentationlayer.app.AppComponent;
 import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 import ru.fixapp.fooproject.presentationlayer.utils.UIUtils;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnTouch;
-import butterknife.Optional;
-import butterknife.Unbinder;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
 
@@ -210,4 +209,5 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	public String getName() {
 		return getClass().getSimpleName();
 	}
+
 }

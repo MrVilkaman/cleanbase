@@ -6,7 +6,6 @@ import android.content.Context;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +25,6 @@ import ru.fixapp.fooproject.TestApplication;
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 18, application = TestApplication.class,
 		manifest = "src/main/AndroidManifest.xml")
-@Ignore
 public class LocalStorageImplTest {
 
 	@Rule

@@ -25,7 +25,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	protected void daggerInject() {
-		DaggerHelloComponent.builder()
+		DaggerHelloScreenComponent.builder()
 				.appComponent(getAppComponent())
 				.build()
 				.inject(this);
