@@ -63,40 +63,6 @@ public abstract class BasePresenter<V extends BaseView> {
 		return view == null ? null : view.getContext();
 	}
 
-	public void handleError(Throwable throwable) {
-		view().hideProgress();
-		// Use in Retrofit
-//		if (throwable instanceof RetrofitError) {
-//			RetrofitError error = (RetrofitError) throwable;
-//			if (error.getKind() == RetrofitError.Kind.NETWORK) {
-//				view().showToast(R.string.dialog_internet_error);
-//			} else if (error.getKind() == RetrofitError.Kind.HTTP) {
-//				Response response = error.getResponse();
-//				if (response != null) {
-//					handleHttpError(error, response.getStatus());
-//				} else {
-//					view().showMessage(error.getMessage());
-//				}
-//			}
-//			if (error.getKind() == RetrofitError.Kind.UNEXPECTED ||
-//					error.getKind() == RetrofitError.Kind.CONVERSION) {
-//				view().showMessage(error.getMessage());
-//			}
-//		} else
-		{
-			view().showToast(throwable.getMessage());
-		}
-
-	}
-
-//	protected void handleHttpError(RetrofitError error, int status) {
-//		switch (status) {
-//			case 401:
-//				view().showMessage(R.string.dialog_invalid_token);
-//				break;
-//		}
-//	}
-
 	protected <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
 		compositeSubscription.add(observable.subscribe(subscriber));
 	}
