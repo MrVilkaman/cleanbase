@@ -55,9 +55,6 @@ configurations.all {
 dependencies {
     compile libraries.dagger
     apt libraries.daggerCompiler
-    compile libraries.javaxInject
-    compile libraries.javaxAnnotationApi
-
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
     compile libraries.supportRecyclerView
