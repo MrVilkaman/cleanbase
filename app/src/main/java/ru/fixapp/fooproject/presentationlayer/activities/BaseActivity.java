@@ -47,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		}
 
 		configureToolBar();
+		injectDagger();
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
 		if (contentFragment == null) {
@@ -61,6 +62,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		}
 		configureProgressBar();
 	}
+
+	protected abstract void injectDagger();
 
 	@IdRes
 	protected int getDrawerContentFrame() {
