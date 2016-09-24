@@ -53,6 +53,8 @@ configurations.all {
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
     compile libraries.dagger
     apt libraries.daggerCompiler
     compile libraries.supportAnnotations
@@ -67,6 +69,7 @@ dependencies {
     compile libraries.retrofit2rxjava
     compile libraries.retrofit2gson
     compile libraries.okHttp3
+
     // Developer tools (Developer Settings)
     compile libraries.okHttpLoggingInterceptor
 
