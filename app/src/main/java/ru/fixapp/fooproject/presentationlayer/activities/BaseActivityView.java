@@ -1,6 +1,6 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
-import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 
 public interface BaseActivityView {
 

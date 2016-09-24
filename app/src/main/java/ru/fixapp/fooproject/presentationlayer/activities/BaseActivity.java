@@ -22,7 +22,7 @@ import java.util.List;
 
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityPresenter, BaseActivityView {
 
@@ -112,8 +112,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		}
 	}
 
-
-	protected void updateIcon() {
+	public void updateIcon() {
 	}
 
 	protected abstract BaseFragment createStartFragment();

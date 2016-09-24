@@ -20,7 +20,7 @@ import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.app.App;
 import ru.fixapp.fooproject.di.AppComponent;
-import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 import ru.fixapp.fooproject.presentationlayer.utils.UIUtils;
 

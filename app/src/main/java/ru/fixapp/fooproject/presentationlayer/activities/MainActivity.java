@@ -2,7 +2,7 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.hello.HelloScreenFragment;
-import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 
 /**
  * Created by root on 12.03.16.
