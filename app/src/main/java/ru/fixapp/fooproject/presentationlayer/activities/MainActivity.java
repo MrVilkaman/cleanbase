@@ -10,6 +10,11 @@ import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
 public class MainActivity extends BaseActivity {
 
 	@Override
+	protected BaseFragment createDrawer() {
+		return null;
+	}
+
+	@Override
 	protected BaseFragment createStartFragment() {
 		return HelloScreenFragment.open();
 	}

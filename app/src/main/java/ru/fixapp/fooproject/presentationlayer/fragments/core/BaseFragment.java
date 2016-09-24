@@ -49,9 +49,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
 			IToolbar toolbar = getToolbar();
-			if (toolbar != null) {
-				toolbar.clear();
-			}
 			bind = ButterKnife.bind(this, view);
 			getPresenter().setView(this);
 			onCreateView(view, savedInstanceState);

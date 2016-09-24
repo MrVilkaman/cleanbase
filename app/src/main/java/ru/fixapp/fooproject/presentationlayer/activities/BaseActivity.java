@@ -1,50 +1,81 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import java.util.List;
 
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.utils.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import java.util.List;
-
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityPresenter, BaseActivityView {
 
-	private static final int PERMANENT_FRAGMENTS = 0; // left menu, retain ,ect
-
+	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
+	protected boolean doubleBackToExitPressedOnce;
+	protected DrawerLayout drawerLayout;
 	private BaseFragment nextFragment;
-
 	private boolean backStack;
 	private boolean isRoot;
 	private boolean forceLoad;
 	private ProgressWheel progress;
 	private boolean inProgress;
 	private boolean openIfCreated;
-	protected boolean doubleBackToExitPressedOnce;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
+		int drawerLayout = getDrawerLayout();
+		if (drawerLayout != 0) {
+			this.drawerLayout = (DrawerLayout) findViewById(drawerLayout);
+		}
 
-
+		configureToolBar();
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
 		if (contentFragment == null) {
 			loadRootFragment(createStartFragment(), true, true, false, false);
+
+			Fragment drawer = createDrawer();
+			if (drawer != null) {
+				fm.beginTransaction()
+						.add(getDrawerContentFrame(), drawer)
+						.commit();
+			}
 		}
 		configureProgressBar();
+	}
+
+	@IdRes
+	protected int getDrawerContentFrame() {
+		return 0;
+	}
+	@IdRes
+	protected int getDrawerLayout() {
+		return 0;
+	}
+
+	protected abstract BaseFragment createDrawer();
+
+
+	protected void configureToolBar() {
+
 	}
 
 	protected int getActivityLayoutResourceID() {
@@ -56,24 +87,33 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		progress.setOnTouchListener((v, event) -> true);
 	}
 
-	protected IToolbar.OnHomeClick getHomeButtonListener() {
-		return () -> {
-			if (hasChild()) {
-				back();
-				updateIcon();
-			}
-		};
-	}
+//	protected IToolbar.OnHomeClick getHomeButtonListener() {
+//		return () -> {
+//			if (hasChild()) {
+//				back();
+//				updateIcon();
+//			}
+//		};
+//	}
 
-	protected void updateIcon() {
-		IToolbar toolbar = getToolbar();
-		if (toolbar != null) {
-			if (hasChild()) {
-				toolbar.showBackIcon();
+
+	private void openDrawer() {
+		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+			drawerLayout.closeDrawers();
+		} else {
+			hideKeyboard();
+			android.app.FragmentManager fManager = getFragmentManager();
+			if (fManager.getBackStackEntryCount() != 0) {
+				back();
 			} else {
-				toolbar.showHomeIcon();
+				if (drawerLayout != null)
+					drawerLayout.openDrawer(Gravity.LEFT);
 			}
 		}
+	}
+
+
+	protected void updateIcon() {
 	}
 
 	protected abstract BaseFragment createStartFragment();
@@ -105,6 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	}
 
 	protected boolean hasChild() {
+
 		return PERMANENT_FRAGMENTS < getSupportFragmentManager().getBackStackEntryCount();
 	}
 
@@ -156,18 +197,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 			if (!(hasOldFragment && isAlreadyLoaded)) {
 				IToolbar toolbar = getToolbar();
+
 				if (isRoot) {
 					clearBackStack();
 					if (toolbar != null) {
-						toolbar.showHomeIcon();
+//						toolbar.showHomeIcon();
 					}
 				} else {
 					if (toolbar != null) {
-						toolbar.showBackIcon();
+//						toolbar.showBackIcon();
 					}
 					if (openIfCreated) {
 					}
 				}
+				preCheckFragment(nextFragment.getName());
 				FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 				boolean b = backStack || isRoot;
 				fragmentTransaction.replace(getContainerID(), nextFragment, nextFragment.getName());
@@ -179,9 +222,15 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 					fragmentTransaction.addToBackStack(null);
 				}
 				fragmentTransaction.commit();
+				hideProgress();
+
 			}
 			nextFragment = null;
 		}
+	}
+
+	public void preCheckFragment(String name) {
+
 	}
 
 	private void clearBackStack() {
@@ -199,7 +248,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		}
 		FragmentTransaction trans = fragmentManager.beginTransaction();
 		for (Fragment fragment : fragments) {
-			if (fragment != null) {
+			if (fragment != null && !(fragment instanceof ISingletonFragment)) {
 				trans.remove(fragment);
 			}
 		}
@@ -219,23 +268,37 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 	@Override
 	public void back() {
-		onBackPressed();
+		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+			drawerLayout.closeDrawers();
+		} else {
+			onBackPressed();
+			updateIcon();
+		}
 	}
 
 	@Override
 	public void showProgress() {
 		inProgress = true;
 		progress.setVisibility(View.VISIBLE);
+		hideKeyboard();
 	}
 
 	@Override
 	public void hideProgress() {
 		inProgress = false;
-		progress.setVisibility(View.GONE);
+		if (progress != null) {
+			progress.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
 	public void clearProgress() {
 		inProgress = false;
+	}
+
+	@Override
+	public void openActivity(Class<? extends FragmentActivity> aClass) {
+		startActivity(new Intent(this, aClass));
+		this.finish();
 	}
 }

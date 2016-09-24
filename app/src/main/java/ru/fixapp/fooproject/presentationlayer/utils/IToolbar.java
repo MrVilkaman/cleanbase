@@ -1,32 +1,22 @@
 package ru.fixapp.fooproject.presentationlayer.utils;
 
-import android.view.View;
+import android.support.annotation.DrawableRes;
 
 public interface IToolbar {
 
     void hide();
 
+    void show();
+
     void setText(int text);
 
     void setText(String text);
 
-    void addView(int layoutId, OnToolbarListener viewCreated);
+    void hideHomeButton();
 
-    void clear();
+    void showHomeButton();
 
-    void hideHomeIcon();
+    void showIcon(@DrawableRes int Id, Runnable callback);
 
-    void showHomeIcon();
-
-    void showBackIcon();
-
-
-    interface OnToolbarListener {
-        void onToolbarViewCreated(View view);
-    }
-
-    interface OnHomeClick {
-        void onClick();
-    }
-
+    void remove(@DrawableRes int resId);
 }
