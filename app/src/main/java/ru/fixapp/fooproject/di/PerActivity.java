@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.app;
+package ru.fixapp.fooproject.di;
 
 import java.lang.annotation.Retention;
 

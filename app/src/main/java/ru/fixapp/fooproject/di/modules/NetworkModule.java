@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.datalayer.modules;
+package ru.fixapp.fooproject.di.modules;
 
 import android.support.annotation.NonNull;
 

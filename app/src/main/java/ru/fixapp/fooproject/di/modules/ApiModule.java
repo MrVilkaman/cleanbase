@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.datalayer.api;
+package ru.fixapp.fooproject.di.modules;
 
 import android.support.annotation.NonNull;
 
@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.fixapp.fooproject.BuildConfig;
+import ru.fixapp.fooproject.datalayer.api.RestApi;
 
 /**
  * Created by Zahar on 31.03.16.

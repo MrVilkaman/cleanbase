@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import ru.fixapp.fooproject.di.AppComponent;
+import ru.fixapp.fooproject.di.DaggerAppComponent;
+import ru.fixapp.fooproject.di.modules.AppModule;
+
 
 /**
  * Created by root on 12.03.16.

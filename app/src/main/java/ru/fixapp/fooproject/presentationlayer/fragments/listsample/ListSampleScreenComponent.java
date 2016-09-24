@@ -6,8 +6,8 @@ import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-import ru.fixapp.fooproject.presentationlayer.app.AppComponent;
-import ru.fixapp.fooproject.presentationlayer.app.PerActivity;
+import ru.fixapp.fooproject.di.AppComponent;
+import ru.fixapp.fooproject.di.PerActivity;
 
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {ListSampleScreenComponent.ListSampleScreenModule.class})
