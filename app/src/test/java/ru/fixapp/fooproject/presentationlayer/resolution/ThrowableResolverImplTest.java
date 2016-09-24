@@ -9,6 +9,7 @@ import ru.fixapp.fooproject.domainlayer.exceptions.InternetConnectionException;
 import ru.fixapp.fooproject.domainlayer.exceptions.NotFoundException;
 import ru.fixapp.fooproject.domainlayer.exceptions.ServerException;
 import ru.fixapp.fooproject.domainlayer.exceptions.ServerNotAvailableException;
+import ru.fixapp.fooproject.domainlayer.exceptions.UnauthorizedException;
 import ru.fixapp.fooproject.domainlayer.exceptions.UncheckedException;
 
 import static org.mockito.Matchers.eq;
@@ -69,6 +70,15 @@ public class ThrowableResolverImplTest extends BaseTestCase {
 
 		// Assert
 		verify(ui).showMessage(eq(R.string.dialog_default_error), eq("qwer"));
+	}
+
+	@Test
+	public void testHandleUnauthorizedException() {
+		// Act
+		resolver.handleError(new UnauthorizedException());
+
+		// Assert
+		verify(ui).showToast(eq(R.string.dialog_default_error));
 	}
 
 	@Test

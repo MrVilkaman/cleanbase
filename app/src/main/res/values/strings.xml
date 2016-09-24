@@ -6,4 +6,5 @@
 	<string name="dialog_internet_error">При загрузке данных произошла ошибка. Проверьте Ваше подключение к сети.</string>
 	<string name="dialog_default_404_error">Не найдено</string>
 	<string name="dialog_default_error">Непредвиденная ошибка: %1$s</string>
+	<string name="dialog_default_unauthorized">Не авторизован</string>
 </resources>
