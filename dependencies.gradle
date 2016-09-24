@@ -66,6 +66,8 @@ ext.libraries = [
         supportAppCompat          : "com.android.support:appcompat-v7:$versions.supportLibs",
         supportCardview           : "com.android.support:cardview-v7:$versions.supportLibs",
         supportRecyclerView       : "com.android.support:recyclerview-v7:$versions.supportLibs",
+        supportDesign             : "com.android.support:design:$versions.supportLibs",
+
         recyclerViewPager         : "com.github.lsjwzh.RecyclerViewPager:lib:$versions.recyclerViewPager",
 
         playServicesBase          : "com.google.android.gms:play-services-base:$versions.gcm",
