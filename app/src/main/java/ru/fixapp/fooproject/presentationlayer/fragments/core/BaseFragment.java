@@ -84,7 +84,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		}
 	}
 
-	protected abstract void daggerInject();
+	public abstract void daggerInject();
 
 	protected AppComponent getAppComponent() {
 		return App.get(getActivity())

@@ -6,13 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.MySimpleAdapter;
-
 import java.util.List;
 
 import butterknife.BindView;
+import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.MySimpleAdapter;
 
 public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter> implements ListSampleView {
 
@@ -40,7 +39,7 @@ public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter> 
 	}
 
 	@Override
-	protected void daggerInject() {
+	public void daggerInject() {
 		DaggerListSampleScreenComponent.builder()
 				.appComponent(getAppComponent())
 				.build()

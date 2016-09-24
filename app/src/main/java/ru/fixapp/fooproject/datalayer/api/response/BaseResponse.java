@@ -4,9 +4,6 @@ public class BaseResponse {
 	private int code;
 	private String message;
 
-	public BaseResponse() {
-	}
-
 	public BaseResponse(int code, String message) {
 		this.code = code;
 		this.message = message;
