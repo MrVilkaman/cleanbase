@@ -1,23 +1,15 @@
 package ru.fixapp.fooproject.presentationlayer.fragments.core;
 
 
-import android.content.Context;
+import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 
+public interface BaseView extends UIResolver {
 
-public interface BaseView {
-
-    Context getContext();
     BasePresenter getPresenter();
 
     void showProgress();
     void hideProgress();
 
-    void showError(Throwable throwable);
+    void handleError(Throwable throwable);
 
-    @SuppressWarnings("SameParameterValue")
-    void showMessage(int testId);
-    void showMessage(String text);
-
-    void showToast(int resId);
-    void showToast(String message);
 }

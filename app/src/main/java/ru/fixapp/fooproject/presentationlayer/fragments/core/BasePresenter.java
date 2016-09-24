@@ -1,7 +1,5 @@
 package ru.fixapp.fooproject.presentationlayer.fragments.core;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,21 +23,18 @@ public abstract class BasePresenter<V extends BaseView> {
 		this.schedulersProvider = schedulersProvider;
 	}
 
-	protected void addUseCases(UseCase... useCases){
+	protected void addUseCases(UseCase... useCases) {
 		useCaseList.addAll(Arrays.asList(useCases));
 	}
 
-	protected void onViewAttached() {
+	public void onViewAttached() {
 		compositeSubscription = new CompositeSubscription();
 	}
 
-	protected void onViewDetached() {
+	public void onViewDetached() {
 		for (UseCase useCase : useCaseList) {
 			useCase.unsubscribe();
 		}
-	}
-
-	protected void onViewBeforeDetached() {
 	}
 
 	public final V view() {
@@ -47,20 +42,7 @@ public abstract class BasePresenter<V extends BaseView> {
 	}
 
 	public final void setView(V view) {
-		if (view == null) {
-						if (this.view != null) {
-				onViewBeforeDetached();
-			}
-			this.view = null;
-			onViewDetached();
-		} else {
-			this.view = view;
-			onViewAttached();
-		}
-	}
-
-	public final Context getContext() {
-		return view == null ? null : view.getContext();
+		this.view = view;
 	}
 
 	protected <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {

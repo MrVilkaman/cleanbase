@@ -1,23 +1,28 @@
 package ru.fixapp.fooproject.datalayer.subscriber;
 
-import android.util.Log;
 
-import ru.fixapp.fooproject.BuildConfig;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseView;
-
-import java.lang.ref.WeakReference;
-
+import ru.fixapp.fooproject.presentationlayer.fragments.core.BindType;
 
 /**
  * Created by root on 16.03.16.
  */
-public class LoadSubscriber<V extends BaseView, T> extends DefaultSubscriber<T> {
-	private WeakReference<V> viewRef;
+public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
+
+	private boolean skipNextError;
 
 	public LoadSubscriber(V view) {
-		this.viewRef = new WeakReference<>(view);
+		super(view);
 		if (needProgress()) {
 			view().showProgress();
+		}
+	}
+
+	@Override
+	public void onNext(T item) {
+		V view = view();
+		if (view instanceof BindType) {
+			((BindType<T>) view).bind(item);
 		}
 	}
 
@@ -25,14 +30,14 @@ public class LoadSubscriber<V extends BaseView, T> extends DefaultSubscriber<T> 
 	public void onError(Throwable e) {
 		super.onError(e);
 		BaseView view = view();
+		if (view  == null) return;
+
+
 		if (needProgress()) {
 			view.hideProgress();
 		}
 		if (showError()) {
-			view.showError(e);
-		}
-		if (BuildConfig.DEBUG) {
-			Log.e("LoadSubscriber", "onError", e);
+			view.handleError(e);
 		}
 	}
 
@@ -41,7 +46,7 @@ public class LoadSubscriber<V extends BaseView, T> extends DefaultSubscriber<T> 
 	}
 
 	protected boolean showError() {
-		return true;
+		return !skipNextError;
 	}
 
 	@Override
@@ -52,7 +57,9 @@ public class LoadSubscriber<V extends BaseView, T> extends DefaultSubscriber<T> 
 		}
 	}
 
-	protected V view() {
-		return viewRef.get();
+	protected void skipNextError() {
+		skipNextError = true;
 	}
+
+
 }

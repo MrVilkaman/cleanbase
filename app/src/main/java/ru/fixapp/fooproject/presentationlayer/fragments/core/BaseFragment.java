@@ -2,33 +2,38 @@ package ru.fixapp.fooproject.presentationlayer.fragments.core;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.app.App;
-import ru.fixapp.fooproject.di.AppComponent;
+import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.UIResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
-import ru.fixapp.fooproject.presentationlayer.utils.UIUtils;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
 	private String previousFragment;
+
+	UIResolver uiResolver;
+	ThrowableResolver throwableResolver;
 
 	@Inject
 	P relationPresenter;
@@ -48,15 +53,27 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
-			IToolbar toolbar = getToolbar();
-			bind = ButterKnife.bind(this, view);
-			getPresenter().setView(this);
+			//// TODO: 17.09.16 it will be doing by dagger2
+			uiResolver = createUiResolver(view);
+			throwableResolver = createThrowableResolver(uiResolver);
+			P presenter = getPresenter();
+			presenter.setView(this);
 			onCreateView(view, savedInstanceState);
+			presenter.onViewAttached();
 		}
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
 		}
 		return view;
+	}
+
+	//// TODO: 17.09.16 it will be doing by dagger2
+	public UIResolver createUiResolver(View view) {
+		return new UIResolverImpl(view);
+	}
+	//// TODO: 17.09.16 it will be doing by dagger2
+	public ThrowableResolver createThrowableResolver(UIResolver ui) {
+		return new ThrowableResolverImpl(ui);
 	}
 
 	@Override
@@ -83,8 +100,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void onDestroyView() {
-		bind.unbind();
-		getPresenter().setView(null);
+		P presenter = getPresenter();
+		presenter.onViewDetached();
+		presenter.setView(null);
 		super.onDestroyView();
 	}
 
@@ -115,7 +133,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	@Override
 	public void hideProgress() {
 		if (progressBar == null) {
-			getActivityView().hideProgress();
+			BaseActivityView activityView = getActivityView();
+			if (activityView != null)
+				activityView.hideProgress();
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}
@@ -177,30 +197,33 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	@Override
-	public void showError(Throwable throwable) {
-		hideProgress();
-		Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_LONG)
-				.show();
+	public void showToast(@StringRes int text) {
+		uiResolver.showToast(text);
 	}
 
 	@Override
-	public void showMessage(int testId) {
-		UIUtils.showAlert(getContext(), testId);
+	public void handleError(Throwable throwable) {
+		throwableResolver.handleError(throwable);
 	}
 
 	@Override
-	public void showMessage(String text) {
-		UIUtils.showAlert(getContext(), text);
+	public void showMessage(@StringRes int text) {
+		uiResolver.showMessage(text);
 	}
 
 	@Override
-	public void showToast(int resId) {
-		UIUtils.showToast(getContext(), resId);
+	public void showMessage(@StringRes int text, Runnable callback) {
+		uiResolver.showMessage(text,callback);
 	}
 
 	@Override
-	public void showToast(String message) {
-		UIUtils.showToast(getContext(), message);
+	public void showMessage(@StringRes int resId, Object... arg) {
+		uiResolver.showMessage(resId,arg);
+	}
+
+	@Override
+	public void showSnackbar(@StringRes int textId) {
+		uiResolver.showSnackbar(textId);
 	}
 
 	public String getName() {
