@@ -3,7 +3,7 @@ package ru.fixapp.fooproject.domainlayer.providers;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.BaseTestCase;
+import ru.fixapp.fooproject.testsutils.BaseTestCase;
 import ru.fixapp.fooproject.datalayer.api.RestApi;
 import ru.fixapp.fooproject.datalayer.providers.SessionDataProviderImpl;
 import ru.fixapp.fooproject.datalayer.store.LocalCacheItemType;

@@ -3,7 +3,7 @@ package ru.fixapp.fooproject.presentationlayer.resolution;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.BaseTestCase;
+import ru.fixapp.fooproject.testsutils.BaseTestCase;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.domainlayer.exceptions.InternetConnectionException;
 import ru.fixapp.fooproject.domainlayer.exceptions.NotFoundException;
@@ -78,7 +78,7 @@ public class ThrowableResolverImplTest extends BaseTestCase {
 		resolver.handleError(new UnauthorizedException());
 
 		// Assert
-		verify(ui).showToast(eq(R.string.dialog_default_error));
+		verify(ui).showToast(eq(R.string.dialog_default_unauthorized));
 	}
 
 	@Test

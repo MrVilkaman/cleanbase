@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.BaseTestCase;
+import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;

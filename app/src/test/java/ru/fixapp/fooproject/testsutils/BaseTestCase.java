@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject;
+package ru.fixapp.fooproject.testsutils;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

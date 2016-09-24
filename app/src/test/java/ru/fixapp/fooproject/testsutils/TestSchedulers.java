@@ -1,7 +1,6 @@
-package ru.fixapp.fooproject;
+package ru.fixapp.fooproject.testsutils;
 
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 

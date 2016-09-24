@@ -2,7 +2,7 @@ package ru.fixapp.fooproject.datalayer.store;
 
 import org.junit.Test;
 
-import ru.fixapp.fooproject.BaseTestCase;
+import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Zahar on 19.04.16.
  */
-public class MemoryStorageImplTest extends BaseTestCase{
+public class MemoryStorageImplTest extends BaseTestCase {
 
 	private MemoryStorageImpl memoryStorage;
 
