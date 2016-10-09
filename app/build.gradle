@@ -89,21 +89,4 @@ dependencies {
     testCompile libraries.assertJandroid
     testCompile libraries.mockitoCore
     testCompile libraries.hamcrest
-    testCompile libraries.powermockXstream
-    testCompile libraries.powermockApi
-    testCompile libraries.powermockModulej4Rule
-    testCompile(libraries.powermockModulej4) {
-        exclude group: 'org.hamcrest'
-    }
-
-    androidTestCompile libraries.supportAnnotations
-    androidTestCompile libraries.supportTestRunner
-    androidTestCompile libraries.supportTestRules
-    androidTestCompile libraries.espressoCore
-    androidTestCompile(libraries.espressoContrib) {
-        // Causes IncompatibleClassChangeError. As always…
-        exclude module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
-        exclude module: 'support-v4'
-    }
 }
