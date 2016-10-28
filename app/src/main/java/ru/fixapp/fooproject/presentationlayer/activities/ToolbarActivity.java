@@ -2,6 +2,7 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 
 
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -66,9 +67,9 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 	protected void configureToolBar() {
 		toolbar = ButterKnife.findById(this, R.id.toolbar_actionbar);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		ActionBar supportActionBar = getSupportActionBar();
+		supportActionBar.setHomeButtonEnabled(true);
+		supportActionBar.setDisplayHomeAsUpEnabled(true);
 		toolbar.setNavigationOnClickListener(v -> {
 			if (hasChild()) {
 				onBackPressed();

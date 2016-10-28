@@ -1,12 +1,10 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +21,7 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
-public abstract class BaseActivity extends AppCompatActivity implements BaseActivityPresenter, BaseActivityView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
 
 
 	@Inject NavigationResolver navigationResolver;
@@ -84,31 +82,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	private void configureProgressBar() {
 		progress = (ProgressWheel) findViewById(R.id.progress_wheel);
 		progress.setOnTouchListener((v, event) -> true);
-	}
-
-//	protected IToolbar.OnHomeClick getHomeButtonListener() {
-//		return () -> {
-//			if (hasChild()) {
-//				back();
-//				updateIcon();
-//			}
-//		};
-//	}
-
-
-	private void openDrawer() {
-		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-			drawerLayout.closeDrawers();
-		} else {
-			hideKeyboard();
-			android.app.FragmentManager fManager = getFragmentManager();
-			if (fManager.getBackStackEntryCount() != 0) {
-				back();
-			} else {
-				if (drawerLayout != null)
-					drawerLayout.openDrawer(Gravity.LEFT);
-			}
-		}
 	}
 
 	public void updateIcon() {
@@ -202,11 +175,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		inProgress = false;
 	}
 
-	@Override
-	public void openActivity(Class<? extends FragmentActivity> aClass) {
-		startActivity(new Intent(this, aClass));
-		this.finish();
-	}
 
 	protected View getRootView() {
 		return findViewById(android.R.id.content);

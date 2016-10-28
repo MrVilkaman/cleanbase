@@ -1,5 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
+import android.support.v4.app.FragmentActivity;
+
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
 public interface NavigationResolver {
@@ -10,4 +12,6 @@ public interface NavigationResolver {
 	void showFragmentWithoutBackStack(BaseFragment fragment);
 
 	boolean onBackPressed();
+
+	void openActivity(Class<? extends FragmentActivity> aClass);
 }

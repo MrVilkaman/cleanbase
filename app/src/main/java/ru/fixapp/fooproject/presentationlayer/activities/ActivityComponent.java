@@ -1,6 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -37,9 +38,11 @@ public interface ActivityComponent {
 		private View view;
 		private FragmentManager fm;
 		private int contentId;
+		private Activity activity;
 
-		public ActivityModule(View view, FragmentManager fm, int contentId) {
+		public ActivityModule(View view, Activity activity, FragmentManager fm, int contentId) {
 			this.view = view;
+			this.activity = activity;
 			this.fm = fm;
 			this.contentId = contentId;
 		}
@@ -47,7 +50,7 @@ public interface ActivityComponent {
 		@Provides
 		@PerActivity
 		public UIResolver createUiResolver(Context context) {
-			return new UIResolverImpl(context,view);
+			return new UIResolverImpl(context, view);
 		}
 
 		@Provides
@@ -59,7 +62,7 @@ public interface ActivityComponent {
 		@Provides
 		@PerActivity
 		public NavigationResolver createNavigationResolver() {
-			return new NavigationResolverImpl(fm,contentId);
+			return new NavigationResolverImpl(activity, fm, contentId);
 		}
 
 	}

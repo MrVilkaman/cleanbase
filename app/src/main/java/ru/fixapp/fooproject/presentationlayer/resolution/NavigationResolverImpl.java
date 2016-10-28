@@ -1,6 +1,9 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -19,8 +22,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 	private BaseFragment nextFragment;
 	private boolean backStack;
 	private boolean isRoot;
+	private Activity currentActivity;
 
-	public NavigationResolverImpl(FragmentManager fragmentManager, int containerID) {
+	public NavigationResolverImpl(Activity currentActivity,FragmentManager fragmentManager, int containerID) {
+		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.containerID = containerID;
 	}
@@ -124,6 +129,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 		}
 		trans.commit();
 
+	}
+
+	@Override
+	public void openActivity(Class<? extends FragmentActivity> aClass) {
+		currentActivity.startActivity(new Intent(currentActivity, aClass));
+		currentActivity.finish();
 	}
 
 
