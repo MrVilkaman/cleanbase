@@ -1,7 +1,5 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
-import android.view.View;
-
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.app.App;
@@ -19,9 +17,8 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	@Override
 	protected void injectDagger() {
 		AppComponent appComponent = App.get(this).getAppComponent();
-		View viewById = findViewById(android.R.id.content);
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
-				.activityModule(new ActivityComponent.ActivityModule(viewById)).build();
+				.activityModule(new ActivityComponent.ActivityModule(getRootView())).build();
 		screenComponent.inject(this);
 	}
 

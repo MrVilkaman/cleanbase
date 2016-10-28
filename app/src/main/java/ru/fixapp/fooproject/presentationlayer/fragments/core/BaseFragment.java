@@ -50,7 +50,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
-			//// TODO: 17.09.16 it will be doing by dagger2
 			bind = ButterKnife.bind(this, view);
 			P presenter = getPresenter();
 			presenter.setView(this);

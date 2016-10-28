@@ -303,4 +303,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		startActivity(new Intent(this, aClass));
 		this.finish();
 	}
+
+	protected View getRootView() {
+		return findViewById(android.R.id.content);
+	}
 }
