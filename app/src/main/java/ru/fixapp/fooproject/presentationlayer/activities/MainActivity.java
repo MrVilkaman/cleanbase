@@ -1,5 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
+import android.view.View;
+
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.app.App;
@@ -10,15 +12,16 @@ import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 /**
  * Created by root on 12.03.16.
  */
-public class MainActivity extends BaseActivity implements IHasComponent<ActivityScreenComponent> {
+public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
 
-	private ActivityScreenComponent screenComponent;
+	private ActivityComponent screenComponent;
 
 	@Override
 	protected void injectDagger() {
 		AppComponent appComponent = App.get(this).getAppComponent();
-		screenComponent =
-				DaggerActivityScreenComponent.builder().appComponent(appComponent).build();
+		View viewById = findViewById(android.R.id.content);
+		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
+				.activityModule(new ActivityComponent.ActivityModule(viewById)).build();
 		screenComponent.inject(this);
 	}
 
@@ -38,7 +41,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	}
 
 	@Override
-	public ActivityScreenComponent getComponent() {
+	public ActivityComponent getComponent() {
 		return screenComponent;
 	}
 }

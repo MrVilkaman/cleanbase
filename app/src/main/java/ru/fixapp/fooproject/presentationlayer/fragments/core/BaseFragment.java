@@ -22,9 +22,7 @@ import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.app.App;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.UIResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
@@ -32,9 +30,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements BaseView, BaseActivityView, OnBackPressedListener {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
-	UIResolver uiResolver;
-	ThrowableResolver throwableResolver;
+
+	@Inject UIResolver uiResolver;
+	@Inject ThrowableResolver throwableResolver;
 	@Inject P relationPresenter;
+
 	@Nullable @BindView(R.id.progress_wheel) View progressBar;
 	private String previousFragment;
 	private Unbinder bind;
@@ -52,8 +52,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		if (isWorkCall()) {
 			//// TODO: 17.09.16 it will be doing by dagger2
 			bind = ButterKnife.bind(this, view);
-			uiResolver = createUiResolver(view);
-			throwableResolver = createThrowableResolver(uiResolver);
 			P presenter = getPresenter();
 			presenter.setView(this);
 			presenter.onViewAttached();
@@ -63,16 +61,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
 		}
 		return view;
-	}
-
-	//// TODO: 17.09.16 it will be doing by dagger2
-	public UIResolver createUiResolver(View view) {
-		return new UIResolverImpl(view);
-	}
-
-	//// TODO: 17.09.16 it will be doing by dagger2
-	public ThrowableResolver createThrowableResolver(UIResolver ui) {
-		return new ThrowableResolverImpl(ui);
 	}
 
 	@Override

@@ -19,9 +19,9 @@ public class UIResolverImpl implements UIResolver {
 	private final Context context;
 	private final View rootView;
 
-	public UIResolverImpl(View baseActivity) {
-		rootView = baseActivity;
-		this.context = baseActivity.getContext();
+	public UIResolverImpl(Context context, View rootView) {
+		this.context = context;
+		this.rootView = rootView;
 	}
 
 	@Override

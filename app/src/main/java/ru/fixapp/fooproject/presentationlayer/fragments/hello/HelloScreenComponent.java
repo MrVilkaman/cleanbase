@@ -5,9 +5,9 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerScreen;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 
-@Component(dependencies = ActivityScreenComponent.class, modules = {HelloScreenComponent.HelloScreenModule.class})
+@Component(dependencies = ActivityComponent.class, modules = {HelloScreenComponent.HelloScreenModule.class})
 @PerScreen
 public interface HelloScreenComponent {
 	void inject(HelloScreenFragment fragment);

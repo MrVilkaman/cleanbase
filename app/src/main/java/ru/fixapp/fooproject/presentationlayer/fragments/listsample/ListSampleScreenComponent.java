@@ -5,9 +5,9 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerScreen;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 
-@Component(dependencies = ActivityScreenComponent.class,
+@Component(dependencies = ActivityComponent.class,
 		modules = {ListSampleScreenComponent.ListSampleScreenModule.class})
 @PerScreen
 public interface ListSampleScreenComponent {

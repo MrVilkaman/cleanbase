@@ -27,7 +27,6 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		appComponent = prepareApplicationComponent().build();
-		appComponent.inject(this);
 	}
 
 	protected DaggerAppComponent.Builder prepareApplicationComponent() {

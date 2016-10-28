@@ -10,11 +10,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.MySimpleAdapter;
 
-public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter> implements ListSampleView {
+public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter>
+		implements ListSampleView {
 
 	@BindView(R.id.recyclerview) RecyclerView recyclerView;
 	private MySimpleAdapter<String> adapter;
@@ -42,9 +43,7 @@ public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter> 
 	@Override
 	public void daggerInject() {
 		DaggerListSampleScreenComponent.builder()
-				.activityScreenComponent(getComponent(ActivityScreenComponent.class))
-				.build()
-				.inject(this);
+				.activityComponent(getComponent(ActivityComponent.class)).build().inject(this);
 	}
 
 	@Override

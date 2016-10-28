@@ -12,7 +12,6 @@ import ru.fixapp.fooproject.di.modules.NetworkModule;
 import ru.fixapp.fooproject.di.modules.ProvidersModule;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
 import ru.fixapp.fooproject.domainlayer.providers.SessionDataProvider;
-import ru.fixapp.fooproject.presentationlayer.app.App;
 
 /**
  * Created by Zahar on 24.03.16.
@@ -32,6 +31,4 @@ public interface AppComponent {
 	RestApi provideApi();
 
 	Context provideContext();
-
-	void inject(App app);
 }
