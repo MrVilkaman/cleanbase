@@ -8,6 +8,4 @@ public interface NavigationResolver {
 	void showRootFragment(BaseFragment fragment);
 
 	void showFragmentWithoutBackStack(BaseFragment fragment);
-
-	void showOrOpenFragment(BaseFragment fragment);
 }

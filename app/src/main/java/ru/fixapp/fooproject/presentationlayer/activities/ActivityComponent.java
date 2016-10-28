@@ -34,11 +34,12 @@ public interface ActivityComponent {
 	public class ActivityModule {
 
 		private View view;
+		private BaseActivityPresenter pres;
 
-		public ActivityModule(View view) {
+		public ActivityModule(View view, BaseActivityPresenter pres) {
 			this.view = view;
+			this.pres = pres;
 		}
-
 		@Provides
 		@PerActivity
 		public UIResolver createUiResolver(Context context) {
@@ -54,7 +55,7 @@ public interface ActivityComponent {
 		@Provides
 		@PerActivity
 		public NavigationResolver createNavigationResolver() {
-			return new NavigationResolverImpl();
+			return new NavigationResolverImpl(pres);
 		}
 
 	}

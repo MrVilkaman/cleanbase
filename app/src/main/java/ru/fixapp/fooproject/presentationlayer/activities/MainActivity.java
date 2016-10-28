@@ -4,7 +4,7 @@ import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.app.App;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.hello.HelloScreenFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 
 /**
@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	protected void injectDagger() {
 		AppComponent appComponent = App.get(this).getAppComponent();
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
-				.activityModule(new ActivityComponent.ActivityModule(getRootView())).build();
+				.activityModule(new ActivityComponent.ActivityModule(getRootView(),this)).build();
 		screenComponent.inject(this);
 	}
 
@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 	@Override
 	protected BaseFragment createStartFragment() {
-		return HelloScreenFragment.open();
+		return Frag1ScreenFragment.open();
 	}
 
 	@Override
