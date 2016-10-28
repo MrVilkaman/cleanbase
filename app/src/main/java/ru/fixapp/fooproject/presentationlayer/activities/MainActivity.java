@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	protected void injectDagger() {
 		AppComponent appComponent = App.get(this).getAppComponent();
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
-				.activityModule(new ActivityComponent.ActivityModule(getRootView(),this)).build();
+				.activityModule(new ActivityComponent.ActivityModule(getRootView(),getSupportFragmentManager(),getContainerID())).build();
 		screenComponent.inject(this);
 	}
 

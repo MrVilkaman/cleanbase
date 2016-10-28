@@ -8,7 +8,6 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -18,13 +17,16 @@ import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityPresenter, BaseActivityView {
+
+
+	@Inject NavigationResolver navigationResolver;
 
 	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	protected boolean doubleBackToExitPressedOnce;
@@ -51,8 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
 		if (contentFragment == null) {
-			loadRootFragment(createStartFragment(), true, true, false, false);
-
+			navigationResolver.showRootFragment(createStartFragment());
 			Fragment drawer = createDrawer();
 			if (drawer != null) {
 				fm.beginTransaction()
@@ -124,15 +125,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		return R.id.content;
 	}
 
-	@Override
-	public void loadRootFragment(BaseFragment fragment, boolean addToBackStack, boolean isRoot, boolean forceLoad, boolean openIfcreated) {
-		nextFragment = fragment;
-		backStack = addToBackStack;
-		this.isRoot = isRoot;
-		this.forceLoad = forceLoad;
-		this.openIfCreated = openIfcreated;
-		nextFragment();
-	}
 
 	private void exit() {
 		if (doubleBackToExitPressedOnce) {
@@ -187,74 +179,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		return listener == null || !listener.onBackPressed();
 	}
 
-	void nextFragment() {
-		if (nextFragment != null) {
-			BaseFragment currentFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(getContainerID());
-			boolean hasOldFragment = currentFragment != null;
-			boolean isAlreadyLoaded = false;
-			if (hasOldFragment) {
-				isAlreadyLoaded = currentFragment.getName()
-						.equals(nextFragment.getName());
-			}
 
-			if (!(hasOldFragment && isAlreadyLoaded)) {
-				IToolbar toolbar = getToolbar();
-
-				if (isRoot) {
-					clearBackStack();
-					if (toolbar != null) {
-//						toolbar.showHomeIcon();
-					}
-				} else {
-					if (toolbar != null) {
-//						toolbar.showBackIcon();
-					}
-					if (openIfCreated) {
-					}
-				}
-				preCheckFragment(nextFragment.getName());
-				FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-				boolean b = backStack || isRoot;
-				fragmentTransaction.replace(getContainerID(), nextFragment, nextFragment.getName());
-				if (currentFragment != null && !isRoot) {
-					nextFragment.setPreviousFragment(b ? currentFragment.getName() : currentFragment.getPreviousFragment());
-					fragmentTransaction.addToBackStack(currentFragment.getName());
-				} else {
-					nextFragment.setPreviousFragment(null);
-					fragmentTransaction.addToBackStack(null);
-				}
-				fragmentTransaction.commit();
-				hideProgress();
-
-			}
-			nextFragment = null;
-		}
-	}
 
 	public void preCheckFragment(String name) {
-
-	}
-
-	private void clearBackStack() {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-
-		if (0 < fragmentManager.getBackStackEntryCount()) {
-			int id = fragmentManager.getBackStackEntryAt(0)
-					.getId();
-			fragmentManager.popBackStackImmediate(id, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		}
-
-		List<Fragment> fragments = fragmentManager.getFragments();
-		if (fragments == null) {
-			return;
-		}
-		FragmentTransaction trans = fragmentManager.beginTransaction();
-		for (Fragment fragment : fragments) {
-			if (fragment != null && !(fragment instanceof ISingletonFragment)) {
-				trans.remove(fragment);
-			}
-		}
-		trans.commit();
 
 	}
 
