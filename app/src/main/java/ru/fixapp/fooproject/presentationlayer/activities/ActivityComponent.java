@@ -10,6 +10,8 @@ import dagger.Provides;
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
@@ -26,6 +28,7 @@ public interface ActivityComponent {
 
 	ThrowableResolver getThrowableResolver();
 
+	NavigationResolver getNavigationResolver();
 
 	@Module
 	public class ActivityModule {
@@ -46,6 +49,12 @@ public interface ActivityComponent {
 		@PerActivity
 		public ThrowableResolver createThrowableResolver(UIResolver ui) {
 			return new ThrowableResolverImpl(ui);
+		}
+
+		@Provides
+		@PerActivity
+		public NavigationResolver createNavigationResolver() {
+			return new NavigationResolverImpl();
 		}
 
 	}

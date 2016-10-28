@@ -47,6 +47,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter>
 
 	@Override
 	public void goToMainScreen() {
-		showFragment(ListSampleScreenFragment.open());
+		getNavigation().showFragment(ListSampleScreenFragment.open());
 	}
 }

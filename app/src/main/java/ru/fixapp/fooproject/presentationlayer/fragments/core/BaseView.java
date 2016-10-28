@@ -11,6 +11,6 @@ public interface BaseView extends UIResolver {
 
 	void hideProgress();
 
-    void handleError(Throwable throwable);
+	void handleError(Throwable throwable);
 
 }

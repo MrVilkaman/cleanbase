@@ -16,11 +16,9 @@ import butterknife.OnTouch;
 import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
-import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.app.App;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
@@ -33,6 +31,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Inject UIResolver uiResolver;
 	@Inject ThrowableResolver throwableResolver;
+	@Inject NavigationResolver navigationResolver;
 	@Inject P relationPresenter;
 
 	@Nullable @BindView(R.id.progress_wheel) View progressBar;
@@ -71,10 +70,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	public abstract void daggerInject();
-
-	protected AppComponent getAppComponent() {
-		return App.get(getActivity()).getAppComponent();
-	}
 
 	@Optional
 	@OnTouch(R.id.parent)
@@ -150,26 +145,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	protected abstract int getLayoutId();
 
-	protected void showFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, true, false, false, false);
-	}
-
-	protected void showRootFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, false, true, false, false);
-	}
-
-	protected void showFragmentWithoutBackStack(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, false, false, false, false);
-	}
-
-	protected void showOrOpenFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, true, false, false, true);
-	}
-
-	public BaseActivityPresenter getBaseActivity() {
-		return (BaseActivityPresenter) getActivity();
-	}
-
 	public BaseActivityView getActivityView() {
 		return (BaseActivityView) getActivity();
 	}
@@ -223,4 +198,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
 	}
 
+	public NavigationResolver getNavigation() {
+		return navigationResolver;
+	}
 }
