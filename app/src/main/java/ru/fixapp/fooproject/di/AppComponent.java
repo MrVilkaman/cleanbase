@@ -1,18 +1,18 @@
 package ru.fixapp.fooproject.di;
 
-import ru.fixapp.fooproject.di.modules.ApiModule;
-import ru.fixapp.fooproject.datalayer.api.RestApi;
-import ru.fixapp.fooproject.di.modules.ProvidersModule;
-import ru.fixapp.fooproject.di.modules.NetworkModule;
-import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-import ru.fixapp.fooproject.domainlayer.providers.SessionDataProvider;
-import ru.fixapp.fooproject.presentationlayer.activities.MainActivity;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import ru.fixapp.fooproject.presentationlayer.app.App;
+import ru.fixapp.fooproject.datalayer.api.RestApi;
+import ru.fixapp.fooproject.di.modules.ApiModule;
 import ru.fixapp.fooproject.di.modules.AppModule;
+import ru.fixapp.fooproject.di.modules.NetworkModule;
+import ru.fixapp.fooproject.di.modules.ProvidersModule;
+import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
+import ru.fixapp.fooproject.domainlayer.providers.SessionDataProvider;
+import ru.fixapp.fooproject.presentationlayer.app.App;
 
 /**
  * Created by Zahar on 24.03.16.
@@ -31,7 +31,7 @@ public interface AppComponent {
 
 	RestApi provideApi();
 
-	void inject(App app);
+	Context provideContext();
 
-	void inject(MainActivity mainActivity);
+	void inject(App app);
 }

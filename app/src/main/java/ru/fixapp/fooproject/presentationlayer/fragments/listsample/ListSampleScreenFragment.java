@@ -10,6 +10,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.MySimpleAdapter;
 
@@ -41,7 +42,7 @@ public class ListSampleScreenFragment extends BaseFragment<ListSamplePresenter> 
 	@Override
 	public void daggerInject() {
 		DaggerListSampleScreenComponent.builder()
-				.appComponent(getAppComponent())
+				.activityScreenComponent(getComponent(ActivityScreenComponent.class))
 				.build()
 				.inject(this);
 	}

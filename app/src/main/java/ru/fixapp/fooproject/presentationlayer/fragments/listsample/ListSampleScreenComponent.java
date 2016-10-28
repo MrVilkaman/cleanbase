@@ -1,16 +1,15 @@
 package ru.fixapp.fooproject.presentationlayer.fragments.listsample;
 
-import android.support.annotation.NonNull;
-
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
+import ru.fixapp.fooproject.di.PerScreen;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
-import ru.fixapp.fooproject.di.AppComponent;
-import ru.fixapp.fooproject.di.PerActivity;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
 
-@PerActivity
-@Component(dependencies = AppComponent.class, modules = {ListSampleScreenComponent.ListSampleScreenModule.class})
+@Component(dependencies = ActivityScreenComponent.class,
+		modules = {ListSampleScreenComponent.ListSampleScreenModule.class})
+@PerScreen
 public interface ListSampleScreenComponent {
 	void inject(ListSampleScreenFragment fragment);
 
@@ -18,7 +17,7 @@ public interface ListSampleScreenComponent {
 	@Module
 	class ListSampleScreenModule {
 		@Provides
-		@NonNull
+		@PerScreen
 		ListSamplePresenter provideListSamplePresenter(SchedulersProvider schedulersProvider) {
 			return new ListSamplePresenter(schedulersProvider);
 		}

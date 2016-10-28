@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityScreenComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.listsample.ListSampleScreenFragment;
 
@@ -26,7 +27,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	@Override
 	public void daggerInject() {
 		DaggerHelloScreenComponent.builder()
-				.appComponent(getAppComponent())
+				.activityScreenComponent(getComponent(ActivityScreenComponent.class))
 				.build()
 				.inject(this);
 	}

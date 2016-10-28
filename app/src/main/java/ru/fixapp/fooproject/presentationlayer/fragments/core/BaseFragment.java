@@ -17,6 +17,7 @@ import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.di.AppComponent;
+import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.app.App;
@@ -27,21 +28,15 @@ import ru.fixapp.fooproject.presentationlayer.resolution.UIResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment
+		implements BaseView, BaseActivityView, OnBackPressedListener {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
-
-	private String previousFragment;
-
 	UIResolver uiResolver;
 	ThrowableResolver throwableResolver;
-
-	@Inject
-	P relationPresenter;
-
-	@Nullable
-	@BindView(R.id.progress_wheel)
-	View progressBar;
+	@Inject P relationPresenter;
+	@Nullable @BindView(R.id.progress_wheel) View progressBar;
+	private String previousFragment;
 	private Unbinder bind;
 
 	@Override
@@ -51,7 +46,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
 			//// TODO: 17.09.16 it will be doing by dagger2
@@ -73,6 +69,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	public UIResolver createUiResolver(View view) {
 		return new UIResolverImpl(view);
 	}
+
 	//// TODO: 17.09.16 it will be doing by dagger2
 	public ThrowableResolver createThrowableResolver(UIResolver ui) {
 		return new ThrowableResolverImpl(ui);
@@ -89,8 +86,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	public abstract void daggerInject();
 
 	protected AppComponent getAppComponent() {
-		return App.get(getActivity())
-				.getAppComponent();
+		return App.get(getActivity()).getAppComponent();
 	}
 
 	@Optional
@@ -218,12 +214,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void showMessage(@StringRes int text, Runnable callback) {
-		uiResolver.showMessage(text,callback);
+		uiResolver.showMessage(text, callback);
 	}
 
 	@Override
 	public void showMessage(@StringRes int resId, Object... arg) {
-		uiResolver.showMessage(resId,arg);
+		uiResolver.showMessage(resId, arg);
 	}
 
 	@Override
@@ -233,6 +229,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	public String getName() {
 		return getClass().getSimpleName();
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <T> T getComponent(Class<T> componentType) {
+		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
 	}
 
 }
