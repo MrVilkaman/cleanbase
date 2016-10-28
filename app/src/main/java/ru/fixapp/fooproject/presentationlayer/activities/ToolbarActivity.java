@@ -9,17 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 
-public abstract class ToolbarActivity extends BaseActivity implements MyToolbarImpl.ToolbarCallbacks {
+public abstract class ToolbarActivity extends BaseActivity
+		implements MyToolbarImpl.ToolbarCallbacks {
 
+	@Inject ToolbarMenuHelper toolbarMenuHelper;
 	private Toolbar toolbar;
-	private ToolbarMenuHelper toolbarMenuHelper = new ToolbarMenuHelper(this::invalidateOptionsMenu);
 
 	@Override
 	protected BaseFragment createStartFragment() {
@@ -27,18 +29,13 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 	}
 
 	@Override
-	public IToolbar getToolbar() {
-		return new MyToolbarImpl(toolbarMenuHelper,toolbar,this);
-	}
-
-	@Override
 	public void updateIcon() {
-		IToolbar toolbar = getToolbar();
-		if (toolbar != null) {
+		ActionBar supportActionBar = getSupportActionBar();
+		if (toolbar != null && supportActionBar != null) {
 			if (hasChild()) {
-				showBackIcon();
+				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
 			} else {
-				showHomeIcon();
+				getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 			}
 		}
 	}
@@ -55,19 +52,13 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void showHomeIcon() {
-		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
-	}
-
-	private void showBackIcon() {
-		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-	}
-
 	@Override
 	protected void configureToolBar() {
 		toolbar = ButterKnife.findById(this, R.id.toolbar_actionbar);
 		setSupportActionBar(toolbar);
 		ActionBar supportActionBar = getSupportActionBar();
+		if (supportActionBar == null)
+			return;
 		supportActionBar.setHomeButtonEnabled(true);
 		supportActionBar.setDisplayHomeAsUpEnabled(true);
 		toolbar.setNavigationOnClickListener(v -> {
@@ -85,15 +76,15 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 	}
 
 	// // TODO: 29.10.16 !!!
-//	@Override
-//	void nextFragment() {
-//		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-//			drawerLayout.closeDrawers();
-//		} else {
-//			toolbarMenuHelper.clear();
-//			super.nextFragment();
-//		}
-//	}
+	//	@Override
+	//	void nextFragment() {
+	//		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+	//			drawerLayout.closeDrawers();
+	//		} else {
+	//			toolbarMenuHelper.clear();
+	//			super.nextFragment();
+	//		}
+	//	}
 
 	private class MyDrawerListener implements DrawerLayout.DrawerListener {
 

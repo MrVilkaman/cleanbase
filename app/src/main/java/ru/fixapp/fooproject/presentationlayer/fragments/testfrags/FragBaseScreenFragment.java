@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 
 public abstract class FragBaseScreenFragment extends BaseFragment<FragBasePresenter> {
 
@@ -21,7 +22,12 @@ public abstract class FragBaseScreenFragment extends BaseFragment<FragBasePresen
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-		numberText.setText(Integer.toString(getNumber()));
+		IToolbar toolbar = getToolbar();
+		toolbar.show();
+		toolbar.showIcon(R.drawable.ic_home,() -> showToast(R.string.app_name));
+		String text = Integer.toString(getNumber());
+		toolbar.setText(text);
+		numberText.setText(text);
 	}
 
 	protected abstract int getNumber();

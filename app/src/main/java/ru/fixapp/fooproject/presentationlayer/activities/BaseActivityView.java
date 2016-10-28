@@ -1,7 +1,5 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
-
 public interface BaseActivityView {
 
 	void showProgress();
@@ -13,6 +11,4 @@ public interface BaseActivityView {
 	void back();
 
 	void hideKeyboard();
-
-	IToolbar getToolbar();
 }

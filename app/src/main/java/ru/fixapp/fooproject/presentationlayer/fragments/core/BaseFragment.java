@@ -33,6 +33,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject ThrowableResolver throwableResolver;
 	@Inject NavigationResolver navigationResolver;
 	@Inject P relationPresenter;
+	@Inject IToolbar toolbar;
 
 	@Nullable @BindView(R.id.progress_wheel) View progressBar;
 	private String previousFragment;
@@ -154,9 +155,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return relationPresenter;
 	}
 
-	@Override
 	public IToolbar getToolbar() {
-		return getActivityView().getToolbar();
+		return toolbar;
 	}
 
 	@Override
