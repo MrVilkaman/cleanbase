@@ -14,7 +14,7 @@ public abstract class BasePresenter<V extends BaseView> {
 
 	private V view;
 
-	private CompositeSubscription compositeSubscription;
+	private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
 	private List<UseCase> useCaseList = new ArrayList<>();
 	private SchedulersProvider schedulersProvider;
@@ -28,7 +28,6 @@ public abstract class BasePresenter<V extends BaseView> {
 	}
 
 	public void onViewAttached() {
-		compositeSubscription = new CompositeSubscription();
 	}
 
 	public void onViewDetached() {

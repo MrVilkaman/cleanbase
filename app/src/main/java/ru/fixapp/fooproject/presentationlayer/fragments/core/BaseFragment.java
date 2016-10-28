@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import butterknife.Optional;
 import butterknife.Unbinder;
@@ -54,12 +55,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
 			//// TODO: 17.09.16 it will be doing by dagger2
+			bind = ButterKnife.bind(this, view);
 			uiResolver = createUiResolver(view);
 			throwableResolver = createThrowableResolver(uiResolver);
 			P presenter = getPresenter();
 			presenter.setView(this);
-			onCreateView(view, savedInstanceState);
 			presenter.onViewAttached();
+			onCreateView(view, savedInstanceState);
 		}
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
@@ -100,6 +102,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void onDestroyView() {
+		if (bind != null) {
+			bind.unbind();
+		}
 		P presenter = getPresenter();
 		presenter.onViewDetached();
 		presenter.setView(null);
