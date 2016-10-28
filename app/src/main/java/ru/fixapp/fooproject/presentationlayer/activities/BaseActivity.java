@@ -31,13 +31,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	protected boolean doubleBackToExitPressedOnce;
 	protected DrawerLayout drawerLayout;
-	private BaseFragment nextFragment;
-	private boolean backStack;
-	private boolean isRoot;
-	private boolean forceLoad;
 	private ProgressWheel progress;
 	private boolean inProgress;
-	private boolean openIfCreated;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,36 +134,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	}
 
 	protected boolean hasChild() {
-
 		return PERMANENT_FRAGMENTS < getSupportFragmentManager().getBackStackEntryCount();
-	}
-
-	public void onBackHandle() {
-		if (!inProgress) {
-			hideProgress();
-
-			FragmentManager supportFragmentManager = getSupportFragmentManager();
-			BaseFragment current = (BaseFragment) supportFragmentManager.findFragmentById(getContainerID());
-			if (current != null && current.getPreviousFragment() != null) {
-				supportFragmentManager.popBackStackImmediate(current.getPreviousFragment(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-				updateIcon();
-			} else {
-				exit();
-			}
-		}
-	}
-
-	protected void clearBackStackToFragment(String name) {
-		FragmentManager supportFragmentManager = getSupportFragmentManager();
-		if (supportFragmentManager != null && name != null) {
-			supportFragmentManager.popBackStackImmediate(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		}
 	}
 
 	@Override
 	public void onBackPressed() {
 		if (processBackFragment()) {
-			onBackHandle();
+			if (!inProgress) {
+				hideProgress();
+				if (!navigationResolver.onBackPressed()) {
+					exit();
+				}
+			}
 			updateIcon();
 		}
 	}

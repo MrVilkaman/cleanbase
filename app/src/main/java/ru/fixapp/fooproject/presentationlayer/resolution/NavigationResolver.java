@@ -8,4 +8,6 @@ public interface NavigationResolver {
 	void showRootFragment(BaseFragment fragment);
 
 	void showFragmentWithoutBackStack(BaseFragment fragment);
+
+	boolean onBackPressed();
 }

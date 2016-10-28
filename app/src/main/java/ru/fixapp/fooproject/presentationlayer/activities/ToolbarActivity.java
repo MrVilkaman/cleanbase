@@ -83,6 +83,7 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 			drawerLayout.addDrawerListener(new MyDrawerListener(findViewById(R.id.all_content)));
 	}
 
+	// // TODO: 29.10.16 !!!
 //	@Override
 //	void nextFragment() {
 //		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -111,7 +112,8 @@ public abstract class ToolbarActivity extends BaseActivity implements MyToolbarI
 
 		@Override
 		public void onDrawerClosed(View drawerView) {
-//			nextFragment();
+			// // TODO: 29.10.16 !!!
+			//			nextFragment();
 		}
 
 		@Override

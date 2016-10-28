@@ -26,6 +26,18 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
+	public boolean onBackPressed() {
+		BaseFragment current = (BaseFragment) fragmentManager.findFragmentById(containerID);
+		if (current != null && current.getPreviousFragment() != null) {
+			fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public void showFragment(BaseFragment fragment) {
 		loadRootFragment(fragment, true, false);
 	}
@@ -74,7 +86,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 				//					if (openIfCreated) {
 				//					}
 			}
-//			preCheckFragment(nextFragment.getName());
+			//			preCheckFragment(nextFragment.getName());
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			boolean b = backStack || isRoot;
 			fragmentTransaction.replace(containerID, nextFragment, nextFragment.getName());
