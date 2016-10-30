@@ -1,0 +1,56 @@
+package ru.fixapp.fooproject.presentationlayer.activities;
+
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
+
+public class ToolbarResolverImpl implements ToolbarResolver{
+
+	private final Toolbar toolbar;
+	private final ActionBar supportActionBar;
+	private final ToolbarMenuHelper toolbarMenuHelper;
+
+	public ToolbarResolverImpl(View view, AppCompatActivity activity, ToolbarMenuHelper toolbarMenuHelper) {
+		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+		activity.setSupportActionBar(toolbar);
+		supportActionBar = activity.getSupportActionBar();
+		supportActionBar.setHomeButtonEnabled(true);
+		supportActionBar.setDisplayHomeAsUpEnabled(true);
+		toolbar.setNavigationOnClickListener(v -> {
+//			if (hasChild()) {
+//				onBackPressed();
+//			} else {
+//				hideKeyboard();
+//				drawerHelper.close();
+//			}
+		});
+		this.toolbarMenuHelper = toolbarMenuHelper;
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		toolbarMenuHelper.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void onOptionsItemSelected(MenuItem item) {
+		toolbarMenuHelper.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void updateIcon() {
+		if (toolbar != null && supportActionBar != null) {
+//			if (hasChild()) {
+//				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+//			} else {
+				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
+			}
+//		}
+	}
+}

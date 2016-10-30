@@ -1,9 +1,9 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -43,14 +43,14 @@ public interface ActivityComponent {
 	class ActivityModule {
 
 		private View view;
-		private Activity activity;
+		private AppCompatActivity activity;
 		private FragmentManager fm;
 		private int contentId;
 		private Runnable updateToolbarButtonsCallback;
 		private Toolbar toolbar;
 		private MyToolbarImpl.ToolbarCallbacks toolbarCallback;
 
-		public ActivityModule(View view, Activity activity, FragmentManager fm, int contentId,
+		public ActivityModule(View view, AppCompatActivity activity, FragmentManager fm, int contentId,
 							  Runnable updateToolbarButtonsCallback, Toolbar toolbar,
 							  MyToolbarImpl.ToolbarCallbacks toolbarCallback) {
 			this.view = view;
@@ -97,6 +97,12 @@ public interface ActivityComponent {
 		@PerActivity
 		public LeftDrawerHelper getLeftDrawerHelper() {
 			return new LeftDrawerHelper();
+		}
+
+		@Provides
+		@PerActivity
+		public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper) {
+			return new ToolbarResolverImpl(view,activity,menuHelper);
 		}
 
 	}

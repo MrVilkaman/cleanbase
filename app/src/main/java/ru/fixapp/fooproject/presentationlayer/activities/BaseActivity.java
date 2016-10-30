@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +16,10 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public abstract class BaseActivity extends AppCompatActivity
@@ -34,11 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity
 	protected boolean doubleBackToExitPressedOnce;
 
 	@Inject NavigationResolver navigationResolver;
-	@Inject ToolbarMenuHelper toolbarMenuHelper;
+	@Inject ToolbarResolver toolbarResolver;
 	@Inject LeftDrawerHelper drawerHelper;
 
 	private ProgressWheel progress;
-	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
 
 		injectDagger();
-		configureToolBar();
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
 		if (contentFragment == null) {
@@ -67,24 +61,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	protected abstract BaseFragment createDrawer();
 
-	protected void configureToolBar() {
-		toolbar = ButterKnife.findById(this, R.id.toolbar_actionbar);
-		setSupportActionBar(toolbar);
-		ActionBar supportActionBar = getSupportActionBar();
-		if (supportActionBar == null)
-			return;
-		supportActionBar.setHomeButtonEnabled(true);
-		supportActionBar.setDisplayHomeAsUpEnabled(true);
-		toolbar.setNavigationOnClickListener(v -> {
-			if (hasChild()) {
-				onBackPressed();
-			} else {
-				hideKeyboard();
-				drawerHelper.close();
-			}
-		});
-
-	}
 
 	protected int getActivityLayoutResourceID() {
 		return R.layout.activity_main;
@@ -97,26 +73,19 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		toolbarMenuHelper.onPrepareOptionsMenu(menu);
+		toolbarResolver.onPrepareOptionsMenu(menu);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		toolbarMenuHelper.onOptionsItemSelected(item);
+		toolbarResolver.onOptionsItemSelected(item);
 		return super.onOptionsItemSelected(item);
 	}
 
 
 	public void updateIcon() {
-		ActionBar supportActionBar = getSupportActionBar();
-		if (toolbar != null && supportActionBar != null) {
-			if (hasChild()) {
-				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-			} else {
-				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
-			}
-		}
+		toolbarResolver.updateIcon();
 	}
 
 	protected abstract BaseFragment createStartFragment();
