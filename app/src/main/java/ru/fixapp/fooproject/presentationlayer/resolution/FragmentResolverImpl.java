@@ -78,8 +78,13 @@ public class FragmentResolverImpl implements FragmentResolver {
 					if(callback != null)
 						callback.onRootFragment();
 				} else {
-					if(callback != null)
-						callback.onNotRootFragment();
+					if(callback != null) {
+						if (isRootScreen() && !backStack) {
+							callback.onRootFragment();
+						}else{
+							callback.onNotRootFragment();
+						}
+					}
 				}
 			}
 			//// TODO: 30.10.16 maybe need?
