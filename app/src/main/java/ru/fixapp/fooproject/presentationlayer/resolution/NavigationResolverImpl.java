@@ -147,4 +147,14 @@ public class NavigationResolverImpl implements NavigationResolver {
 //		}
 	}
 
+//	@Override
+//	void nextFragment() {
+//		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+//			drawerLayout.closeDrawers();
+//		} else {
+//			toolbarMenuHelper.clear();
+//			super.nextFragment();
+//		}
+//	}
+
 }

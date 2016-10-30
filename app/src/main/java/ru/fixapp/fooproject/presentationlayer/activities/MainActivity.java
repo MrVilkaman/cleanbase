@@ -1,5 +1,6 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
+import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.ButterKnife;
@@ -8,13 +9,11 @@ import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.app.App;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
-/**
- * Created by root on 12.03.16.
- */
-public class MainActivity extends BaseActivity
-		implements IHasComponent<ActivityComponent> {
+
+public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
 
 	private ActivityComponent screenComponent;
 
@@ -30,9 +29,18 @@ public class MainActivity extends BaseActivity
 		screenComponent.inject(this);
 	}
 
+	protected int getActivityLayoutResourceID() {
+		return R.layout.activity_main_app;
+	}
+
+	@IdRes
+	protected int getDrawerContentFrame() {
+		return R.id.menu_frame;
+	}
+
 	@Override
 	protected BaseFragment createDrawer() {
-		return null;
+		return DrawerScreenFragment.open();
 	}
 
 	@Override

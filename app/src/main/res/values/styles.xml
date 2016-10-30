@@ -27,5 +27,12 @@
 		<item name="titleTextAppearance">@style/Toolbar.TitleText</item>
 	</style>
 
+	<style name="LeftMenuItem">
+		<item name="android:button">@null</item>
+		<item name="android:padding">8dp</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+	</style>
+
 
 </resources>

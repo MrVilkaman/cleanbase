@@ -39,7 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarMenuHelper toolbarMenuHelper;
 	private ProgressWheel progress;
-	private boolean inProgress;
 	private Toolbar toolbar;
 
 	@Override
@@ -98,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity
 		});
 
 		if (drawerLayout != null)
-			drawerLayout.addDrawerListener(new MyDrawerListener(findViewById(R.id.all_content)));
+			drawerLayout.addDrawerListener(new MyDrawerListener(findViewById(R.id.all_content),getDrawerContentFrame()));
 	}
 
 	protected int getActivityLayoutResourceID() {
@@ -129,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity
 			if (hasChild()) {
 				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
 			} else {
-				getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
 			}
 		}
 	}
@@ -159,11 +158,9 @@ public abstract class BaseActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed() {
 		if (processBackFragment()) {
-			if (!inProgress) {
-				hideProgress();
-				if (!navigationResolver.onBackPressed()) {
-					exit();
-				}
+			hideProgress();
+			if (!navigationResolver.onBackPressed()) {
+				exit();
 			}
 			updateIcon();
 		}
@@ -190,14 +187,12 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	@Override
 	public void showProgress() {
-		inProgress = true;
 		progress.setVisibility(View.VISIBLE);
 		hideKeyboard();
 	}
 
 	@Override
 	public void hideProgress() {
-		inProgress = false;
 		if (progress != null) {
 			progress.setVisibility(View.GONE);
 		}
@@ -207,35 +202,4 @@ public abstract class BaseActivity extends AppCompatActivity
 		return findViewById(android.R.id.content);
 	}
 
-	private class MyDrawerListener implements DrawerLayout.DrawerListener {
-
-		private final View view;
-
-		public MyDrawerListener(View view) {
-			this.view = view;
-		}
-
-		@Override
-		public void onDrawerSlide(View drawerView, float slideOffset) {
-			if (drawerView.getId() == getDrawerContentFrame()) {
-				float moveFactor = drawerView.getWidth() * slideOffset;
-				view.setTranslationX(moveFactor);
-			}
-		}
-
-		@Override
-		public void onDrawerClosed(View drawerView) {
-			// // TODO: 29.10.16 !!!
-			//			nextFragment();
-		}
-
-		@Override
-		public void onDrawerOpened(View drawerView) {
-		}
-
-		@Override
-		public void onDrawerStateChanged(int newState) {
-
-		}
-	}
 }

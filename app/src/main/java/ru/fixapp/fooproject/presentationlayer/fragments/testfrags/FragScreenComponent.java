@@ -15,6 +15,8 @@ public interface FragScreenComponent {
 	void inject(Frag4ScreenFragment fragment);
 	void inject(Frag5ScreenFragment fragment);
 
+	void inject(DrawerScreenFragment fragment);
+
 	@Module
 	class FragScreenModule {
 	}
