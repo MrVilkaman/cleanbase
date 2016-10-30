@@ -97,27 +97,31 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Override
 	public void hideKeyboard() {
-//		getActivityView().hideKeyboard();
+		getActivityView().hideKeyboard();
 	}
 
 	@Override
 	public void showProgress() {
-//		if (progressBar == null) {
-//			getActivityView().showProgress();
-//		} else {
-//			progressBar.setVisibility(View.VISIBLE);
-//		}
+		if (progressBar == null) {
+			getActivityView().showProgress();
+		} else {
+			progressBar.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
 	public void hideProgress() {
-//		if (progressBar == null) {
-//			BaseActivityView activityView = getActivityView();
-//			if (activityView != null)
-//				activityView.hideProgress();
-//		} else {
-//			progressBar.setVisibility(View.GONE);
-//		}
+		if (progressBar == null) {
+			BaseActivityView activityView = getActivityView();
+			if (activityView != null)
+				activityView.hideProgress();
+		} else {
+			progressBar.setVisibility(View.GONE);
+		}
+	}
+
+	public BaseActivityView getActivityView() {
+		return (BaseActivityView) getActivity();
 	}
 
 	private boolean isWorkCall() {

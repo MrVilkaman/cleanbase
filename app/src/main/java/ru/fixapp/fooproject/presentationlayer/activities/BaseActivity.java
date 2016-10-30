@@ -20,14 +20,14 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
+
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
 
-
-	@Inject NavigationResolver navigationResolver;
 
 	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	protected boolean doubleBackToExitPressedOnce;
 	protected DrawerLayout drawerLayout;
+	@Inject NavigationResolver navigationResolver;
 	private ProgressWheel progress;
 	private boolean inProgress;
 
@@ -48,9 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 			navigationResolver.showRootFragment(createStartFragment());
 			Fragment drawer = createDrawer();
 			if (drawer != null) {
-				fm.beginTransaction()
-						.add(getDrawerContentFrame(), drawer)
-						.commit();
+				fm.beginTransaction().add(getDrawerContentFrame(), drawer).commit();
 			}
 		}
 		configureProgressBar();
@@ -101,8 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		}
 
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "Еще раз", Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(this, "Еще раз", Toast.LENGTH_SHORT).show();
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 1000);
 	}
 
@@ -125,14 +122,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 	private boolean processBackFragment() {
 		Fragment fragmentById = getSupportFragmentManager().findFragmentById(getContainerID());
-		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ? ((OnBackPressedListener) fragmentById) : null;
+		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
+				((OnBackPressedListener) fragmentById) : null;
 		return listener == null || !listener.onBackPressed();
 	}
 
 
 	@Override
 	public void hideKeyboard() {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm =
+				(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		View view = getCurrentFocus();
 		if (view != null) {
 			view.clearFocus();
