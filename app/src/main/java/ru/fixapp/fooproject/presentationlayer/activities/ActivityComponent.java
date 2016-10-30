@@ -82,8 +82,9 @@ public interface ActivityComponent {
 		@PerActivity
 		public NavigationResolver createNavigationResolver(FragmentResolver fragmentResolver,
 														   LeftDrawerHelper drawer,
-														   ToolbarResolver toolbarResolver) {
-			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver);
+														   ToolbarResolver toolbarResolver,
+														   UIResolver ui) {
+			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver,ui);
 		}
 
 		@Provides

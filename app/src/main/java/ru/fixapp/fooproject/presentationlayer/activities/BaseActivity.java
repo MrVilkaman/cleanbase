@@ -2,7 +2,6 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -26,7 +24,6 @@ public abstract class BaseActivity extends AppCompatActivity
 		implements BaseActivityView, MyToolbarImpl.ToolbarCallbacks {
 
 
-	protected boolean doubleBackToExitPressedOnce;
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
@@ -93,26 +90,11 @@ public abstract class BaseActivity extends AppCompatActivity
 		return R.id.content;
 	}
 
-
-	private void exit() {
-		if (doubleBackToExitPressedOnce) {
-			finish();
-			return;
-		}
-
-		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "Еще раз", Toast.LENGTH_SHORT).show();
-		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 1000);
-	}
-
 	@Override
 	public void onBackPressed() {
 		if (processBackFragment()) {
 			hideProgress();
-			if (!navigationResolver.onBackPressed()) {
-				exit();
-			}
-			updateIcon();
+			navigationResolver.onBackPressed();
 		}
 	}
 

@@ -4,24 +4,32 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 
+import java.util.concurrent.TimeUnit;
+
+import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+
+import static rx.Observable.just;
 
 
 public class NavigationResolverImpl implements NavigationResolver {
 
+	protected boolean doubleBackToExitPressedOnce;
 	private Activity currentActivity;
 	private FragmentResolver fragmentManager;
 	private LeftDrawerHelper drawerHelper;
 	private ToolbarResolver toolbarResolver;
-
+	private UIResolver uiResolver;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
-								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver) {
+								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
+								  UIResolver uiResolver) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
 		this.toolbarResolver = toolbarResolver;
+		this.uiResolver = uiResolver;
 
 		fragmentManager.setCallback(new FragmentResolver.FragmentResolverCallback() {
 			@Override
@@ -43,7 +51,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 				} else {
 					onBackPressed();
 					//// TODO: 30.10.16 !!
-//					hideKeyboard();
+					//					hideKeyboard();
 				}
 			}
 
@@ -60,7 +68,15 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public boolean onBackPressed() {
-		return fragmentManager.onBackPressed();
+		boolean b = fragmentManager.onBackPressed();
+
+		if (!b) {
+			exit();
+		} else {
+			toolbarResolver.updateIcon();
+		}
+
+		return b;
 	}
 
 	@Override
@@ -113,5 +129,19 @@ public class NavigationResolverImpl implements NavigationResolver {
 			onBackPressed();
 			toolbarResolver.updateIcon();
 		}
+	}
+
+	private void exit() {
+
+		if (doubleBackToExitPressedOnce) {
+			currentActivity.finish();
+		} else {
+			uiResolver.showToast(R.string.exit_toast);
+			doubleBackToExitPressedOnce = true;
+			just(null).delay(1000, TimeUnit.MILLISECONDS)
+					.subscribe(o -> doubleBackToExitPressedOnce = false);
+		}
+
+
 	}
 }
