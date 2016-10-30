@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -63,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	protected int getDrawerContentFrame() {
 		return 0;
 	}
+
 	@IdRes
 	protected int getDrawerLayout() {
 		return 0;
@@ -130,11 +130,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	}
 
 
-
-	public void preCheckFragment(String name) {
-
-	}
-
 	@Override
 	public void hideKeyboard() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -142,16 +137,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		if (view != null) {
 			view.clearFocus();
 			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-		}
-	}
-
-	@Override
-	public void back() {
-		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-			drawerLayout.closeDrawers();
-		} else {
-			onBackPressed();
-			updateIcon();
 		}
 	}
 
@@ -169,12 +154,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 			progress.setVisibility(View.GONE);
 		}
 	}
-
-	@Override
-	public void clearProgress() {
-		inProgress = false;
-	}
-
 
 	protected View getRootView() {
 		return findViewById(android.R.id.content);

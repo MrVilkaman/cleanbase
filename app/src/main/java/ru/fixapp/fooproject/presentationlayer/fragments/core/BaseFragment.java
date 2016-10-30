@@ -96,38 +96,28 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
-	public void back() {
-		getActivityView().back();
-	}
-
-	@Override
 	public void hideKeyboard() {
-		getActivityView().hideKeyboard();
+//		getActivityView().hideKeyboard();
 	}
 
 	@Override
 	public void showProgress() {
-		if (progressBar == null) {
-			getActivityView().showProgress();
-		} else {
-			progressBar.setVisibility(View.VISIBLE);
-		}
+//		if (progressBar == null) {
+//			getActivityView().showProgress();
+//		} else {
+//			progressBar.setVisibility(View.VISIBLE);
+//		}
 	}
 
 	@Override
 	public void hideProgress() {
-		if (progressBar == null) {
-			BaseActivityView activityView = getActivityView();
-			if (activityView != null)
-				activityView.hideProgress();
-		} else {
-			progressBar.setVisibility(View.GONE);
-		}
-	}
-
-	@Override
-	public void clearProgress() {
-		getActivityView().clearProgress();
+//		if (progressBar == null) {
+//			BaseActivityView activityView = getActivityView();
+//			if (activityView != null)
+//				activityView.hideProgress();
+//		} else {
+//			progressBar.setVisibility(View.GONE);
+//		}
 	}
 
 	private boolean isWorkCall() {
@@ -145,10 +135,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	protected abstract void onCreateView(View view, Bundle savedInstanceState);
 
 	protected abstract int getLayoutId();
-
-	public BaseActivityView getActivityView() {
-		return (BaseActivityView) getActivity();
-	}
 
 	@Override
 	public P getPresenter() {

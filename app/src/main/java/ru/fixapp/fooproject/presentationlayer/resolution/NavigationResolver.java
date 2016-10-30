@@ -13,5 +13,7 @@ public interface NavigationResolver {
 
 	boolean onBackPressed();
 
+	void back();
+
 	void openActivity(Class<? extends FragmentActivity> aClass);
 }

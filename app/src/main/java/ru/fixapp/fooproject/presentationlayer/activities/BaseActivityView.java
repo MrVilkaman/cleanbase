@@ -6,9 +6,5 @@ public interface BaseActivityView {
 
 	void hideProgress();
 
-	void clearProgress();
-
-	void back();
-
 	void hideKeyboard();
 }

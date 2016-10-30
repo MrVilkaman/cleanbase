@@ -137,5 +137,14 @@ public class NavigationResolverImpl implements NavigationResolver {
 		currentActivity.finish();
 	}
 
+	@Override
+	public void back() {
+//		if (drawerLayout != null && drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+//			drawerLayout.closeDrawers();
+//		} else {
+			onBackPressed();
+			//updateIcon();
+//		}
+	}
 
 }
