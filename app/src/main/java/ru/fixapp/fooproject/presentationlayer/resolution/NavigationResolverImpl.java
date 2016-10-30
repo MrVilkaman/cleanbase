@@ -96,10 +96,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (drawerHelper.isOpen()) {
 			drawerHelper.close(() -> {
 				toolbarResolver.clear();
-				fragmentManager.showFragmentWithoutBackStack(fragment);
+				fragmentManager.showRootFragment(fragment);
 			});
 		} else {
-			fragmentManager.showFragmentWithoutBackStack(fragment);
+			fragmentManager.showRootFragment(fragment);
 		}
 	}
 
