@@ -13,7 +13,8 @@ import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFra
 /**
  * Created by root on 12.03.16.
  */
-public class MainActivity extends ToolbarActivity implements IHasComponent<ActivityComponent> {
+public class MainActivity extends BaseActivity
+		implements IHasComponent<ActivityComponent> {
 
 	private ActivityComponent screenComponent;
 
@@ -24,8 +25,8 @@ public class MainActivity extends ToolbarActivity implements IHasComponent<Activ
 		AppComponent appComponent = App.get(this).getAppComponent();
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
 				.activityModule(new ActivityComponent.ActivityModule(getRootView(), this,
-						getSupportFragmentManager(), getContainerID(), this::invalidateOptionsMenu,toolbar,this))
-				.build();
+						getSupportFragmentManager(), getContainerID(), this::invalidateOptionsMenu,
+						toolbar, this)).build();
 		screenComponent.inject(this);
 	}
 

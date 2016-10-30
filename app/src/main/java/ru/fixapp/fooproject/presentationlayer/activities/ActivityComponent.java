@@ -39,6 +39,7 @@ public interface ActivityComponent {
 	IToolbar getIToolbar();
 
 	@Module
+	// разбить на несколько модулей, для включения\выключения по ненадобности
 	class ActivityModule {
 
 		private View view;
@@ -60,6 +61,7 @@ public interface ActivityComponent {
 			this.toolbar = toolbar;
 			this.toolbarCallback = toolbarCallback;
 		}
+
 
 		@Provides
 		@PerActivity
