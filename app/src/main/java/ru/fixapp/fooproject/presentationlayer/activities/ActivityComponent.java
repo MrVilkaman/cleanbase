@@ -93,5 +93,11 @@ public interface ActivityComponent {
 			return new MyToolbarImpl(toolbarMenuHelper,toolbar,toolbarCallback);
 		}
 
+		@Provides
+		@PerActivity
+		public LeftDrawerHelper getLeftDrawerHelper() {
+			return new LeftDrawerHelper();
+		}
+
 	}
 }

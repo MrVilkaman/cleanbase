@@ -1,6 +1,5 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
-import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.ButterKnife;
@@ -31,11 +30,6 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 	protected int getActivityLayoutResourceID() {
 		return R.layout.activity_main_app;
-	}
-
-	@IdRes
-	protected int getDrawerContentFrame() {
-		return R.id.menu_frame;
 	}
 
 	@Override

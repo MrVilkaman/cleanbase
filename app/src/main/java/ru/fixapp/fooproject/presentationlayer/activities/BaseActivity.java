@@ -3,14 +3,11 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,9 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	protected boolean doubleBackToExitPressedOnce;
-	protected DrawerLayout drawerLayout;
+
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarMenuHelper toolbarMenuHelper;
+	@Inject LeftDrawerHelper drawerHelper;
+
 	private ProgressWheel progress;
 	private Toolbar toolbar;
 
@@ -45,20 +44,19 @@ public abstract class BaseActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
-		int drawerLayout = getDrawerLayout();
-		if (drawerLayout != 0) {
-			this.drawerLayout = (DrawerLayout) findViewById(drawerLayout);
-		}
 
-		configureToolBar();
+
 		injectDagger();
+		configureToolBar();
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment contentFragment = fm.findFragmentById(getContainerID());
 		if (contentFragment == null) {
 			navigationResolver.showRootFragment(createStartFragment());
+
+			//// TODO: 30.10.16 !!
 			Fragment drawer = createDrawer();
 			if (drawer != null) {
-				fm.beginTransaction().add(getDrawerContentFrame(), drawer).commit();
+				fm.beginTransaction().add(drawerHelper.getDrawerContentFrame(), drawer).commit();
 			}
 		}
 		configureProgressBar();
@@ -66,15 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	protected abstract void injectDagger();
 
-	@IdRes
-	protected int getDrawerContentFrame() {
-		return 0;
-	}
-
-	@IdRes
-	protected int getDrawerLayout() {
-		return 0;
-	}
 
 	protected abstract BaseFragment createDrawer();
 
@@ -91,13 +80,10 @@ public abstract class BaseActivity extends AppCompatActivity
 				onBackPressed();
 			} else {
 				hideKeyboard();
-				if (drawerLayout != null)
-					drawerLayout.openDrawer(Gravity.LEFT);
+				drawerHelper.close();
 			}
 		});
 
-		if (drawerLayout != null)
-			drawerLayout.addDrawerListener(new MyDrawerListener(findViewById(R.id.all_content),getDrawerContentFrame()));
 	}
 
 	protected int getActivityLayoutResourceID() {
