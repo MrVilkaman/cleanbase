@@ -26,12 +26,11 @@ public abstract class BaseActivity extends AppCompatActivity
 		implements BaseActivityView, MyToolbarImpl.ToolbarCallbacks {
 
 
-	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	protected boolean doubleBackToExitPressedOnce;
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
-	@Inject LeftDrawerHelper drawerHelper;
+	@Inject LeftDrawerHelperImpl drawerHelper;
 
 	private ProgressWheel progress;
 
@@ -104,10 +103,6 @@ public abstract class BaseActivity extends AppCompatActivity
 		this.doubleBackToExitPressedOnce = true;
 		Toast.makeText(this, "Еще раз", Toast.LENGTH_SHORT).show();
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 1000);
-	}
-
-	protected boolean hasChild() {
-		return PERMANENT_FRAGMENTS < getSupportFragmentManager().getBackStackEntryCount();
 	}
 
 	@Override

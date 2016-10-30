@@ -16,6 +16,8 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	private final ActionBar supportActionBar;
 	private final ToolbarMenuHelper toolbarMenuHelper;
 
+	private ToolbarResolverCallback callback;
+
 	public ToolbarResolverImpl(View view, AppCompatActivity activity, ToolbarMenuHelper toolbarMenuHelper) {
 		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
 		activity.setSupportActionBar(toolbar);
@@ -23,12 +25,8 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 		supportActionBar.setHomeButtonEnabled(true);
 		supportActionBar.setDisplayHomeAsUpEnabled(true);
 		toolbar.setNavigationOnClickListener(v -> {
-//			if (hasChild()) {
-//				onBackPressed();
-//			} else {
-//				hideKeyboard();
-//				drawerHelper.close();
-//			}
+			if (callback != null)
+				callback.onClickHome();
 		});
 		this.toolbarMenuHelper = toolbarMenuHelper;
 	}
@@ -44,13 +42,28 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	}
 
 	@Override
+	public void clear() {
+		toolbarMenuHelper.clear();
+	}
+
+	@Override
 	public void updateIcon() {
-		if (toolbar != null && supportActionBar != null) {
-//			if (hasChild()) {
-//				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-//			} else {
-				supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
-			}
-//		}
+		if (callback != null)
+			callback.updateIcon();
+	}
+
+	@Override
+	public void showHomeIcon() {
+		supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
+	}
+
+	@Override
+	public void showBackIcon() {
+		supportActionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+	}
+
+	@Override
+	public void setCallback(ToolbarResolverCallback callback) {
+		this.callback = callback;
 	}
 }
