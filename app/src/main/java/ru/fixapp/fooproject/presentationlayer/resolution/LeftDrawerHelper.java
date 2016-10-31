@@ -2,6 +2,8 @@ package ru.fixapp.fooproject.presentationlayer.resolution;
 
 import android.support.annotation.IdRes;
 
+import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+
 public interface LeftDrawerHelper {
 
 	@IdRes
@@ -16,6 +18,10 @@ public interface LeftDrawerHelper {
 	int getDrawerLayout();
 
 	void open();
+
+	boolean hasDrawer();
+
+	BaseFragment getDrawerFragment();
 
 	interface LeftDrawerHelperCallback {
 		void onClose();

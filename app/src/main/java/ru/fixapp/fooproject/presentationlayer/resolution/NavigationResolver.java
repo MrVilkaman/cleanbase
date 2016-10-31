@@ -11,6 +11,8 @@ public interface NavigationResolver {
 
 	void showFragmentWithoutBackStack(BaseFragment fragment);
 
+	BaseFragment createStartFragment();
+
 	boolean onBackPressed();
 
 	void back();

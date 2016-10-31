@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
 import static rx.Observable.just;
 
@@ -30,6 +31,15 @@ public class NavigationResolverImpl implements NavigationResolver {
 		this.drawerHelper = drawerHelper;
 		this.toolbarResolver = toolbarResolver;
 		this.uiResolver = uiResolver;
+
+
+		if(!fragmentManager.hasFragment()){
+			fragmentManager.showRootFragment(createStartFragment());
+
+			if(drawerHelper.hasDrawer()){
+				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(), drawerHelper.getDrawerFragment());
+			}
+		}
 
 		fragmentManager.setCallback(new FragmentResolver.FragmentResolverCallback() {
 			@Override
@@ -64,6 +74,11 @@ public class NavigationResolverImpl implements NavigationResolver {
 				}
 			}
 		});
+	}
+
+	@Override
+	public BaseFragment createStartFragment() {
+		return Frag1ScreenFragment.open();
 	}
 
 	@Override

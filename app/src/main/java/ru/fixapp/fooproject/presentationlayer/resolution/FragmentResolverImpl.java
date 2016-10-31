@@ -148,4 +148,15 @@ public class FragmentResolverImpl implements FragmentResolver {
 		boolean b1 = PERMANENT_FRAGMENTS < fragmentManager.getBackStackEntryCount();
 		return !b1 || !b;
 	}
+
+	@Override
+	public boolean hasFragment() {
+		Fragment contentFragment = fragmentManager.findFragmentById(containerID);
+		return contentFragment != null;
+	}
+
+	@Override
+	public void addDrawer(int drawerContentFrame, BaseFragment drawerFragment) {
+		fragmentManager.beginTransaction().add(drawerContentFrame, drawerFragment).commit();
+	}
 }

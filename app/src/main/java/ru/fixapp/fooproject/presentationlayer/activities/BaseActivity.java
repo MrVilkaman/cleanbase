@@ -3,7 +3,6 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import javax.inject.Inject;
 
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
@@ -38,24 +36,10 @@ public abstract class BaseActivity extends AppCompatActivity
 
 
 		injectDagger();
-		FragmentManager fm = getSupportFragmentManager();
-		Fragment contentFragment = fm.findFragmentById(getContainerID());
-		if (contentFragment == null) {
-			navigationResolver.showRootFragment(createStartFragment());
-
-			//// TODO: 30.10.16 !!
-			Fragment drawer = createDrawer();
-			if (drawer != null) {
-				fm.beginTransaction().add(drawerHelper.getDrawerContentFrame(), drawer).commit();
-			}
-		}
 		configureProgressBar();
 	}
 
 	protected abstract void injectDagger();
-
-
-	protected abstract BaseFragment createDrawer();
 
 
 	protected int getActivityLayoutResourceID() {
@@ -83,8 +67,6 @@ public abstract class BaseActivity extends AppCompatActivity
 	public void updateIcon() {
 		toolbarResolver.updateIcon();
 	}
-
-	protected abstract BaseFragment createStartFragment();
 
 	protected int getContainerID() {
 		return R.id.content;

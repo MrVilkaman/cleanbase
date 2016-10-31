@@ -6,6 +6,10 @@ import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 public interface FragmentResolver {
 
 
+	boolean hasFragment();
+
+	void addDrawer(int drawerContentFrame, BaseFragment drawerFragment);
+
 	interface FragmentResolverCallback{
 
 		void onRootFragment();

@@ -5,6 +5,8 @@ import android.view.Gravity;
 import android.view.View;
 
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 
 public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
@@ -30,6 +32,16 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	@Override
 	public int getDrawerContentFrame() {
 		return R.id.menu_frame;
+	}
+
+	@Override
+	public boolean hasDrawer() {
+		return true;
+	}
+
+	@Override
+	public BaseFragment getDrawerFragment() {
+		return DrawerScreenFragment.open();
 	}
 
 	@Override

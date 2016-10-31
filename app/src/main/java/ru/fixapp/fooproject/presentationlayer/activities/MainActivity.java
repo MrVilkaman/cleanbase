@@ -7,9 +7,6 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.app.App;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
 
 public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
@@ -30,16 +27,6 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 	protected int getActivityLayoutResourceID() {
 		return R.layout.activity_main_app;
-	}
-
-	@Override
-	protected BaseFragment createDrawer() {
-		return DrawerScreenFragment.open();
-	}
-
-	@Override
-	protected BaseFragment createStartFragment() {
-		return Frag1ScreenFragment.open();
 	}
 
 	@Override
