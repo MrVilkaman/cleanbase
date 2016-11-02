@@ -41,8 +41,10 @@ public interface ActivityComponent {
 
 	IToolbar getIToolbar();
 
+	BaseActivityView provideBaseActivityView();
+
 	@Module
-			// разбить на несколько модулей, для включения\выключения по ненадобности
+			// todo разбить на несколько модулей, для включения\выключения по ненадобности
 	class ActivityModule {
 
 		private View view;
@@ -52,8 +54,9 @@ public interface ActivityComponent {
 		private Runnable updateToolbarButtonsCallback;
 		private Toolbar toolbar;
 		private MyToolbarImpl.ToolbarCallbacks toolbarCallback;
+		private BaseActivityView baseActivityView;
 
-		public ActivityModule(View view, AppCompatActivity activity, FragmentManager fm,
+		public ActivityModule(View view, AppCompatActivity activity,BaseActivityView baseActivityView, FragmentManager fm,
 							  int contentId, Runnable updateToolbarButtonsCallback, Toolbar toolbar,
 							  MyToolbarImpl.ToolbarCallbacks toolbarCallback) {
 			this.view = view;
@@ -63,6 +66,7 @@ public interface ActivityComponent {
 			this.updateToolbarButtonsCallback = updateToolbarButtonsCallback;
 			this.toolbar = toolbar;
 			this.toolbarCallback = toolbarCallback;
+			this.baseActivityView = baseActivityView;
 		}
 
 
@@ -84,7 +88,7 @@ public interface ActivityComponent {
 														   LeftDrawerHelper drawer,
 														   ToolbarResolver toolbarResolver,
 														   UIResolver ui) {
-			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver,ui);
+			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver,ui,baseActivityView);
 		}
 
 		@Provides
@@ -122,6 +126,12 @@ public interface ActivityComponent {
 		@PerActivity
 		public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper) {
 			return new ToolbarResolverImpl(view, activity, menuHelper);
+		}
+
+		@Provides
+		@PerActivity
+		public BaseActivityView getBaseActivityView() {
+			return baseActivityView;
 		}
 
 	}

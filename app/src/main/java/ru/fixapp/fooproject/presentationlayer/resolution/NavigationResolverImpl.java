@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import java.util.concurrent.TimeUnit;
 
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
@@ -22,15 +23,17 @@ public class NavigationResolverImpl implements NavigationResolver {
 	private LeftDrawerHelper drawerHelper;
 	private ToolbarResolver toolbarResolver;
 	private UIResolver uiResolver;
+	private BaseActivityView activityView;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
 								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
-								  UIResolver uiResolver) {
+								  UIResolver uiResolver,BaseActivityView activityView) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
 		this.toolbarResolver = toolbarResolver;
 		this.uiResolver = uiResolver;
+		this.activityView = activityView;
 
 
 		if(!fragmentManager.hasFragment()){
@@ -60,8 +63,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 					drawerHelper.open();
 				} else {
 					onBackPressed();
-					//// TODO: 30.10.16 !!
-					//					hideKeyboard();
+					activityView.hideKeyboard();
 				}
 			}
 

@@ -19,7 +19,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 		AppComponent appComponent = App.get(this).getAppComponent();
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
-				.activityModule(new ActivityComponent.ActivityModule(getRootView(), this,
+				.activityModule(new ActivityComponent.ActivityModule(getRootView(), this,this,
 						getSupportFragmentManager(), getContainerID(), this::invalidateOptionsMenu,
 						toolbar, this)).build();
 		screenComponent.inject(this);
