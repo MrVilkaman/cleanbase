@@ -36,8 +36,8 @@ public abstract class BaseFragmentTest {
 	protected void initDep(BaseFragment fragment) {
 		doNothing().when(fragment)
 				.daggerInject();
-		doReturn(activityView).when(fragment)
-				.getActivityView();
+//		doReturn(activityView).when(fragment)
+//				.getActivityView();
 		doReturn(toolbar).when(fragment)
 				.getToolbar();
 		//// TODO: 28.10.16 maybe need use dagger2 for inject test module?

@@ -87,7 +87,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 					}
 				}
 			}
-			//// TODO: 30.10.16 maybe need?
+			////30.10.16 maybe need?
 			//			preCheckFragment(nextFragment.getName());
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			boolean b = backStack || isRoot;

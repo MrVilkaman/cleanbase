@@ -27,7 +27,9 @@ import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 
 @PerActivity
-@Component(dependencies = AppComponent.class, modules = ActivityComponent.ActivityModule.class)
+@Component(dependencies = AppComponent.class,
+		modules = {ActivityComponent.CommonActivityModule.class,
+				ActivityComponent.DrawerModule.class, ActivityComponent.ToolbarModule.class})
 public interface ActivityComponent {
 	void inject(MainActivity activity);
 
@@ -43,32 +45,25 @@ public interface ActivityComponent {
 
 	BaseActivityView provideBaseActivityView();
 
-	@Module
-			// todo разбить на несколько модулей, для включения\выключения по ненадобности
-	class ActivityModule {
 
-		private View view;
+	@Module
+	class CommonActivityModule {
+
+
 		private AppCompatActivity activity;
+		private BaseActivityView baseActivityView;
+		private View view;
 		private FragmentManager fm;
 		private int contentId;
-		private Runnable updateToolbarButtonsCallback;
-		private Toolbar toolbar;
-		private MyToolbarImpl.ToolbarCallbacks toolbarCallback;
-		private BaseActivityView baseActivityView;
 
-		public ActivityModule(View view, AppCompatActivity activity,BaseActivityView baseActivityView, FragmentManager fm,
-							  int contentId, Runnable updateToolbarButtonsCallback, Toolbar toolbar,
-							  MyToolbarImpl.ToolbarCallbacks toolbarCallback) {
-			this.view = view;
+		public CommonActivityModule(AppCompatActivity activity, BaseActivityView baseActivityView,
+									View view, FragmentManager fm, int contentId) {
 			this.activity = activity;
+			this.baseActivityView = baseActivityView;
+			this.view = view;
 			this.fm = fm;
 			this.contentId = contentId;
-			this.updateToolbarButtonsCallback = updateToolbarButtonsCallback;
-			this.toolbar = toolbar;
-			this.toolbarCallback = toolbarCallback;
-			this.baseActivityView = baseActivityView;
 		}
-
 
 		@Provides
 		@PerActivity
@@ -88,13 +83,8 @@ public interface ActivityComponent {
 														   LeftDrawerHelper drawer,
 														   ToolbarResolver toolbarResolver,
 														   UIResolver ui) {
-			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver,ui,baseActivityView);
-		}
-
-		@Provides
-		@PerActivity
-		public LeftDrawerHelper createLeftDrawerHelper() {
-			return new LeftDrawerHelperImpl(view);
+			return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver,
+					ui, baseActivityView);
 		}
 
 
@@ -102,6 +92,40 @@ public interface ActivityComponent {
 		@PerActivity
 		public FragmentResolver createFragmentResolver() {
 			return new FragmentResolverImpl(fm, contentId);
+		}
+
+		@Provides
+		@PerActivity
+		public BaseActivityView getBaseActivityView() {
+			return baseActivityView;
+		}
+	}
+
+
+	@Module
+	class ToolbarModule {
+
+		private View view;
+		private AppCompatActivity activity;
+
+		private Runnable updateToolbarButtonsCallback;
+		private Toolbar toolbar;
+		private MyToolbarImpl.ToolbarCallbacks toolbarCallback;
+
+		public ToolbarModule(View view, AppCompatActivity activity,
+							 Runnable updateToolbarButtonsCallback, Toolbar toolbar,
+							 MyToolbarImpl.ToolbarCallbacks toolbarCallback) {
+			this.view = view;
+			this.activity = activity;
+			this.updateToolbarButtonsCallback = updateToolbarButtonsCallback;
+			this.toolbar = toolbar;
+			this.toolbarCallback = toolbarCallback;
+		}
+
+		@Provides
+		@PerActivity
+		public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper) {
+			return new ToolbarResolverImpl(view, activity, menuHelper);
 		}
 
 		@Provides
@@ -116,22 +140,20 @@ public interface ActivityComponent {
 			return new MyToolbarImpl(toolbarMenuHelper, toolbar, toolbarCallback);
 		}
 
+	}
+
+	@Module
+	class DrawerModule {
+		private View view;
+
+		public DrawerModule(View view) {
+			this.view = view;
+		}
+
 		@Provides
 		@PerActivity
-		public LeftDrawerHelperImpl getLeftDrawerHelper() {
+		public LeftDrawerHelper createLeftDrawerHelper() {
 			return new LeftDrawerHelperImpl(view);
-		}
-
-		@Provides
-		@PerActivity
-		public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper) {
-			return new ToolbarResolverImpl(view, activity, menuHelper);
-		}
-
-		@Provides
-		@PerActivity
-		public BaseActivityView getBaseActivityView() {
-			return baseActivityView;
 		}
 
 	}

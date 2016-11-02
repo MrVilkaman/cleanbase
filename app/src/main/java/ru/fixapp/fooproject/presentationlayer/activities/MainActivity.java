@@ -1,6 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import butterknife.ButterKnife;
 import ru.fixapp.fooproject.R;
@@ -18,10 +19,16 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 		Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar_actionbar);
 
 		AppComponent appComponent = App.get(this).getAppComponent();
+		View rootView = getRootView();
+		ActivityComponent.CommonActivityModule commonActivityModule =
+				new ActivityComponent.CommonActivityModule(this, this, rootView,
+						getSupportFragmentManager(), getContainerID());
+
 		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
-				.activityModule(new ActivityComponent.ActivityModule(getRootView(), this,this,
-						getSupportFragmentManager(), getContainerID(), this::invalidateOptionsMenu,
-						toolbar, this)).build();
+				.commonActivityModule(commonActivityModule)
+				.toolbarModule(new ActivityComponent.ToolbarModule(rootView,this,this::invalidateOptionsMenu,toolbar,this))
+				.drawerModule(new ActivityComponent.DrawerModule(rootView))
+				.build();
 		screenComponent.inject(this);
 	}
 

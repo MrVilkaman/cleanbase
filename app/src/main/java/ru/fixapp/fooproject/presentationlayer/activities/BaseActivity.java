@@ -14,6 +14,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import javax.inject.Inject;
 
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
@@ -25,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
-	@Inject LeftDrawerHelperImpl drawerHelper;
+	@Inject LeftDrawerHelper drawerHelper;
 
 	private ProgressWheel progress;
 
@@ -81,6 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity
 	}
 
 	private boolean processBackFragment() {
+		//// TODO: 02.11.16 !!!
 		Fragment fragmentById = getSupportFragmentManager().findFragmentById(getContainerID());
 		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
 				((OnBackPressedListener) fragmentById) : null;
