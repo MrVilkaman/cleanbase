@@ -15,12 +15,8 @@ import javax.inject.Inject;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
 
-public abstract class BaseActivity extends AppCompatActivity
-		implements BaseActivityView, MyToolbarImpl.ToolbarCallbacks {
-
-
+public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
@@ -60,11 +56,6 @@ public abstract class BaseActivity extends AppCompatActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		toolbarResolver.onOptionsItemSelected(item);
 		return super.onOptionsItemSelected(item);
-	}
-
-
-	public void updateIcon() {
-		toolbarResolver.updateIcon();
 	}
 
 	protected int getContainerID() {

@@ -66,4 +66,26 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	public void setCallback(ToolbarResolverCallback callback) {
 		this.callback = callback;
 	}
+
+	@Override
+	public void setTitle(int text) {
+		supportActionBar.setTitle(text);
+	}
+
+	@Override
+	public void setTitle(String text) {
+		supportActionBar.setTitle(text);
+	}
+
+	@Override
+	public void hideHomeButton() {
+		supportActionBar.setHomeButtonEnabled(false);
+		supportActionBar.setDisplayShowHomeEnabled(false);
+	}
+
+	@Override
+	public void showHomeButton() {
+		supportActionBar.setHomeButtonEnabled(true);
+		supportActionBar.setDisplayShowHomeEnabled(true);
+	}
 }

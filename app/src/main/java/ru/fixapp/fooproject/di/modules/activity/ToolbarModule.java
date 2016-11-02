@@ -2,7 +2,6 @@ package ru.fixapp.fooproject.di.modules.activity;
 
 
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import dagger.Module;
@@ -19,18 +18,9 @@ public class ToolbarModule {
 	private View view;
 	private AppCompatActivity activity;
 
-	private Runnable updateToolbarButtonsCallback;
-	private Toolbar toolbar;
-	private MyToolbarImpl.ToolbarCallbacks toolbarCallback;
-
-	public ToolbarModule(View view, AppCompatActivity activity,
-						 Runnable updateToolbarButtonsCallback, Toolbar toolbar,
-						 MyToolbarImpl.ToolbarCallbacks toolbarCallback) {
+	public ToolbarModule(View view, AppCompatActivity activity) {
 		this.view = view;
 		this.activity = activity;
-		this.updateToolbarButtonsCallback = updateToolbarButtonsCallback;
-		this.toolbar = toolbar;
-		this.toolbarCallback = toolbarCallback;
 	}
 
 	@Provides
@@ -42,12 +32,12 @@ public class ToolbarModule {
 	@Provides
 	@PerActivity
 	public ToolbarMenuHelper createToolbarMenuHelper() {
-		return new ToolbarMenuHelper(updateToolbarButtonsCallback);
+		return new ToolbarMenuHelper(() -> activity.invalidateOptionsMenu());
 	}
 
 	@Provides
 	@PerActivity
-	public IToolbar getToolbar(ToolbarMenuHelper toolbarMenuHelper) {
-		return new MyToolbarImpl(toolbarMenuHelper, toolbar, toolbarCallback);
+	public IToolbar getToolbar(ToolbarMenuHelper toolbarMenuHelper, ToolbarResolver resolver) {
+		return new MyToolbarImpl(view, toolbarMenuHelper, resolver);
 	}
 }

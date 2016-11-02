@@ -7,6 +7,14 @@ public interface ToolbarResolver {
 
 	void setCallback(ToolbarResolverCallback callback);
 
+	void setTitle(int text);
+
+	void setTitle(String text);
+
+	void hideHomeButton();
+
+	void showHomeButton();
+
 	interface ToolbarResolverCallback{
 		void onClickHome();
 		void updateIcon();
