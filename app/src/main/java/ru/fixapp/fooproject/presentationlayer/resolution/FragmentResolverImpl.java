@@ -97,6 +97,8 @@ public class FragmentResolverImpl implements FragmentResolver {
 						b ? currentFragment.getName() : currentFragment.getPreviousFragment());
 				fragmentTransaction.addToBackStack(currentFragment.getName());
 			} else {
+				if(callback != null)
+					callback.onRootFragment();
 				nextFragment.setPreviousFragment(null);
 				fragmentTransaction.addToBackStack(null);
 			}
