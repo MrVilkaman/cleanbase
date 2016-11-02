@@ -13,7 +13,7 @@ public interface NavigationResolver {
 
 	BaseFragment createStartFragment();
 
-	boolean onBackPressed();
+	void onBackPressed();
 
 	void back();
 

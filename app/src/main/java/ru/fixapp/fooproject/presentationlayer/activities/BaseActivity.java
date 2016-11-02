@@ -2,7 +2,6 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
-import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public abstract class BaseActivity extends AppCompatActivity
 		implements BaseActivityView, MyToolbarImpl.ToolbarCallbacks {
@@ -75,20 +73,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	@Override
 	public void onBackPressed() {
-		if (processBackFragment()) {
-			hideProgress();
-			navigationResolver.onBackPressed();
-		}
+		navigationResolver.onBackPressed();
 	}
-
-	private boolean processBackFragment() {
-		//// TODO: 02.11.16 !!!
-		Fragment fragmentById = getSupportFragmentManager().findFragmentById(getContainerID());
-		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
-				((OnBackPressedListener) fragmentById) : null;
-		return listener == null || !listener.onBackPressed();
-	}
-
 
 	@Override
 	public void hideKeyboard() {

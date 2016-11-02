@@ -23,6 +23,8 @@ public interface FragmentResolver {
 
 	void showFragmentWithoutBackStack(BaseFragment fragment);
 
+	boolean processBackFragment();
+
 	boolean onBackPressed();
 
 	void back();

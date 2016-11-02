@@ -27,7 +27,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
 								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
-								  UIResolver uiResolver,BaseActivityView activityView) {
+								  UIResolver uiResolver, BaseActivityView activityView) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
@@ -69,11 +69,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 		});
 
 
-		if(!fragmentManager.hasFragment()){
+		if (!fragmentManager.hasFragment()) {
 			fragmentManager.showRootFragment(createStartFragment());
 
-			if(drawerHelper.hasDrawer()){
-				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(), drawerHelper.getDrawerFragment());
+			if (drawerHelper.hasDrawer()) {
+				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(),
+						drawerHelper.getDrawerFragment());
 			}
 		}
 	}
@@ -84,16 +85,15 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public boolean onBackPressed() {
-		boolean b = fragmentManager.onBackPressed();
-
-		if (!b) {
-			exit();
-		} else {
-			toolbarResolver.updateIcon();
+	public void onBackPressed() {
+		if (fragmentManager.processBackFragment()) {
+			activityView.hideProgress();
+			if (fragmentManager.onBackPressed()) {
+				toolbarResolver.updateIcon();
+			} else {
+				exit();
+			}
 		}
-
-		return b;
 	}
 
 	@Override

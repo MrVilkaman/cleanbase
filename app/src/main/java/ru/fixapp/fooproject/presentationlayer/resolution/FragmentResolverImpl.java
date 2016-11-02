@@ -9,6 +9,7 @@ import java.util.List;
 
 import ru.fixapp.fooproject.presentationlayer.activities.ISingletonFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public class FragmentResolverImpl implements FragmentResolver {
 
@@ -25,6 +26,15 @@ public class FragmentResolverImpl implements FragmentResolver {
 		this.fragmentManager = fragmentManager;
 		this.containerID = containerID;
 	}
+
+	@Override
+	public boolean processBackFragment() {
+		Fragment fragmentById = fragmentManager.findFragmentById(containerID);
+		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
+				((OnBackPressedListener) fragmentById) : null;
+		return listener == null || !listener.onBackPressed();
+	}
+
 
 	@Override
 	public boolean onBackPressed() {
