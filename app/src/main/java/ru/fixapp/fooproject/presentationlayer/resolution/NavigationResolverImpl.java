@@ -35,15 +35,6 @@ public class NavigationResolverImpl implements NavigationResolver {
 		this.uiResolver = uiResolver;
 		this.activityView = activityView;
 
-
-		if(!fragmentManager.hasFragment()){
-			fragmentManager.showRootFragment(createStartFragment());
-
-			if(drawerHelper.hasDrawer()){
-				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(), drawerHelper.getDrawerFragment());
-			}
-		}
-
 		fragmentManager.setCallback(new FragmentResolver.FragmentResolverCallback() {
 			@Override
 			public void onRootFragment() {
@@ -76,6 +67,15 @@ public class NavigationResolverImpl implements NavigationResolver {
 				}
 			}
 		});
+
+
+		if(!fragmentManager.hasFragment()){
+			fragmentManager.showRootFragment(createStartFragment());
+
+			if(drawerHelper.hasDrawer()){
+				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(), drawerHelper.getDrawerFragment());
+			}
+		}
 	}
 
 	@Override
