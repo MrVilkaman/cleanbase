@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
 import static rx.Observable.just;
@@ -54,7 +54,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public BaseFragment createStartFragment() {
-		return Frag1ScreenFragment.open();
+		return PhotoMakerScreenFragment.open();
 	}
 
 	@Override

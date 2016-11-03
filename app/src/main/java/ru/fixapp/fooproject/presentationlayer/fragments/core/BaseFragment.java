@@ -17,6 +17,7 @@ import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.di.IHasComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
@@ -43,7 +44,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		daggerInject();
+		daggerInject(getComponent(ActivityComponent.class));
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		}
 	}
 
-	public abstract void daggerInject();
+	public abstract void daggerInject(ActivityComponent component);
 
 	@Optional
 	@OnTouch(R.id.parent)
