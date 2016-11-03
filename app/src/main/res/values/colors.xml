@@ -10,5 +10,6 @@
 	<color name="divider_color">#888</color>
 	<color name="toolbar_bg">#3F51B5</color>
 	<color name="app_main_text_color">#fff</color>
+	<color name="crop_frame_color">@color/colorPrimary</color>
 
 </resources>

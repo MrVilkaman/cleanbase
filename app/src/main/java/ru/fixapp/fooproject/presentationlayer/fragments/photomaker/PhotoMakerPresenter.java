@@ -10,4 +10,8 @@ public class PhotoMakerPresenter extends BasePresenter<PhotoMakerView> {
 	@Inject
 	public PhotoMakerPresenter() {
 	}
+
+	public void loadFile(String lastPath) {
+		view().showImage(lastPath);
+	}
 }

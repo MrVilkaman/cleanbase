@@ -80,6 +80,9 @@ dependencies {
     compile libraries.materialDialog
     compile libraries.materialProgress
 
+    compile libraries.simplecropview
+    compile libraries.picasso
+
     //tests
     testCompile libraries.junit
     testCompile libraries.supportAnnotations
