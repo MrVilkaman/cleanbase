@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;

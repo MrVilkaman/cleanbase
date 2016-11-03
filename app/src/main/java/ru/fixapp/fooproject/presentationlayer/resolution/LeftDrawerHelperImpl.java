@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.activities;
+package ru.fixapp.fooproject.presentationlayer.resolution;
 
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -6,8 +6,6 @@ import android.view.View;
 
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 
 public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
 
@@ -41,7 +39,7 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 
 	@Override
 	public BaseFragment getDrawerFragment() {
-		return DrawerScreenFragment.open();
+		return null;
 	}
 
 	@Override

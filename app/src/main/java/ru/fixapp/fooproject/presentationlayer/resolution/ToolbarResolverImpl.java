@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.activities;
+package ru.fixapp.fooproject.presentationlayer.resolution;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

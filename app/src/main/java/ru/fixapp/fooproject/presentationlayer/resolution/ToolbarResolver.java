@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.activities;
+package ru.fixapp.fooproject.presentationlayer.resolution;
 
 import android.view.Menu;
 import android.view.MenuItem;

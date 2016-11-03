@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
