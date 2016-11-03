@@ -16,32 +16,28 @@ import butterknife.OnTouch;
 import butterknife.Optional;
 import butterknife.Unbinder;
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.di.AppComponent;
-import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityPresenter;
+import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.app.App;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.UIResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment
+		implements BaseView, BaseActivityView, OnBackPressedListener {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
+	@Inject UIResolver uiResolver;
+	@Inject ThrowableResolver throwableResolver;
+	@Inject NavigationResolver navigationResolver;
+	@Inject P relationPresenter;
+	@Inject IToolbar toolbar;
+	@Inject BaseActivityView activityView;
+
+	@Nullable @BindView(R.id.progress_wheel) View progressBar;
 	private String previousFragment;
-
-	UIResolver uiResolver;
-	ThrowableResolver throwableResolver;
-
-	@Inject
-	P relationPresenter;
-
-	@Nullable
-	@BindView(R.id.progress_wheel)
-	View progressBar;
 	private Unbinder bind;
 
 	@Override
@@ -51,13 +47,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
-			//// TODO: 17.09.16 it will be doing by dagger2
 			bind = ButterKnife.bind(this, view);
-			uiResolver = createUiResolver(view);
-			throwableResolver = createThrowableResolver(uiResolver);
 			P presenter = getPresenter();
 			presenter.setView(this);
 			presenter.onViewAttached();
@@ -69,15 +63,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		return view;
 	}
 
-	//// TODO: 17.09.16 it will be doing by dagger2
-	public UIResolver createUiResolver(View view) {
-		return new UIResolverImpl(view);
-	}
-	//// TODO: 17.09.16 it will be doing by dagger2
-	public ThrowableResolver createThrowableResolver(UIResolver ui) {
-		return new ThrowableResolverImpl(ui);
-	}
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -87,11 +72,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	public abstract void daggerInject();
-
-	protected AppComponent getAppComponent() {
-		return App.get(getActivity())
-				.getAppComponent();
-	}
 
 	@Optional
 	@OnTouch(R.id.parent)
@@ -117,19 +97,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	@Override
-	public void back() {
-		getActivityView().back();
-	}
-
-	@Override
 	public void hideKeyboard() {
-		getActivityView().hideKeyboard();
+		activityView.hideKeyboard();
 	}
 
 	@Override
 	public void showProgress() {
 		if (progressBar == null) {
-			getActivityView().showProgress();
+			activityView.showProgress();
 		} else {
 			progressBar.setVisibility(View.VISIBLE);
 		}
@@ -138,17 +113,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	@Override
 	public void hideProgress() {
 		if (progressBar == null) {
-			BaseActivityView activityView = getActivityView();
-			if (activityView != null)
-				activityView.hideProgress();
+			activityView.hideProgress();
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}
-	}
-
-	@Override
-	public void clearProgress() {
-		getActivityView().clearProgress();
 	}
 
 	private boolean isWorkCall() {
@@ -167,38 +135,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	protected abstract int getLayoutId();
 
-	protected void showFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, true, false, false, false);
-	}
-
-	protected void showRootFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, false, true, false, false);
-	}
-
-	protected void showFragmentWithoutBackStack(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, false, false, false, false);
-	}
-
-	protected void showOrOpenFragment(BaseFragment fragment) {
-		getBaseActivity().loadRootFragment(fragment, true, false, false, true);
-	}
-
-	public BaseActivityPresenter getBaseActivity() {
-		return (BaseActivityPresenter) getActivity();
-	}
-
-	public BaseActivityView getActivityView() {
-		return (BaseActivityView) getActivity();
-	}
-
 	@Override
 	public P getPresenter() {
 		return relationPresenter;
 	}
 
-	@Override
 	public IToolbar getToolbar() {
-		return getActivityView().getToolbar();
+		return toolbar;
 	}
 
 	@Override
@@ -218,12 +161,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void showMessage(@StringRes int text, Runnable callback) {
-		uiResolver.showMessage(text,callback);
+		uiResolver.showMessage(text, callback);
 	}
 
 	@Override
 	public void showMessage(@StringRes int resId, Object... arg) {
-		uiResolver.showMessage(resId,arg);
+		uiResolver.showMessage(resId, arg);
 	}
 
 	@Override
@@ -235,4 +178,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		return getClass().getSimpleName();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected <T> T getComponent(Class<T> componentType) {
+		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
+	}
+
+	public NavigationResolver getNavigation() {
+		return navigationResolver;
+	}
 }

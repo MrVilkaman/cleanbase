@@ -10,7 +10,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
 
-public abstract class BasePresenter<V extends BaseView> {
+public class BasePresenter<V extends BaseView> {
 
 	private V view;
 

@@ -17,7 +17,6 @@ import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
@@ -37,14 +36,15 @@ public abstract class BaseFragmentTest {
 	protected void initDep(BaseFragment fragment) {
 		doNothing().when(fragment)
 				.daggerInject();
-		doReturn(activityView).when(fragment)
-				.getActivityView();
+//		doReturn(activityView).when(fragment)
+//				.getActivityView();
 		doReturn(toolbar).when(fragment)
 				.getToolbar();
-		doReturn(throwable).when(fragment)
-				.createThrowableResolver(any());
-		doReturn(uiRes).when(fragment)
-				.createUiResolver(any());
+		//// TODO: 28.10.16 maybe need use dagger2 for inject test module?
+//		doReturn(throwable).when(fragment)
+//				.createThrowableResolver(any());
+//		doReturn(uiRes).when(fragment)
+//				.createUiResolver(any());
 	}
 
 }

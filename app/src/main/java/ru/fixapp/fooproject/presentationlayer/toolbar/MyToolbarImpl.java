@@ -2,20 +2,26 @@ package ru.fixapp.fooproject.presentationlayer.toolbar;
 
 
 import android.support.annotation.DrawableRes;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.ToolbarResolver;
+
 public class MyToolbarImpl implements IToolbar {
 
-	private final ToolbarMenuHelper toolbarMenuHelper;
 	private final Toolbar toolbar;
-	private final ToolbarCallbacks callbacks;
+	private final ToolbarResolver resolver;
+	private final ToolbarMenuHelper toolbarMenuHelper;
 
-	public MyToolbarImpl(ToolbarMenuHelper toolbarMenuHelper, Toolbar toolbar, ToolbarCallbacks callbacks) {
+	public MyToolbarImpl(View view, ToolbarMenuHelper toolbarMenuHelper,ToolbarResolver resolver) {
+		this.toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+		if (toolbar == null) {
+			throw new NullPointerException("toolbar == null! Cant fing R.id.toolbar_actionbar");
+		}
+
+		this.resolver = resolver;
 		this.toolbarMenuHelper = toolbarMenuHelper;
-		this.toolbar = toolbar;
-		this.callbacks = callbacks;
 	}
 
 	@Override
@@ -30,28 +36,23 @@ public class MyToolbarImpl implements IToolbar {
 
 	@Override
 	public void setText(int text) {
-		callbacks.getSupportActionBar().setTitle(text);
+		resolver.setTitle(text);
 	}
 
 
 	@Override
 	public void setText(String text) {
-		callbacks.getSupportActionBar().setTitle(text);
+		resolver.setTitle(text);
 	}
 
 	@Override
 	public void hideHomeButton() {
-		ActionBar supportActionBar = callbacks.getSupportActionBar();
-		supportActionBar.setHomeButtonEnabled(false);
-		supportActionBar.setDisplayHomeAsUpEnabled(false);
+		resolver.hideHomeButton();
 	}
 
 	@Override
 	public void showHomeButton() {
-		ActionBar supportActionBar = callbacks.getSupportActionBar();
-		supportActionBar.setHomeButtonEnabled(true);
-		supportActionBar.setDisplayShowHomeEnabled(true);
-		callbacks.updateIcon();
+		resolver.showHomeButton();
 	}
 
 	@Override
@@ -63,10 +64,4 @@ public class MyToolbarImpl implements IToolbar {
 	public void remove(@DrawableRes int resId) {
 		toolbarMenuHelper.remove(resId);
 	}
-
-	public interface ToolbarCallbacks {
-		ActionBar getSupportActionBar();
-		void updateIcon();
-	}
-
 }

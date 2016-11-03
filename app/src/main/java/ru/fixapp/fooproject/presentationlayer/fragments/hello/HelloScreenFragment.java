@@ -7,17 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.listsample.ListSampleScreenFragment;
 
-import butterknife.BindView;
-import butterknife.OnClick;
+public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter>
+		implements HelloScreenView {
 
-public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> implements HelloScreenView {
-
-	@BindView(R.id.hello_login_btn)
-	Button btnLogin;
+	@BindView(R.id.hello_login_btn) Button btnLogin;
 
 	public static HelloScreenFragment open() {
 		return new HelloScreenFragment();
@@ -26,9 +26,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	@Override
 	public void daggerInject() {
 		DaggerHelloScreenComponent.builder()
-				.appComponent(getAppComponent())
-				.build()
-				.inject(this);
+				.activityComponent(getComponent(ActivityComponent.class)).build().inject(this);
 	}
 
 	@Override
@@ -38,7 +36,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-
+		showSnackbar(R.string.app_name);
 	}
 
 	@OnClick(R.id.hello_login_btn)
@@ -49,6 +47,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	public void goToMainScreen() {
-		showFragment(ListSampleScreenFragment.open());
+		getNavigation().showFragment(ListSampleScreenFragment.open());
 	}
 }

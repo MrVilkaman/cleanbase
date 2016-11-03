@@ -5,11 +5,12 @@ import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 
 public interface BaseView extends UIResolver {
 
-    BasePresenter getPresenter();
+	BasePresenter getPresenter();
 
-    void showProgress();
-    void hideProgress();
+	void showProgress();
 
-    void handleError(Throwable throwable);
+	void hideProgress();
+
+	void handleError(Throwable throwable);
 
 }

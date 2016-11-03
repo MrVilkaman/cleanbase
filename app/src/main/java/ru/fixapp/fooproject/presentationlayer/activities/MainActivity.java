@@ -1,38 +1,42 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
-import ru.fixapp.fooproject.presentationlayer.app.App;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.hello.HelloScreenFragment;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import android.view.View;
 
-/**
- * Created by root on 12.03.16.
- */
-public class MainActivity extends BaseActivity {
+import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.di.AppComponent;
+import ru.fixapp.fooproject.di.IHasComponent;
+import ru.fixapp.fooproject.di.modules.activity.CommonActivityModule;
+import ru.fixapp.fooproject.di.modules.activity.DrawerModule;
+import ru.fixapp.fooproject.di.modules.activity.ToolbarModule;
+import ru.fixapp.fooproject.presentationlayer.app.App;
+
+
+public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
+
+	private ActivityComponent screenComponent;
 
 	@Override
 	protected void injectDagger() {
-		DaggerActivityScreenComponent.builder()
-				.appComponent(App.get(this)
-						.getAppComponent())
-				.build()
-				.inject(this);
+
+		AppComponent appComponent = App.get(this).getAppComponent();
+		View rootView = getRootView();
+		CommonActivityModule commonActivityModule =
+				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
+						getContainerID());
+
+		screenComponent = DaggerActivityComponent.builder().appComponent(appComponent)
+				.commonActivityModule(commonActivityModule)
+				.toolbarModule(new ToolbarModule(rootView, this))
+				.drawerModule(new DrawerModule(rootView)).build();
+		screenComponent.inject(this);
+	}
+
+	protected int getActivityLayoutResourceID() {
+		return R.layout.activity_main_app;
 	}
 
 	@Override
-	protected BaseFragment createDrawer() {
-		return null;
+	public ActivityComponent getComponent() {
+		return screenComponent;
 	}
-
-	@Override
-	protected BaseFragment createStartFragment() {
-		return HelloScreenFragment.open();
-	}
-
-	@Override
-	public IToolbar getToolbar() {
-		return null;
-	}
-
-
 }
