@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
 import ru.fixapp.fooproject.domainlayer.usecase.core.UseCase;
 import rx.Observable;
@@ -19,7 +21,11 @@ public class BasePresenter<V extends BaseView> {
 	private List<UseCase> useCaseList = new ArrayList<>();
 	private SchedulersProvider schedulersProvider;
 
-	public BasePresenter(SchedulersProvider schedulersProvider) {
+	public BasePresenter() {
+	}
+
+	@Inject
+	public void setSchedulersProvider(SchedulersProvider schedulersProvider) {
 		this.schedulersProvider = schedulersProvider;
 	}
 
