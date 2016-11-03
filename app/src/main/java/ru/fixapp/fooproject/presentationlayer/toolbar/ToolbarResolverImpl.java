@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.toolbar;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 
 public class ToolbarResolverImpl implements ToolbarResolver{
 

@@ -10,6 +10,7 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
+import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
 import static rx.Observable.just;
 

@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.resolution.ToolbarResolver;
 
 public class MyToolbarImpl implements IToolbar {
 
