@@ -73,7 +73,6 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 	@Override
 	public void daggerInject(ActivityComponent component) {
 		DaggerPhotoMakerScreenComponent.builder().activityComponent(component)
-				.photoMakerScreenModule(new PhotoMakerScreenComponent.PhotoMakerScreenModule(this))
 				.build().inject(this);
 	}
 

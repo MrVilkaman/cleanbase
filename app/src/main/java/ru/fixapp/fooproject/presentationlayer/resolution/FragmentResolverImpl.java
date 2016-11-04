@@ -1,26 +1,28 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import java.util.List;
 
-import ru.fixapp.fooproject.presentationlayer.fragments.core.ISingletonFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.ISingletonFragment;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public class FragmentResolverImpl implements FragmentResolver {
 
-
+	private static final int EMTPY_CODE = -1;
+	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	private FragmentResolverCallback callback;
 	private FragmentManager fragmentManager;
 	private int containerID;
-
 	private BaseFragment nextFragment;
 	private boolean backStack;
 	private boolean isRoot;
+	private int code = EMTPY_CODE;
 
 	public FragmentResolverImpl(FragmentManager fragmentManager, int containerID) {
 		this.fragmentManager = fragmentManager;
@@ -29,16 +31,15 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	@Override
 	public boolean processBackFragment() {
-		Fragment fragmentById = fragmentManager.findFragmentById(containerID);
+		Fragment fragmentById = getCurrentFragment();
 		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
 				((OnBackPressedListener) fragmentById) : null;
 		return listener == null || !listener.onBackPressed();
 	}
 
-
 	@Override
 	public boolean onBackPressed() {
-		BaseFragment current = (BaseFragment) fragmentManager.findFragmentById(containerID);
+		BaseFragment current = (BaseFragment) getCurrentFragment();
 		if (current != null && current.getPreviousFragment() != null) {
 			fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -63,7 +64,6 @@ public class FragmentResolverImpl implements FragmentResolver {
 		loadRootFragment(fragment, false, false);
 	}
 
-
 	public void loadRootFragment(BaseFragment fragment, boolean addToBackStack, boolean isRoot) {
 		nextFragment = fragment;
 		backStack = addToBackStack;
@@ -71,11 +71,9 @@ public class FragmentResolverImpl implements FragmentResolver {
 		nextFragment();
 	}
 
-
 	void nextFragment() {
 		if (nextFragment != null) {
-			BaseFragment currentFragment =
-					(BaseFragment) fragmentManager.findFragmentById(containerID);
+			BaseFragment currentFragment = (BaseFragment) getCurrentFragment();
 			boolean hasOldFragment = currentFragment != null;
 			boolean isAlreadyLoaded = false;
 			if (hasOldFragment) {
@@ -85,13 +83,13 @@ public class FragmentResolverImpl implements FragmentResolver {
 			if (!(hasOldFragment && isAlreadyLoaded)) {
 				if (isRoot) {
 					clearBackStack();
-					if(callback != null)
+					if (callback != null)
 						callback.onRootFragment();
 				} else {
-					if(callback != null) {
+					if (callback != null) {
 						if (isRootScreen() && !backStack) {
 							callback.onRootFragment();
-						}else{
+						} else {
 							callback.onNotRootFragment();
 						}
 					}
@@ -99,6 +97,12 @@ public class FragmentResolverImpl implements FragmentResolver {
 			}
 			////30.10.16 maybe need?
 			//			preCheckFragment(nextFragment.getName());
+
+			if (code != EMTPY_CODE) {
+				nextFragment.setTargetFragment(currentFragment, code);
+				code = EMTPY_CODE;
+			}
+
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			boolean b = backStack || isRoot;
 			fragmentTransaction.replace(containerID, nextFragment, nextFragment.getName());
@@ -107,7 +111,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 						b ? currentFragment.getName() : currentFragment.getPreviousFragment());
 				fragmentTransaction.addToBackStack(currentFragment.getName());
 			} else {
-				if(callback != null)
+				if (callback != null)
 					callback.onRootFragment();
 				nextFragment.setPreviousFragment(null);
 				fragmentTransaction.addToBackStack(null);
@@ -118,6 +122,19 @@ public class FragmentResolverImpl implements FragmentResolver {
 		nextFragment = null;
 	}
 
+	@Override
+	public void setTargetFragmentCode(int code) {
+		this.code = code;
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		getCurrentFragment().startActivityForResult(intent, requestCode);
+	}
+
+	private Fragment getCurrentFragment() {
+		return fragmentManager.findFragmentById(containerID);
+	}
 
 	private void clearBackStack() {
 
@@ -150,11 +167,9 @@ public class FragmentResolverImpl implements FragmentResolver {
 		this.callback = callback;
 	}
 
-	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
-
 	@Override
 	public boolean isRootScreen() {
-		BaseFragment current = (BaseFragment) fragmentManager.findFragmentById(containerID);
+		BaseFragment current = (BaseFragment) getCurrentFragment();
 		boolean b = current != null && current.getPreviousFragment() != null;
 
 		boolean b1 = PERMANENT_FRAGMENTS < fragmentManager.getBackStackEntryCount();
@@ -163,7 +178,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	@Override
 	public boolean hasFragment() {
-		Fragment contentFragment = fragmentManager.findFragmentById(containerID);
+		Fragment contentFragment = getCurrentFragment();
 		return contentFragment != null;
 	}
 

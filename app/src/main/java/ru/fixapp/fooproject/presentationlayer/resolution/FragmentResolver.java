@@ -1,6 +1,8 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
 
+import android.content.Intent;
+
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
 public interface FragmentResolver {
@@ -10,12 +12,7 @@ public interface FragmentResolver {
 
 	void addDrawer(int drawerContentFrame, BaseFragment drawerFragment);
 
-	interface FragmentResolverCallback{
-
-		void onRootFragment();
-
-		void onNotRootFragment();
-	}
+	void startActivityForResult(Intent intent, int requestCode);
 
 	void showFragment(BaseFragment fragment);
 
@@ -27,9 +24,18 @@ public interface FragmentResolver {
 
 	boolean onBackPressed();
 
+	void setTargetFragmentCode(int code);
+
 	void back();
 
 	void setCallback(FragmentResolverCallback callback);
 
 	boolean isRootScreen();
+
+	interface FragmentResolverCallback{
+
+		void onRootFragment();
+
+		void onNotRootFragment();
+	}
 }

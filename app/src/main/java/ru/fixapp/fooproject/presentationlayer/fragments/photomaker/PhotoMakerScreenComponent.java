@@ -1,13 +1,15 @@
 package ru.fixapp.fooproject.presentationlayer.fragments.photomaker;
 
+import android.content.Context;
+
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerScreen;
 import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
-import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelper;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelperImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 
 @PerScreen
 @Component(dependencies = ActivityComponent.class,
@@ -19,16 +21,10 @@ public interface PhotoMakerScreenComponent {
 	@Module
 	class PhotoMakerScreenModule {
 
-		private BaseFragment baseFragment;
-
-		public PhotoMakerScreenModule(BaseFragment baseFragment) {
-			this.baseFragment = baseFragment;
-		}
-
 		@PerScreen
 		@Provides
-		public PhotoHelper getPhotoHelper(){
-			return new PhotoHelperImpl(baseFragment);
+		public PhotoHelper getPhotoHelper(Context context, NavigationResolver nav) {
+			return new PhotoHelperImpl(context, nav);
 		}
 	}
 }

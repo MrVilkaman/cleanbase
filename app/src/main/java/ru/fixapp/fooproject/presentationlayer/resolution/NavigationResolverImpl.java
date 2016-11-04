@@ -106,9 +106,24 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
+	public void setTargetFragment(int code) {
+		fragmentManager.setTargetFragmentCode(code);
+	}
+
+	@Override
 	public void openActivity(Class<? extends FragmentActivity> aClass) {
 		currentActivity.startActivity(new Intent(currentActivity, aClass));
 		currentActivity.finish();
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		currentActivity.startActivityForResult(intent, requestCode);
+	}
+
+	@Override
+	public void startActivityForResultFormFragment(Intent intent, int requestCode) {
+		fragmentManager.startActivityForResult(intent, requestCode);
 	}
 
 	@Override
@@ -122,7 +137,6 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	private void exit() {
-
 		if (doubleBackToExitPressedOnce) {
 			currentActivity.finish();
 		} else {
@@ -131,8 +145,6 @@ public class NavigationResolverImpl implements NavigationResolver {
 			just(null).delay(1000, TimeUnit.MILLISECONDS)
 					.subscribe(o -> doubleBackToExitPressedOnce = false);
 		}
-
-
 	}
 
 	private static class MyFragmentResolverCallback

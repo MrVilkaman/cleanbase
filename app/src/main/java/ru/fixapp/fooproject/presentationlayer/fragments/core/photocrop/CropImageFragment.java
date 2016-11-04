@@ -19,7 +19,6 @@ import butterknife.OnClick;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.utils.PhotoUtils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,14 +40,13 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 
 	@BindView(R.id.cropImageView) CropImageView cropImageView;
 
-	public static CropImageFragment newInstance(Fragment target, String imageFile, String resultFile, MODE mode) {
+	public static CropImageFragment newInstance(String imageFile, String resultFile, MODE mode) {
 		Bundle args = new Bundle();
 		args.putString(EXTRA_INPUT, imageFile);
 		args.putString(EXTRA_OUTPUT, resultFile);
 		args.putString(EXTRA_AS_SQUARE, mode.name());
 		CropImageFragment fragment = new CropImageFragment();
 		fragment.setArguments(args);
-		fragment.setTargetFragment(target, PhotoUtils.CROP_PHOTO_REQUEST_CODE);
 		return fragment;
 	}
 

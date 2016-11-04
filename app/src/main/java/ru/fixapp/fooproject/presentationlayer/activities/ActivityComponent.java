@@ -1,6 +1,8 @@
 package ru.fixapp.fooproject.presentationlayer.activities;
 
 
+import android.content.Context;
+
 import dagger.Component;
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.PerActivity;
@@ -21,6 +23,8 @@ public interface ActivityComponent {
 	void inject(MainActivity activity);
 
 	SchedulersProvider getSchedulersProvider();
+
+	Context getContext();
 
 	UIResolver getUIResolver();
 
