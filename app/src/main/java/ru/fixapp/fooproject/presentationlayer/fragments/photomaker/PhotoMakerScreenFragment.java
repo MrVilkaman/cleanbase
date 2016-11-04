@@ -45,13 +45,11 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 	@OnClick(R.id.photo_take)
 	void onClickTake() {
 		photoHelper.openCamera(CropImageFragment.MODE.FREE);
-		//		PhotoUtils.openCamera(this, CropImageFragment.MODE.FREE);
 	}
 
 	@OnClick(R.id.photo_gallary)
 	void onClickGallary() {
 		photoHelper.openGallery(CropImageFragment.MODE.FREE);
-		//		PhotoUtils.openGallery(this, CropImageFragment.MODE.FREE);
 	}
 
 	@Override
@@ -68,7 +66,6 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 
 	@Override
 	public void daggerInject(ActivityComponent component) {
