@@ -60,17 +60,14 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (photoHelper.onActivityResult(requestCode, resultCode, data)) {
-			getPresenter().loadFile(photoHelper.getLastPath());
-		}
-
+		photoHelper.onActivityResult(requestCode, resultCode, data,
+				path -> getPresenter().loadFile(path));
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
 	public void daggerInject(ActivityComponent component) {
-		DaggerPhotoMakerScreenComponent.builder().activityComponent(component)
-				.build().inject(this);
+		DaggerPhotoMakerScreenComponent.builder().activityComponent(component).build().inject(this);
 	}
 
 }

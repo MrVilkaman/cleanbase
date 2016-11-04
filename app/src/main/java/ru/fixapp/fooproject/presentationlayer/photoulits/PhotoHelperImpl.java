@@ -60,15 +60,16 @@ public class PhotoHelperImpl implements PhotoHelper {
 	}
 
 	@Override
-	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data,
+								 PhotoHelperCallback callback) {
+		String pathToTempFiles = getPathToTempFiles();
 		if (requestCode == SELECT_PICTURE_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
 				final Uri selectedImage = data.getData();
 
 				if (selectedImage.getScheme().equals("file")) {
-					showCrop(selectedImage.getEncodedPath(), getPathToTempFiles() + lastFileName,
-							mode);
-					return false;
+					showCrop(selectedImage.getEncodedPath(), pathToTempFiles + lastFileName, mode);
+					return;
 				}
 
 				String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -78,7 +79,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 					if (cursor.moveToFirst()) {
 						int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 						String filePath = cursor.getString(columnIndex);
-						showCrop(filePath, getPathToTempFiles() + lastFileName, mode);
+						showCrop(filePath, pathToTempFiles + lastFileName, mode);
 					}
 					cursor.close();
 				}
@@ -86,9 +87,8 @@ public class PhotoHelperImpl implements PhotoHelper {
 
 		} else if (requestCode == TAKE_PHOTO_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
-
-				String path = getPathToTempFiles() + IMAGE_TEMP_FILE_NAME;
-				showCrop(path, getPathToTempFiles() + lastFileName, mode);
+				showCrop(pathToTempFiles + IMAGE_TEMP_FILE_NAME, pathToTempFiles + lastFileName,
+						mode);
 			}
 		} else if (requestCode == CROP_PHOTO_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_CANCELED) {
@@ -98,9 +98,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 		}
 
 		if (requestCode == CROP_PHOTO_REQUEST_CODE && Activity.RESULT_OK == resultCode) {
-			return true;
-		} else {
-			return false;
+			callback.onGetPath(pathToTempFiles + lastFileName);
 		}
 	}
 
@@ -164,8 +162,4 @@ public class PhotoHelperImpl implements PhotoHelper {
 		file.delete();
 	}
 
-	@Override
-	public String getLastPath() {
-		return getPathToTempFiles() + lastFileName;
-	}
 }

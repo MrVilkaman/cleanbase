@@ -6,7 +6,12 @@ import android.content.Intent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.photocrop.CropImageFragment;
 
 public interface PhotoHelper {
-	boolean onActivityResult(int requestCode, int resultCode, Intent data);
+
+	interface PhotoHelperCallback{
+		void onGetPath(String path);
+	}
+
+	void onActivityResult(int requestCode, int resultCode, Intent data, PhotoHelperCallback callback);
 
 	void openCamera(CropImageFragment.MODE free);
 
@@ -15,6 +20,4 @@ public interface PhotoHelper {
 	void openGallery(CropImageFragment.MODE free);
 
 	void openGallery(CropImageFragment.MODE free, String fileName);
-
-	String getLastPath();
 }
