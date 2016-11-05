@@ -35,11 +35,13 @@ public class NavigationResolverImpl implements NavigationResolver {
 		this.uiResolver = uiResolver;
 		this.activityView = activityView;
 
-		init();
 	}
 
 	@Override
 	public void init() {
+
+		fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
+
 		toolbarResolver.setCallback(
 				new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
 						toolbarResolver));
