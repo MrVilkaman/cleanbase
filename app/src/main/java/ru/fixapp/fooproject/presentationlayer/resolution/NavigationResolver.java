@@ -7,6 +7,8 @@ import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
 public interface NavigationResolver {
 
+	void init();
+
 	BaseFragment createStartFragment();
 
 	void showFragment(BaseFragment fragment);

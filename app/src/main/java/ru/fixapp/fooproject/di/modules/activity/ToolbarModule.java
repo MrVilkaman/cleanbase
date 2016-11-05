@@ -26,7 +26,7 @@ public class ToolbarModule {
 	@Provides
 	@PerActivity
 	public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper) {
-		return new ToolbarResolverImpl(view, activity, menuHelper);
+		return new ToolbarResolverImpl(menuHelper);
 	}
 
 	@Provides

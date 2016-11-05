@@ -15,12 +15,14 @@ import javax.inject.Inject;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
+	@Inject IToolbar iToolbar;
 	@Inject LeftDrawerHelper drawerHelper;
 
 	private ProgressWheel progress;
@@ -29,9 +31,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
-
-
 		injectDagger();
+		View rootView = getRootView();
+		iToolbar.init(rootView);
+		toolbarResolver.init(rootView,this);
+		navigationResolver.init();
 		configureProgressBar();
 	}
 

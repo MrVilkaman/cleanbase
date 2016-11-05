@@ -9,18 +9,22 @@ import ru.fixapp.fooproject.R;
 
 public class MyToolbarImpl implements IToolbar {
 
-	private final Toolbar toolbar;
+	private  Toolbar toolbar;
 	private final ToolbarResolver resolver;
 	private final ToolbarMenuHelper toolbarMenuHelper;
 
 	public MyToolbarImpl(View view, ToolbarMenuHelper toolbarMenuHelper,ToolbarResolver resolver) {
+
+		this.resolver = resolver;
+		this.toolbarMenuHelper = toolbarMenuHelper;
+	}
+
+	@Override
+	public void init(View view) {
 		this.toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
 		if (toolbar == null) {
 			throw new NullPointerException("toolbar == null! Cant fing R.id.toolbar_actionbar");
 		}
-
-		this.resolver = resolver;
-		this.toolbarMenuHelper = toolbarMenuHelper;
 	}
 
 	@Override

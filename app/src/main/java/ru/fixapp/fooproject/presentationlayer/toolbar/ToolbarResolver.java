@@ -1,7 +1,9 @@
 package ru.fixapp.fooproject.presentationlayer.toolbar;
 
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public interface ToolbarResolver {
 
@@ -19,6 +21,8 @@ public interface ToolbarResolver {
 		void onClickHome();
 		void updateIcon();
 	}
+
+	void init(View view, AppCompatActivity activity);
 
 	void onPrepareOptionsMenu(Menu menu);
 

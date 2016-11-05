@@ -1,8 +1,11 @@
 package ru.fixapp.fooproject.presentationlayer.toolbar;
 
 import android.support.annotation.DrawableRes;
+import android.view.View;
 
 public interface IToolbar {
+
+    void init(View view);
 
     void hide();
 

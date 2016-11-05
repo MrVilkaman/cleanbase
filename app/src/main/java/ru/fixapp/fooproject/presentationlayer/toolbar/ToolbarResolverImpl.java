@@ -11,13 +11,18 @@ import ru.fixapp.fooproject.R;
 
 public class ToolbarResolverImpl implements ToolbarResolver{
 
-	private final Toolbar toolbar;
-	private final ActionBar supportActionBar;
-	private final ToolbarMenuHelper toolbarMenuHelper;
+	private Toolbar toolbar;
+	private ActionBar supportActionBar;
+	private ToolbarMenuHelper toolbarMenuHelper;
 
 	private ToolbarResolverCallback callback;
 
-	public ToolbarResolverImpl(View view, AppCompatActivity activity, ToolbarMenuHelper toolbarMenuHelper) {
+	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper) {
+		this.toolbarMenuHelper = toolbarMenuHelper;
+	}
+
+	@Override
+	public void init(View view, AppCompatActivity activity) {
 		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
 		activity.setSupportActionBar(toolbar);
 		supportActionBar = activity.getSupportActionBar();
@@ -27,7 +32,6 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 			if (callback != null)
 				callback.onClickHome();
 		});
-		this.toolbarMenuHelper = toolbarMenuHelper;
 	}
 
 	@Override

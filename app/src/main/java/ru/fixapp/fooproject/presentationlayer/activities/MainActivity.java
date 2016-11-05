@@ -17,6 +17,9 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 	@Override
 	protected void injectDagger() {
+		if (screenComponent != null) {
+			return;
+		}
 
 		AppComponent appComponent = App.get(this).getAppComponent();
 		View rootView = getRootView();
@@ -37,6 +40,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 
 	@Override
 	public ActivityComponent getComponent() {
+		injectDagger();
 		return screenComponent;
 	}
 }
