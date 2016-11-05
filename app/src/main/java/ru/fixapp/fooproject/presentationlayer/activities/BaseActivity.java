@@ -33,7 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		View rootView = getRootView();
-		iToolbar.init(rootView);
 		toolbarResolver.init(rootView,this);
 		navigationResolver.init();
 		configureProgressBar();

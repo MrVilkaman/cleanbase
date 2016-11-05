@@ -1,5 +1,6 @@
 package ru.fixapp.fooproject.presentationlayer.toolbar;
 
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -90,5 +91,25 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	public void showHomeButton() {
 		supportActionBar.setHomeButtonEnabled(true);
 		supportActionBar.setDisplayShowHomeEnabled(true);
+	}
+
+	@Override
+	public void showIcon(@DrawableRes int id, Runnable callback) {
+		toolbarMenuHelper.showIcon(id,callback);
+	}
+
+	@Override
+	public void remove(@DrawableRes int resId) {
+		toolbarMenuHelper.remove(resId);
+	}
+
+	@Override
+	public void hide() {
+		toolbar.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void show() {
+		toolbar.setVisibility(View.VISIBLE);
 	}
 }

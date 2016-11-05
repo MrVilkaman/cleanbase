@@ -7,11 +7,10 @@ import android.view.View;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
+import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolverImpl;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
-import ru.fixapp.fooproject.presentationlayer.toolbar.MyToolbarImpl;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
 
 @Module
 public class ToolbarModule {
@@ -37,7 +36,7 @@ public class ToolbarModule {
 
 	@Provides
 	@PerActivity
-	public IToolbar getToolbar(ToolbarMenuHelper toolbarMenuHelper, ToolbarResolver resolver) {
-		return new MyToolbarImpl(view, toolbarMenuHelper, resolver);
+	public IToolbar getToolbar(ToolbarResolver resolver) {
+		return resolver;
 	}
 }

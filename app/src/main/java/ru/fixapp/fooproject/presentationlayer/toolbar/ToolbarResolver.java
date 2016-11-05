@@ -5,17 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public interface ToolbarResolver {
-
-	void setCallback(ToolbarResolverCallback callback);
-
-	void setTitle(int text);
-
-	void setTitle(String text);
-
-	void hideHomeButton();
-
-	void showHomeButton();
+public interface ToolbarResolver extends IToolbar {
 
 	interface ToolbarResolverCallback{
 		void onClickHome();
@@ -23,6 +13,8 @@ public interface ToolbarResolver {
 	}
 
 	void init(View view, AppCompatActivity activity);
+
+	void setCallback(ToolbarResolverCallback callback);
 
 	void onPrepareOptionsMenu(Menu menu);
 

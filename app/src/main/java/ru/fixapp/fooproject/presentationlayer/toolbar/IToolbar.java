@@ -1,25 +1,24 @@
 package ru.fixapp.fooproject.presentationlayer.toolbar;
 
 import android.support.annotation.DrawableRes;
-import android.view.View;
+import android.support.annotation.StringRes;
 
 public interface IToolbar {
 
-    void init(View view);
 
-    void hide();
+	void hide();
 
-    void show();
+	void show();
 
-    void setText(int text);
+	void hideHomeButton();
 
-    void setText(String text);
+	void showHomeButton();
 
-    void hideHomeButton();
+	void setTitle(@StringRes int text);
 
-    void showHomeButton();
+	void setTitle(String text);
 
-    void showIcon(@DrawableRes int Id, Runnable callback);
+	void showIcon(@DrawableRes int Id, Runnable callback);
 
-    void remove(@DrawableRes int resId);
+	void remove(@DrawableRes int resId);
 }
