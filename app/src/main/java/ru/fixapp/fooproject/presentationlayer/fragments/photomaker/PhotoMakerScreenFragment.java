@@ -20,11 +20,13 @@ import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.photocrop.CropImageFragment;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.ImageLoader;
 
 public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 		implements PhotoMakerView {
 
 	@Inject PhotoHelper photoHelper;
+	@Inject ImageLoader imageLoader;
 
 	@BindView(R.id.image_view) ImageView imageView;
 
@@ -54,8 +56,7 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Override
 	public void showImage(String lastPath) {
-		Picasso.with(getActivity()).load(new File(lastPath))
-				.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageView);
+		imageLoader.showFromFile(lastPath,imageView);
 	}
 
 	@Override

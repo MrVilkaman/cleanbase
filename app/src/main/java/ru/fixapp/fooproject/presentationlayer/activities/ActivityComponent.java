@@ -10,6 +10,7 @@ import ru.fixapp.fooproject.di.modules.activity.CommonActivityModule;
 import ru.fixapp.fooproject.di.modules.activity.DrawerModule;
 import ru.fixapp.fooproject.di.modules.activity.ToolbarModule;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
+import ru.fixapp.fooproject.presentationlayer.resolution.ImageLoader;
 import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
@@ -35,5 +36,7 @@ public interface ActivityComponent {
 	IToolbar getIToolbar();
 
 	BaseActivityView provideBaseActivityView();
+
+	ImageLoader provideImageLoader();
 
 }

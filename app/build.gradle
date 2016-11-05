@@ -82,6 +82,7 @@ dependencies {
 
     compile libraries.simplecropview
     compile libraries.picasso
+    compile libraries.picassoOkhttp
 
     //tests
     testCompile libraries.junit
