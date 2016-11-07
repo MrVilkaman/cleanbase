@@ -6,11 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -41,7 +36,13 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
+		getPresenter().init(savedInstanceState);
+	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		getPresenter().saveInstanceState(outState);
 	}
 
 	@OnClick(R.id.photo_take)

@@ -30,12 +30,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
-	@Inject UIResolver uiResolver;
-	@Inject ThrowableResolver throwableResolver;
-	@Inject NavigationResolver navigationResolver;
-	@Inject P relationPresenter;
-	@Inject IToolbar toolbar;
-	@Inject BaseActivityView activityView;
+	//// TODO: 07.11.16 dont use public
+	@Inject public  UIResolver uiResolver;
+	@Inject public ThrowableResolver throwableResolver;
+	@Inject public NavigationResolver navigationResolver;
+	@Inject public P relationPresenter;
+	@Inject public IToolbar toolbar;
+	@Inject public BaseActivityView activityView;
 
 	@Nullable @BindView(R.id.progress_wheel) View progressBar;
 	private String previousFragment;
@@ -180,7 +181,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <T> T getComponent(Class<T> componentType) {
+	//// TODO: 07.11.16 must return protected...
+	public  <T> T getComponent(Class<T> componentType) {
 		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
 	}
 

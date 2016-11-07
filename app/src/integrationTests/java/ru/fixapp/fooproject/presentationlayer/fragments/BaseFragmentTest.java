@@ -1,6 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.fragments;
 
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,22 +31,28 @@ public abstract class BaseFragmentTest {
 	@Mock protected BaseActivityView activityView;
 	@Mock protected UIResolver uiRes;
 	@Mock protected ThrowableResolver throwable;
+	@Mock protected BaseActivityView baseActivityView;
 
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
 
+	@Before
+	public void init(){
+
+	}
+
 	protected void initDep(BaseFragment fragment) {
 		doNothing().when(fragment)
 				.daggerInject(any());
-//		doReturn(activityView).when(fragment)
-//				.getActivityView();
-		doReturn(toolbar).when(fragment)
-				.getToolbar();
+		doReturn(null).when(fragment)
+				.getComponent(any());
+		fragment.uiResolver = uiRes;
+		fragment.toolbar = toolbar;
+		fragment.activityView = activityView;
+		fragment.throwableResolver = throwable;
+		fragment.activityView = baseActivityView;
+
 		//// TODO: 28.10.16 maybe need use dagger2 for inject test module?
-//		doReturn(throwable).when(fragment)
-//				.createThrowableResolver(any());
-//		doReturn(uiRes).when(fragment)
-//				.createUiResolver(any());
 	}
 
 }
