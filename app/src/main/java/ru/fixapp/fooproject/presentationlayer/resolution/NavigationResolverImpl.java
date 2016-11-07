@@ -2,7 +2,6 @@ package ru.fixapp.fooproject.presentationlayer.resolution;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -116,7 +115,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void openActivity(Class<? extends FragmentActivity> aClass) {
+	public void openActivity(Class<? extends Activity> aClass) {
 		currentActivity.startActivity(new Intent(currentActivity, aClass));
 		currentActivity.finish();
 	}
@@ -141,7 +140,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 		}
 	}
 
-	private void exit() {
+	void exit() {
 		if (doubleBackToExitPressedOnce) {
 			currentActivity.finish();
 		} else {

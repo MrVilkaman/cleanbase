@@ -1,7 +1,7 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
@@ -23,7 +23,7 @@ public interface NavigationResolver {
 
 	void back();
 
-	void openActivity(Class<? extends FragmentActivity> aClass);
+	void openActivity(Class<? extends Activity> aClass);
 
 	void startActivityForResultFormFragment(Intent intent, int requestCode);
 
