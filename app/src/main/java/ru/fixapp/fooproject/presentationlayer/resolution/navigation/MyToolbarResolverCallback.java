@@ -3,7 +3,7 @@ package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
 class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolverCallback {

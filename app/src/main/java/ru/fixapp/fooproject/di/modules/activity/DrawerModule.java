@@ -6,8 +6,8 @@ import android.view.View;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelperEmpty;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelperEmpty;
 
 @Module
 public class DrawerModule {

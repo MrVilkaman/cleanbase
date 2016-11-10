@@ -13,7 +13,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import javax.inject.Inject;
 
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;

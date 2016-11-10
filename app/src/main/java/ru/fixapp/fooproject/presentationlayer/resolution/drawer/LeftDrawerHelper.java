@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
 import android.support.annotation.IdRes;
 

@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;

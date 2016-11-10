@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -7,24 +7,28 @@ import android.view.View;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
-public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
+public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
 
 
+	private static final int MAIN_GRAVITY = Gravity.LEFT;
+	LeftDrawerHelperCallback leftDrawerHelperCallback;
 	private DrawerLayout drawerLayout;
 	private View contentView;
-	private LeftDrawerHelperCallback leftDrawerHelperCallback;
 
 
 	public LeftDrawerHelperImpl(View rootView) {
 		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
-
 		contentView = rootView.findViewById(R.id.all_content);
+	}
+
+	// NOTE: call once before use!
+	public void init() {
 		this.drawerLayout.addDrawerListener(this);
 	}
 
 	@Override
 	public void open() {
-		drawerLayout.openDrawer(Gravity.LEFT);
+		drawerLayout.openDrawer(MAIN_GRAVITY);
 	}
 
 	@Override
@@ -38,13 +42,11 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	}
 
 	@Override
-	public BaseFragment getDrawerFragment() {
-		return null;
-	}
+	public abstract BaseFragment getDrawerFragment();
 
 	@Override
 	public boolean isOpen() {
-		return drawerLayout.isDrawerOpen(Gravity.LEFT);
+		return drawerLayout.isDrawerOpen(MAIN_GRAVITY);
 	}
 
 	@Override

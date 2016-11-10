@@ -10,7 +10,7 @@ import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
