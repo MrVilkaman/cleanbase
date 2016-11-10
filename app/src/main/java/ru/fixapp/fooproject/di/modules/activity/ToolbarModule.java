@@ -7,10 +7,10 @@ import android.view.View;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarMenuHelper;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolverImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarMenuHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolverImpl;
 
 @Module
 public class ToolbarModule {

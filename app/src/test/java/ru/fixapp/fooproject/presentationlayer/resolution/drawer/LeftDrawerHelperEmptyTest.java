@@ -1,11 +1,9 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelperEmpty;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 

@@ -15,8 +15,8 @@ import javax.inject.Inject;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
 

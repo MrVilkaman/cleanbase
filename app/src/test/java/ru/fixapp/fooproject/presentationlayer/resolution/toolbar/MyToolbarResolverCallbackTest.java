@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
+package ru.fixapp.fooproject.presentationlayer.resolution.toolbar;
 
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -6,9 +6,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.mockito.Mockito.never;

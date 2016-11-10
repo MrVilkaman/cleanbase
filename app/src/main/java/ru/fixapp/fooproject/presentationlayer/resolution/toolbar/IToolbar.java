@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.toolbar;
+package ru.fixapp.fooproject.presentationlayer.resolution.toolbar;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;

@@ -14,7 +14,7 @@ import ru.fixapp.fooproject.presentationlayer.resolution.ImageLoader;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
 
 @PerActivity
 @Component(dependencies = AppComponent.class,

@@ -22,7 +22,7 @@ import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment

@@ -1,9 +1,9 @@
-package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
+package ru.fixapp.fooproject.presentationlayer.resolution.fragments;
 
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.mockito.Mockito.verify;

@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.toolbar;
+package ru.fixapp.fooproject.presentationlayer.resolution.toolbar;
 
 
 import android.support.v4.util.ArrayMap;

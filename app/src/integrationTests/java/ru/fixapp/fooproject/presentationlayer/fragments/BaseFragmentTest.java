@@ -16,7 +16,7 @@ import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;

@@ -1,10 +1,9 @@
-package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
+package ru.fixapp.fooproject.presentationlayer.resolution.fragments;
 
 
-import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 
-class MyFragmentResolverCallback implements FragmentResolver.FragmentResolverCallback {
+public class MyFragmentResolverCallback implements FragmentResolver.FragmentResolverCallback {
 	private final ToolbarResolver toolbarResolver;
 
 	public MyFragmentResolverCallback(ToolbarResolver toolbarResolver) {

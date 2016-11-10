@@ -1,12 +1,12 @@
-package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
+package ru.fixapp.fooproject.presentationlayer.resolution.toolbar;
 
 
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 
-class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolverCallback {
+public class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolverCallback {
 	private final FragmentResolver fragmentManager;
 	private final LeftDrawerHelper drawerHelper;
 	private final BaseActivityView activityView;

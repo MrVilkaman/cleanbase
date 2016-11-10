@@ -9,10 +9,12 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
-import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
-import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.MyFragmentResolverCallback;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.MyToolbarResolverCallback;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 
 import static rx.Observable.just;
 
