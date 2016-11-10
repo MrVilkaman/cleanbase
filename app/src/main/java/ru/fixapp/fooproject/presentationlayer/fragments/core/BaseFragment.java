@@ -19,7 +19,7 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;

@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,18 +10,24 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.activities.MainActivity;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper.LeftDrawerHelperCallback;
+import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -274,6 +280,50 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(toolbarResolver).updateIcon();
 	}
 
+
+	@Test
+	public void testOnExit_oneClick() {
+		// Arrange
+		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
+
+		// Act
+		resolver.exit();
+
+		// Assert
+		verify(uiResolver).showToast(R.string.exit_toast);
+	}
+
+	@Test
+	public void testOnExit_twoClick() {
+		// Arrange
+		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
+
+		// Act
+		resolver.exit();
+		resolver.exit();
+
+		// Assert
+		InOrder inOrder = inOrder(uiResolver, currentActivity);
+		inOrder.verify(uiResolver,times(1)).showToast(R.string.exit_toast);
+		inOrder.verify(currentActivity,times(1)).finish();
+	}
+
+	@Test
+	public void testOnClickHome() {
+		// Arrange
+
+		// Act
+		resolver.onBackPressed();
+
+		// Assert
+
+	}
+
+	@Test
+	public void testUpdateIcon() {
+
+	}
+
 	/*TOOLS*/
 	private InOrder testShowFragmentBase(Runnable action) {
 		// Arrange
@@ -310,6 +360,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(drawerHelper, never()).close(any());
 		return inOrder;
 	}
+
 
 
 }

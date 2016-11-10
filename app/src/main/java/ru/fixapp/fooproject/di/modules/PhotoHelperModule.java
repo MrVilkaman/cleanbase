@@ -7,7 +7,7 @@ import dagger.Provides;
 import ru.fixapp.fooproject.di.PerScreen;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelper;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelperImpl;
-import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 
 @Module
 public class PhotoHelperModule {

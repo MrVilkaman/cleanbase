@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.photocrop.CropImageFragment;
-import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.utils.StorageUtils;
 
 public class PhotoHelperImpl implements PhotoHelper {

@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 
 import android.app.Activity;
 import android.content.Intent;

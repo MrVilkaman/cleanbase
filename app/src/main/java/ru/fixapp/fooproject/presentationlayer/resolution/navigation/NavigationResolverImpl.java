@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.resolution;
+package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
+import ru.fixapp.fooproject.presentationlayer.resolution.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.ToolbarResolver;
 
 import static rx.Observable.just;
@@ -41,9 +44,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 		fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
 
-		toolbarResolver.setCallback(
+		MyToolbarResolverCallback callback =
 				new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
-						toolbarResolver));
+						toolbarResolver, this);
+		toolbarResolver.setCallback(callback);
 
 
 		if (!fragmentManager.hasFragment()) {
@@ -151,58 +155,4 @@ public class NavigationResolverImpl implements NavigationResolver {
 		}
 	}
 
-	private static class MyFragmentResolverCallback
-			implements FragmentResolver.FragmentResolverCallback {
-		private final ToolbarResolver toolbarResolver;
-
-		public MyFragmentResolverCallback(ToolbarResolver toolbarResolver) {
-			this.toolbarResolver = toolbarResolver;
-		}
-
-		@Override
-		public void onRootFragment() {
-			toolbarResolver.showHomeIcon();
-		}
-
-		@Override
-		public void onNotRootFragment() {
-			toolbarResolver.showBackIcon();
-		}
-	}
-
-	private class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolverCallback {
-		private final FragmentResolver fragmentManager;
-		private final LeftDrawerHelper drawerHelper;
-		private final BaseActivityView activityView;
-		private final ToolbarResolver toolbarResolver;
-
-		public MyToolbarResolverCallback(FragmentResolver fragmentManager,
-										 LeftDrawerHelper drawerHelper,
-										 BaseActivityView activityView,
-										 ToolbarResolver toolbarResolver) {
-			this.fragmentManager = fragmentManager;
-			this.drawerHelper = drawerHelper;
-			this.activityView = activityView;
-			this.toolbarResolver = toolbarResolver;
-		}
-
-		@Override
-		public void onClickHome() {
-			if (fragmentManager.isRootScreen()) {
-				drawerHelper.open();
-			} else {
-				onBackPressed();
-				activityView.hideKeyboard();
-			}
-		}
-
-		@Override
-		public void updateIcon() {
-			if (fragmentManager.isRootScreen()) {
-				toolbarResolver.showHomeIcon();
-			} else {
-				toolbarResolver.showBackIcon();
-			}
-		}
-	}
 }

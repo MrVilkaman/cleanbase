@@ -11,7 +11,7 @@ import ru.fixapp.fooproject.di.modules.activity.DrawerModule;
 import ru.fixapp.fooproject.di.modules.activity.ToolbarModule;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
 import ru.fixapp.fooproject.presentationlayer.resolution.ImageLoader;
-import ru.fixapp.fooproject.presentationlayer.resolution.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.toolbar.IToolbar;
