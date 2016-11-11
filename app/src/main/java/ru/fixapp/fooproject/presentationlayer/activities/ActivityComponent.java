@@ -15,6 +15,7 @@ import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationRe
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
+import ru.fixapp.fooproject.presentationlayer.utils.StorageUtils;
 
 @PerActivity
 @Component(dependencies = AppComponent.class,
@@ -38,5 +39,7 @@ public interface ActivityComponent {
 	BaseActivityView provideBaseActivityView();
 
 	ImageLoader provideImageLoader();
+
+	StorageUtils storageUtils();
 
 }

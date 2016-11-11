@@ -14,6 +14,7 @@ import ru.fixapp.fooproject.di.modules.ProvidersModule;
 import ru.fixapp.fooproject.domainlayer.providers.SchedulersProvider;
 import ru.fixapp.fooproject.domainlayer.providers.SessionDataProvider;
 import ru.fixapp.fooproject.presentationlayer.resolution.ImageLoader;
+import ru.fixapp.fooproject.presentationlayer.utils.StorageUtils;
 
 /**
  * Created by Zahar on 24.03.16.
@@ -32,6 +33,8 @@ public interface AppComponent {
 	SchedulersProvider getSchedulersProvider();
 
 	RestApi provideApi();
+
+	StorageUtils storageUtils();
 
 	Context provideContext();
 

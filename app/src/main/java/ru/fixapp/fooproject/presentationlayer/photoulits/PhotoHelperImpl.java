@@ -39,10 +39,12 @@ public class PhotoHelperImpl implements PhotoHelper {
 
 	private final Context context;
 	private final NavigationResolver resolver;
+	private final StorageUtils storageUtils;
 
-	public PhotoHelperImpl(Context context, NavigationResolver resolver) {
+	public PhotoHelperImpl(Context context, NavigationResolver resolver, StorageUtils storageUtils) {
 		this.context = context;
 		this.resolver = resolver;
+		this.storageUtils = storageUtils;
 	}
 
 	public static void copy(File src, File dst) throws IOException {
@@ -56,7 +58,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 	}
 
 	private String getPathToTempFiles() {
-		return StorageUtils.getStoragePath(context) + File.separator + IMAGE_TEMP + File.separator;
+		return storageUtils.getStoragePath(context) + File.separator + IMAGE_TEMP + File.separator;
 	}
 
 	@Override
