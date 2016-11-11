@@ -81,37 +81,40 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public void showFragment(BaseFragment fragment) {
-		if (drawerHelper.isOpen()) {
-			drawerHelper.close(() -> {
-				toolbarResolver.clear();
-				fragmentManager.showFragment(fragment);
-			});
-		} else {
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
+			toolbarResolver.clear();
 			fragmentManager.showFragment(fragment);
+		};
+		if (drawerHelper.isOpen()) {
+			drawerHelper.close(callback);
+		} else {
+			callback.onClose();
 		}
 	}
 
 	@Override
 	public void showRootFragment(BaseFragment fragment) {
-		if (drawerHelper.isOpen()) {
-			drawerHelper.close(() -> {
-				toolbarResolver.clear();
-				fragmentManager.showRootFragment(fragment);
-			});
-		} else {
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
+			toolbarResolver.clear();
 			fragmentManager.showRootFragment(fragment);
+		};
+		if (drawerHelper.isOpen()) {
+			drawerHelper.close(callback);
+		} else {
+			callback.onClose();
 		}
 	}
 
 	@Override
 	public void showFragmentWithoutBackStack(BaseFragment fragment) {
-		if (drawerHelper.isOpen()) {
-			drawerHelper.close(() -> {
-				toolbarResolver.clear();
-				fragmentManager.showFragmentWithoutBackStack(fragment);
-			});
-		} else {
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
+			toolbarResolver.clear();
 			fragmentManager.showFragmentWithoutBackStack(fragment);
+		};
+		if (drawerHelper.isOpen()) {
+			drawerHelper.close(callback);
+		} else {
+			callback.onClose();
 		}
 	}
 

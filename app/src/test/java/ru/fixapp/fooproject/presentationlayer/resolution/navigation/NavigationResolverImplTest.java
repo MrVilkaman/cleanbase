@@ -358,6 +358,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 
 		inOrder.verify(drawerHelper).isOpen();
 		inOrder.verify(drawerHelper, never()).close(any());
+		inOrder.verify(toolbarResolver).clear();
 		return inOrder;
 	}
 
