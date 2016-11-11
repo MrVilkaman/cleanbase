@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import java.util.Collections;
 import java.util.List;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
@@ -15,7 +16,6 @@ import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 public class FragmentResolverImpl implements FragmentResolver {
 
 	private static final int EMTPY_CODE = -1;
-	private static final int PERMANENT_FRAGMENTS = 1; // left menu, retain ,ect
 	private FragmentResolverCallback callback;
 	private FragmentManager fragmentManager;
 	private int containerID;
@@ -68,10 +68,6 @@ public class FragmentResolverImpl implements FragmentResolver {
 		nextFragment = fragment;
 		backStack = addToBackStack;
 		this.isRoot = isRoot;
-		nextFragment();
-	}
-
-	void nextFragment() {
 		if (nextFragment != null) {
 			BaseFragment currentFragment = (BaseFragment) getCurrentFragment();
 			boolean hasOldFragment = currentFragment != null;
@@ -81,45 +77,58 @@ public class FragmentResolverImpl implements FragmentResolver {
 			}
 
 			if (!(hasOldFragment && isAlreadyLoaded)) {
-				if (isRoot) {
-					clearBackStack();
-					if (callback != null)
-						callback.onRootFragment();
-				} else {
-					if (callback != null) {
-						if (isRootScreen() && !backStack) {
-							callback.onRootFragment();
-						} else {
-							callback.onNotRootFragment();
-						}
-					}
-				}
+				updateToolbar();
 			}
-			////30.10.16 maybe need?
-			//			preCheckFragment(nextFragment.getName());
 
 			if (code != EMTPY_CODE) {
 				nextFragment.setTargetFragment(currentFragment, code);
 				code = EMTPY_CODE;
 			}
-
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			boolean b = backStack || isRoot;
-			fragmentTransaction.replace(containerID, nextFragment, nextFragment.getName());
-			if (currentFragment != null && !isRoot) {
-				nextFragment.setPreviousFragment(
-						b ? currentFragment.getName() : currentFragment.getPreviousFragment());
-				fragmentTransaction.addToBackStack(currentFragment.getName());
-			} else {
-				if (callback != null)
-					callback.onRootFragment();
-				nextFragment.setPreviousFragment(null);
-				fragmentTransaction.addToBackStack(null);
-			}
-			fragmentTransaction.commit();
-
+			doTransaction(currentFragment);
 		}
 		nextFragment = null;
+	}
+
+	public void updateToolbar() {
+		if (this.isRoot) {
+			clearBackStack();
+			if (callback != null)
+				callback.onRootFragment();
+		} else {
+			if (callback != null) {
+				if (isRootScreen() && !backStack) {
+					callback.onRootFragment();
+				} else {
+					callback.onNotRootFragment();
+				}
+			}
+		}
+	}
+
+	void doTransaction(BaseFragment currentFragment) {
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		boolean b = backStack || this.isRoot;
+		fragmentTransaction.replace(containerID, nextFragment, nextFragment.getName());
+		if (currentFragment != null && !this.isRoot) {
+			addChildFragment(currentFragment, fragmentTransaction,
+					b ? currentFragment.getName() : currentFragment.getPreviousFragment());
+		} else {
+			addRootFragment(fragmentTransaction);
+		}
+		fragmentTransaction.commit();
+	}
+
+	void addChildFragment(BaseFragment currentFragment, FragmentTransaction fragmentTransaction,
+						  String previousFragment) {
+		nextFragment.setPreviousFragment(previousFragment);
+		fragmentTransaction.addToBackStack(currentFragment.getName());
+	}
+
+	void addRootFragment(FragmentTransaction fragmentTransaction) {
+		if (callback != null)
+			callback.onRootFragment();
+		nextFragment.setPreviousFragment(null);
+		fragmentTransaction.addToBackStack(null);
 	}
 
 	@Override
@@ -136,25 +145,37 @@ public class FragmentResolverImpl implements FragmentResolver {
 		return fragmentManager.findFragmentById(containerID);
 	}
 
-	private void clearBackStack() {
+	void clearBackStack() {
 
 		if (0 < fragmentManager.getBackStackEntryCount()) {
 			int id = fragmentManager.getBackStackEntryAt(0).getId();
 			fragmentManager.popBackStackImmediate(id, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 
-		List<Fragment> fragments = fragmentManager.getFragments();
-		if (fragments == null) {
-			return;
-		}
+		List<Fragment> fragments = getFragments();
 		FragmentTransaction trans = fragmentManager.beginTransaction();
 		for (Fragment fragment : fragments) {
-			if (fragment != null && !(fragment instanceof ISingletonFragment)) {
-				trans.remove(fragment);
-			}
+			trans.remove(fragment);
 		}
 		trans.commit();
+	}
 
+	private List<Fragment> getFragments() {
+		List<Fragment> fragments = fragmentManager.getFragments();
+		if (fragments == null) {
+			return Collections.emptyList();
+		}
+		for (int i = fragments.size() - 1; 0 <= i; i--) {
+			Fragment fragment = fragments.get(i);
+			if (!isSimpleFragment(fragment)) {
+				fragments.remove(i);
+			}
+		}
+		return fragments;
+	}
+
+	private boolean isSimpleFragment(Fragment fragment) {
+		return fragment != null && !(fragment instanceof ISingletonFragment);
 	}
 
 	@Override
@@ -172,8 +193,8 @@ public class FragmentResolverImpl implements FragmentResolver {
 		BaseFragment current = (BaseFragment) getCurrentFragment();
 		boolean b = current != null && current.getPreviousFragment() != null;
 
-		boolean b1 = PERMANENT_FRAGMENTS < fragmentManager.getBackStackEntryCount();
-		return !b1 || !b;
+		boolean b1 = getFragments().isEmpty();
+		return b1 || !b;
 	}
 
 	@Override
