@@ -19,6 +19,7 @@ public class UIResolverImpl implements UIResolver {
 	private final Context context;
 	private final View rootView;
 
+	// context for show dialogs
 	public UIResolverImpl(Context context, View rootView) {
 		this.context = context;
 		this.rootView = rootView;

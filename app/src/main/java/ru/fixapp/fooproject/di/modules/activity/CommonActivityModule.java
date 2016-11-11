@@ -1,7 +1,6 @@
 package ru.fixapp.fooproject.di.modules.activity;
 
 
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,16 +9,16 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolverImpl;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolverImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolverImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolverImpl;
+import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 
 @Module
 public class CommonActivityModule {
@@ -41,8 +40,8 @@ public class CommonActivityModule {
 
 	@Provides
 	@PerActivity
-	public UIResolver createUiResolver(Context context) {
-		return new UIResolverImpl(context, view);
+	public UIResolver createUiResolver() {
+		return new UIResolverImpl(view.getContext(), view);
 	}
 
 	@Provides
