@@ -23,7 +23,6 @@ import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationRe
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
-import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements BaseView, BaseActivityView, OnBackPressedListener {

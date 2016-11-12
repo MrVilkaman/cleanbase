@@ -11,7 +11,7 @@ import java.util.List;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.ISingletonFragment;
-import ru.fixapp.fooproject.presentationlayer.utils.OnBackPressedListener;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.OnBackPressedListener;
 
 public class FragmentResolverImpl implements FragmentResolver {
 

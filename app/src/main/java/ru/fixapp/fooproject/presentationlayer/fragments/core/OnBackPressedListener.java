@@ -1,4 +1,4 @@
-package ru.fixapp.fooproject.presentationlayer.utils;
+package ru.fixapp.fooproject.presentationlayer.fragments.core;
 
 public interface OnBackPressedListener {
 	boolean onBackPressed();
