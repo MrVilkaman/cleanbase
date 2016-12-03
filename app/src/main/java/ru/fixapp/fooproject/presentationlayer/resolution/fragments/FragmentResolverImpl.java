@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +74,8 @@ public class FragmentResolverImpl implements FragmentResolver {
 			boolean hasOldFragment = currentFragment != null;
 			boolean isAlreadyLoaded = false;
 			if (hasOldFragment) {
-				isAlreadyLoaded = currentFragment.getName().equals(nextFragment.getName());
+				isAlreadyLoaded = currentFragment.getName()
+						.equals(nextFragment.getName());
 			}
 
 			if (!(hasOldFragment && isAlreadyLoaded)) {
@@ -148,7 +150,8 @@ public class FragmentResolverImpl implements FragmentResolver {
 	void clearBackStack() {
 
 		if (0 < fragmentManager.getBackStackEntryCount()) {
-			int id = fragmentManager.getBackStackEntryAt(0).getId();
+			int id = fragmentManager.getBackStackEntryAt(0)
+					.getId();
 			fragmentManager.popBackStackImmediate(id, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 
@@ -165,6 +168,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 		if (fragments == null) {
 			return Collections.emptyList();
 		}
+		fragments = new ArrayList<>(fragments);
 		for (int i = fragments.size() - 1; 0 <= i; i--) {
 			Fragment fragment = fragments.get(i);
 			if (!isSimpleFragment(fragment)) {
@@ -205,6 +209,8 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	@Override
 	public void addDrawer(int drawerContentFrame, BaseFragment drawerFragment) {
-		fragmentManager.beginTransaction().add(drawerContentFrame, drawerFragment).commit();
+		fragmentManager.beginTransaction()
+				.add(drawerContentFrame, drawerFragment)
+				.commit();
 	}
 }
