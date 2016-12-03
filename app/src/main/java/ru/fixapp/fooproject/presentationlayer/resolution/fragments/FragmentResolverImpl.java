@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -165,6 +166,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 		if (fragments == null) {
 			return Collections.emptyList();
 		}
+		fragments = new ArrayList<>(fragments);
 		for (int i = fragments.size() - 1; 0 <= i; i--) {
 			Fragment fragment = fragments.get(i);
 			if (!isSimpleFragment(fragment)) {
