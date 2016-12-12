@@ -32,6 +32,12 @@ public class UIResolverImpl implements UIResolver {
 	}
 
 	@Override
+	public void showToast(@StringRes int resId, Object... arg) {
+		Toast.makeText(context, context.getString(resId, arg), Toast.LENGTH_SHORT)
+				.show();
+	}
+
+	@Override
 	public void showMessage(@StringRes int resId) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
 		builder.content(resId)
@@ -42,7 +48,7 @@ public class UIResolverImpl implements UIResolver {
 	@Override
 	public void showMessage(@StringRes int resId, Object... arg) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
-		builder.content(resId,arg)
+		builder.content(resId, arg)
 				.positiveText(android.R.string.ok)
 				.show();
 	}
@@ -61,7 +67,8 @@ public class UIResolverImpl implements UIResolver {
 		Snackbar snackbar = Snackbar.make(rootView, textId, Snackbar.LENGTH_LONG);
 		View snackBarView = snackbar.getView();
 		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-		TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+		TextView textView =
+				(TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
 		textView.setTextColor(ContextCompat.getColor(context, R.color.app_main_text_color));
 		snackbar.show();
 	}
