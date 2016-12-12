@@ -6,24 +6,32 @@ import java.lang.ref.WeakReference;
 
 import ru.fixapp.fooproject.BuildConfig;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseView;
+import ru.fixapp.fooproject.presentationlayer.utils.AppUtils;
 
 
 /**
  * Created by root on 15.03.16.
  */
-public abstract class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
+public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	private final WeakReference<V> viewRef;
+	private final String string;
 
 	public ViewSubscriber(V view) {
 		this.viewRef = new WeakReference<>(view);
+		string = BuildConfig.DEBUG ? AppUtils.getSubscriberStartStack() : "";
 	}
 
 	@Override
 	public void onError(Throwable e) {
 		if (BuildConfig.DEBUG) {
-			Log.e("LoadSubscriber", "onError", e);
+			Log.e("LoadSubscriber", "Start by:" + string, e);
 		}
+	}
+
+	@Override
+	public void onNext(T t) {
+
 	}
 
 	@Override
