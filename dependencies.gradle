@@ -12,6 +12,7 @@ ext.versions = [
         dagger            : '2.7',
         rxJava            : '1.2.1',
         rxandroid         : '1.2.1',
+        rxBus             : '1.2.0',
 
         supportLibs       : '25.0.0',
         gcm               : '8.4.0',
@@ -94,6 +95,8 @@ ext.libraries = [
         gson                      : "com.google.code.gson:gson:$versions.gson",
 
         rxJava                    : "io.reactivex:rxjava:$versions.rxJava",
+        rxBus                     : "net.jokubasdargis.rxbus:rxbus:$versions.rxBus",
+        rxBusAndroid              : "net.jokubasdargis.rxbus:rxbus-android:$versions.rxBus",
         rxAndroid                 : "io.reactivex:rxandroid:$versions.rxandroid",
         rxBindingAppcompat        : "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$versions.rxBinding",
 

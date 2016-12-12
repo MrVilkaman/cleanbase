@@ -23,6 +23,7 @@ import ru.fixapp.fooproject.presentationlayer.utils.StorageUtils;
 		AppModule.class,
 		ApiModule.class,
 		NetworkModule.class,
+		EventBusModule.class,
 		ImageLoaderModule.class,
 		ProvidersModule.class})
 @Singleton

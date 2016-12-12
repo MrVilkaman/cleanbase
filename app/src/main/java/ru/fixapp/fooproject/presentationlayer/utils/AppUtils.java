@@ -21,4 +21,22 @@ public class AppUtils {
 	public static boolean isSamsung() {
 		return Build.MANUFACTURER.compareToIgnoreCase("samsung") != 0;
 	}
+
+
+	public static String getSubscriberStartStack() {
+		StackTraceElement[] stackTrace = new Exception().getStackTrace();
+
+		boolean findInit = false;
+		for (int i = 1; i < stackTrace.length; i++) {
+			String methodName = stackTrace[i].getMethodName();
+			if (methodName.equals("<init>")) {
+				findInit = true;
+			}else{
+				if (findInit) {
+					return String.format("\n%s\n%s", stackTrace[i].toString(), stackTrace[i+1].toString());
+				}
+			}
+		}
+		return "";
+	}
 }
