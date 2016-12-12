@@ -9,10 +9,14 @@ import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseView;
 import ru.fixapp.fooproject.presentationlayer.utils.AppUtils;
 
 
+/**
+ * Created by root on 15.03.16.
+ */
 public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	private final WeakReference<V> viewRef;
 	private final String string;
+	private boolean skipNextError;
 
 	public ViewSubscriber(V view) {
 		this.viewRef = new WeakReference<>(view);
@@ -23,6 +27,11 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	public void onError(Throwable e) {
 		if (BuildConfig.DEBUG) {
 			Log.e("LoadSubscriber", "Start by:" + string, e);
+		}
+		BaseView view = view();
+		if (view == null) return;
+		if (showError()) {
+			view.handleError(e);
 		}
 	}
 
@@ -39,4 +48,13 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	protected V view() {
 		return viewRef.get();
 	}
+
+	protected void skipNextError() {
+		skipNextError = true;
+	}
+
+	protected boolean showError() {
+		return !skipNextError;
+	}
+
 }

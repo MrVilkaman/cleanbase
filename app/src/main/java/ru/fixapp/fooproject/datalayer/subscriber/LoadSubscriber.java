@@ -9,7 +9,6 @@ import ru.fixapp.fooproject.presentationlayer.fragments.core.BindType;
  */
 public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 
-	private boolean skipNextError;
 
 	public LoadSubscriber(V view) {
 		super(view);
@@ -19,6 +18,7 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onNext(T item) {
 		V view = view();
 		if (view instanceof BindType) {
@@ -28,25 +28,17 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 
 	@Override
 	public void onError(Throwable e) {
-		super.onError(e);
 		BaseView view = view();
 		if (view  == null) return;
-
 
 		if (needProgress()) {
 			view.hideProgress();
 		}
-		if (showError()) {
-			view.handleError(e);
-		}
+		super.onError(e);
 	}
 
 	protected boolean needProgress() {
 		return true;
-	}
-
-	protected boolean showError() {
-		return !skipNextError;
 	}
 
 	@Override
@@ -56,10 +48,5 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 			view().hideProgress();
 		}
 	}
-
-	protected void skipNextError() {
-		skipNextError = true;
-	}
-
 
 }
