@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testerror.TestErrorScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
@@ -64,7 +63,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public BaseFragment createStartFragment() {
-		return TestErrorScreenFragment.open();
+		return null;
 	}
 
 	@Override
