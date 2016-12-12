@@ -1,13 +1,16 @@
 <resources>
+	<!--  GLOBAL  -->
 	<string name="app_name">Foo</string>
 
-	<string name="exit_toast">Для выхода нажмите еще раз!</string>
+	<string name="simple_text">%1$s</string>
 
+	<!--Dialogs-->
 	<string name="dialog_server_error">Неожиданная ошибка на сервере</string>
 	<string name="dialog_server_notavailable_error">Сервер временно недоступен!</string>
 	<string name="dialog_internet_error">При загрузке данных произошла ошибка. Проверьте Ваше подключение к сети.</string>
 	<string name="dialog_default_404_error">Не найдено</string>
 	<string name="dialog_default_error">Непредвиденная ошибка: %1$s</string>
 	<string name="dialog_default_unauthorized">Не авторизован</string>
+	<string name="exit_toast">Для выхода нажмите еще раз!</string>
 	<string name="crop_done">Готово</string>
 </resources>
