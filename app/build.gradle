@@ -16,16 +16,28 @@ android {
         versionCode versions.code
         versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         debug {
             if (project.hasProperty("mytestCoverageEnabled")) {
                 testCoverageEnabled = mytestCoverageEnabled
             }
+            ext.enableCrashlytics = false
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        dev {
+            minSdkVersion 21
+//            buildConfigField "String", "HOST", "\"api.byblos.su\""
+        }
+
+        prod {
         }
     }
 
