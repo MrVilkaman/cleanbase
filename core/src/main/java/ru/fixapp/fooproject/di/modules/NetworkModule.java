@@ -2,7 +2,7 @@ package ru.fixapp.fooproject.di.modules;
 
 import android.support.annotation.NonNull;
 
-import ru.fixapp.fooproject.BuildConfig;
+import com.github.mrvilkaman.core.BuildConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +40,7 @@ public class NetworkModule {
 	}
 
 	private Interceptor provideHttpLoggingInterceptor() {
+		// TODO: 25.12.16 mode to global setting
 		if (BuildConfig.DEBUG) {
 			HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 			httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

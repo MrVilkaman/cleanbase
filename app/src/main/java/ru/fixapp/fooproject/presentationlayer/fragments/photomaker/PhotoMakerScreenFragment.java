@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityCoreComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.photocrop.CropImageFragment;
 import ru.fixapp.fooproject.presentationlayer.photoulits.PhotoHelper;
@@ -68,8 +68,8 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 	}
 
 	@Override
-	public void daggerInject(ActivityComponent component) {
-		DaggerPhotoMakerScreenComponent.builder().activityComponent(component).build().inject(this);
+	public void daggerInject(ActivityCoreComponent component) {
+		DaggerPhotoMakerScreenComponent.builder().activityCoreComponent(component).build().inject(this);
 	}
 
 }

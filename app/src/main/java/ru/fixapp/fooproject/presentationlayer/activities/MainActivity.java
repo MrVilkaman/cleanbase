@@ -11,7 +11,7 @@ import ru.fixapp.fooproject.di.modules.activity.ToolbarModule;
 import ru.fixapp.fooproject.presentationlayer.app.App;
 
 
-public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
+public class MainActivity extends BaseActivity implements IHasComponent<ActivityCoreComponent> {
 
 	private ActivityComponent screenComponent;
 
@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 				.toolbarModule(new ToolbarModule(rootView, this))
 				.drawerModule(new DrawerModule(rootView)).build();
 		screenComponent.inject(this);
+
 	}
 
 	protected int getActivityLayoutResourceID() {
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	}
 
 	@Override
-	public ActivityComponent getComponent() {
+	public ActivityCoreComponent getComponent() {
 		injectDagger();
 		return screenComponent;
 	}

@@ -2,9 +2,10 @@ package ru.fixapp.fooproject.datalayer.subscriber;
 
 import android.util.Log;
 
+import com.github.mrvilkaman.core.BuildConfig;
+
 import java.lang.ref.WeakReference;
 
-import ru.fixapp.fooproject.BuildConfig;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseView;
 import ru.fixapp.fooproject.presentationlayer.utils.AppUtils;
 
@@ -20,11 +21,14 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	public ViewSubscriber(V view) {
 		this.viewRef = new WeakReference<>(view);
+		// TODO: 25.12.16 mode to global setting
 		string = BuildConfig.DEBUG ? AppUtils.getSubscriberStartStack() : "";
 	}
 
 	@Override
 	public void onError(Throwable e) {
+		// TODO: 25.12.16 mode to global setting
+
 		if (BuildConfig.DEBUG) {
 			Log.e("LoadSubscriber", "Start by:" + string, e);
 		}

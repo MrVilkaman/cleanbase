@@ -1,5 +1,6 @@
 package ru.fixapp.fooproject.domainlayer.providers;
 
+import dagger.Module;
 import rx.Scheduler;
 
 /**

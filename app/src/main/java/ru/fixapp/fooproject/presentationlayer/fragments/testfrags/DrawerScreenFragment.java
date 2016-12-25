@@ -5,7 +5,7 @@ import android.view.View;
 
 import butterknife.OnClick;
 import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityCoreComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.ISingletonFragment;
 
@@ -53,8 +53,8 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 	}
 
 	@Override
-	public void daggerInject(ActivityComponent component) {
-		DaggerFragScreenComponent.builder().activityComponent(component)
+	public void daggerInject(ActivityCoreComponent component) {
+		DaggerFragScreenComponent.builder().activityCoreComponent(component)
 				.build().inject(this);
 
 	}

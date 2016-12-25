@@ -8,11 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.core.R2;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
@@ -46,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	}
 
 	private void configureProgressBar() {
-		progress = (ProgressWheel) findViewById(R.id.progress_wheel);
+		progress = (ProgressWheel) findViewById(R2.id.progress_wheel);
 		progress.setOnTouchListener((v, event) -> true);
 	}
 
@@ -63,7 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 	}
 
 	protected int getContainerID() {
-		return R.id.content;
+		return R2.id.content;
 	}
 
 	@Override

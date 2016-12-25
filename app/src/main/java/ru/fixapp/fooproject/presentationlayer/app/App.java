@@ -14,8 +14,7 @@ import ru.fixapp.fooproject.di.modules.AppModule;
  */
 public class App extends Application {
 
-	@NonNull
-	private AppComponent appComponent;
+	@NonNull private AppComponent appComponent;
 
 	// Prevent need in a singleton (global) reference to the application object.
 	@NonNull
@@ -30,8 +29,7 @@ public class App extends Application {
 	}
 
 	protected DaggerAppComponent.Builder prepareApplicationComponent() {
-		return DaggerAppComponent
-				.builder()
+		return DaggerAppComponent.builder()
 				.appModule(new AppModule(this));
 	}
 

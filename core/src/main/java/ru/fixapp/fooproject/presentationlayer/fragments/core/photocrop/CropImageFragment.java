@@ -18,7 +18,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityCoreComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -165,8 +165,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 	}
 
 	@Override
-	public void daggerInject(ActivityComponent component) {
-		// TODO: 25.12.16 corelib fix !
+	public void daggerInject(ActivityCoreComponent component) {
 
 //		DaggerCropImageScreenComponent.builder()
 //				.activityComponent(component)
