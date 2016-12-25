@@ -33,12 +33,7 @@ public class LeftDrawerHelperImplTest extends BaseTestCase {
 		when(view.findViewById(R.id.drawer_layout)).thenReturn(drawerLayout);
 		when(view.findViewById(R.id.all_content)).thenReturn(contentView);
 
-		drawerHelper = new LeftDrawerHelperImpl(view) {
-			@Override
-			public BaseFragment getDrawerFragment() {
-				return null;
-			}
-		};
+		drawerHelper = new LeftDrawerHelperImpl(view, () -> null);
 	}
 
 	@Test

@@ -9,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
+import ru.fixapp.fooproject.presentationlayer.resolution.ProvideFragmentCallback;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolverImpl;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
@@ -28,14 +29,17 @@ public class CommonActivityModule {
 	protected View view;
 	protected FragmentManager fm;
 	protected int contentId;
+	private ProvideFragmentCallback callback;
 
 	public CommonActivityModule(AppCompatActivity activity, BaseActivityView baseActivityView,
-								View view, FragmentManager fm, int contentId) {
+								View view, FragmentManager fm, int contentId,
+								ProvideFragmentCallback callback) {
 		this.activity = activity;
 		this.baseActivityView = baseActivityView;
 		this.view = view;
 		this.fm = fm;
 		this.contentId = contentId;
+		this.callback = callback;
 	}
 
 	@Provides
@@ -57,7 +61,7 @@ public class CommonActivityModule {
 													   ToolbarResolver toolbarResolver,
 													   UIResolver ui) {
 		return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver, ui,
-				baseActivityView);
+				baseActivityView, callback);
 	}
 
 

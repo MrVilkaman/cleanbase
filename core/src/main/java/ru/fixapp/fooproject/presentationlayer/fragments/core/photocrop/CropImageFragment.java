@@ -167,10 +167,10 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 	@Override
 	public void daggerInject(ActivityCoreComponent component) {
 
-//		DaggerCropImageScreenComponent.builder()
-//				.activityComponent(component)
-//				.build()
-//				.inject(this);
+		DaggerCropImageScreenComponent.builder()
+				.activityCoreComponent(component)
+				.build()
+				.inject(this);
 	}
 
 	@Override

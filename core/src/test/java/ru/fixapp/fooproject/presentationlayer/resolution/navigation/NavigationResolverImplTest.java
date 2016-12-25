@@ -49,7 +49,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	public void init() {
 		resolver = Mockito.spy(
 				new NavigationResolverImpl(currentActivity, fragmentManager, drawerHelper,
-						toolbarResolver, uiResolver, activityView));
+						toolbarResolver, uiResolver, activityView, () -> mock(BaseFragment.class)));
 	}
 
 	@Test

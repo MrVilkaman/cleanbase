@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.resolution.ProvideFragmentCallback;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
@@ -29,9 +30,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 	private UIResolver uiResolver;
 	private BaseActivityView activityView;
 
+	private ProvideFragmentCallback callback;
+
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
 								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
-								  UIResolver uiResolver, BaseActivityView activityView) {
+								  UIResolver uiResolver, BaseActivityView activityView,
+								  ProvideFragmentCallback callback) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
@@ -39,6 +43,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 		this.uiResolver = uiResolver;
 		this.activityView = activityView;
 
+		this.callback = callback;
 	}
 
 	@Override
@@ -64,7 +69,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public BaseFragment createStartFragment() {
-		return null;
+		return callback.createFragment();
 	}
 
 	@Override

@@ -7,19 +7,22 @@ import android.view.View;
 import com.github.mrvilkaman.core.R;
 
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.resolution.ProvideFragmentCallback;
 
-public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
+public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
 
 
 	private static final int MAIN_GRAVITY = Gravity.LEFT;
 	LeftDrawerHelperCallback leftDrawerHelperCallback;
 	private DrawerLayout drawerLayout;
 	private View contentView;
+	private final ProvideFragmentCallback callback;
 
 
-	public LeftDrawerHelperImpl(View rootView) {
+	public LeftDrawerHelperImpl(View rootView, ProvideFragmentCallback callback) {
 		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
 		contentView = rootView.findViewById(R.id.all_content);
+		this.callback = callback;
 	}
 
 	// NOTE: call once before use!
@@ -43,7 +46,9 @@ public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLa
 	}
 
 	@Override
-	public abstract BaseFragment getDrawerFragment();
+	public BaseFragment getDrawerFragment(){
+		return callback.createFragment();
+	}
 
 	@Override
 	public boolean isOpen() {
