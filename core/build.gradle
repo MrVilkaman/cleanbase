@@ -1,31 +1,99 @@
 apply plugin: 'com.android.library'
+apply from: '../dependencies.gradle'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
-        versionName "1.0"
-
+        versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
     buildTypes {
+        debug {
+            if (project.hasProperty("mytestCoverageEnabled")) {
+                testCoverageEnabled = mytestCoverageEnabled
+            }
+            ext.enableCrashlytics = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        // Integration tests live in src/integrationTest.
+        test.java.srcDir 'src/integrationTests/java'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
+        force libraries.supportAnnotations
+        force libraries.supportAppCompat
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile libraries.dagger
+    apt libraries.daggerCompiler
+    compile libraries.supportAnnotations
+    compile libraries.supportAppCompat
+    compile libraries.supportRecyclerView
+    compile libraries.supportDesign
+
+    compile libraries.butterKnife
+    apt libraries.butterKnifeCompiler
+
+    compile libraries.retrofit2
+    compile libraries.retrofit2rxjava
+    compile libraries.retrofit2gson
+    compile libraries.okHttp3
+
+    // Developer tools (Developer Settings)
+    compile libraries.okHttpLoggingInterceptor
+
+    compile libraries.rxBus
+    compile libraries.rxBusAndroid
+    compile libraries.rxJava
+    compile libraries.rxAndroid
+    compile libraries.rxBindingAppcompat
+
+    compile libraries.materialDialog
+    compile libraries.materialProgress
+
+    compile libraries.simplecropview
+    compile libraries.picasso
+    compile libraries.picassoOkhttp
+
+    //tests
+    testCompile libraries.junit
+    testCompile libraries.supportAnnotations
+    testCompile libraries.robolectric
+    testCompile libraries.robolectricShadows
+    testCompile libraries.assertJ
+    testCompile libraries.assertJandroid
+    testCompile libraries.mockitoCore
+    testCompile libraries.hamcrest
 }

@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
-import ru.fixapp.fooproject.BuildConfig;
-import ru.fixapp.fooproject.R;
-import ru.fixapp.fooproject.presentationlayer.activities.MainActivity;
+import com.github.mrvilkaman.core.R;
+
 
 public class NotificationManager {
 
@@ -70,7 +68,9 @@ public class NotificationManager {
 	}
 
 	protected Intent getIntent() {
-		return new Intent(context, MainActivity.class);
+		//// TODO: 25.12.16 core lib fix dependency
+		return null;
+//		return new Intent(context, MainActivity.class);
 	}
 
 	private void showNotification(NotificationCompat.Builder nb, int id) {
@@ -93,13 +93,9 @@ public class NotificationManager {
 			}
 		} catch (Exception e) {
 			notification = null;
-			if (BuildConfig.DEBUG) {
-				Toast.makeText(context, "NotificationManager error", Toast.LENGTH_LONG).show();
-			}
 		}
 		return notification;
 	}
-
 
 	public void cancelNotification() {
 		android.app.NotificationManager nMgr = (android.app.NotificationManager) context
