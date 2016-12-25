@@ -107,4 +107,6 @@ dependencies {
     testCompile libraries.assertJandroid
     testCompile libraries.mockitoCore
     testCompile libraries.hamcrest
+
+    compile project(":core")
 }
