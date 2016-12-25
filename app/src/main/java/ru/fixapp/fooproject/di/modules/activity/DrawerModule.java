@@ -6,8 +6,10 @@ import android.view.View;
 import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
+import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
+import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelperEmpty;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelperImpl;
 
 @Module
 public class DrawerModule {
@@ -21,7 +23,12 @@ public class DrawerModule {
 	@Provides
 	@PerActivity
 	public LeftDrawerHelper createLeftDrawerHelper() {
-		return new LeftDrawerHelperEmpty();
+		return new LeftDrawerHelperImpl(view) {
+			@Override
+			public BaseFragment getDrawerFragment() {
+				return DrawerScreenFragment.open();
+			}
+		};
 	}
 
 }

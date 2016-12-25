@@ -32,8 +32,8 @@ public class UIResolverImpl implements UIResolver {
 	}
 
 	@Override
-	public void showToast(@StringRes int textId, Object... arg) {
-		Toast.makeText(context, context.getString(textId, arg), Toast.LENGTH_SHORT)
+	public void showToast(@StringRes int resId, Object... arg) {
+		Toast.makeText(context, context.getString(resId, arg), Toast.LENGTH_SHORT)
 				.show();
 	}
 

@@ -151,8 +151,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
-	public void showToast(@StringRes int textId, Object... arg) {
-		uiResolver.showToast(textId,arg);
+	public void showToast(@StringRes int resId, Object... arg) {
+		uiResolver.showToast(resId,arg);
 	}
 
 	@Override
