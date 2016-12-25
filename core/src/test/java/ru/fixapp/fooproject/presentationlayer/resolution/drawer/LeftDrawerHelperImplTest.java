@@ -4,11 +4,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 
+import com.github.mrvilkaman.core.R;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 

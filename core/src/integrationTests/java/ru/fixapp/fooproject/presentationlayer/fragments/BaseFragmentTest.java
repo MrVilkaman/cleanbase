@@ -1,6 +1,8 @@
 package ru.fixapp.fooproject.presentationlayer.fragments;
 
 
+import com.github.mrvilkaman.core.BuildConfig;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -10,8 +12,6 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import ru.fixapp.fooproject.BuildConfig;
-import ru.fixapp.fooproject.TestApplication;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 18, application = TestApplication.class,
+@Config(constants = BuildConfig.class, sdk = 18, /*application = TestApplication.class,*/
 		manifest = "src/main/AndroidManifest.xml")
 public abstract class BaseFragmentTest {
 

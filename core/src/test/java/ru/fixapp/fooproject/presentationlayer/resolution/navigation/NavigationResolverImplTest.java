@@ -3,6 +3,8 @@ package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.github.mrvilkaman.core.R;
+
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -10,14 +12,14 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.presentationlayer.activities.BaseActivity;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.activities.MainActivity;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper.LeftDrawerHelperCallback;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper
+		.LeftDrawerHelperCallback;
+import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
@@ -221,7 +223,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	@Test
 	public void testOpenActivity() {
 		// Act
-		resolver.openActivity(MainActivity.class);
+		resolver.openActivity(BaseActivity.class);
 
 		// Assert
 		verify(currentActivity).startActivity(any());

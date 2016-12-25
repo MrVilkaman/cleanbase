@@ -1,16 +1,17 @@
 package ru.fixapp.fooproject.presentationlayer.resolution;
 
+import com.github.mrvilkaman.core.R;
+
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ru.fixapp.fooproject.testsutils.BaseTestCase;
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.domainlayer.exceptions.InternetConnectionException;
 import ru.fixapp.fooproject.domainlayer.exceptions.NotFoundException;
 import ru.fixapp.fooproject.domainlayer.exceptions.ServerException;
 import ru.fixapp.fooproject.domainlayer.exceptions.ServerNotAvailableException;
 import ru.fixapp.fooproject.domainlayer.exceptions.UnauthorizedException;
 import ru.fixapp.fooproject.domainlayer.exceptions.UncheckedException;
+import ru.fixapp.fooproject.testsutils.BaseTestCase;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;

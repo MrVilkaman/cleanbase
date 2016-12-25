@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.github.mrvilkaman.core.R;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -13,7 +15,6 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import ru.fixapp.fooproject.testsutils.BaseTestCase;
 import ru.fixapp.fooproject.testsutils.Tutils;
