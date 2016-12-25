@@ -6,6 +6,8 @@ public interface UIResolver {
 
 	void showToast(@StringRes int textId);
 
+	void showToast(@StringRes int textId,Object... arg);
+
 	void showMessage(@StringRes int resId);
 
 	void showMessage(@StringRes int resId, Object... arg);

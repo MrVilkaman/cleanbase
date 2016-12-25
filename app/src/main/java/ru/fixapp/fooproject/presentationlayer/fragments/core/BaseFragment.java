@@ -151,6 +151,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
+	public void showToast(@StringRes int textId, Object... arg) {
+		uiResolver.showToast(textId,arg);
+	}
+
+	@Override
 	public void handleError(Throwable throwable) {
 		throwableResolver.handleError(throwable);
 	}
