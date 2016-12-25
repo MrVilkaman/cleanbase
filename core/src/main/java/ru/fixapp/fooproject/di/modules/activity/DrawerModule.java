@@ -7,7 +7,6 @@ import dagger.Module;
 import dagger.Provides;
 import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelperImpl;
 
@@ -26,7 +25,9 @@ public class DrawerModule {
 		return new LeftDrawerHelperImpl(view) {
 			@Override
 			public BaseFragment getDrawerFragment() {
-				return DrawerScreenFragment.open();
+				//// TODO: 25.12.16 libcore need fix!
+				return null;
+//				return DrawerScreenFragment.open();
 			}
 		};
 	}

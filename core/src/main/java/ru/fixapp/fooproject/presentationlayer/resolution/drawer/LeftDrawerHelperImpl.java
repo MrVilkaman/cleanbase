@@ -4,7 +4,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 
-import ru.fixapp.fooproject.R;
+import com.github.mrvilkaman.core.R2;
+
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
 public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
@@ -18,7 +19,7 @@ public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLa
 
 	public LeftDrawerHelperImpl(View rootView) {
 		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
-		contentView = rootView.findViewById(R.id.all_content);
+		contentView = rootView.findViewById(R2.id.all_content);
 	}
 
 	// NOTE: call once before use!
@@ -33,7 +34,7 @@ public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLa
 
 	@Override
 	public int getDrawerContentFrame() {
-		return R.id.menu_frame;
+		return R2.id.menu_frame;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public abstract class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLa
 
 	@Override
 	public int getDrawerLayout() {
-		return R.id.drawer_layout;
+		return R2.id.drawer_layout;
 	}
 
 	@Override

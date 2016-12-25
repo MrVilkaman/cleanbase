@@ -22,7 +22,7 @@ import ru.fixapp.fooproject.presentationlayer.utils.StorageUtils;
 		modules = {CommonActivityModule.class, DrawerModule.class,
 				ToolbarModule.class})
 public interface ActivityComponent {
-	void inject(MainActivity activity);
+//	void inject(MainActivity activity);
 
 	SchedulersProvider getSchedulersProvider();
 

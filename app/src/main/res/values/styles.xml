@@ -1,45 +1,9 @@
 <resources>
-
-	<!-- Base application theme. -->
-	<style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-		<!-- Customize your theme here. -->
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">@color/colorAccent</item>
-		<!--<item name="colorButtonNormal">@color/colorPrimary</item>-->
-		<item name="android:textColor">@color/textColor</item>
-	</style>
-
-	<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-		<item name="android:textSize">16sp</item>
-		<item name="android:gravity">center</item>
-		<item name="android:layout_gravity">center</item>
-	</style>
-
-	<style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
-
-	<style name="ToolBarStyle.Base" parent="">
-		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-		<item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-	</style>
-
-	<style name="ToolBarStyle.Event" parent="ToolBarStyle">
-		<item name="titleTextAppearance">@style/Toolbar.TitleText</item>
-	</style>
-
 	<style name="LeftMenuItem">
 		<item name="android:button">@null</item>
 		<item name="android:padding">8dp</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>
 	</style>
-
-	<style name="PhotoCropButton">
-		<item name="android:layout_margin">8dp</item>
-		<item name="android:layout_width">162dp</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_gravity">center_horizontal|bottom</item>
-	</style>
-
 
 </resources>

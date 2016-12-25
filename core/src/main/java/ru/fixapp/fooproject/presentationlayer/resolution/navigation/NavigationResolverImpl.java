@@ -3,12 +3,12 @@ package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.github.mrvilkaman.core.R2;
+
 import java.util.concurrent.TimeUnit;
 
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
-import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.fragments.FragmentResolver;
@@ -64,7 +64,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public BaseFragment createStartFragment() {
-		return PhotoMakerScreenFragment.open();
+		return null;
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (doubleBackToExitPressedOnce) {
 			currentActivity.finish();
 		} else {
-			uiResolver.showToast(R.string.exit_toast);
+			uiResolver.showToast(R2.string.exit_toast);
 			doubleBackToExitPressedOnce = true;
 			just(null).delay(1000, TimeUnit.MILLISECONDS)
 					.subscribe(o -> doubleBackToExitPressedOnce = false);

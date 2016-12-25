@@ -10,8 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import ru.fixapp.fooproject.R;
+import com.github.mrvilkaman.core.R2;
 
 
 public class UIResolverImpl implements UIResolver {
@@ -66,10 +65,10 @@ public class UIResolverImpl implements UIResolver {
 	public void showSnackbar(@StringRes int textId) {
 		Snackbar snackbar = Snackbar.make(rootView, textId, Snackbar.LENGTH_LONG);
 		View snackBarView = snackbar.getView();
-		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R2.color.colorPrimary));
 		TextView textView =
 				(TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-		textView.setTextColor(ContextCompat.getColor(context, R.color.app_main_text_color));
+		textView.setTextColor(ContextCompat.getColor(context, R2.color.app_main_text_color));
 		snackbar.show();
 	}
 

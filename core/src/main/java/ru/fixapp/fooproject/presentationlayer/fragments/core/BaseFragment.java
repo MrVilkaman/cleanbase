@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mrvilkaman.core.R2;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -15,13 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import butterknife.Optional;
 import butterknife.Unbinder;
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.activities.BaseActivityView;
-import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.ThrowableResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.UIResolver;
+import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
@@ -37,7 +38,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
 
-	@Nullable @BindView(R.id.progress_wheel) View progressBar;
+	@Nullable @BindView(R2.id.progress_wheel) View progressBar;
 	private String previousFragment;
 	private Unbinder bind;
 
@@ -75,7 +76,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	public abstract void daggerInject(ActivityComponent component);
 
 	@Optional
-	@OnTouch(R.id.parent)
+	@OnTouch(R2.id.parent)
 	boolean onTouchParent() {
 		hideKeyboard();
 		return false;

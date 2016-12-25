@@ -2,7 +2,16 @@ apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.jakewharton.butterknife'
 
+buildscript{
+    repositories {
+        mavenCentral()
+    }
+    dependencies{
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+    }
+}
 
 android {
     compileSdkVersion versions.compileSdk

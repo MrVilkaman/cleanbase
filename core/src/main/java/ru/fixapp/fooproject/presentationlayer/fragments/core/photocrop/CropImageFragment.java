@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.core.R2;
 import com.isseiaoki.simplecropview.CropImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -16,7 +18,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import ru.fixapp.fooproject.R;
 import ru.fixapp.fooproject.presentationlayer.activities.ActivityComponent;
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 import rx.Observable;
@@ -38,7 +39,8 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 	private static final String EXTRA_OUTPUT = "output";
 	private static final String EXTRA_AS_SQUARE = "as_square";
 
-	@BindView(R.id.cropImageView) CropImageView cropImageView;
+	@BindView(R2.id.cropImageView)
+	CropImageView cropImageView;
 
 	public static CropImageFragment newInstance(String imageFile, String resultFile, MODE mode) {
 		Bundle args = new Bundle();
@@ -164,10 +166,12 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 
 	@Override
 	public void daggerInject(ActivityComponent component) {
-		DaggerCropImageScreenComponent.builder()
-				.activityComponent(component)
-				.build()
-				.inject(this);
+		// TODO: 25.12.16 corelib fix !
+
+//		DaggerCropImageScreenComponent.builder()
+//				.activityComponent(component)
+//				.build()
+//				.inject(this);
 	}
 
 	@Override
@@ -203,7 +207,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 		}
 	}
 
-	@OnClick(R.id.ready)
+	@OnClick(R2.id.ready)
 	void onClick() {
 		getPresenter().savePhoto();
 	}
