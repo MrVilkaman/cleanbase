@@ -16,14 +16,13 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import ru.fixapp.fooproject.BuildConfig;
-import ru.fixapp.fooproject.TestApplication;
 
 
 /**
  * Created by Zahar on 18.04.16.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 18, application = TestApplication.class,
+@Config(constants = BuildConfig.class, sdk = 18,
 		manifest = "src/main/AndroidManifest.xml")
 public class LocalStorageImplTest {
 
