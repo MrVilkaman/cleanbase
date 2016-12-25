@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.core.R2;
 
 
 public class ToolbarResolverImpl implements ToolbarResolver{
@@ -26,7 +25,7 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 
 	@Override
 	public void init(View view, AppCompatActivity activity) {
-		toolbar = (Toolbar) view.findViewById(R2.id.toolbar_actionbar);
+		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
 		activity.setSupportActionBar(toolbar);
 		supportActionBar = activity.getSupportActionBar();
 		supportActionBar.setHomeButtonEnabled(true);

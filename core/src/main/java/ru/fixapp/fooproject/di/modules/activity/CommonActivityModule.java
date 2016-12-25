@@ -23,11 +23,11 @@ import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver
 @Module
 public class CommonActivityModule {
 
-	private AppCompatActivity activity;
-	private BaseActivityView baseActivityView;
-	private View view;
-	private FragmentManager fm;
-	private int contentId;
+	protected AppCompatActivity activity;
+	protected BaseActivityView baseActivityView;
+	protected View view;
+	protected FragmentManager fm;
+	protected int contentId;
 
 	public CommonActivityModule(AppCompatActivity activity, BaseActivityView baseActivityView,
 								View view, FragmentManager fm, int contentId) {

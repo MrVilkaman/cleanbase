@@ -13,7 +13,7 @@ import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper
 @Module
 public class DrawerModule {
 
-	private View view;
+	protected View view;
 
 	public DrawerModule(View view) {
 		this.view = view;
