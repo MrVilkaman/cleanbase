@@ -65,41 +65,11 @@ configurations.all {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile libraries.dagger
     apt libraries.daggerCompiler
-    compile libraries.supportAnnotations
-    compile libraries.supportAppCompat
-    compile libraries.supportRecyclerView
-    compile libraries.supportDesign
 
-    compile libraries.butterKnife
     apt libraries.butterKnifeCompiler
 
-    compile libraries.retrofit2
-    compile libraries.retrofit2rxjava
-    compile libraries.retrofit2gson
-    compile libraries.okHttp3
-
-    // Developer tools (Developer Settings)
-    compile libraries.okHttpLoggingInterceptor
-
-    compile libraries.rxBus
-    compile libraries.rxBusAndroid
-    compile libraries.rxJava
-    compile libraries.rxAndroid
-    compile libraries.rxBindingAppcompat
-
-    compile libraries.materialDialog
-    compile libraries.materialProgress
-
-    compile libraries.simplecropview
-    compile libraries.picasso
-    compile libraries.picassoOkhttp
-
     compile project(":core")
-
     testCompile project(':testutils')
-
 }
