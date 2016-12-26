@@ -14,17 +14,21 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import javax.inject.Inject;
 
 import ru.fixapp.fooproject.di.IHasComponent;
+import ru.fixapp.fooproject.presentationlayer.app.CoreApp;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.ToolbarResolver;
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseActivityView {
+public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppCompatActivity
+		implements BaseActivityView, IHasComponent<C> {
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ToolbarResolver toolbarResolver;
 	@Inject IToolbar iToolbar;
 	@Inject LeftDrawerHelper drawerHelper;
+
+	private C activityComponent;
 
 	private ProgressWheel progress;
 
@@ -34,13 +38,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		View rootView = getRootView();
-		toolbarResolver.init(rootView,this);
+		toolbarResolver.init(rootView, this);
 		navigationResolver.init();
 		configureProgressBar();
 	}
-
-	protected abstract void injectDagger();
-
 
 	protected int getActivityLayoutResourceID() {
 		return R.layout.activity_main;
@@ -102,7 +103,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<T> componentType) {
-		return componentType.cast(((IHasComponent<T>) this).getComponent());
+		return componentType.cast(((IHasComponent<T>) CoreApp.get(this)).getComponent());
 	}
+
+	@Override
+	public C getComponent() {
+		injectDagger();
+		return activityComponent;
+	}
+
+	private void injectDagger() {
+		if (activityComponent != null) {
+			return;
+		}
+		activityComponent = createComponent();
+		injectMe(activityComponent);
+	}
+
+	protected abstract void injectMe(C activityComponent);
+
+	protected abstract C createComponent();
 
 }
