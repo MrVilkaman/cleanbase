@@ -33,7 +33,7 @@ public abstract class BaseFragmentTest {
 
 	protected void initDep(BaseFragment fragment) {
 		Mockito.doNothing().when(fragment)
-				.daggerInject(Matchers.any());
+				.daggerInject();
 		Mockito.doReturn(null).when(fragment)
 				.getComponent(Matchers.any());
 		fragment.uiResolver = uiRes;

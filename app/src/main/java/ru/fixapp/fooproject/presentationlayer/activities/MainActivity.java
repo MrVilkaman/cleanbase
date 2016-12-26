@@ -3,6 +3,7 @@ package ru.fixapp.fooproject.presentationlayer.activities;
 import android.view.View;
 
 import ru.fixapp.fooproject.R;
+import ru.fixapp.fooproject.di.ActivityComponent;
 import ru.fixapp.fooproject.di.AppComponent;
 import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.di.modules.activity.CommonActivityModule;
@@ -13,7 +14,7 @@ import ru.fixapp.fooproject.presentationlayer.fragments.photomaker.PhotoMakerScr
 import ru.fixapp.fooproject.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 
 
-public class MainActivity extends BaseActivity implements IHasComponent<ActivityCoreComponent> {
+public class MainActivity extends BaseActivity implements IHasComponent<ActivityComponent> {
 
 	private ActivityComponent screenComponent;
 
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity implements IHasComponent<Activity
 	}
 
 	@Override
-	public ActivityCoreComponent getComponent() {
+	public ActivityComponent getComponent() {
 		injectDagger();
 		return screenComponent;
 	}

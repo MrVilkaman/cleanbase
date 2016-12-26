@@ -53,7 +53,8 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 	}
 
 	@Override
-	public void daggerInject(ActivityCoreComponent component) {
+	public void daggerInject() {
+		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
 		DaggerFragScreenComponent.builder().activityCoreComponent(component)
 				.build().inject(this);
 

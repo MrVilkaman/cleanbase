@@ -21,7 +21,8 @@ public class Frag2ScreenFragment extends FragBaseScreenFragment {
 	}
 
 	@Override
-	public void daggerInject(ActivityCoreComponent component) {
+	public void daggerInject() {
+		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
 		DaggerFragScreenComponent.builder().activityCoreComponent(component).build().inject(this);
 	}
 }

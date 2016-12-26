@@ -1,12 +1,12 @@
-package ru.fixapp.fooproject.presentationlayer.activities;
+package ru.fixapp.fooproject.di;
 
 
 import dagger.Component;
-import ru.fixapp.fooproject.di.AppComponent;
-import ru.fixapp.fooproject.di.PerActivity;
 import ru.fixapp.fooproject.di.modules.activity.CommonActivityModule;
 import ru.fixapp.fooproject.di.modules.activity.DrawerModule;
 import ru.fixapp.fooproject.di.modules.activity.ToolbarModule;
+import ru.fixapp.fooproject.presentationlayer.activities.ActivityCoreComponent;
+import ru.fixapp.fooproject.presentationlayer.activities.MainActivity;
 
 @PerActivity
 @Component(dependencies = AppComponent.class,
