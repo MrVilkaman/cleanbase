@@ -1,8 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 
-import com.github.mrvilkaman.core.R2;
-
+import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
 import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
@@ -22,19 +21,19 @@ public class ThrowableResolverImpl implements ThrowableResolver {
 	@Override
 	public void handleError(Throwable throwable) {
 		if (throwable instanceof ServerException) {
-			uiResolver.showMessage(R2.string.dialog_server_error);
+			uiResolver.showMessage(R.string.dialog_server_error);
 		} else if (throwable instanceof ServerNotAvailableException) {
-			uiResolver.showMessage(R2.string.dialog_server_notavailable_error);
+			uiResolver.showMessage(R.string.dialog_server_notavailable_error);
 		} else if (throwable instanceof InternetConnectionException) {
-			uiResolver.showSnackbar(R2.string.dialog_internet_error);
+			uiResolver.showSnackbar(R.string.dialog_internet_error);
 		} else if (throwable instanceof NotFoundException) {
-			uiResolver.showMessage(R2.string.dialog_default_404_error);
+			uiResolver.showMessage(R.string.dialog_default_404_error);
 		} else if (throwable instanceof UncheckedException) {
-			uiResolver.showMessage(R2.string.dialog_default_error, throwable.getMessage());
+			uiResolver.showMessage(R.string.dialog_default_error, throwable.getMessage());
 		} else if (throwable instanceof UnauthorizedException) {
-			uiResolver.showToast(R2.string.dialog_default_unauthorized);
+			uiResolver.showToast(R.string.dialog_default_unauthorized);
 		} else {
-			uiResolver.showMessage(R2.string.dialog_default_error, throwable.getMessage());
+			uiResolver.showMessage(R.string.dialog_default_error, throwable.getMessage());
 		}
 	}
 }
