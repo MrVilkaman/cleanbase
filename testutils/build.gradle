@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+apply from: '../dependencies.gradle'
+//apply plugin: 'com.github.hauner.jarTest'
+//
+//buildscript{
+//    repositories {
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
+//    }
+//    dependencies{
+//        classpath "gradle.plugin.gradle-plugins:jartest:1.0.1"
+//    }
+//}
+
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    sourceSets {
+        // Integration tests live in src/integrationTest.
+        test.java.srcDir 'src/integrationTests/java'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+    provided libraries.rxJava
+
+    //tests
+    compile libraries.junit
+    compile libraries.supportAnnotations
+    compile libraries.robolectric
+    compile libraries.robolectricShadows
+    compile libraries.assertJ
+    compile libraries.assertJandroid
+    compile libraries.mockitoCore
+    compile libraries.hamcrest
+}

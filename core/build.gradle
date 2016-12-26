@@ -96,13 +96,8 @@ dependencies {
     compile libraries.picasso
     compile libraries.picassoOkhttp
 
+
     //tests
-    testCompile libraries.junit
-    testCompile libraries.supportAnnotations
-    testCompile libraries.robolectric
-    testCompile libraries.robolectricShadows
-    testCompile libraries.assertJ
-    testCompile libraries.assertJandroid
-    testCompile libraries.mockitoCore
-    testCompile libraries.hamcrest
+    testCompile project(':testutils')
+
 }
