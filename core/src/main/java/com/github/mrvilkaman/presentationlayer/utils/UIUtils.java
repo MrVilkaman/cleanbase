@@ -9,14 +9,16 @@ import android.widget.EditText;
  */
 public class UIUtils {
 
+	private UIUtils(){}
+
 	public static String asString(EditText view) {
 		if (view == null)
-			return null;
+			return "";
 
 		Editable text = view.getText();
 		if (text != null)
 			return text.toString();
-		return null;
+		return "";
 	}
 
 	public static void changeVisibility(View view, boolean show) {
