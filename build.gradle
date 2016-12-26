@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: 'dependencies.gradle'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'jacoco'
 buildscript {
     apply from: 'dependencies.gradle'
     repositories {

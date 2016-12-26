@@ -3,6 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../artifacts.gradle'
 apply from: '../dependencies.gradle'
+apply from: '../jacoco.gradle'
 apply plugin: 'com.github.ben-manes.versions'
 android {
     // Declared in dependencies.gradle in the root of the project.
@@ -24,6 +25,7 @@ android {
                 testCoverageEnabled = mytestCoverageEnabled
             }
             ext.enableCrashlytics = false
+            testCoverageEnabled true
         }
         release {
             minifyEnabled false

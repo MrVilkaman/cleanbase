@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
+apply from: '../jacoco.gradle'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.butterknife'
@@ -32,6 +33,7 @@ android {
                 testCoverageEnabled = mytestCoverageEnabled
             }
             ext.enableCrashlytics = false
+            testCoverageEnabled true
         }
         release {
             minifyEnabled false
