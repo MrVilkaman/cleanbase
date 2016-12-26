@@ -9,8 +9,8 @@ import com.github.mrvilkaman.di.DaggerActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
-import com.github.mrvilkaman.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
 
 public class MainActivity extends BaseActivity<ActivityComponent> {
@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity<ActivityComponent> {
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
 				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
-						getContainerID(), PhotoMakerScreenFragment::open);
+						getContainerID(), Frag1ScreenFragment::open);
 
 		return DaggerActivityComponent.builder()
 				.appComponent(appComponent)

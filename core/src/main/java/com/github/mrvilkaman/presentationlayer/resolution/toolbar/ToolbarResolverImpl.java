@@ -9,18 +9,21 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 
 
 public class ToolbarResolverImpl implements ToolbarResolver{
 
+	private final LeftDrawerHelper drawerHelper;
+	private final ToolbarMenuHelper toolbarMenuHelper;
 	private Toolbar toolbar;
 	private ActionBar supportActionBar;
-	private ToolbarMenuHelper toolbarMenuHelper;
 
 	private ToolbarResolverCallback callback;
 
-	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper) {
+	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper, LeftDrawerHelper drawerHelper) {
 		this.toolbarMenuHelper = toolbarMenuHelper;
+		this.drawerHelper = drawerHelper;
 	}
 
 	@Override
@@ -59,7 +62,11 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 
 	@Override
 	public void showHomeIcon() {
-		supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
+		if (drawerHelper.hasDrawer()) {
+			supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
+		}else{
+			supportActionBar.setHomeAsUpIndicator(R.drawable.md_transparent);
+		}
 	}
 
 	@Override

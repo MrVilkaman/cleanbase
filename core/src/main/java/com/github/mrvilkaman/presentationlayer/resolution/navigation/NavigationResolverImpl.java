@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.github.mrvilkaman.core.R;
-
-import java.util.concurrent.TimeUnit;
-
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
@@ -16,6 +13,8 @@ import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentReso
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.MyFragmentResolverCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.MyToolbarResolverCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+
+import java.util.concurrent.TimeUnit;
 
 import static rx.Observable.just;
 
@@ -90,11 +89,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 			toolbarResolver.clear();
 			fragmentManager.showFragment(fragment);
 		};
-		if (drawerHelper.isOpen()) {
-			drawerHelper.close(callback);
-		} else {
-			callback.onClose();
-		}
+		close(callback, drawerHelper);
 	}
 
 	@Override
@@ -103,11 +98,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 			toolbarResolver.clear();
 			fragmentManager.showRootFragment(fragment);
 		};
-		if (drawerHelper.isOpen()) {
-			drawerHelper.close(callback);
-		} else {
-			callback.onClose();
-		}
+		close(callback, drawerHelper);
 	}
 
 	@Override
@@ -116,6 +107,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 			toolbarResolver.clear();
 			fragmentManager.showFragmentWithoutBackStack(fragment);
 		};
+		LeftDrawerHelper drawerHelper = this.drawerHelper;
+		close(callback, drawerHelper);
+	}
+
+	private void close(LeftDrawerHelper.LeftDrawerHelperCallback callback,
+					  LeftDrawerHelper drawerHelper) {
 		if (drawerHelper.isOpen()) {
 			drawerHelper.close(callback);
 		} else {
