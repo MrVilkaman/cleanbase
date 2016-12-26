@@ -1,8 +1,9 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
+import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+
 import javax.inject.Inject;
 
-import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import rx.Observable;
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;

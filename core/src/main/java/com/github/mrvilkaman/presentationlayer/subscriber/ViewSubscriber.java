@@ -1,13 +1,12 @@
-package com.github.mrvilkaman.datalayer.subscriber;
+package com.github.mrvilkaman.presentationlayer.subscriber;
 
 import android.util.Log;
 
-import com.github.mrvilkaman.core.BuildConfig;
-
-import java.lang.ref.WeakReference;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
+import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
+
+import java.lang.ref.WeakReference;
 
 
 /**
@@ -22,14 +21,14 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	public ViewSubscriber(V view) {
 		this.viewRef = new WeakReference<>(view);
 		// TODO: 25.12.16 mode to global setting
-		string = BuildConfig.DEBUG ? AppUtils.getSubscriberStartStack() : "";
+		string = CleanBaseSettings.needSubscribeLogs() ? AppUtils.getSubscriberStartStack() : "";
 	}
 
 	@Override
 	public void onError(Throwable e) {
 		// TODO: 25.12.16 mode to global setting
 
-		if (BuildConfig.DEBUG) {
+		if (CleanBaseSettings.needSubscribeLogs()) {
 			Log.e("LoadSubscriber", "Start by:" + string, e);
 		}
 		BaseView view = view();

@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.datalayer.subscriber;
+package com.github.mrvilkaman.presentationlayer.subscriber;
 
 
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;

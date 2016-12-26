@@ -10,8 +10,8 @@ import com.github.mrvilkaman.di.IHasComponent;
 public abstract class CoreApp<C extends AppCoreComponent> extends Application
 		implements IHasComponent<C> {
 
-	@NonNull protected C appComponent;
 
+	@NonNull protected C appComponent;
 
 	@NonNull
 	public static CoreApp get(@NonNull Context context) {
@@ -20,9 +20,16 @@ public abstract class CoreApp<C extends AppCoreComponent> extends Application
 
 	@Override
 	public void onCreate() {
+		CleanBaseSettings.Builder builder = CleanBaseSettings.changeSettings();
+		launch(builder);
+		CleanBaseSettings.save(builder);
 		super.onCreate();
 		appComponent = createComponent();
 	}
+
+	protected abstract void launch(
+			CleanBaseSettings.Builder builder);
+
 
 	protected abstract C createComponent();
 
@@ -30,4 +37,6 @@ public abstract class CoreApp<C extends AppCoreComponent> extends Application
 	public C getComponent() {
 		return appComponent;
 	}
+
+
 }
