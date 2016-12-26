@@ -3,7 +3,7 @@ package com.github.mrvilkaman.presentationlayer.app;
 
 public class CleanBaseSettings {
 
-	private static Builder builder;
+	private static Builder builder = new Builder();
 
 	public static boolean needSubscribeLogs() {
 		return builder.subscribeLogs;
