@@ -16,15 +16,14 @@ public class DrawerModule {
 	protected View view;
 	private ProvideFragmentCallback callback;
 
-	public DrawerModule(View view, ProvideFragmentCallback callback) {
-		this.view = view;
+	public DrawerModule(ProvideFragmentCallback callback) {
 		this.callback = callback;
 	}
 
 	@Provides
 	@PerActivity
 	public LeftDrawerHelper createLeftDrawerHelper() {
-		return new LeftDrawerHelperImpl(view, callback);
+		return new LeftDrawerHelperImpl(callback);
 	}
 
 }

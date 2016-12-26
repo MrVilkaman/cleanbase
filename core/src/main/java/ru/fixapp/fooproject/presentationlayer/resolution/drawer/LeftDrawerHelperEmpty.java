@@ -1,9 +1,18 @@
 package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
 
+import android.support.annotation.NonNull;
+import android.view.View;
+
 import ru.fixapp.fooproject.presentationlayer.fragments.core.BaseFragment;
 
 public class LeftDrawerHelperEmpty implements LeftDrawerHelper {
+
+	@Override
+	public void init(@NonNull View rootView) {
+
+	}
+
 	@Override
 	public int getDrawerContentFrame() {
 		return 0;

@@ -38,6 +38,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		View rootView = getRootView();
+		drawerHelper.init(rootView);
 		toolbarResolver.init(rootView, this);
 		navigationResolver.init();
 		configureProgressBar();

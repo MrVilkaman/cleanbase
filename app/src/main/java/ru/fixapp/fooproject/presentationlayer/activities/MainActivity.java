@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity<ActivityComponent> {
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
 				.toolbarModule(new ToolbarModule(rootView, this))
-				.drawerModule(new DrawerModule(rootView, DrawerScreenFragment::open))
+				.drawerModule(new DrawerModule(DrawerScreenFragment::open))
 				.build();
 	}
 

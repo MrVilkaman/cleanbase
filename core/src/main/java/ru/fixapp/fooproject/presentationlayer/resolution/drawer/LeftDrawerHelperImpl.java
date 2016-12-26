@@ -1,5 +1,6 @@
 package ru.fixapp.fooproject.presentationlayer.resolution.drawer;
 
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -19,14 +20,14 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	private final ProvideFragmentCallback callback;
 
 
-	public LeftDrawerHelperImpl(View rootView, ProvideFragmentCallback callback) {
-		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
-		contentView = rootView.findViewById(R.id.all_content);
+	public LeftDrawerHelperImpl(ProvideFragmentCallback callback) {
 		this.callback = callback;
 	}
 
-	// NOTE: call once before use!
-	public void init() {
+	@Override
+	public void init(@NonNull View rootView) {
+		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
+		contentView = rootView.findViewById(R.id.all_content);
 		this.drawerLayout.addDrawerListener(this);
 	}
 

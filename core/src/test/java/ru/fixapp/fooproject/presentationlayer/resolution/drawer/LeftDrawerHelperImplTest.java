@@ -33,15 +33,16 @@ public class LeftDrawerHelperImplTest extends BaseTestCase {
 		when(view.findViewById(R.id.drawer_layout)).thenReturn(drawerLayout);
 		when(view.findViewById(R.id.all_content)).thenReturn(contentView);
 
-		drawerHelper = new LeftDrawerHelperImpl(view, () -> null);
+		drawerHelper = new LeftDrawerHelperImpl(() -> null);
+		drawerHelper.init(view);
 	}
 
 	@Test
 	public void testInit() {
 		// Act
-		drawerHelper.init();
 
 		// Assert
+		assertThat(drawerLayout).isNotNull();
 		verify(drawerLayout).addDrawerListener(drawerHelper);
 	}
 

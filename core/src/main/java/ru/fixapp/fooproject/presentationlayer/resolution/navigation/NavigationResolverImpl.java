@@ -3,7 +3,7 @@ package ru.fixapp.fooproject.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.github.mrvilkaman.core.R2;
+import com.github.mrvilkaman.core.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -158,7 +158,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (doubleBackToExitPressedOnce) {
 			currentActivity.finish();
 		} else {
-			uiResolver.showToast(R2.string.exit_toast);
+			uiResolver.showToast(R.string.exit_toast);
 			doubleBackToExitPressedOnce = true;
 			just(null).delay(1000, TimeUnit.MILLISECONDS)
 					.subscribe(o -> doubleBackToExitPressedOnce = false);
