@@ -1,0 +1,79 @@
+package com.github.mrvilkaman.di.modules.activity;
+
+
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import dagger.Module;
+import dagger.Provides;
+import com.github.mrvilkaman.di.PerActivity;
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
+import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolverImpl;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolverImpl;
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolverImpl;
+import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolverImpl;
+import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+
+@Module
+public class CommonActivityModule {
+
+	protected AppCompatActivity activity;
+	protected BaseActivityView baseActivityView;
+	protected View view;
+	protected FragmentManager fm;
+	protected int contentId;
+	private ProvideFragmentCallback callback;
+
+	public CommonActivityModule(AppCompatActivity activity, BaseActivityView baseActivityView,
+								View view, FragmentManager fm, int contentId,
+								ProvideFragmentCallback callback) {
+		this.activity = activity;
+		this.baseActivityView = baseActivityView;
+		this.view = view;
+		this.fm = fm;
+		this.contentId = contentId;
+		this.callback = callback;
+	}
+
+	@Provides
+	@PerActivity
+	public UIResolver createUiResolver() {
+		return new UIResolverImpl(view.getContext(), view);
+	}
+
+	@Provides
+	@PerActivity
+	public ThrowableResolver createThrowableResolver(UIResolver ui) {
+		return new ThrowableResolverImpl(ui);
+	}
+
+	@Provides
+	@PerActivity
+	public NavigationResolver createNavigationResolver(FragmentResolver fragmentResolver,
+													   LeftDrawerHelper drawer,
+													   ToolbarResolver toolbarResolver,
+													   UIResolver ui) {
+		return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver, ui,
+				baseActivityView, callback);
+	}
+
+
+	@Provides
+	@PerActivity
+	public FragmentResolver createFragmentResolver() {
+		return new FragmentResolverImpl(fm, contentId);
+	}
+
+	@Provides
+	@PerActivity
+	public BaseActivityView getBaseActivityView() {
+		return baseActivityView;
+	}
+}
