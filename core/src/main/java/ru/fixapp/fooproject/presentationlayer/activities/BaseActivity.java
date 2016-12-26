@@ -13,6 +13,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
+import ru.fixapp.fooproject.di.IHasComponent;
 import ru.fixapp.fooproject.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import ru.fixapp.fooproject.presentationlayer.resolution.navigation.NavigationResolver;
 import ru.fixapp.fooproject.presentationlayer.resolution.toolbar.IToolbar;
@@ -97,6 +98,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 	protected View getRootView() {
 		return findViewById(android.R.id.content);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getComponent(Class<T> componentType) {
+		return componentType.cast(((IHasComponent<T>) this).getComponent());
 	}
 
 }
