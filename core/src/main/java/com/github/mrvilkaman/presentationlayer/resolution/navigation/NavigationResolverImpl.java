@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.resolution.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
@@ -112,7 +113,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	private void close(LeftDrawerHelper.LeftDrawerHelperCallback callback,
-					  LeftDrawerHelper drawerHelper) {
+					   LeftDrawerHelper drawerHelper) {
 		if (drawerHelper.isOpen()) {
 			drawerHelper.close(callback);
 		} else {
@@ -140,6 +141,19 @@ public class NavigationResolverImpl implements NavigationResolver {
 	public void startActivityForResultFormFragment(Intent intent, int requestCode) {
 		fragmentManager.startActivityForResult(intent, requestCode);
 	}
+
+	@Override
+	public void openLinkInBrowser(String link) {
+		final String url;
+		if (!link.startsWith("http://") && !link.startsWith("https://"))
+			url = "http://" + link;
+		else
+			url = link;
+
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		currentActivity.startActivity(browserIntent);
+	}
+
 
 	@Override
 	public void back() {

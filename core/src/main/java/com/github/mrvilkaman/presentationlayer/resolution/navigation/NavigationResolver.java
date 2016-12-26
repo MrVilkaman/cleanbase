@@ -21,6 +21,8 @@ public interface NavigationResolver {
 
 	void onBackPressed();
 
+	void openLinkInBrowser(String link);
+
 	void back();
 
 	void openActivity(Class<? extends Activity> aClass);

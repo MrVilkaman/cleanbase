@@ -4,25 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper.LeftDrawerHelperCallback;
+import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+import com.github.mrvilkaman.testsutils.BaseTestCase;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
-import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
-		.LeftDrawerHelperCallback;
-import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
-import com.github.mrvilkaman.testsutils.BaseTestCase;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -117,7 +116,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		BaseFragment startFragment = resolver.createStartFragment();
 
 		// Assert
-		Assertions.assertThat(startFragment).isNotNull();
+		assertThat(startFragment).isNotNull();
 	}
 
 	@Test
@@ -340,7 +339,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(drawerHelper).isOpen();
 
 		ArgumentCaptor<LeftDrawerHelperCallback> argument =
-				ArgumentCaptor.forClass(LeftDrawerHelperCallback.class);
+				forClass(LeftDrawerHelperCallback.class);
 		inOrder.verify(drawerHelper).close(argument.capture());
 		LeftDrawerHelperCallback value = argument.getValue();
 		value.onClose();
