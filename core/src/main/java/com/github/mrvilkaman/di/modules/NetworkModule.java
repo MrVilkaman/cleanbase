@@ -2,7 +2,7 @@ package com.github.mrvilkaman.di.modules;
 
 import android.support.annotation.NonNull;
 
-import com.github.mrvilkaman.core.BuildConfig;
+import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,8 +40,7 @@ public class NetworkModule {
 	}
 
 	private Interceptor provideHttpLoggingInterceptor() {
-		// TODO: 25.12.16 mode to global setting
-		if (BuildConfig.DEBUG) {
+		if (CleanBaseSettings.httpLogging()) {
 			HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 			httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 			return httpLoggingInterceptor;

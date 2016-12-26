@@ -17,15 +17,45 @@ public class CleanBaseSettings {
 		builder.save();
 	}
 
+	public static boolean rxBusLogs() {
+		return builder.rxBusLogs;
+	}
+
+	public static boolean imageLoadingLogs() {
+		return builder.imageLoadingLogs;
+	}
+
+	public static boolean httpLogging() {
+		return builder.httpLogging;
+	}
+
 	public static class Builder {
 
 		private boolean subscribeLogs;
+		private boolean rxBusLogs;
+		private boolean imageLoadingLogs;
+		private boolean httpLogging;
 
-		public Builder() {
+		private Builder() {
 		}
 
-		public Builder setSubscribeLogs(boolean logs) {
+		Builder setRxBusLogs(boolean rxBusLogs) {
+			this.rxBusLogs = rxBusLogs;
+			return this;
+		}
+
+		Builder setSubscribeLogs(boolean logs) {
 			this.subscribeLogs = logs;
+			return this;
+		}
+
+		Builder setImageLoadingLogs(boolean imageLoadingLogs) {
+			this.imageLoadingLogs = imageLoadingLogs;
+			return this;
+		}
+
+		Builder setHttpLogging(boolean httpLogging) {
+			this.httpLogging = httpLogging;
 			return this;
 		}
 

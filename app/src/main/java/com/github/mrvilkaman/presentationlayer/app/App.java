@@ -21,7 +21,10 @@ public class App extends CoreApp<AppComponent> {
 
 	@Override
 	protected void launch(CleanBaseSettings.Builder builder) {
-		builder.setSubscribeLogs(BuildConfig.DEBUG);
+		builder.setSubscribeLogs(BuildConfig.DEBUG)
+				.setHttpLogging(BuildConfig.DEBUG)
+				.setRxBusLogs(BuildConfig.DEBUG)
+				.setImageLoadingLogs(BuildConfig.DEBUG);
 	}
 
 	@Override
