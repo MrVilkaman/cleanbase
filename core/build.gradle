@@ -3,14 +3,10 @@ apply from: '../dependencies.gradle'
 apply from: '../jacoco.gradle'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.jakewharton.butterknife'
 
 buildscript{
     repositories {
         mavenCentral()
-    }
-    dependencies{
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
     }
 }
 
@@ -79,9 +75,6 @@ dependencies {
     compile libraries.supportAppCompat
     compile libraries.supportRecyclerView
     compile libraries.supportDesign
-
-    compile libraries.butterKnife
-    apt libraries.butterKnifeCompiler
 
     compile libraries.retrofit2
     compile libraries.retrofit2rxjava

@@ -8,15 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mrvilkaman.core.R2;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnTouch;
-import butterknife.Optional;
-import butterknife.Unbinder;
+import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -24,20 +16,25 @@ import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements BaseView, BaseActivityView, OnBackPressedListener {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
 	//// TODO: 07.11.16 dont use public
-	@Inject public  UIResolver uiResolver;
+	@Inject public UIResolver uiResolver;
 	@Inject public ThrowableResolver throwableResolver;
 	@Inject public NavigationResolver navigationResolver;
 	@Inject public P relationPresenter;
 	@Inject public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
 
-	@Nullable @BindView(R2.id.progress_wheel) View progressBar;
+	View progressBar;
 	private String previousFragment;
 	private Unbinder bind;
 
@@ -53,6 +50,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (isWorkCall()) {
 			bind = ButterKnife.bind(this, view);
+			initView(view);
 			P presenter = getPresenter();
 			presenter.setView(this);
 			presenter.onViewAttached();
@@ -64,6 +62,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return view;
 	}
 
+	private void initView(View view) {
+		progressBar = view.findViewById(R.id.progress_wheel);
+		if (progressBar != null) {
+			progressBar.setOnTouchListener((view1, motionEvent) -> {
+				hideKeyboard();
+				return false;
+			});
+		}
+	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -73,13 +81,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	public abstract void daggerInject();
-
-	@Optional
-	@OnTouch(R2.id.parent)
-	boolean onTouchParent() {
-		hideKeyboard();
-		return false;
-	}
 
 	@Override
 	public void onDestroyView() {
@@ -152,7 +153,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Override
 	public void showToast(@StringRes int resId, Object... arg) {
-		uiResolver.showToast(resId,arg);
+		uiResolver.showToast(resId, arg);
 	}
 
 	@Override
@@ -186,7 +187,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@SuppressWarnings("unchecked")
 	//// TODO: 07.11.16 must return protected...
-	public  <T> T getComponent(Class<T> componentType) {
+	public <T> T getComponent(Class<T> componentType) {
 		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
 	}
 
