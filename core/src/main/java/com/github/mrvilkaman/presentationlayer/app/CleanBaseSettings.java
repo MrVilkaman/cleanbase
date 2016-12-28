@@ -39,22 +39,22 @@ public class CleanBaseSettings {
 		private Builder() {
 		}
 
-		Builder setRxBusLogs(boolean rxBusLogs) {
+		public Builder setRxBusLogs(boolean rxBusLogs) {
 			this.rxBusLogs = rxBusLogs;
 			return this;
 		}
 
-		Builder setSubscribeLogs(boolean logs) {
+		public Builder setSubscribeLogs(boolean logs) {
 			this.subscribeLogs = logs;
 			return this;
 		}
 
-		Builder setImageLoadingLogs(boolean imageLoadingLogs) {
+		public Builder setImageLoadingLogs(boolean imageLoadingLogs) {
 			this.imageLoadingLogs = imageLoadingLogs;
 			return this;
 		}
 
-		Builder setHttpLogging(boolean httpLogging) {
+		public Builder setHttpLogging(boolean httpLogging) {
 			this.httpLogging = httpLogging;
 			return this;
 		}
