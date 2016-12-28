@@ -5,12 +5,12 @@ public class CleanBaseSettings {
 
 	private static Builder builder = new Builder();
 
-	public static boolean needSubscribeLogs() {
-		return builder.subscribeLogs;
-	}
-
 	static Builder changeSettings() {
 		return new Builder();
+	}
+
+	public static boolean needSubscribeLogs() {
+		return builder.subscribeLogs;
 	}
 
 	static void save(Builder builder) {

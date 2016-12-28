@@ -27,9 +27,7 @@ public abstract class CoreApp<C extends AppCoreComponent> extends Application
 		appComponent = createComponent();
 	}
 
-	protected abstract void launch(
-			CleanBaseSettings.Builder builder);
-
+	protected abstract void launch(CleanBaseSettings.Builder builder);
 
 	protected abstract C createComponent();
 
