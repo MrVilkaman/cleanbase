@@ -8,7 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.core.R2;
+import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.isseiaoki.simplecropview.CropImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -16,10 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -39,7 +36,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 	private static final String EXTRA_OUTPUT = "output";
 	private static final String EXTRA_AS_SQUARE = "as_square";
 
-	@BindView(R2.id.cropImageView)
+//	@BindView(R2.id.cropImageView)
 	CropImageView cropImageView;
 
 	public static CropImageFragment newInstance(String imageFile, String resultFile, MODE mode) {
@@ -64,6 +61,9 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 		if (arguments == null) {
 			return;
 		}
+
+		cropImageView = (CropImageView) view.findViewById(R.id.cropImageView);
+		view.findViewById(R.id.ready).setOnClickListener(view1 -> onClick());
 
 		MODE mode = MODE.valueOf(arguments.getString(EXTRA_AS_SQUARE));
 
@@ -206,7 +206,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 		}
 	}
 
-	@OnClick(R2.id.ready)
+//	@OnClick(R2.id.ready)
 	void onClick() {
 		getPresenter().savePhoto();
 	}

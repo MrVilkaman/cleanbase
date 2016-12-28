@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-
 /**
  * Created by Zahar on 17.01.2016.
  */
@@ -29,11 +27,12 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.Vi
 
 	static class ViewHolder<T> extends BaseVH<T> {
 
-		@BindView(android.R.id.text1)
 		TextView textView;
 
 		ViewHolder(View view, OnClickListener<T> onClick) {
 			super(view, onClick);
+
+			textView = (TextView) view.findViewById(android.R.id.text1);
 		}
 
 		@Override
