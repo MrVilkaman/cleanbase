@@ -76,6 +76,8 @@ dependencies {
     compile libraries.supportRecyclerView
     compile libraries.supportDesign
 
+    compile libraries.butterKnife
+
     compile libraries.retrofit2
     compile libraries.retrofit2rxjava
     compile libraries.retrofit2gson
