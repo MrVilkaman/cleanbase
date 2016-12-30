@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			style="@style/ImageTitle"
+			android:text="Загрузка с заданной шириной"/>
+
+		<ImageView
+			android:layout_height="154dp"
+			android:layout_width="100dp"
+			android:id="@+id/image_view_1"
+			style="@style/ImageHolder"/>
+
+		<TextView
+			style="@style/ImageTitle"
+			android:text="Загрузка с заданной высотой"/>
+
+		<ImageView
+			android:id="@+id/image_view_2"
+			style="@style/ImageHolder"/>
+
+		<TextView
+			style="@style/ImageTitle"
+			android:text="Загрузка с заданной высотой и шириной"/>
+
+		<ImageView
+			android:id="@+id/image_view_3"
+			style="@style/ImageHolder"/>
+		<TextView
+			style="@style/ImageTitle"
+			android:text=""/>
+
+		<ImageView
+			android:id="@+id/image_view_4"
+			style="@style/ImageHolder"/>
+
+
+		<TextView
+			style="@style/ImageTitle"
+			android:text="Ошибка =("/>
+
+		<ImageView
+			android:layout_height="154dp"
+			android:layout_width="100dp"
+			android:id="@+id/image_view_5"
+			style="@style/ImageHolder"/>
+
+	</LinearLayout>
+</ScrollView>

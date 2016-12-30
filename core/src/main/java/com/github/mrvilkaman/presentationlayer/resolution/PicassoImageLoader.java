@@ -20,4 +20,12 @@ public class PicassoImageLoader implements ImageLoader {
 		picasso.load(new File(path)).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
 				.into(target);
 	}
+
+	@Override
+	public void load(String url, int sizeWidth, int sizeHeight, ImageView target) {
+		picasso.load(url)
+				.resize(sizeWidth, sizeHeight)
+				.onlyScaleDown()
+				.into(target);
+	}
 }
