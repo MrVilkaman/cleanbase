@@ -9,8 +9,9 @@ import android.widget.ImageView;
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
+import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -23,7 +24,8 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 	@BindView(R.id.image_view_3) ImageView view3;
 	@BindView(R.id.image_view_4) ImageView view4;
 	@BindView(R.id.image_view_5) ImageView view5;
-	private Picasso picasso;
+
+	@Inject ImageLoader imageLoader;
 
 	public static ImageloadScreenFragment open() {
 		return new ImageloadScreenFragment();
@@ -37,11 +39,6 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 
-		picasso = Picasso.with(getContext());
-		picasso.setIndicatorsEnabled(true);
-		picasso.setLoggingEnabled(true);
-		picasso.invalidate(URL);
-
 		loadFixWight();
 		loadFixHeight();
 		loadFixAll();
@@ -50,42 +47,27 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 
 	private void loadError() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		load(Uri.parse("http://file.mobilmusic.ru/g"), dimension, dimension, view5,
-				R.drawable.ic_picasso_placeholder, R.drawable.ic_picasso_error);
+		imageLoader.load(Uri.parse("http://file.mobilmusic.ru/g"), dimension, dimension,
+				R.drawable.ic_picasso_placeholder, R.drawable.ic_picasso_error, view5);
 	}
 
-	private void load(Uri uri, int width, int height, ImageView target, int placeholderResId,
-					  int errorResId) {
-		RequestCreator load = picasso.load(uri);
-		if (0 < width && 0 < height) {
-			load = load.centerCrop();
-		}
-		if (0 != width || 0 != height) {
-			load = load.resize(width, height)
-					.onlyScaleDown();
-		}
-
-		load.placeholder(placeholderResId)
-				.error(errorResId)
-				.into(target);
-	}
 
 	private void loadFixWight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		load(Uri.parse(URL), 0, dimension, view1, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error);
+		imageLoader.load(Uri.parse(URL), 0, dimension, R.drawable.ic_picasso_placeholder,
+				R.drawable.ic_picasso_error, view1);
 	}
 
 	private void loadFixHeight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		load(Uri.parse(URL), dimension, 0, view2, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error);
+		imageLoader.load(Uri.parse(URL), dimension, 0, R.drawable.ic_picasso_placeholder,
+				R.drawable.ic_picasso_error, view2);
 	}
 
 	private void loadFixAll() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		load(Uri.parse(URL), dimension, dimension, view3, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error);
+		imageLoader.load(Uri.parse(URL), dimension, dimension, R.drawable.ic_picasso_placeholder,
+				R.drawable.ic_picasso_error, view3);
 	}
 
 	@Override
