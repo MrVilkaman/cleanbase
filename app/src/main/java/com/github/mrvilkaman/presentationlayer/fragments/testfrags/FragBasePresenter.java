@@ -15,7 +15,6 @@ public class FragBasePresenter extends BasePresenter {
 
 	@Override
 	public void onViewAttached() {
-		super.onViewAttached();
 		subscribe(Observable.error(new InternetConnectionException()), new ViewSubscriber<>(view()));
 	}
 }
