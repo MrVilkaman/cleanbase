@@ -1,7 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.imageload;
 
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,26 +46,26 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 
 	private void loadError() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(Uri.parse("http://file.mobilmusic.ru/g"), dimension, dimension,
+		imageLoader.load("http://file.mobilmusic.ru/g", dimension, dimension,
 				R.drawable.ic_picasso_placeholder, R.drawable.ic_picasso_error, view5);
 	}
 
 
 	private void loadFixWight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(Uri.parse(URL), 0, dimension, R.drawable.ic_picasso_placeholder,
+		imageLoader.load(URL, 0, dimension, R.drawable.ic_picasso_placeholder,
 				R.drawable.ic_picasso_error, view1);
 	}
 
 	private void loadFixHeight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(Uri.parse(URL), dimension, 0, R.drawable.ic_picasso_placeholder,
+		imageLoader.load(URL, dimension, 0, R.drawable.ic_picasso_placeholder,
 				R.drawable.ic_picasso_error, view2);
 	}
 
 	private void loadFixAll() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(Uri.parse(URL), dimension, dimension, R.drawable.ic_picasso_placeholder,
+		imageLoader.load(URL, dimension, dimension, R.drawable.ic_picasso_placeholder,
 				R.drawable.ic_picasso_error, view3);
 	}
 

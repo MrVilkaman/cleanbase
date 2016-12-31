@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.photocrop.CropImageFragment;
 import com.github.mrvilkaman.presentationlayer.photoulits.PhotoHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 		implements PhotoMakerView {
@@ -57,7 +58,7 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Override
 	public void showImage(String lastPath) {
-		imageLoader.showFromFile(lastPath,imageView);
+		imageLoader.load(lastPath,0,0,-1,-1,imageView);
 	}
 
 	@Override

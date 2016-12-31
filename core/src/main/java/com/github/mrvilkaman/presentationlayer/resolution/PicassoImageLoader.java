@@ -1,6 +1,5 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
-import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
@@ -26,10 +25,19 @@ public class PicassoImageLoader implements ImageLoader {
 	}
 
 	@Override
-	public void load(Uri uri, int width, int height, @DrawableRes int placeholderResId,
+	public void load(String uri, int width, int height, @DrawableRes int placeholderResId,
 					 @DrawableRes int errorResId, ImageView target) {
 
-		RequestCreator load = picasso.load(uri);
+		RequestCreator load;
+		if (uri.startsWith("http://")) {
+			load = picasso.load(uri);
+		} else
+//		if (uri.startsWith("file"))
+		{
+			load = picasso.load(new File(uri))
+					.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);
+		}
+
 		if (0 < width && 0 < height) {
 			load = load.centerCrop();
 		}
@@ -43,6 +51,8 @@ public class PicassoImageLoader implements ImageLoader {
 		if (0 < errorResId) {
 			load = load.error(errorResId);
 		}
+
+
 		load.into(target);
 	}
 }
