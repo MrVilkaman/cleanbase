@@ -1,20 +1,14 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 public interface ImageLoader {
-	@Deprecated
-	void showFromFile(String path, ImageView target);
 
-	@Deprecated
-	void load(String uri, int width, int height, @DrawableRes int placeholderResId,
-			  @DrawableRes int errorResId, ImageView target);
+	Builder loadUrl(@NonNull String url);
 
-
-	Builder loadUrl(String url);
-
-	Builder loadFile(String path);
+	Builder loadFile(@NonNull String path);
 
 	interface Builder {
 
@@ -24,10 +18,10 @@ public interface ImageLoader {
 
 		Builder error(@DrawableRes int errorResId);
 
-		void into(ImageView target);
-
 		Builder height(int dimension);
 
 		Builder width(int dimension);
+
+		void into(@NonNull ImageView target);
 	}
 }

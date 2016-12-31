@@ -19,54 +19,13 @@ public class PicassoImageLoader implements ImageLoader {
 	}
 
 	@Override
-	@Deprecated
-	public void showFromFile(@NonNull String path, @NonNull ImageView target) {
-		picasso.load(new File(path))
-				.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-				.into(target);
-	}
-
-	@Override
-	@Deprecated
-	public void load(String uri, int width, int height, @DrawableRes int placeholderResId,
-					 @DrawableRes int errorResId, ImageView target) {
-
-		RequestCreator load;
-		if (uri.startsWith("http://")) {
-			load = picasso.load(uri);
-		} else
-		//		if (uri.startsWith("file"))
-		{
-			load = picasso.load(new File(uri))
-					.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);
-		}
-
-		if (0 < width && 0 < height) {
-			load = load.centerCrop();
-		}
-		if (0 != width || 0 != height) {
-			load = load.resize(width, height)
-					.onlyScaleDown();
-		}
-		if (0 < placeholderResId) {
-			load = load.placeholder(placeholderResId);
-		}
-		if (0 < errorResId) {
-			load = load.error(errorResId);
-		}
-
-
-		load.into(target);
-	}
-
-	@Override
-	public Builder loadUrl(String url) {
+	public Builder loadUrl(@NonNull String url) {
 		RequestCreator load = picasso.load(url);
 		return new MyBuilder(load);
 	}
 
 	@Override
-	public Builder loadFile(String path) {
+	public Builder loadFile(@NonNull String path) {
 		RequestCreator load = picasso.load(new File(path))
 				.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE);
 		return new MyBuilder(load);
@@ -74,7 +33,7 @@ public class PicassoImageLoader implements ImageLoader {
 
 	private static class MyBuilder implements Builder {
 
-		private final RequestCreator creator;
+		private RequestCreator creator;
 
 		public MyBuilder(RequestCreator creator) {
 			this.creator = creator;
@@ -115,7 +74,7 @@ public class PicassoImageLoader implements ImageLoader {
 		}
 
 		@Override
-		public void into(ImageView target) {
+		public void into(@NonNull ImageView target) {
 			creator.into(target);
 		}
 	}
