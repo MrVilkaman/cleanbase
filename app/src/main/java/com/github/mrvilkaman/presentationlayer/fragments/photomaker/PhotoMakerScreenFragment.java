@@ -58,7 +58,8 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Override
 	public void showImage(String lastPath) {
-		imageLoader.load(lastPath,0,0,-1,-1,imageView);
+		imageLoader.loadFile(lastPath)
+				.into(imageView);
 	}
 
 	@Override
@@ -71,7 +72,10 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 	@Override
 	public void daggerInject() {
 		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
-		DaggerPhotoMakerScreenComponent.builder().activityCoreComponent(component).build().inject(this);
+		DaggerPhotoMakerScreenComponent.builder()
+				.activityCoreComponent(component)
+				.build()
+				.inject(this);
 	}
 
 }

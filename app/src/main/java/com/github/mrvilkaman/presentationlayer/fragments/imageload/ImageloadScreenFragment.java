@@ -46,27 +46,37 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 
 	private void loadError() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load("http://file.mobilmusic.ru/g", dimension, dimension,
-				R.drawable.ic_picasso_placeholder, R.drawable.ic_picasso_error, view5);
+		imageLoader.loadUrl("http://file.mobilmusic.ru/g")
+				.size(dimension, dimension)
+				.holder(R.drawable.ic_picasso_placeholder)
+				.error(R.drawable.ic_picasso_error)
+				.into(view5);
 	}
 
 
 	private void loadFixWight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(URL, 0, dimension, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error, view1);
+		imageLoader.loadUrl(URL)
+				.height(dimension)
+				.holder(R.drawable.ic_picasso_placeholder)
+				.error(R.drawable.ic_picasso_error)
+				.into(view1);
 	}
 
 	private void loadFixHeight() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(URL, dimension, 0, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error, view2);
+		imageLoader.loadUrl(URL)
+				.width(dimension)
+				.holder(R.drawable.ic_picasso_placeholder)
+				.error(R.drawable.ic_picasso_error)
+				.into(view2);
 	}
 
 	private void loadFixAll() {
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
-		imageLoader.load(URL, dimension, dimension, R.drawable.ic_picasso_placeholder,
-				R.drawable.ic_picasso_error, view3);
+		imageLoader.loadUrl(URL)
+				.size(dimension,dimension)
+				.into(view3);
 	}
 
 	@Override
