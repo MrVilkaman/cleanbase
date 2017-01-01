@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,23 +10,20 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import javax.inject.Inject;
-
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.app.CoreApp;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import javax.inject.Inject;
 
 public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppCompatActivity
 		implements BaseActivityView, IHasComponent<C> {
 
 	@Inject NavigationResolver navigationResolver;
-	@Inject ToolbarResolver toolbarResolver;
-	@Inject IToolbar iToolbar;
+	@Inject @Nullable ToolbarResolver toolbarResolver;
 	@Inject LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
@@ -39,7 +37,9 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		injectDagger();
 		View rootView = getRootView();
 		drawerHelper.init(rootView);
-		toolbarResolver.init(rootView, this);
+		if (toolbarResolver != null) {
+			toolbarResolver.init(rootView, this);
+		}
 		navigationResolver.init();
 		configureProgressBar();
 	}
@@ -55,13 +55,17 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		toolbarResolver.onPrepareOptionsMenu(menu);
+		if (toolbarResolver != null) {
+			toolbarResolver.onPrepareOptionsMenu(menu);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		toolbarResolver.onOptionsItemSelected(item);
+		if (toolbarResolver != null) {
+			toolbarResolver.onOptionsItemSelected(item);
+		}
 		return super.onOptionsItemSelected(item);
 	}
 

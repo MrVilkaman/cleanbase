@@ -1,10 +1,11 @@
 package com.github.mrvilkaman.di.modules.activity;
 
 
+import android.support.annotation.Nullable;
+
 import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolverEmpty;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,13 +15,15 @@ public class ToolbarEmptyModule {
 
 	@Provides
 	@PerActivity
+	@Nullable
 	public ToolbarResolver getToolbarResolver() {
-		return new ToolbarResolverEmpty();
+		return null;
 	}
 
 	@Provides
 	@PerActivity
-	public IToolbar getToolbar(ToolbarResolver resolver) {
-		return resolver;
+	@Nullable
+	public IToolbar getToolbar() {
+		return null;
 	}
 }

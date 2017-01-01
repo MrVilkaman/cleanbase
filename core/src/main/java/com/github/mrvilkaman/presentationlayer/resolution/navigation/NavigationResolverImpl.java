@@ -3,6 +3,7 @@ package com.github.mrvilkaman.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
@@ -26,14 +27,14 @@ public class NavigationResolverImpl implements NavigationResolver {
 	private Activity currentActivity;
 	private FragmentResolver fragmentManager;
 	private LeftDrawerHelper drawerHelper;
-	private ToolbarResolver toolbarResolver;
+	@Nullable private ToolbarResolver toolbarResolver;
 	private UIResolver uiResolver;
 	private BaseActivityView activityView;
 
 	private ProvideFragmentCallback callback;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
-								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
+								  LeftDrawerHelper drawerHelper, @Nullable ToolbarResolver toolbarResolver,
 								  UIResolver uiResolver, BaseActivityView activityView,
 								  ProvideFragmentCallback callback) {
 		this.currentActivity = currentActivity;
