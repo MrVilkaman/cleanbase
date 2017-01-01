@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.presentationlayer.activities.SecondActivity;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
@@ -52,7 +53,7 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 
 	@OnClick(R.id.menu_5)
 	void onClick5(){
-//		getNavigation().showRootFragment(Frag5ScreenFragment.open());
+		getNavigation().openActivity(SecondActivity.class);
 	}
 
 	@Override

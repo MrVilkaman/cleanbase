@@ -1,11 +1,10 @@
 package com.github.mrvilkaman.di;
 
-
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
-import com.github.mrvilkaman.presentationlayer.activities.MainActivity;
+import com.github.mrvilkaman.presentationlayer.activities.SecondActivity;
 
 import dagger.Component;
 
@@ -13,8 +12,7 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class,
 		modules = {CommonActivityModule.class, DrawerModule.class,
 				ToolbarModule.class})
-public interface ActivityComponent extends ActivityCoreComponent {
+public interface SecondActivityComponent extends ActivityCoreComponent {
 
-	void inject(MainActivity activity);
-
+	void inject(SecondActivity activity);
 }
