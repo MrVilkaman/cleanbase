@@ -1,5 +1,5 @@
 # cleanbase
-----
+
 Cleanbase - это библиотека для построения Android приложения с использованием MVP и CleanArchitecture.
 
 [![](https://jitpack.io/v/MrVilkaman/cleanbase.svg)](https://jitpack.io/#MrVilkaman/cleanbase)
