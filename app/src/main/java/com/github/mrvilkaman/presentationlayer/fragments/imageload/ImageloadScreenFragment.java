@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.github.mrvilkaman.R;
-import com.github.mrvilkaman.di.ActivityComponent;
+import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 
@@ -81,9 +81,9 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 
 	@Override
 	public void daggerInject() {
-		ActivityComponent component = getComponent(ActivityComponent.class);
+		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
 		DaggerImageloadScreenComponent.builder()
-				.activityComponent(component)
+				.activityCoreComponent(component)
 				.build()
 				.inject(this);
 	}
