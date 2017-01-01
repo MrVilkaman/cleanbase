@@ -34,9 +34,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 	private ProvideFragmentCallback callback;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
-								  LeftDrawerHelper drawerHelper, @Nullable ToolbarResolver toolbarResolver,
-								  UIResolver uiResolver, BaseActivityView activityView,
-								  ProvideFragmentCallback callback) {
+								  LeftDrawerHelper drawerHelper,
+								  @Nullable ToolbarResolver toolbarResolver, UIResolver uiResolver,
+								  BaseActivityView activityView, ProvideFragmentCallback
+										  callback) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
@@ -50,12 +51,16 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void init() {
 
-		fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
+		if (toolbarResolver != null) {
+			fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
+		}
 
 		MyToolbarResolverCallback callback =
 				new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
 						toolbarResolver, this);
-		toolbarResolver.setCallback(callback);
+		if (toolbarResolver != null) {
+			toolbarResolver.setCallback(callback);
+		}
 
 
 		if (!fragmentManager.hasFragment()) {
@@ -78,7 +83,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (fragmentManager.processBackFragment()) {
 			activityView.hideProgress();
 			if (fragmentManager.onBackPressed()) {
-				toolbarResolver.updateIcon();
+				if (toolbarResolver != null)
+					toolbarResolver.updateIcon();
 			} else {
 				exit();
 			}
@@ -88,7 +94,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void showFragment(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showFragment(fragment);
 		};
 		close(callback, drawerHelper);
@@ -97,7 +104,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void showRootFragment(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showRootFragment(fragment);
 		};
 		close(callback, drawerHelper);
@@ -106,7 +114,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void showFragmentWithoutBackStack(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showFragmentWithoutBackStack(fragment);
 		};
 		LeftDrawerHelper drawerHelper = this.drawerHelper;
@@ -162,7 +171,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 			drawerHelper.close();
 		} else {
 			onBackPressed();
-			toolbarResolver.updateIcon();
+			if (toolbarResolver != null)
+				toolbarResolver.updateIcon();
 		}
 	}
 
