@@ -25,7 +25,7 @@ android {
                 testCoverageEnabled = mytestCoverageEnabled
             }
             ext.enableCrashlytics = false
-            testCoverageEnabled true
+            testCoverageEnabled false
         }
         release {
             minifyEnabled false

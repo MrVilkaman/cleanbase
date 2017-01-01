@@ -28,6 +28,7 @@ public class BasePresenter<V extends BaseView> {
 	}
 
 	public void onViewDetached() {
+		compositeSubscription.clear();
 	}
 
 	public final V view() {
@@ -38,11 +39,11 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
-	protected <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
+	protected final <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
 		compositeSubscription.add(observable.subscribe(subscriber));
 	}
 
-	protected <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
+	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
 		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
 				.subscribe(subscriber));
 	}
