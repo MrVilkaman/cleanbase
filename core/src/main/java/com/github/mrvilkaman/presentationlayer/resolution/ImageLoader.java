@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 public interface ImageLoader {
 
-	Builder loadUrl(@NonNull String url);
+	Builder load(@NonNull String url);
 
 	Builder loadFile(@NonNull String path);
 

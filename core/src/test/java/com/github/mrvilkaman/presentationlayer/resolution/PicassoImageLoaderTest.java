@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.Tutils;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -30,7 +31,7 @@ public class PicassoImageLoaderTest extends BaseTestCase {
 
 	@Mock(answer = Answers.RETURNS_MOCKS) Picasso picasso;
 
- RequestCreator creator = Tutils.mockBuilder(RequestCreator.class);
+	RequestCreator creator = Tutils.mockBuilder(RequestCreator.class);
 	@Mock ImageView view;
 
 	private ImageLoader imageLoader;
@@ -46,7 +47,7 @@ public class PicassoImageLoaderTest extends BaseTestCase {
 	@Test
 	public void testLoadUrl_minWay() {
 		// Act
-		imageLoader.loadUrl("url")
+		imageLoader.load("url")
 				.into(view);
 
 		// Assert
@@ -60,11 +61,35 @@ public class PicassoImageLoaderTest extends BaseTestCase {
 
 	}
 
+	@Test
+	public void testLoadFile_minWay() {
+		// Act
+		imageLoader.loadFile("path")
+				.into(view);
+
+		// Assert
+		InOrder inOrder = Mockito.inOrder(creator, picasso);
+		ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
+		inOrder.verify(picasso)
+				.load(argument.capture());
+		File value = argument.getValue();
+		assertThat(value.getPath()).isEqualTo("path");
+
+		inOrder.verify(creator)
+				.memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE);
+
+		inOrder.verify(creator)
+				.into(view);
+		verify(creator, never()).centerCrop();
+		verify(creator, never()).resize(anyInt(), anyInt());
+
+	}
+
 
 	@Test
 	public void testLoadUrl_withFullCustomSizeAndErrorAndLoadHolders() {
 		// Act
-		imageLoader.loadUrl("url")
+		imageLoader.load("url")
 				.size(150, 250)
 				.holder(R.drawable.ic_home)
 				.error(R.drawable.ic_back)
@@ -123,13 +148,17 @@ public class PicassoImageLoaderTest extends BaseTestCase {
 		InOrder inOrder = Mockito.inOrder(creator, picasso);
 
 		ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
-		inOrder.verify(picasso).load(argument.capture());
+		inOrder.verify(picasso)
+				.load(argument.capture());
 		File value = argument.getValue();
 		assertThat(value.getPath()).isEqualTo("path");
 
-		inOrder.verify(creator).resize(0, 250);
-		inOrder.verify(creator).onlyScaleDown();
-		inOrder.verify(creator).into(view);
+		inOrder.verify(creator)
+				.resize(0, 250);
+		inOrder.verify(creator)
+				.onlyScaleDown();
+		inOrder.verify(creator)
+				.into(view);
 
 		verify(creator, never()).centerCrop();
 	}

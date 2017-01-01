@@ -19,7 +19,7 @@ public class PicassoImageLoader implements ImageLoader {
 	}
 
 	@Override
-	public Builder loadUrl(@NonNull String url) {
+	public Builder load(@NonNull String url) {
 		RequestCreator load = picasso.load(url);
 		return new MyBuilder(load);
 	}
