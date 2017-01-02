@@ -37,6 +37,6 @@ public class MainActivity extends BaseActivity<ActivityComponent> {
 	}
 
 	protected int getActivityLayoutResourceID() {
-		return R.layout.activity_main_app;
+		return R.layout.cleanbase_activity_content_with_toolbar_and_drawer;
 	}
 }

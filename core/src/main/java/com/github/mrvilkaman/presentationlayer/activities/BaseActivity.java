@@ -47,7 +47,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 	}
 
 	protected int getActivityLayoutResourceID() {
-		return R.layout.activity_main;
+		return R.layout.cleanbase_activity_content_with_toolbar;
 	}
 
 	private void configureProgressBar() {

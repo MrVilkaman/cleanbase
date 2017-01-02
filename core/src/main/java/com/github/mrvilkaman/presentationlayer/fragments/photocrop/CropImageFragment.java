@@ -51,7 +51,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 
 	@Override
 	protected int getLayoutId() {
-		return R.layout.fragment_crop_fragment;
+		return R.layout.cleanbase_fragment_crop_fragment;
 	}
 
 	@Override

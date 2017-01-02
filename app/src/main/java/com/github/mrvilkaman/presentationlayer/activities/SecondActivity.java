@@ -34,7 +34,7 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent> {
 
 	@Override
 	protected int getActivityLayoutResourceID() {
-		return R.layout.activity_base_content_only;
+		return R.layout.cleanbase_activity_content_only;
 	}
 }
 

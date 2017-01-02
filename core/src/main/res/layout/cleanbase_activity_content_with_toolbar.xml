@@ -7,7 +7,7 @@
 	xmlns:wheel="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools">
 
-	<include layout="@layout/toolbar"/>
+	<include layout="@layout/cleanbase_toolbar"/>
 
 	<FrameLayout
 		android:id="@+id/content"
