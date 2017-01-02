@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.github.mrvilkaman.R;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 import com.github.mrvilkaman.presentationlayer.photoulits.PhotoHelper;

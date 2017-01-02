@@ -3,7 +3,6 @@ package com.github.mrvilkaman.di;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerEmptyModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarEmptyModule;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.activities.SecondActivity;
 
 import dagger.Component;

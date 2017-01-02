@@ -4,7 +4,6 @@ package com.github.mrvilkaman.di;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.activities.MainActivity;
 
 import dagger.Component;

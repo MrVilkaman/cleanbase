@@ -1,7 +1,9 @@
 package com.github.mrvilkaman.di;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
@@ -19,4 +21,6 @@ public interface AppCoreComponent {
 	Context provideContext();
 
 	ImageLoader provideImageLoader();
+
+	@Nullable LeakCanaryProxy provideLeakCanaryProxy();
 }

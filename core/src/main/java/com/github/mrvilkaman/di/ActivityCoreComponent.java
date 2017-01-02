@@ -1,10 +1,12 @@
-package com.github.mrvilkaman.presentationlayer.activities;
+package com.github.mrvilkaman.di;
 
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
@@ -32,5 +34,7 @@ public interface ActivityCoreComponent {
 	ImageLoader provideImageLoader();
 
 	StorageUtils storageUtils();
+
+	@Nullable LeakCanaryProxy provideLeakCanaryProxy();
 
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.app.CoreApp;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -131,4 +133,12 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 
 	protected abstract C createComponent();
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
+		if (leakCanaryProxy != null) {
+			leakCanaryProxy.init();
+		}
+	}
 }

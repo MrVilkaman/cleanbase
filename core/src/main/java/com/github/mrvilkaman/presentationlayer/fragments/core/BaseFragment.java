@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -91,6 +93,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		presenter.onViewDetached();
 		presenter.setView(null);
 		super.onDestroyView();
+		LeakCanaryProxy leakCanaryProxy =
+				getComponent(ActivityCoreComponent.class).provideLeakCanaryProxy();
+		if (leakCanaryProxy != null) {
+			leakCanaryProxy.init();
+		}
 	}
 
 	@Override

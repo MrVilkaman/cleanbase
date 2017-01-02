@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.isseiaoki.simplecropview.CropImageView;
 import com.squareup.picasso.Callback;

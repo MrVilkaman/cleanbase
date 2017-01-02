@@ -3,7 +3,7 @@ package com.github.mrvilkaman.presentationlayer.fragments.testfrags;
 import dagger.Component;
 import dagger.Module;
 import com.github.mrvilkaman.di.PerScreen;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 
 @PerScreen
 @Component(dependencies = ActivityCoreComponent.class,

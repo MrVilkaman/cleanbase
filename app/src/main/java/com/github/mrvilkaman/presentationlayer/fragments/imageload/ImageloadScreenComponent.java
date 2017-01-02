@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.imageload;
 
 import com.github.mrvilkaman.di.PerScreen;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 
 import dagger.Component;
 
