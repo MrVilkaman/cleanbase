@@ -1,8 +1,6 @@
 package com.github.mrvilkaman.di.modules;
 
 
-import android.support.annotation.NonNull;
-
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 
 import javax.inject.Singleton;
@@ -15,7 +13,6 @@ import dagger.Provides;
 public class DevModule {
 
 	@Provides
-	@NonNull
 	@Singleton
 	public LeakCanaryProxy provideLeakCanaryProxy() {
 		return null;
