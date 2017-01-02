@@ -13,7 +13,7 @@ import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.datalayer.api.response.BaseResponse;
-import com.github.mrvilkaman.datalayer.providers.DpUtilsImpl;
+import com.github.mrvilkaman.datalayer.providers.DPUtilsImpl;
 import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
 import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
@@ -28,11 +28,11 @@ import static rx.Observable.just;
 
 public class DPUtilsTest extends BaseTestCase {
 
-	private DpUtilsImpl dpUtils;
+	private DPUtilsImpl dpUtils;
 
 	@Override
 	public void init() {
-		dpUtils = new DpUtilsImpl();
+		dpUtils = new DPUtilsImpl();
 	}
 
 	@Test

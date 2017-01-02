@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.di;
+package com.github.mrvilkaman.di.modules;
 
 import android.util.Log;
 

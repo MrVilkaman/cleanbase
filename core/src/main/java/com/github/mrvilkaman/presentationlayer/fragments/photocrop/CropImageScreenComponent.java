@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.presentationlayer.fragments.core.photocrop;
+package com.github.mrvilkaman.presentationlayer.fragments.photocrop;
 
 import dagger.Component;
 import com.github.mrvilkaman.di.PerScreen;
