@@ -59,7 +59,7 @@ public class CommonActivityModule {
 	@Provides
 	@PerActivity
 	public NavigationResolver createNavigationResolver(FragmentResolver fragmentResolver,
-													   LeftDrawerHelper drawer,
+													   @Nullable LeftDrawerHelper drawer,
 													   @Nullable ToolbarResolver toolbarResolver,
 													   UIResolver ui) {
 		return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver, ui,

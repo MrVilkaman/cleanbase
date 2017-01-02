@@ -24,7 +24,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject @Nullable ToolbarResolver toolbarResolver;
-	@Inject LeftDrawerHelper drawerHelper;
+	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
 
@@ -36,7 +36,9 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		View rootView = getRootView();
-		drawerHelper.init(rootView);
+		if (drawerHelper != null) {
+			drawerHelper.init(rootView);
+		}
 		if (toolbarResolver != null) {
 			toolbarResolver.init(rootView, this);
 		}
