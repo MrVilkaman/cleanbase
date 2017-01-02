@@ -10,13 +10,14 @@ import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationR
 
 public class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolverCallback {
 	private final FragmentResolver fragmentManager;
-	private final LeftDrawerHelper drawerHelper;
 	private final BaseActivityView activityView;
+	private final @Nullable LeftDrawerHelper drawerHelper;
 	private final @Nullable ToolbarResolver toolbarResolver;
 	private final NavigationResolver navigationResolver;
 
 	public MyToolbarResolverCallback(FragmentResolver fragmentManager,
-									 LeftDrawerHelper drawerHelper, BaseActivityView activityView,
+									 @Nullable LeftDrawerHelper drawerHelper,
+									 BaseActivityView activityView,
 									 @Nullable ToolbarResolver toolbarResolver,
 									 NavigationResolver navigationResolver) {
 		this.fragmentManager = fragmentManager;
@@ -29,7 +30,9 @@ public class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolve
 	@Override
 	public void onClickHome() {
 		if (fragmentManager.isRootScreen()) {
-			drawerHelper.open();
+			if (drawerHelper != null) {
+				drawerHelper.open();
+			}
 		} else {
 			navigationResolver.onBackPressed();
 			activityView.hideKeyboard();

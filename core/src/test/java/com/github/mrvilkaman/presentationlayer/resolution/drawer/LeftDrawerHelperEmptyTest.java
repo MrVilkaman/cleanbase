@@ -1,10 +1,10 @@
 package com.github.mrvilkaman.presentationlayer.resolution.drawer;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class LeftDrawerHelperEmptyTest extends BaseTestCase {
@@ -18,6 +18,7 @@ public class LeftDrawerHelperEmptyTest extends BaseTestCase {
 		LeftDrawerHelper drawerHelper = new LeftDrawerHelperEmpty();
 
 		// Act
+		drawerHelper.init(null);
 		drawerHelper.open();
 		drawerHelper.close();
 		drawerHelper.isOpen();
