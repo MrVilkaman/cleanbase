@@ -12,6 +12,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by root on 15.03.16.
  */
+@SuppressWarnings("WeakerAccess")
 public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	private final WeakReference<V> viewRef;
@@ -20,14 +21,11 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	public ViewSubscriber(V view) {
 		this.viewRef = new WeakReference<>(view);
-		// TODO: 25.12.16 mode to global setting
 		string = CleanBaseSettings.needSubscribeLogs() ? AppUtils.getSubscriberStartStack() : "";
 	}
 
 	@Override
 	public void onError(Throwable e) {
-		// TODO: 25.12.16 mode to global setting
-
 		if (CleanBaseSettings.needSubscribeLogs()) {
 			Log.e("LoadSubscriber", "Start by:" + string, e);
 		}

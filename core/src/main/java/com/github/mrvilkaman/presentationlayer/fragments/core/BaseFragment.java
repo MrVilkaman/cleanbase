@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -31,7 +33,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject public ThrowableResolver throwableResolver;
 	@Inject public NavigationResolver navigationResolver;
 	@Inject public P relationPresenter;
-	@Inject public IToolbar toolbar;
+	@Inject @Nullable public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
 
 	View progressBar;
@@ -91,6 +93,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		presenter.onViewDetached();
 		presenter.setView(null);
 		super.onDestroyView();
+		LeakCanaryProxy leakCanaryProxy =
+				getComponent(ActivityCoreComponent.class).provideLeakCanaryProxy();
+		if (leakCanaryProxy != null) {
+			leakCanaryProxy.init();
+		}
 	}
 
 	@Override

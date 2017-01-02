@@ -1,42 +1,40 @@
 package com.github.mrvilkaman.presentationlayer.activities;
 
+
 import android.view.View;
 
 import com.github.mrvilkaman.R;
-import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.di.AppComponent;
-import com.github.mrvilkaman.di.DaggerActivityComponent;
+import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
+import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
-import com.github.mrvilkaman.di.modules.activity.DrawerModule;
-import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
-import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 
-
-public class MainActivity extends BaseActivity<ActivityComponent> {
+public class SecondActivity extends BaseActivity<SecondActivityComponent> {
 
 	@Override
-	protected ActivityComponent createComponent() {
+	protected void injectMe(SecondActivityComponent activityComponent) {
+		activityComponent.inject(this);
+	}
+
+	@Override
+	protected SecondActivityComponent createComponent() {
+
 		AppComponent appComponent = getComponent(AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
 				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
 						getContainerID(), ImageloadScreenFragment::open);
 
-		return DaggerActivityComponent.builder()
+		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
-				.toolbarModule(new ToolbarModule(rootView, this))
-				.drawerModule(new DrawerModule(DrawerScreenFragment::open))
 				.build();
 	}
 
 	@Override
-	protected void injectMe(ActivityComponent activityComponent) {
-		activityComponent.inject(this);
-	}
-
 	protected int getActivityLayoutResourceID() {
-		return R.layout.cleanbase_activity_content_with_toolbar_and_drawer;
+		return R.layout.cleanbase_activity_content_only;
 	}
 }
+

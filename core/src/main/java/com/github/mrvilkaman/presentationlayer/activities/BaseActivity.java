@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,24 +10,23 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import javax.inject.Inject;
-
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.app.CoreApp;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import javax.inject.Inject;
 
 public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppCompatActivity
 		implements BaseActivityView, IHasComponent<C> {
 
 	@Inject NavigationResolver navigationResolver;
-	@Inject ToolbarResolver toolbarResolver;
-	@Inject IToolbar iToolbar;
-	@Inject LeftDrawerHelper drawerHelper;
+	@Inject @Nullable ToolbarResolver toolbarResolver;
+	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
 
@@ -38,14 +38,18 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		View rootView = getRootView();
-		drawerHelper.init(rootView);
-		toolbarResolver.init(rootView, this);
+		if (drawerHelper != null) {
+			drawerHelper.init(rootView);
+		}
+		if (toolbarResolver != null) {
+			toolbarResolver.init(rootView, this);
+		}
 		navigationResolver.init();
 		configureProgressBar();
 	}
 
 	protected int getActivityLayoutResourceID() {
-		return R.layout.activity_main;
+		return R.layout.cleanbase_activity_content_with_toolbar;
 	}
 
 	private void configureProgressBar() {
@@ -55,13 +59,17 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		toolbarResolver.onPrepareOptionsMenu(menu);
+		if (toolbarResolver != null) {
+			toolbarResolver.onPrepareOptionsMenu(menu);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		toolbarResolver.onOptionsItemSelected(item);
+		if (toolbarResolver != null) {
+			toolbarResolver.onOptionsItemSelected(item);
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -125,4 +133,12 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 
 	protected abstract C createComponent();
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
+		if (leakCanaryProxy != null) {
+			leakCanaryProxy.init();
+		}
+	}
 }

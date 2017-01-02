@@ -68,7 +68,7 @@ public class UIResolverImpl implements UIResolver {
 		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
 		TextView textView =
 				(TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-		textView.setTextColor(ContextCompat.getColor(context, R.color.app_main_text_color));
+		textView.setTextColor(ContextCompat.getColor(context, R.color.cleanbase_main_text_color));
 		snackbar.show();
 	}
 

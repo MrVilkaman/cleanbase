@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">Core</string>
 
-	<string name="simple_text">%1$s</string>
+	<string name="cleanbase_simple_text">%1$s</string>
 
 	<!--Dialogs-->
 	<string name="dialog_server_error">Неожиданная ошибка на сервере</string>
@@ -10,7 +10,7 @@
 	<string name="dialog_default_404_error">Не найдено</string>
 	<string name="dialog_default_error">Непредвиденная ошибка: %1$s</string>
 	<string name="dialog_default_unauthorized">Не авторизован</string>
-	<string name="exit_toast">Для выхода нажмите еще раз!</string>
-	<string name="crop_done">Готово</string>
+	<string name="toast_exit">Для выхода нажмите еще раз!</string>
+	<string name="cleanbase_crop_done">Готово</string>
 
 </resources>

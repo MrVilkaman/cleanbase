@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge>
 	<android.support.v7.widget.Toolbar
-		style="@style/ToolBarStyle.Event"
 		android:id="@+id/toolbar_actionbar"
+		style="@style/ToolBarStyle.Event"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/toolbar_bg"
-		 android:gravity="center"
+		android:background="@color/cleanbase_toolbar_bg_color"
+		android:gravity="center"
 		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 		app:titleTextAppearance="@style/Toolbar.TitleText">
 	</android.support.v7.widget.Toolbar>

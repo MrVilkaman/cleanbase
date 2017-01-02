@@ -12,8 +12,8 @@
 		android:layout_height="match_parent"
 		custom:scv_background_color="#000000"
 		custom:scv_overlay_color="#66000000"
-		custom:scv_frame_color="@color/crop_frame_color"
-		custom:scv_handle_color="@color/crop_frame_color"
+		custom:scv_frame_color="@color/cleanbase_crop_frame_color"
+		custom:scv_handle_color="@color/cleanbase_crop_frame_color"
 		custom:scv_guide_color="#BBFFFFFF"
 		custom:scv_frame_stroke_weight="2dp"
 		custom:scv_handle_size="8dp"
@@ -25,6 +25,6 @@
 	<Button
 		style="@style/PhotoCropButton"
 		android:id="@+id/ready"
-		android:text="@string/crop_done"/>
+		android:text="@string/cleanbase_crop_done"/>
 
 </FrameLayout>

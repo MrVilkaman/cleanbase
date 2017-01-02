@@ -3,6 +3,7 @@ package com.github.mrvilkaman.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
@@ -25,17 +26,18 @@ public class NavigationResolverImpl implements NavigationResolver {
 	protected boolean doubleBackToExitPressedOnce;
 	private Activity currentActivity;
 	private FragmentResolver fragmentManager;
-	private LeftDrawerHelper drawerHelper;
-	private ToolbarResolver toolbarResolver;
+	@Nullable private LeftDrawerHelper drawerHelper;
+	@Nullable private ToolbarResolver toolbarResolver;
 	private UIResolver uiResolver;
 	private BaseActivityView activityView;
 
 	private ProvideFragmentCallback callback;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
-								  LeftDrawerHelper drawerHelper, ToolbarResolver toolbarResolver,
-								  UIResolver uiResolver, BaseActivityView activityView,
-								  ProvideFragmentCallback callback) {
+								  @Nullable LeftDrawerHelper drawerHelper,
+								  @Nullable ToolbarResolver toolbarResolver, UIResolver uiResolver,
+								  BaseActivityView activityView, ProvideFragmentCallback
+										  callback) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
 		this.drawerHelper = drawerHelper;
@@ -49,22 +51,31 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void init() {
 
-		fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
+		if (toolbarResolver != null) {
+			fragmentManager.setCallback(new MyFragmentResolverCallback(toolbarResolver));
+		}
 
 		MyToolbarResolverCallback callback =
 				new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
 						toolbarResolver, this);
-		toolbarResolver.setCallback(callback);
+		if (toolbarResolver != null) {
+			toolbarResolver.setCallback(callback);
+		}
 
 
 		if (!fragmentManager.hasFragment()) {
 			fragmentManager.showRootFragment(createStartFragment());
 
-			if (drawerHelper.hasDrawer()) {
+			if (hasDrawer()) {
+				//noinspection ConstantConditions
 				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(),
 						drawerHelper.getDrawerFragment());
 			}
 		}
+	}
+
+	private boolean hasDrawer() {
+		return drawerHelper != null && drawerHelper.hasDrawer();
 	}
 
 	@Override
@@ -77,7 +88,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (fragmentManager.processBackFragment()) {
 			activityView.hideProgress();
 			if (fragmentManager.onBackPressed()) {
-				toolbarResolver.updateIcon();
+				if (toolbarResolver != null)
+					toolbarResolver.updateIcon();
 			} else {
 				exit();
 			}
@@ -87,34 +99,36 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void showFragment(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showFragment(fragment);
 		};
-		close(callback, drawerHelper);
+		close(callback);
 	}
 
 	@Override
 	public void showRootFragment(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showRootFragment(fragment);
 		};
-		close(callback, drawerHelper);
+		close(callback);
 	}
 
 	@Override
 	public void showFragmentWithoutBackStack(BaseFragment fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			toolbarResolver.clear();
+			if (toolbarResolver != null)
+				toolbarResolver.clear();
 			fragmentManager.showFragmentWithoutBackStack(fragment);
 		};
-		LeftDrawerHelper drawerHelper = this.drawerHelper;
-		close(callback, drawerHelper);
+		close(callback);
 	}
 
-	private void close(LeftDrawerHelper.LeftDrawerHelperCallback callback,
-					   LeftDrawerHelper drawerHelper) {
-		if (drawerHelper.isOpen()) {
+	private void close(LeftDrawerHelper.LeftDrawerHelperCallback callback) {
+		//noinspection ConstantConditions
+		if (hasDrawer() && drawerHelper.isOpen()) {
 			drawerHelper.close(callback);
 		} else {
 			callback.onClose();
@@ -157,19 +171,21 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public void back() {
-		if (drawerHelper.isOpen()) {
+		if (hasDrawer() && drawerHelper.isOpen()) {
 			drawerHelper.close();
 		} else {
 			onBackPressed();
-			toolbarResolver.updateIcon();
+			if (toolbarResolver != null)
+				toolbarResolver.updateIcon();
 		}
 	}
 
 	void exit() {
-		if (doubleBackToExitPressedOnce) {
+
+		if (doubleBackToExitPressedOnce || !currentActivity.isTaskRoot()) {
 			currentActivity.finish();
 		} else {
-			uiResolver.showToast(R.string.exit_toast);
+			uiResolver.showToast(R.string.toast_exit);
 			doubleBackToExitPressedOnce = true;
 			just(null).delay(1000, TimeUnit.MILLISECONDS)
 					.subscribe(o -> doubleBackToExitPressedOnce = false);

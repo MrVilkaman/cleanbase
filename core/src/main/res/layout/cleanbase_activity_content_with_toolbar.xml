@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
 	android:id="@+id/all_content"
-	android:layout_height="fill_parent"
-	android:layout_width="fill_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	xmlns:wheel="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
 
-	<include layout="@layout/toolbar"/>
+	<include layout="@layout/cleanbase_toolbar"/>
 
 	<FrameLayout
 		android:id="@+id/content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_below="@+id/toolbar_actionbar"/>
+
 	<com.pnikosis.materialishprogress.ProgressWheel
-		android:visibility="gone"
-		tools:visibility="visible"
-		android:background="#88000000"
 		android:id="@+id/progress_wheel"
-		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true"
-		wheel:matProg_barColor="@color/app_background"
-		wheel:matProg_progressIndeterminate="true" />
+		android:background="@color/cleanbase_progress_bg_color"
+		android:gravity="center"
+		android:visibility="gone"
+		tools:visibility="visible"
+		wheel:matProg_barColor="@color/cleanbase_progress_bar_color"
+		wheel:matProg_progressIndeterminate="true"/>
 </RelativeLayout>

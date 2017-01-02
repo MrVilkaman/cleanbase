@@ -1,8 +1,8 @@
-package com.github.mrvilkaman.presentationlayer.fragments.core.photocrop;
+package com.github.mrvilkaman.presentationlayer.fragments.photocrop;
 
 import dagger.Component;
 import com.github.mrvilkaman.di.PerScreen;
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 
 @PerScreen
 @Component(dependencies = ActivityCoreComponent.class)

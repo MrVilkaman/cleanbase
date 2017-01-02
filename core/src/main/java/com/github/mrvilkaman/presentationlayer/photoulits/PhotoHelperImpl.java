@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.photocrop.CropImageFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 

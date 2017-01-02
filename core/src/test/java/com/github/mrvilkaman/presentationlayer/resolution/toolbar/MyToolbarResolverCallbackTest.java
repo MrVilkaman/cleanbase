@@ -1,15 +1,15 @@
 package com.github.mrvilkaman.presentationlayer.resolution.toolbar;
 
-import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
+
+import org.junit.Test;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -56,8 +56,10 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 		// Assert
 		verify(drawerHelper, never()).open();
 		InOrder inOrder = Mockito.inOrder(navigationResolver, activityView);
-		inOrder.verify(navigationResolver).onBackPressed();
-		inOrder.verify(activityView).hideKeyboard();
+		inOrder.verify(navigationResolver)
+				.onBackPressed();
+		inOrder.verify(activityView)
+				.hideKeyboard();
 	}
 
 	@Test
@@ -84,6 +86,39 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 		// Assert
 		verify(toolbarResolver, never()).showBackIcon();
 		verify(toolbarResolver).showHomeIcon();
+	}
+
+
+	@Test
+	public void testUpdateIcon_withoutToolbar_notRootScreen() {
+		// Arrange
+		callback = new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
+				null, navigationResolver);
+		when(fragmentManager.isRootScreen()).thenReturn(false);
+
+		// Act
+		callback.updateIcon();
+
+		// Assert
+		verify(fragmentManager, never()).isRootScreen();
+		verify(toolbarResolver, never()).showBackIcon();
+		verify(toolbarResolver, never()).showHomeIcon();
+	}
+
+	@Test
+	public void testUpdateIcon_withoutToolbar_RootScreen() {
+		// Arrange
+		callback = new MyToolbarResolverCallback(fragmentManager, drawerHelper, activityView,
+				null, navigationResolver);
+		when(fragmentManager.isRootScreen()).thenReturn(true);
+
+		// Act
+		callback.updateIcon();
+
+		// Assert
+		verify(fragmentManager, never()).isRootScreen();
+		verify(toolbarResolver, never()).showBackIcon();
+		verify(toolbarResolver, never()).showHomeIcon();
 	}
 
 

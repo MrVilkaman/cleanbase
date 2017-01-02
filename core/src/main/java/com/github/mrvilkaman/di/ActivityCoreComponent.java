@@ -1,15 +1,12 @@
-package com.github.mrvilkaman.presentationlayer.activities;
+package com.github.mrvilkaman.di;
 
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
-import dagger.Component;
-import com.github.mrvilkaman.di.AppCoreComponent;
-import com.github.mrvilkaman.di.PerActivity;
-import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
-import com.github.mrvilkaman.di.modules.activity.DrawerModule;
-import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
+import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
@@ -18,12 +15,7 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 
-@PerActivity
-@Component(dependencies = AppCoreComponent.class,
-		modules = {CommonActivityModule.class, DrawerModule.class,
-				ToolbarModule.class})
 public interface ActivityCoreComponent {
-//	void inject(MainActivity activity);
 
 	SchedulersProvider getSchedulersProvider();
 
@@ -35,12 +27,14 @@ public interface ActivityCoreComponent {
 
 	NavigationResolver getNavigationResolver();
 
-	IToolbar getIToolbar();
+	@Nullable IToolbar getIToolbar();
 
 	BaseActivityView provideBaseActivityView();
 
 	ImageLoader provideImageLoader();
 
 	StorageUtils storageUtils();
+
+	@Nullable LeakCanaryProxy provideLeakCanaryProxy();
 
 }

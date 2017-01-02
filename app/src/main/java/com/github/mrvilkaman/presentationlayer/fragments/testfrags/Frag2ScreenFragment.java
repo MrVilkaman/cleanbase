@@ -1,6 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.testfrags;
 
-import com.github.mrvilkaman.presentationlayer.activities.ActivityCoreComponent;
+import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 
 public class Frag2ScreenFragment extends FragBaseScreenFragment {

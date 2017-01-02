@@ -5,7 +5,7 @@
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:background">@color/app_background</item>
+        <item name="android:background">@color/cleanbase_app_background</item>
     </style>
 
 
@@ -36,13 +36,13 @@
     <style name="LineDiv">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divider_color</item>
+        <item name="android:background">@color/cleanbase_divider_color</item>
     </style>
 
     <style name="LineDivV">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:background">@color/divider_color</item>
+        <item name="android:background">@color/cleanbase_divider_color</item>
     </style>
 
 
@@ -54,7 +54,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!--<item name="colorButtonNormal">@color/colorPrimary</item>-->
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColor">@color/cleanbase_main_text_color</item>
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
