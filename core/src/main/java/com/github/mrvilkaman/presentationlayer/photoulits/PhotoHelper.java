@@ -3,7 +3,7 @@ package com.github.mrvilkaman.presentationlayer.photoulits;
 
 import android.content.Intent;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.photocrop.CropImageFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 
 public interface PhotoHelper {
 

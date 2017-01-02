@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import com.github.mrvilkaman.di.modules.ApiModule;
 import com.github.mrvilkaman.di.modules.AppModule;
+import com.github.mrvilkaman.di.modules.EventBusModule;
 import com.github.mrvilkaman.di.modules.ImageLoaderModule;
 import com.github.mrvilkaman.di.modules.NetworkModule;
 import com.github.mrvilkaman.di.modules.ProvidersModule;

@@ -15,13 +15,17 @@
 		android:theme="@style/AppTheme">
 		<activity 
 			android:screenOrientation="portrait"
-			android:name="com.github.mrvilkaman.presentationlayer.activities.MainActivity">
+			android:name=".presentationlayer.activities.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+
+		<activity
+			android:screenOrientation="portrait"
+			android:name=".presentationlayer.activities.SecondActivity"/>
 
 
 	</application>

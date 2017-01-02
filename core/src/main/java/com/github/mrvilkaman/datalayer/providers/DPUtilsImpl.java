@@ -18,7 +18,7 @@ import com.github.mrvilkaman.domainlayer.providers.DPUtils;
 import rx.Observable;
 import rx.functions.Func1;
 
-public class DpUtilsImpl implements DPUtils {
+public class DPUtilsImpl implements DPUtils {
 
 	@Override
 	public <T extends BaseResponse> Observable.Transformer<T, T> handleAnswer() {

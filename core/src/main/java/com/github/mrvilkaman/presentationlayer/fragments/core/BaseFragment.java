@@ -31,7 +31,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject public ThrowableResolver throwableResolver;
 	@Inject public NavigationResolver navigationResolver;
 	@Inject public P relationPresenter;
-	@Inject public IToolbar toolbar;
+	@Inject @Nullable public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
 
 	View progressBar;

@@ -12,11 +12,7 @@ import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 public interface AppCoreComponent {
 
-//	SessionDataProvider getSessionDataProvider();
-
 	SchedulersProvider getSchedulersProvider();
-
-//	RestApi provideApi();
 
 	StorageUtils storageUtils();
 
