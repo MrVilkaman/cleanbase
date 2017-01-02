@@ -185,7 +185,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (doubleBackToExitPressedOnce || !currentActivity.isTaskRoot()) {
 			currentActivity.finish();
 		} else {
-			uiResolver.showToast(R.string.exit_toast);
+			uiResolver.showToast(R.string.toast_exit);
 			doubleBackToExitPressedOnce = true;
 			just(null).delay(1000, TimeUnit.MILLISECONDS)
 					.subscribe(o -> doubleBackToExitPressedOnce = false);

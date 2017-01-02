@@ -16,12 +16,10 @@
 		android:id="@+id/progress_wheel"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_centerVertical="true"
-		android:background="#88000000"
+		android:background="@color/cleanbase_progress_bg_color"
 		android:gravity="center"
 		android:visibility="gone"
 		tools:visibility="visible"
-		wheel:matProg_barColor="@color/app_background"
+		wheel:matProg_barColor="@color/cleanbase_progress_bar_color"
 		wheel:matProg_progressIndeterminate="true"/>
 </FrameLayout>

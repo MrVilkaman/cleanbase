@@ -337,7 +337,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		resolver.exit();
 
 		// Assert
-		verify(uiResolver).showToast(R.string.exit_toast);
+		verify(uiResolver).showToast(R.string.toast_exit);
 	}
 
 	@Test
@@ -352,7 +352,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 
 		// Assert
 		verify(uiResolver, never())
-				.showToast(R.string.exit_toast);
+				.showToast(R.string.toast_exit);
 		verify(currentActivity, times(1))
 				.finish();
 	}
@@ -370,7 +370,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		// Assert
 		InOrder inOrder = inOrder(uiResolver, currentActivity);
 		inOrder.verify(uiResolver, times(1))
-				.showToast(R.string.exit_toast);
+				.showToast(R.string.toast_exit);
 		inOrder.verify(currentActivity, times(1))
 				.finish();
 	}
