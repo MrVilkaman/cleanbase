@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.testfrags;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -53,7 +54,7 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 
 	@OnClick(R.id.menu_5)
 	void onClick5(){
-		getNavigation().openActivity(SecondActivity.class);
+		getNavigation().startActivityForResult(new Intent(getContext(),SecondActivity.class),-1);
 	}
 
 	@Override
