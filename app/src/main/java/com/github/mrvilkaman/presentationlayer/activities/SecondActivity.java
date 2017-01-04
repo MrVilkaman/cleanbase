@@ -8,6 +8,7 @@ import com.github.mrvilkaman.di.AppComponent;
 import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
 import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
+import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 
 public class SecondActivity extends BaseActivity<SecondActivityComponent> {
@@ -29,12 +30,13 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent> {
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
+				.toolbarModule(new ToolbarModule(rootView,this))
 				.build();
 	}
 
 	@Override
 	protected int getActivityLayoutResourceID() {
-		return R.layout.cleanbase_activity_content_only;
+		return R.layout.cleanbase_activity_content_with_toolbar;
 	}
 }
 

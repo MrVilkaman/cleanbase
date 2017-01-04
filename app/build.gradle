@@ -70,6 +70,7 @@ dependencies {
 
     apt libraries.daggerCompiler
 
+    compile libraries.butterKnife
     apt libraries.butterKnifeCompiler
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
