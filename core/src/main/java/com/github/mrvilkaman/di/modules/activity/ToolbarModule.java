@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.di.modules.activity;
 
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -27,7 +28,7 @@ public class ToolbarModule {
 	@Provides
 	@PerActivity
 	public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper,
-											  LeftDrawerHelper drawerHelper) {
+											  @Nullable LeftDrawerHelper drawerHelper) {
 		return new ToolbarResolverImpl(menuHelper, drawerHelper);
 	}
 

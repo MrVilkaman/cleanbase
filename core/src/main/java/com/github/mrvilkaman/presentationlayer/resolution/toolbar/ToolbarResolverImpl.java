@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.resolution.toolbar;
 
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,7 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 
 	private ToolbarResolverCallback callback;
 
-	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper, LeftDrawerHelper drawerHelper) {
+	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper, @Nullable LeftDrawerHelper drawerHelper) {
 		this.toolbarMenuHelper = toolbarMenuHelper;
 		this.drawerHelper = drawerHelper;
 	}
@@ -29,6 +30,9 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	@Override
 	public void init(View view, AppCompatActivity activity) {
 		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+		if (toolbar == null) {
+			throw new NullPointerException("Can`t find Toolbar with id R.id.toolbar_actionbar!\n Use R.layout.cleanbase_activity_content_with_toolbar");
+		}
 		activity.setSupportActionBar(toolbar);
 		supportActionBar = activity.getSupportActionBar();
 		supportActionBar.setHomeButtonEnabled(true);
@@ -62,7 +66,7 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 
 	@Override
 	public void showHomeIcon() {
-		if (drawerHelper.hasDrawer()) {
+		if (drawerHelper != null && drawerHelper.hasDrawer()) {
 			supportActionBar.setHomeAsUpIndicator(R.drawable.ic_home);
 		}else{
 			supportActionBar.setHomeAsUpIndicator(R.drawable.md_transparent);
