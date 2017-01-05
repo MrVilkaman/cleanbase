@@ -1,10 +1,10 @@
 package com.github.mrvilkaman.presentationlayer.resolution.fragments;
 
-import org.junit.Test;
-import org.mockito.Mock;
-
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
+
+import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
 
@@ -25,7 +25,7 @@ public class MyFragmentResolverCallbackTest extends BaseTestCase {
 		callback.onRootFragment();
 
 		// Assert
-		verify(toolbarResolver).showHomeIcon();
+		verify(toolbarResolver).updateIcon();
 	}
 
 	@Test
