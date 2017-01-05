@@ -46,7 +46,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		}
 		navigationResolver.init();
 		configureProgressBar();
+		afterOnCreate();
 	}
+
+	protected abstract void afterOnCreate();
 
 	protected int getActivityLayoutResourceID() {
 		return R.layout.cleanbase_activity_content_with_toolbar;

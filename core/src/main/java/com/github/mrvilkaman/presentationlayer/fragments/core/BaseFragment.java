@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.exceptions.Exceptions;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements BaseView, BaseActivityView, OnBackPressedListener {
@@ -200,5 +201,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	public NavigationResolver getNavigation() {
 		return navigationResolver;
+	}
+
+	@Override
+	public boolean isTaskRoot() {
+		throw Exceptions.propagate(new NoSuchMethodException("Plaese dont use this method in fragment!"));
 	}
 }

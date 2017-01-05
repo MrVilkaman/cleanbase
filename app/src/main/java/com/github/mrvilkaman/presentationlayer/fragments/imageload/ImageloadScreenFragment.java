@@ -37,6 +37,8 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
+		getToolbar().setTitle("Коты)");
+
 
 		loadFixWight();
 		loadFixHeight();

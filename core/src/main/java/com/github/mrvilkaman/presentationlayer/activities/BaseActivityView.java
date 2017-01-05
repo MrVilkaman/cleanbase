@@ -7,4 +7,6 @@ public interface BaseActivityView {
 	void hideProgress();
 
 	void hideKeyboard();
+
+	boolean isTaskRoot();
 }

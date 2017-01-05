@@ -29,7 +29,7 @@ public class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolve
 
 	@Override
 	public void onClickHome() {
-		if (fragmentManager.isRootScreen()) {
+		if (needShowHome()) {
 			if (drawerHelper != null) {
 				drawerHelper.open();
 			}
@@ -45,10 +45,14 @@ public class MyToolbarResolverCallback implements ToolbarResolver.ToolbarResolve
 			return;
 		}
 
-		if (fragmentManager.isRootScreen()) {
+		if (needShowHome()) {
 			toolbarResolver.showHomeIcon();
 		} else {
 			toolbarResolver.showBackIcon();
 		}
+	}
+
+	private boolean needShowHome() {
+		return fragmentManager.isRootScreen() && activityView.isTaskRoot();
 	}
 }

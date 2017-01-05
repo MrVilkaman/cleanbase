@@ -7,6 +7,8 @@ import android.view.View;
 
 public interface ToolbarResolver extends IToolbar {
 
+	void setUseCustomTitle();
+
 	interface ToolbarResolverCallback{
 		void onClickHome();
 		void updateIcon();

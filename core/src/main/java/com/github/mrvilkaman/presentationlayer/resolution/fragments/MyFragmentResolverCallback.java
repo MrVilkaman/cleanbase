@@ -12,7 +12,7 @@ public class MyFragmentResolverCallback implements FragmentResolver.FragmentReso
 
 	@Override
 	public void onRootFragment() {
-		toolbarResolver.showHomeIcon();
+		toolbarResolver.updateIcon();
 	}
 
 	@Override

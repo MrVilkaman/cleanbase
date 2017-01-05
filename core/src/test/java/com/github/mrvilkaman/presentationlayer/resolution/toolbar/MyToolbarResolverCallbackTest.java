@@ -32,9 +32,10 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testOnClickHome_rootScreen() {
+	public void testOnClickHome_rootScreenAndRootActivity() {
 		// Arrange
 		when(fragmentManager.isRootScreen()).thenReturn(true);
+		when(activityView.isTaskRoot()).thenReturn(true);
 
 		// Act
 		callback.onClickHome();
@@ -43,6 +44,22 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 		verify(drawerHelper).open();
 		verify(navigationResolver, never()).onBackPressed();
 		verify(activityView, never()).hideKeyboard();
+	}
+
+
+	@Test
+	public void testOnClickHome_rootScreenAndNotRootActivity() {
+		// Arrange
+		when(fragmentManager.isRootScreen()).thenReturn(true);
+		when(activityView.isTaskRoot()).thenReturn(false);
+
+		// Act
+		callback.onClickHome();
+
+		// Assert
+		verify(drawerHelper,never()).open();
+		verify(navigationResolver).onBackPressed();
+		verify(activityView).hideKeyboard();
 	}
 
 	@Test
@@ -76,9 +93,10 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testUpdateIcon_RootScreen() {
+	public void testUpdateIcon_RootScreenAndRootActivity() {
 		// Arrange
 		when(fragmentManager.isRootScreen()).thenReturn(true);
+		when(activityView.isTaskRoot()).thenReturn(true);
 
 		// Act
 		callback.updateIcon();
@@ -87,6 +105,21 @@ public class MyToolbarResolverCallbackTest extends BaseTestCase {
 		verify(toolbarResolver, never()).showBackIcon();
 		verify(toolbarResolver).showHomeIcon();
 	}
+
+	@Test
+	public void testUpdateIcon_RootScreenAndNotRootActivity() {
+		// Arrange
+		when(fragmentManager.isRootScreen()).thenReturn(true);
+		when(activityView.isTaskRoot()).thenReturn(false);
+
+		// Act
+		callback.updateIcon();
+
+		// Assert
+		verify(toolbarResolver,never()).updateIcon();
+		verify(toolbarResolver).showBackIcon();
+	}
+
 
 
 	@Test
