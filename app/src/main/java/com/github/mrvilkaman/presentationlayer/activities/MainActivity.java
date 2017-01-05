@@ -36,6 +36,11 @@ public class MainActivity extends BaseActivity<ActivityComponent> {
 		activityComponent.inject(this);
 	}
 
+	@Override
+	protected void afterOnCreate() {
+
+	}
+
 	protected int getActivityLayoutResourceID() {
 		return R.layout.cleanbase_activity_content_with_toolbar_and_drawer;
 	}

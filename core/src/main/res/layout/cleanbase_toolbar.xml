@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge>
+
 	<android.support.v7.widget.Toolbar
 		android:id="@+id/toolbar_actionbar"
 		style="@style/ToolBarStyle.Event"
@@ -11,5 +12,13 @@
 		android:gravity="center"
 		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 		app:titleTextAppearance="@style/Toolbar.TitleText">
+		<TextView
+			android:id="@+id/toolbar_actionbar_center_title"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:textColor="@color/cleanbase_toolbar_text_color"
+			android:textSize="@dimen/cleanbase_toolbar_text_size"/>
 	</android.support.v7.widget.Toolbar>
 </merge>

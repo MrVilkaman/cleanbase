@@ -35,6 +35,12 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent> {
 	}
 
 	@Override
+	protected void afterOnCreate() {
+		//noinspection ConstantConditions
+		toolbarResolver.setUseCustomTitle();
+	}
+
+	@Override
 	protected int getActivityLayoutResourceID() {
 		return R.layout.cleanbase_activity_content_with_toolbar;
 	}

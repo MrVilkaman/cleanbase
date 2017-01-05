@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -21,6 +22,8 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	private ActionBar supportActionBar;
 
 	private ToolbarResolverCallback callback;
+	private TextView mTitle;
+	private boolean useCustomTitle;
 
 	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper, @Nullable LeftDrawerHelper drawerHelper) {
 		this.toolbarMenuHelper = toolbarMenuHelper;
@@ -33,6 +36,10 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 		if (toolbar == null) {
 			throw new NullPointerException("Can`t find Toolbar with id R.id.toolbar_actionbar!\n Use R.layout.cleanbase_activity_content_with_toolbar");
 		}
+
+		mTitle = (TextView) view.findViewById(R.id.toolbar_actionbar_center_title);
+		mTitle.setVisibility(View.VISIBLE);
+
 		activity.setSupportActionBar(toolbar);
 		supportActionBar = activity.getSupportActionBar();
 		supportActionBar.setHomeButtonEnabled(true);
@@ -84,13 +91,29 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	}
 
 	@Override
+	public void setUseCustomTitle() {
+		this.useCustomTitle = true;
+		mTitle.setVisibility(View.VISIBLE);
+		supportActionBar.setTitle("");
+		mTitle.setText(supportActionBar.getTitle());
+	}
+
+	@Override
 	public void setTitle(int text) {
-		supportActionBar.setTitle(text);
+		if(useCustomTitle) {
+			mTitle.setText(text);
+		}else {
+			supportActionBar.setTitle(text);
+		}
 	}
 
 	@Override
 	public void setTitle(String text) {
-		supportActionBar.setTitle(text);
+		if(useCustomTitle) {
+			mTitle.setText(text);
+		}else {
+			supportActionBar.setTitle(text);
+		}
 	}
 
 	@Override

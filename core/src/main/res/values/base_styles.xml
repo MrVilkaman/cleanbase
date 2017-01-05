@@ -58,7 +58,7 @@
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/cleanbase_toolbar_text_size</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
     </style>
