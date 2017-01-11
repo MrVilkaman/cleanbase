@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by Zahar on 17.01.2016.
  */
-public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.ViewHolder<T>> {
+public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T, MySimpleAdapter.ViewHolder<T>> {
 
 	@Override
-	protected ViewHolder<T> getHolder(View view, OnClickListener<T> onClick) {
-		return new ViewHolder<>(view,onClick);
+	protected ViewHolder<T> getHolder(View view) {
+		return new ViewHolder<>(view);
 	}
 
 	protected int getLayoutId() {
@@ -29,9 +29,8 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T,MySimpleAdapter.Vi
 
 		TextView textView;
 
-		ViewHolder(View view, OnClickListener<T> onClick) {
-			super(view, onClick);
-
+		ViewHolder(View view) {
+			super(view);
 			textView = (TextView) view.findViewById(android.R.id.text1);
 		}
 
