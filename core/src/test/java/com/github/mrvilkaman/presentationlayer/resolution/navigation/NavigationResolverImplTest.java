@@ -173,6 +173,8 @@ public class NavigationResolverImplTest extends BaseTestCase {
 				.onBackPressed();
 		inOrder.verify(toolbarResolver)
 				.updateIcon();
+		inOrder.verify(toolbarResolver)
+				.clear();
 
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		inOrder.verify(resolver, never())
@@ -202,6 +204,8 @@ public class NavigationResolverImplTest extends BaseTestCase {
 				.onBackPressed();
 		inOrder.verify(toolbarResolver, never())
 				.updateIcon();
+		inOrder.verify(toolbarResolver,never())
+				.clear();
 		inOrder.verify(resolver)
 				.exit();
 	}
