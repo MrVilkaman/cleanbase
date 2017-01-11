@@ -47,13 +47,6 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 
 	protected abstract int getLayoutId();
 
-	@Override
-	public void onBindViewHolder(VH holder, int position) {
-		T item = getItem(position);
-		holder.itemView.setTag(item);
-		holder.bind(item);
-	}
-
 	public T getItem(int pos) {
 		return items.get(pos);
 	}
@@ -76,6 +69,20 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	}
 
 	@Override
+	public void onBindViewHolder(VH holder, int position) {
+
+	}
+
+	@Override
+	public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+		T item = getItem(position);
+		holder.itemView.setTag(item);
+		//// TODO: 11.01.17 removeit!
+		holder.bind(item);
+		holder.bind(item, position, payloads);
+	}
+
+	@Override
 	public int getItemCount() {
 		return (items != null) ? items.size() : 0;
 	}
@@ -89,7 +96,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	}
 
 	@Nullable
-	protected DiffUtil.Callback getDiffCallback(List<T> oldItems, List<T> newItems){
+	protected DiffUtil.Callback getDiffCallback(List<T> oldItems, List<T> newItems) {
 		return null;
 	}
 

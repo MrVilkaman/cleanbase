@@ -3,6 +3,8 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
@@ -41,5 +43,10 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 		});
 	}
 
-	public abstract void bind(Type item);
+	@Deprecated
+	public void bind(Type item){
+
+	}
+
+	public abstract void bind(Type item, int position, List<Object> payloads);
 }
