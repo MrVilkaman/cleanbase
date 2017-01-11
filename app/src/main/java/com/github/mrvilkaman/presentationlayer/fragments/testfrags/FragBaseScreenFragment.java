@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public abstract class FragBaseScreenFragment extends BaseFragment<FragBasePresenter> {
 
@@ -24,10 +25,14 @@ public abstract class FragBaseScreenFragment extends BaseFragment<FragBasePresen
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 		IToolbar toolbar = getToolbar();
 		toolbar.show();
-		toolbar.showIcon(R.drawable.ic_home,() -> showToast(R.string.app_name));
+		toolbar.showIcon(getIcon(),() -> showToast(R.string.app_name));
 		String text = Integer.toString(getNumber());
 		toolbar.setTitle(text);
 		numberText.setText(text);
+	}
+
+	protected int getIcon() {
+		return R.drawable.ic_home;
 	}
 
 	protected abstract int getNumber();

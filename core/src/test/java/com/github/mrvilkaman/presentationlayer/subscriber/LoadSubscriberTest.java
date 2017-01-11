@@ -1,5 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.subscriber;
 
+import android.support.v4.media.MediaMetadataCompat;
+
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
@@ -24,7 +26,23 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 	@Test
 	public void testProgress_onSuccess() {
-		subject.subscribe(new LoadSubscriber<>(view));
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
+		subscriber.setView(view);
+		subject.subscribe(subscriber);
+		subject.onCompleted();
+
+		InOrder inOrder = Mockito.inOrder(view);
+		inOrder.verify(view)
+				.showProgress();
+		inOrder.verify(view)
+				.hideProgress();
+	}
+
+	@Test
+	@MediaMetadataCompat.RatingKey
+	public void testProgress_onSuccess_oldSignature() {
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>(view);
+		subject.subscribe(subscriber);
 		subject.onCompleted();
 
 		InOrder inOrder = Mockito.inOrder(view);
@@ -38,7 +56,9 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testProgress_OnError() {
 		Exception exception = mock(Exception.class);
 
-		subject.subscribe(new LoadSubscriber<>(view));
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
+		subscriber.setView(view);
+		subject.subscribe(subscriber);
 		subject.onError(exception);
 
 		InOrder inOrder = Mockito.inOrder(view);
@@ -52,7 +72,9 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 	@Test
 	public void testNoNeedProgress_onSuccess() {
-		subject.subscribe(new WithoutProgressSubscriber());
+		WithoutProgressSubscriber subscriber = new WithoutProgressSubscriber();
+		subscriber.setView(view);
+		subject.subscribe(subscriber);
 		subject.onCompleted();
 
 		InOrder inOrder = Mockito.inOrder(view);
@@ -66,7 +88,9 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testNoNeedProgress_OnError() {
 		Exception exception = mock(Exception.class);
 
-		subject.subscribe(new WithoutProgressSubscriber());
+		WithoutProgressSubscriber subscriber = new WithoutProgressSubscriber();
+		subscriber.setView(view);
+		subject.subscribe(subscriber);
 		subject.onError(exception);
 
 		InOrder inOrder = Mockito.inOrder(view);
@@ -82,7 +106,8 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testSkipError() {
 		Exception exception = mock(Exception.class);
 
-		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>(view);
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
+		subscriber.setView(view);
 		subscriber.skipNextError();
 
 		subject.subscribe(subscriber);
@@ -96,7 +121,8 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testOnNext_bindString() {
 		TestView v = mock(TestView.class);
 
-		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>(v);
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
+		subscriber.setView(v);
 
 		subject.subscribe(subscriber);
 		subject.onNext("qwer");
@@ -111,7 +137,8 @@ public class LoadSubscriberTest extends BaseTestCase {
 	@Test
 	public void testOnNext() {
 
-		ViewSubscriber<BaseView, Object> subscriber = new ViewSubscriber<>(view);
+		ViewSubscriber<BaseView, Object> subscriber = new ViewSubscriber<>();
+		subscriber.setView(view);
 
 		subject.subscribe(subscriber);
 		subject.onNext(new Object());
@@ -121,7 +148,7 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 	private class WithoutProgressSubscriber extends LoadSubscriber<BaseView, Object> {
 		public WithoutProgressSubscriber() {
-			super(LoadSubscriberTest.this.view);
+			super();
 		}
 
 		@Override

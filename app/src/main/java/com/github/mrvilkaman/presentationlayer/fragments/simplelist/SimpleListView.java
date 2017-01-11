@@ -5,6 +5,6 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
 
 import java.util.List;
 
-public interface SimpleListView extends BaseView, BindType<List<String>> {
+public interface SimpleListView extends BaseView, BindType<List<SimpleModel>> {
 
 }

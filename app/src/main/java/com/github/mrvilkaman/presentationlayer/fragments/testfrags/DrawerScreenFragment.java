@@ -11,6 +11,7 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 
 import butterknife.OnClick;
 
@@ -49,7 +50,7 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 
 	@OnClick(R.id.menu_4)
 	void onClick4(){
-//		getNavigation().showRootFragment(Frag4ScreenFragment.open());
+		getNavigation().showRootFragment(SimpleListScreenFragment.open());
 	}
 
 	@OnClick(R.id.menu_5)

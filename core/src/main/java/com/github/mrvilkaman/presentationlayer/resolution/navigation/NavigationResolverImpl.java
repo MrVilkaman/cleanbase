@@ -88,8 +88,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 		if (fragmentManager.processBackFragment()) {
 			activityView.hideProgress();
 			if (fragmentManager.onBackPressed()) {
-				if (toolbarResolver != null)
+				if (toolbarResolver != null) {
 					toolbarResolver.updateIcon();
+					toolbarResolver.clear();
+				}
 			} else {
 				exit();
 			}
@@ -175,8 +177,10 @@ public class NavigationResolverImpl implements NavigationResolver {
 			drawerHelper.close();
 		} else {
 			onBackPressed();
-			if (toolbarResolver != null)
+			if (toolbarResolver != null) {
 				toolbarResolver.updateIcon();
+				toolbarResolver.clear();
+			}
 		}
 	}
 

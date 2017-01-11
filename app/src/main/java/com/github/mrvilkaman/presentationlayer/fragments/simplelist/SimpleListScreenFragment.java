@@ -10,6 +10,7 @@ import android.view.View;
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 
 import java.util.List;
 
@@ -34,13 +35,15 @@ public class SimpleListScreenFragment extends BaseFragment<SimpleListPresenter>
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-		getToolbar().showIcon(android.R.drawable.ic_input_add,() -> getPresenter().add());
+		IToolbar toolbar = getToolbar();
+		toolbar.showIcon(android.R.drawable.ic_input_add,() -> getPresenter().add());
+		toolbar.showIcon(android.R.drawable.ic_menu_share,() -> getPresenter().shuffle());
 
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setAdapter(adapter);
 		adapter.setOnClick(category -> showToast(R.string.cleanbase_simple_text,"Простой клик"));
-		adapter.setOnLongClick(category -> showToast(R.string.cleanbase_simple_text,"Долгий клик"));
+		adapter.setOnLongClick(category -> getPresenter().remove(category));
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class SimpleListScreenFragment extends BaseFragment<SimpleListPresenter>
 	}
 
 	@Override
-	public void bind(List<String> item) {
+	public void bind(List<SimpleModel> item) {
 		adapter.setItems(item);
 	}
 }

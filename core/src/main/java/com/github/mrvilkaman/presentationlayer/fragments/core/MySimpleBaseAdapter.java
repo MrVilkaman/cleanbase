@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Zahar on 17.01.2016.
@@ -19,6 +21,7 @@ import java.util.List;
 public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		extends RecyclerView.Adapter<VH> {
 
+	private static final String TAG = "MySimpleBaseAdapter";
 	protected ItemListener<T> onClick;
 	protected List<T> items;
 	private ItemListener<T> onLongClick;
@@ -40,10 +43,8 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return getHolder(view);
 	}
 
-	@NonNull
-	protected VH getHolder(View view) {
-		return null;
-	}
+	//	@NonNull
+	protected abstract VH getHolder(View view);
 
 	protected abstract int getLayoutId();
 
@@ -73,13 +74,18 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
 		T item = getItem(position);
 		holder.itemView.setTag(item);
 		//// TODO: 11.01.17 removeit!
 		holder.bind(item);
-		holder.bind(item, position, payloads);
+		if (payloads.isEmpty()) {
+			holder.bind(item, position, Collections.EMPTY_SET);
+		}else{
+			holder.bind(item, position, (Set<String>) payloads.get(0));
+		}
 	}
 
 	@Override

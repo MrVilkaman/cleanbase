@@ -3,7 +3,7 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.List;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 
@@ -13,16 +13,16 @@ import butterknife.ButterKnife;
 public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
 
+	public BaseVH(View view) {
+		super(view);
+		ButterKnife.bind(this, view);
+	}
+
 	@Deprecated
 	public BaseVH(View view, ItemListener<Type> onClick) {
 		this(view);
 		ButterKnife.bind(this, view);
 		setListeners(view, onClick, null);
-	}
-
-	public BaseVH(View view) {
-		super(view);
-		ButterKnife.bind(this, view);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,5 +48,5 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
 	}
 
-	public abstract void bind(Type item, int position, List<Object> payloads);
+	public abstract void bind(Type item, int position, Set<String> payloads);
 }

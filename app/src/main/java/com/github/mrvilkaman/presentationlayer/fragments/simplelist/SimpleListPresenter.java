@@ -12,12 +12,12 @@ import javax.inject.Inject;
 
 public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 
-	private final ArrayList<String> strings;
+	private final List<SimpleModel> strings;
 
 	@Inject
 	public SimpleListPresenter() {
 
-		List<String> ts = Arrays.asList("1", "2", "3", "1", "2", "3");
+		List<SimpleModel> ts = Arrays.asList(new SimpleModel(1, "1"), new SimpleModel(2, "3"));
 		strings = new ArrayList<>(ts);
 	}
 
@@ -28,10 +28,41 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 		view().bind(strings);
 	}
 
-	public void add() {
-		strings.add(UUID.randomUUID()
-				.toString());
-		Collections.shuffle(strings);
-		view().bind(strings);
+
+	public void remove(SimpleModel category) {
+		strings.remove(category);
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+
+		Collections.shuffle(qwer);
+		view().bind(qwer);
 	}
+
+	public void add() {
+		String value = UUID.randomUUID()
+				.toString();
+		strings.add(new SimpleModel(strings.size(), value));
+
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+		Collections.shuffle(qwer);
+		view().bind(qwer);
+	}
+
+	public void shuffle() {
+		String value = UUID.randomUUID()
+				.toString();
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+		qwer.get(0).setValue(value);
+		Collections.shuffle(qwer);
+		view().bind(qwer);
+	}
+
 }

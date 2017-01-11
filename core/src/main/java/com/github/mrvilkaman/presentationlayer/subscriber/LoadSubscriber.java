@@ -10,8 +10,17 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
 public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 
 
+	@Deprecated
 	public LoadSubscriber(V view) {
 		super(view);
+	}
+
+	public LoadSubscriber() {
+		super();
+	}
+
+	@Override
+	public void onStart() {
 		if (needProgress()) {
 			view().showProgress();
 		}

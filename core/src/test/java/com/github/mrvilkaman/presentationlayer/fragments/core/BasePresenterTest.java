@@ -1,6 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.subscriber.LoadSubscriber;
+import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.TestSchedulers;
 
@@ -15,6 +17,7 @@ import rx.observers.TestSubscriber;
 import rx.subjects.PublishSubject;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 
 public class BasePresenterTest extends BaseTestCase {
@@ -42,6 +45,35 @@ public class BasePresenterTest extends BaseTestCase {
 		assertThat(view2).isNotNull()
 				.isEqualTo(mockView);
 	}
+
+	@Test
+	public void testSubscribe_setView() {
+		// Arrange
+		ViewSubscriber subscriber = Mockito.spy(new ViewSubscriber());
+		PublishSubject<Object> obs = PublishSubject.create();
+
+		presenter.setView(mockView);
+		// Act
+		presenter.subscribe(obs, subscriber);
+
+		// Assert
+		verify(subscriber).setView(mockView);
+	}
+
+	@Test
+	public void testSubscribe_setView_load() {
+		// Arrange
+		LoadSubscriber subscriber = Mockito.spy(new LoadSubscriber());
+		PublishSubject<Object> obs = PublishSubject.create();
+		presenter.setView(mockView);
+
+		// Act
+		presenter.subscribe(obs, subscriber);
+
+		// Assert
+		verify(subscriber).setView(mockView);
+	}
+
 
 	@Test
 	public void testSubscribe_afterDetachAndAttachAgain() {

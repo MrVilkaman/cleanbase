@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
 import javax.inject.Inject;
 
@@ -39,12 +40,18 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
+	protected final <T> void subscribe(Observable<T> observable) {
+		subscribe(observable, new ViewSubscriber<>());
+	}
+
 	protected final <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
+		if (subscriber instanceof ViewSubscriber) {
+			((ViewSubscriber) subscriber).setView(view);
+		}
 		compositeSubscription.add(observable.subscribe(subscriber));
 	}
 
 	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
-		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-				.subscribe(subscriber));
+		subscribe(observable.observeOn(schedulersProvider.mainThread()), subscriber);
 	}
 }
