@@ -3,6 +3,8 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
@@ -10,15 +12,41 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
-	public BaseVH(View view, MySimpleBaseAdapter.OnClickListener<Type> onClick) {
+
+	@Deprecated
+	public BaseVH(View view, ItemListener<Type> onClick) {
+		this(view);
+		ButterKnife.bind(this, view);
+		setListeners(view, onClick, null);
+	}
+
+	public BaseVH(View view) {
 		super(view);
 		ButterKnife.bind(this, view);
+	}
+
+	@SuppressWarnings("unchecked")
+	final void setListeners(View view, ItemListener<Type> onClick,
+							ItemListener<Type> onLongClick) {
 		view.setOnClickListener(view1 -> {
 			if (onClick != null) {
-				onClick.click((Type)view1.getTag());
+				onClick.click((Type) view.getTag());
 			}
+		});
+
+		view.setOnLongClickListener(view1 -> {
+			if (onLongClick != null) {
+				onLongClick.click((Type) view.getTag());
+				return true;
+			}
+			return false;
 		});
 	}
 
-	public abstract void bind(Type item);
+	@Deprecated
+	public void bind(Type item){
+
+	}
+
+	public abstract void bind(Type item, int position, List<Object> payloads);
 }
