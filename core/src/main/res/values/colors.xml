@@ -6,7 +6,7 @@
 	<color name="cleanbase_app_background">#fff</color>
 
 	<color name="cleanbase_divider_color">#888</color>
-	<color name="cleanbase_main_text_color">#fff</color>
+	<color name="cleanbase_main_text_color">#000</color>
 	<color name="cleanbase_toolbar_bg_color">#3F51B5</color>
 	<color name="cleanbase_toolbar_text_color">@color/cleanbase_main_text_color</color>
 
