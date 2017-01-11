@@ -89,7 +89,9 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	}
 
 	@Nullable
-	protected abstract DiffUtil.Callback getDiffCallback(List<T> oldItems, List<T> newItems);
+	protected DiffUtil.Callback getDiffCallback(List<T> oldItems, List<T> newItems){
+		return null;
+	}
 
 	public interface OnClickListener<T> {
 		void click(@NonNull T category);
