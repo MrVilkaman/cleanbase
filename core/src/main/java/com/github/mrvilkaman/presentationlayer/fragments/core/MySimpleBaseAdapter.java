@@ -19,9 +19,9 @@ import java.util.List;
 public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		extends RecyclerView.Adapter<VH> {
 
-	protected OnClickListener<T> onClick;
+	protected ItemListener<T> onClick;
 	protected List<T> items;
-	private OnClickListener<T> onLongClick;
+	private ItemListener<T> onLongClick;
 
 	@Override
 	public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,7 +36,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 
 	@Deprecated
 	@NonNull
-	protected VH getHolder(View view, OnClickListener<T> onClick) {
+	protected VH getHolder(View view, ItemListener<T> onClick) {
 		return getHolder(view);
 	}
 
@@ -87,11 +87,11 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return (items != null) ? items.size() : 0;
 	}
 
-	public void setOnClick(OnClickListener<T> onClick) {
+	public void setOnClick(ItemListener<T> onClick) {
 		this.onClick = onClick;
 	}
 
-	public void setOnLongClick(OnClickListener<T> onLongClick) {
+	public void setOnLongClick(ItemListener<T> onLongClick) {
 		this.onLongClick = onLongClick;
 	}
 
@@ -100,6 +100,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return null;
 	}
 
+	@Deprecated
 	public interface OnClickListener<T> {
 		void click(@NonNull T category);
 	}

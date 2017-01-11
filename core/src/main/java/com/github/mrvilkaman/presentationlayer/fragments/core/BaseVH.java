@@ -14,7 +14,7 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
 
 	@Deprecated
-	public BaseVH(View view, MySimpleBaseAdapter.OnClickListener<Type> onClick) {
+	public BaseVH(View view, ItemListener<Type> onClick) {
 		this(view);
 		ButterKnife.bind(this, view);
 		setListeners(view, onClick, null);
@@ -26,8 +26,8 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 	}
 
 	@SuppressWarnings("unchecked")
-	final void setListeners(View view, MySimpleBaseAdapter.OnClickListener<Type> onClick,
-					  MySimpleBaseAdapter.OnClickListener<Type> onLongClick) {
+	final void setListeners(View view, ItemListener<Type> onClick,
+							ItemListener<Type> onLongClick) {
 		view.setOnClickListener(view1 -> {
 			if (onClick != null) {
 				onClick.click((Type) view.getTag());
