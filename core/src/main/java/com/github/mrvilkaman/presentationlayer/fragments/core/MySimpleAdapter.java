@@ -3,7 +3,7 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Zahar on 17.01.2016.
@@ -28,8 +28,9 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T, MySimpleAdapter.V
 		}
 
 		@Override
-		public void bind(T item, int position, List<Object> payloads) {
+		public void bind(T item, int position, Set<String> payloads) {
 			textView.setText(item.toString());
+
 		}
 	}
 }

@@ -18,6 +18,7 @@ public class SimpleListAdapter extends MySimpleBaseAdapter<SimpleModel, SimpleMo
 	@Inject
 	public SimpleListAdapter(ImageLoader loader) {
 		this.loader = loader;
+//		setHasStableIds(true);
 	}
 
 	@Override
@@ -34,5 +35,11 @@ public class SimpleListAdapter extends MySimpleBaseAdapter<SimpleModel, SimpleMo
 	protected DiffUtil.Callback getDiffCallback(List<SimpleModel> oldItems,
 												List<SimpleModel> newItems) {
 		return new SimpleDiffUtils(oldItems, newItems);
+	}
+
+	@Override
+	public boolean onFailedToRecycleView(SimpleModelVH holder) {
+		return true;
+//		return super.onFailedToRecycleView(holder);
 	}
 }

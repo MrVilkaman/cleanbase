@@ -28,11 +28,41 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 		view().bind(strings);
 	}
 
+
+	public void remove(SimpleModel category) {
+		strings.remove(category);
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+
+		Collections.shuffle(qwer);
+		view().bind(qwer);
+	}
+
 	public void add() {
 		String value = UUID.randomUUID()
 				.toString();
 		strings.add(new SimpleModel(strings.size(), value));
-		Collections.shuffle(strings);
-		view().bind(strings);
+
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+		Collections.shuffle(qwer);
+		view().bind(qwer);
 	}
+
+	public void shuffle() {
+		String value = UUID.randomUUID()
+				.toString();
+		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
+		for (int i = 0; i < strings.size(); i++) {
+			qwer.add(strings.get(i).clone());
+		}
+		qwer.get(0).setValue(value);
+		Collections.shuffle(qwer);
+		view().bind(qwer);
+	}
+
 }

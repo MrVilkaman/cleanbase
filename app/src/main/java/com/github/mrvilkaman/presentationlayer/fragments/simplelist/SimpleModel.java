@@ -4,7 +4,7 @@ package com.github.mrvilkaman.presentationlayer.fragments.simplelist;
 public class SimpleModel {
 
 	private final int number;
-	private final String value;
+	private String value;
 
 	public SimpleModel(int number, String value) {
 		this.number = number;
@@ -17,6 +17,11 @@ public class SimpleModel {
 
 	public String getValue() {
 		return value;
+	}
+
+	@SuppressWarnings("CloneDoesntCallSuperClone")
+	public SimpleModel clone(){
+		return new SimpleModel(number,value);
 	}
 
 	@Override
@@ -43,5 +48,9 @@ public class SimpleModel {
 
 	public String getImage() {
 		return "http://sodesign.by/wp-content/uploads/2015/12/cat-02.png";
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 }
