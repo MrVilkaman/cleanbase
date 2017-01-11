@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import java.util.List;
@@ -16,27 +17,52 @@ public abstract class BaseDiffCallback<Type> extends DiffUtil.Callback {
 	}
 
 	@Override
-	public int getOldListSize() {
+	public final int getOldListSize() {
 		return mOldList != null ? mOldList.size() : 0;
 	}
 
 	@Override
-	public int getNewListSize() {
+	public final int getNewListSize() {
 		return mNewList != null ? mNewList.size() : 0;
 	}
 
 	@Override
-	public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-		Type oldItem = mOldList.get(oldItemPosition);
-		Type newItem = mNewList.get(newItemPosition);
+	public final boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+		Type oldItem = getOldItem(oldItemPosition);
+		Type newItem = getNewItem(newItemPosition);
 		return areItemsTheSame(oldItem, newItem);
+	}
+
+	protected final Type getNewItem(int newItemPosition) {
+		return mNewList.get(newItemPosition);
+	}
+
+	protected final Type getOldItem(int oldItemPosition) {
+		return mOldList.get(oldItemPosition);
 	}
 
 	protected abstract boolean areItemsTheSame(Type oldItem, Type newItem);
 
-	@Override
-	public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-		return mNewList.get(newItemPosition).equals(mOldList.get(oldItemPosition));
+	protected boolean areContentsTheSame(Type oldItem, Type newItem) {
+		return oldItem.equals(newItem);
 	}
 
+	@Override
+	public final boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+		Type newItem = getNewItem(newItemPosition);
+		Type oldItem = getOldItem(oldItemPosition);
+		return areContentsTheSame(newItem, oldItem);
+	}
+
+	@Nullable
+	@Override
+	public final Object getChangePayload(int oldItemPosition, int newItemPosition) {
+		Type newItem = getNewItem(newItemPosition);
+		Type oldItem = getOldItem(oldItemPosition);
+		return getChangePayload(newItem, oldItem);
+	}
+
+	protected Object getChangePayload(Type newItem, Type oldItem) {
+		return null;
+	}
 }
