@@ -53,7 +53,7 @@ public class SimpleListScreenFragment extends BaseFragment<SimpleListPresenter>
 	}
 
 	@Override
-	public void bind(List<String> item) {
+	public void bind(List<SimpleModel> item) {
 		adapter.setItems(item);
 	}
 }

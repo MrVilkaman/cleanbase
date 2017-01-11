@@ -13,16 +13,16 @@ import butterknife.ButterKnife;
 public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
 
+	public BaseVH(View view) {
+		super(view);
+		ButterKnife.bind(this, view);
+	}
+
 	@Deprecated
 	public BaseVH(View view, ItemListener<Type> onClick) {
 		this(view);
 		ButterKnife.bind(this, view);
 		setListeners(view, onClick, null);
-	}
-
-	public BaseVH(View view) {
-		super(view);
-		ButterKnife.bind(this, view);
 	}
 
 	@SuppressWarnings("unchecked")

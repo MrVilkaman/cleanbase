@@ -40,10 +40,8 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return getHolder(view);
 	}
 
-	@NonNull
-	protected VH getHolder(View view) {
-		return null;
-	}
+//	@NonNull
+	protected abstract VH getHolder(View view);
 
 	protected abstract int getLayoutId();
 

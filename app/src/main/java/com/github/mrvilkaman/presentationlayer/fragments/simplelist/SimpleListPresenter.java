@@ -12,12 +12,12 @@ import javax.inject.Inject;
 
 public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 
-	private final ArrayList<String> strings;
+	private final List<SimpleModel> strings;
 
 	@Inject
 	public SimpleListPresenter() {
 
-		List<String> ts = Arrays.asList("1", "2", "3", "1", "2", "3");
+		List<SimpleModel> ts = Arrays.asList(new SimpleModel(1, "1"), new SimpleModel(2, "3"));
 		strings = new ArrayList<>(ts);
 	}
 
@@ -29,8 +29,9 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 	}
 
 	public void add() {
-		strings.add(UUID.randomUUID()
-				.toString());
+		String value = UUID.randomUUID()
+				.toString();
+		strings.add(new SimpleModel(strings.size(), value));
 		Collections.shuffle(strings);
 		view().bind(strings);
 	}
