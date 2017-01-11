@@ -39,6 +39,8 @@ public class SimpleListScreenFragment extends BaseFragment<SimpleListPresenter>
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setAdapter(adapter);
+		adapter.setOnClick(category -> showToast(R.string.cleanbase_simple_text,"Простой клик"));
+		adapter.setOnLongClick(category -> showToast(R.string.cleanbase_simple_text,"Долгий клик"));
 	}
 
 	@Override
