@@ -16,7 +16,8 @@ allprojects {
 ```
 ```
 dependencies {
-    compile 'com.github.MrVilkaman.cleanbase:core:0.3'
+    compile 'com.github.MrVilkaman.cleanbase:core:номер_версии'
+    testCompile 'com.github.MrVilkaman.cleanbase:testutils:номер_версии'
 }
 ```
 Больше информации можно получить в [wiki](https://github.com/MrVilkaman/cleanbase/wiki).
