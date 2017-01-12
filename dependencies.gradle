@@ -6,11 +6,11 @@ ext.versions = [
         minSdk            : 15,
         targetSdk         : 22,
         compileSdk        : 25,
-        buildTools        : '25.0.0',
+        buildTools        : '25.0.2',
 
 
         dagger            : '2.8',
-        rxJava            : '1.2.4',
+        rxJava            : '1.2.5',
         rxandroid         : '1.2.1',
         rxBus             : '2.0.0',
 
@@ -41,7 +41,7 @@ ext.versions = [
 
         powermock         : '1.6.5',
         junit             : '4.12',
-        robolectric       : '3.1.4',
+        robolectric       : '3.2.2',
         assertJ           : '3.6.1',
         assertJandroid    : '1.1.1',
         mockito           : '1.10.19',

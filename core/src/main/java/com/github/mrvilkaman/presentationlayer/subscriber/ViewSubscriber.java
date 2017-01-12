@@ -2,9 +2,9 @@ package com.github.mrvilkaman.presentationlayer.subscriber;
 
 import android.util.Log;
 
+import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
-import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 
 import java.lang.ref.WeakReference;
 
@@ -15,13 +15,23 @@ import java.lang.ref.WeakReference;
 @SuppressWarnings("WeakerAccess")
 public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
-	private final WeakReference<V> viewRef;
 	private final String string;
+	private WeakReference<V> viewRef;
 	private boolean skipNextError;
 
-	public ViewSubscriber(V view) {
-		this.viewRef = new WeakReference<>(view);
+
+	public ViewSubscriber() {
 		string = CleanBaseSettings.needSubscribeLogs() ? AppUtils.getSubscriberStartStack() : "";
+	}
+
+	@Deprecated
+	public ViewSubscriber(V view) {
+		this();
+		setView(view);
+	}
+
+	public void setView(V view) {
+		this.viewRef = new WeakReference<>(view);
 	}
 
 	@Override
@@ -30,7 +40,8 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 			Log.e("LoadSubscriber", "Start by:" + string, e);
 		}
 		BaseView view = view();
-		if (view == null) return;
+		if (view == null)
+			return;
 		if (showError()) {
 			view.handleError(e);
 		}

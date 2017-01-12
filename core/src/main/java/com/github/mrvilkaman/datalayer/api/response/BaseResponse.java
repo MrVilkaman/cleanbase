@@ -1,6 +1,6 @@
 package com.github.mrvilkaman.datalayer.api.response;
 
-public class BaseResponse {
+public class BaseResponse implements IBaseResponse {
 	private int code;
 	private String message;
 

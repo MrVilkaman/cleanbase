@@ -21,6 +21,11 @@ public class Frag4ScreenFragment extends FragBaseScreenFragment {
 	}
 
 	@Override
+	protected int getIcon() {
+		return android.R.drawable.ic_dialog_map;
+	}
+
+	@Override
 	public void daggerInject() {
 		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
 		DaggerFragScreenComponent.builder().activityCoreComponent(component).build().inject(this);

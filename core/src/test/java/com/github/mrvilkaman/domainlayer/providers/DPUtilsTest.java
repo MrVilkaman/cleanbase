@@ -2,6 +2,16 @@ package com.github.mrvilkaman.domainlayer.providers;
 
 import android.accounts.NetworkErrorException;
 
+import com.github.mrvilkaman.datalayer.api.response.BaseResponse;
+import com.github.mrvilkaman.datalayer.api.response.IBaseResponse;
+import com.github.mrvilkaman.datalayer.providers.DPUtilsImpl;
+import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
+import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
+import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
+import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
+import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
+import com.github.mrvilkaman.testsutils.BaseTestCase;
+
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,14 +21,6 @@ import java.net.UnknownHostException;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
-import com.github.mrvilkaman.testsutils.BaseTestCase;
-import com.github.mrvilkaman.datalayer.api.response.BaseResponse;
-import com.github.mrvilkaman.datalayer.providers.DPUtilsImpl;
-import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
-import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
-import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
-import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
-import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -144,7 +146,7 @@ public class DPUtilsTest extends BaseTestCase {
 		TestSubscriber<Object> subscriber = new TestSubscriber<>();
 
 		// Act
-		Observable.<BaseResponse>error(exception)
+		Observable.<IBaseResponse>error(exception)
 				.compose(dpUtils.handleAnswer())
 				.subscribe(subscriber);
 
