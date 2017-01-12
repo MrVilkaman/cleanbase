@@ -4,24 +4,25 @@ package com.github.mrvilkaman.datalayer.providers;
 import android.accounts.NetworkErrorException;
 import android.support.annotation.NonNull;
 
-import java.io.IOException;
-
-import retrofit2.Response;
-import retrofit2.adapter.rxjava.HttpException;
-import com.github.mrvilkaman.datalayer.api.response.BaseResponse;
+import com.github.mrvilkaman.datalayer.api.response.IBaseResponse;
 import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
 import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
 import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import com.github.mrvilkaman.domainlayer.providers.DPUtils;
+
+import java.io.IOException;
+
+import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Func1;
 
 public class DPUtilsImpl implements DPUtils {
 
 	@Override
-	public <T extends BaseResponse> Observable.Transformer<T, T> handleAnswer() {
+	public <T extends IBaseResponse> Observable.Transformer<T, T> handleAnswer() {
 		return obs -> obs
 				.onErrorResumeNext(getThrowableObservableFunc1())
 				.concatMap(r -> {
@@ -39,7 +40,7 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@NonNull
-	private <T> Observable<T> handleError(BaseResponse response) {
+	private <T> Observable<T> handleError(IBaseResponse response) {
 		Throwable exception = getThrowable(response.getMessage(), response.getCode(), null);
 		return Observable.error(exception);
 	}
