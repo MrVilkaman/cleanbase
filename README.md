@@ -16,11 +16,13 @@ allprojects {
 ```
 ```
 dependencies {
-    compile 'com.github.MrVilkaman.cleanbase:core:номер_версии'
-    testCompile 'com.github.MrVilkaman.cleanbase:testutils:номер_версии'
+    compile 'com.github.MrVilkaman:cleanbase:core:номер_версии'
+    testCompile 'com.github.MrVilkaman:cleanbase:testutils:номер_версии'
 }
 ```
 Больше информации можно получить в [wiki](https://github.com/MrVilkaman/cleanbase/wiki).
 
 История изменения находится [тут](https://github.com/MrVilkaman/cleanbase/releases).
+
+Обсуждение и планирование изменений и улучшений происходит в [Trello](https://trello.com/b/Qv7lOF6K/cleanbase-github)
 
