@@ -24,16 +24,15 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 	@Override
 	public void onViewAttached() {
 		super.onViewAttached();
-
 		view().bind(strings);
 	}
-
 
 	public void remove(SimpleModel category) {
 		strings.remove(category);
 		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
 		for (int i = 0; i < strings.size(); i++) {
-			qwer.add(strings.get(i).clone());
+			qwer.add(strings.get(i)
+					.clone());
 		}
 
 		Collections.shuffle(qwer);
@@ -47,7 +46,8 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 
 		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
 		for (int i = 0; i < strings.size(); i++) {
-			qwer.add(strings.get(i).clone());
+			qwer.add(strings.get(i)
+					.clone());
 		}
 		Collections.shuffle(qwer);
 		view().bind(qwer);
@@ -58,9 +58,11 @@ public class SimpleListPresenter extends BasePresenter<SimpleListView> {
 				.toString();
 		ArrayList<SimpleModel> qwer = new ArrayList<>(strings.size());
 		for (int i = 0; i < strings.size(); i++) {
-			qwer.add(strings.get(i).clone());
+			qwer.add(strings.get(i)
+					.clone());
 		}
-		qwer.get(0).setValue(value);
+		qwer.get(0)
+				.setValue(value);
 		Collections.shuffle(qwer);
 		view().bind(qwer);
 	}

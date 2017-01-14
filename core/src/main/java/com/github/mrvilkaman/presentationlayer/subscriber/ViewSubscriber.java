@@ -37,7 +37,7 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	@Override
 	public void onError(Throwable e) {
 		if (CleanBaseSettings.needSubscribeLogs()) {
-			Log.e("LoadSubscriber", "Start by:" + string, e);
+			Log.e("ViewSubscriber", "Start by:" + string, e);
 		}
 		BaseView view = view();
 		if (view == null)

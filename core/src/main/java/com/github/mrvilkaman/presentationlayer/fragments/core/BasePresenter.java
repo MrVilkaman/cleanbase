@@ -21,7 +21,7 @@ public class BasePresenter<V extends BaseView> {
 	}
 
 	@Inject
-	public void setSchedulersProvider(SchedulersProvider schedulersProvider) {
+	public final void setSchedulersProvider(SchedulersProvider schedulersProvider) {
 		this.schedulersProvider = schedulersProvider;
 	}
 
