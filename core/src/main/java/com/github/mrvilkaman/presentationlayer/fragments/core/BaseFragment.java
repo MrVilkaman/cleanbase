@@ -144,7 +144,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	protected abstract int getLayoutId();
 
-	@Override
 	public P getPresenter() {
 		return relationPresenter;
 	}
