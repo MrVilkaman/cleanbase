@@ -1,9 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
-import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
-
-public interface BaseView extends UIResolver {
+public interface BaseView  {
 
 	BasePresenter getPresenter();
 

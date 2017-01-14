@@ -25,7 +25,7 @@ public abstract class FragBaseScreenFragment extends BaseFragment<FragBasePresen
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 		IToolbar toolbar = getToolbar();
 		toolbar.show();
-		toolbar.showIcon(getIcon(),() -> showToast(R.string.app_name));
+		toolbar.showIcon(getIcon(),() -> getUiResolver().showToast(R.string.app_name));
 		String text = Integer.toString(getNumber());
 		toolbar.setTitle(text);
 		numberText.setText(text);
