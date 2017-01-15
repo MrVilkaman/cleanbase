@@ -6,15 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener;
 
-public class FragmentResolverImpl implements FragmentResolver {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AndroidFragmentResolver implements FragmentResolver {
 
 	private static final int EMTPY_CODE = -1;
 	private FragmentResolverCallback callback;
@@ -25,7 +25,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 	private boolean isRoot;
 	private int code = EMTPY_CODE;
 
-	public FragmentResolverImpl(FragmentManager fragmentManager, int containerID) {
+	public AndroidFragmentResolver(FragmentManager fragmentManager, int containerID) {
 		this.fragmentManager = fragmentManager;
 		this.containerID = containerID;
 	}
@@ -140,7 +140,10 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
-		getCurrentFragment().startActivityForResult(intent, requestCode);
+		Fragment currentFragment = getCurrentFragment();
+		if (currentFragment != null) {
+			currentFragment.startActivityForResult(intent, requestCode);
+		}
 	}
 
 	private Fragment getCurrentFragment() {
@@ -171,20 +174,15 @@ public class FragmentResolverImpl implements FragmentResolver {
 		fragments = new ArrayList<>(fragments);
 		for (int i = fragments.size() - 1; 0 <= i; i--) {
 			Fragment fragment = fragments.get(i);
-			if (!isSimpleFragment(fragment)) {
+			if (!isSingletonFragment(fragment)) {
 				fragments.remove(i);
 			}
 		}
 		return fragments;
 	}
 
-	private boolean isSimpleFragment(Fragment fragment) {
+	private boolean isSingletonFragment(Fragment fragment) {
 		return fragment != null && !(fragment instanceof ISingletonFragment);
-	}
-
-	@Override
-	public void back() {
-		onBackPressed();
 	}
 
 	@Override
@@ -208,9 +206,13 @@ public class FragmentResolverImpl implements FragmentResolver {
 	}
 
 	@Override
-	public void addDrawer(int drawerContentFrame, BaseFragment drawerFragment) {
+	public void addStaticFragment(int contentId, BaseFragment fragment) {
+		if (!(fragment instanceof ISingletonFragment)) {
+			throw new IllegalArgumentException("fragment must impliment ISingletonFragment");
+		}
+
 		fragmentManager.beginTransaction()
-				.add(drawerContentFrame, drawerFragment)
+				.add(contentId, fragment)
 				.commit();
 	}
 }

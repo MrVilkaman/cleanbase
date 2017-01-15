@@ -10,7 +10,7 @@ public interface FragmentResolver {
 
 	boolean hasFragment();
 
-	void addDrawer(int drawerContentFrame, BaseFragment drawerFragment);
+	void addStaticFragment(int drawerContentFrame, BaseFragment drawerFragment);
 
 	void startActivityForResult(Intent intent, int requestCode);
 
@@ -25,8 +25,6 @@ public interface FragmentResolver {
 	boolean onBackPressed();
 
 	void setTargetFragmentCode(int code);
-
-	void back();
 
 	void setCallback(FragmentResolverCallback callback);
 

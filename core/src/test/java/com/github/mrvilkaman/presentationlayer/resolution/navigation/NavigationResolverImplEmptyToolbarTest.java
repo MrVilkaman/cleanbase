@@ -78,7 +78,7 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 		inOrder.verify(fragmentManager,never()).setCallback(any());
 		inOrder.verify(fragmentManager).hasFragment();
 		inOrder.verify(fragmentManager).showRootFragment(baseFragment);
-		inOrder.verify(fragmentManager,never()).addDrawer(anyInt(), any());
+		inOrder.verify(fragmentManager,never()).addStaticFragment(anyInt(), any());
 	}
 
 

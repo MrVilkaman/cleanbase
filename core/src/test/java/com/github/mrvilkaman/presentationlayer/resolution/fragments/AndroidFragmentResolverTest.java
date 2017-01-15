@@ -1,11 +1,17 @@
 package com.github.mrvilkaman.presentationlayer.resolution.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
+import com.github.mrvilkaman.testsutils.BaseTestCase;
+import com.github.mrvilkaman.testsutils.Tutils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,10 +20,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
-
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.github.mrvilkaman.testsutils.BaseTestCase;
-import com.github.mrvilkaman.testsutils.Tutils;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -29,7 +31,7 @@ import static org.mockito.Mockito.when;
 
 
 @SuppressWarnings("ResourceType")
-public class FragmentResolverImplTest extends BaseTestCase {
+public class AndroidFragmentResolverTest extends BaseTestCase {
 
 
 	private static final int containerID = 90;
@@ -38,7 +40,7 @@ public class FragmentResolverImplTest extends BaseTestCase {
 
 	@Override
 	public void init() {
-		resolver = new FragmentResolverImpl(fragmentManager, containerID);
+		resolver = new AndroidFragmentResolver(fragmentManager, containerID);
 	}
 
 	@Test
@@ -161,16 +163,13 @@ public class FragmentResolverImplTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testBack() {
-		// Arrange
-		FragmentResolver spy = Mockito.spy(resolver);
-
+	public void testStartActivityForResult_fragmentNotFound() {
 		// Act
-		spy.back();
+		Intent mock = mock(Intent.class);
+		resolver.startActivityForResult(mock,99);
 
 		// Assert
-		verify(spy).onBackPressed();
-
+		Assert.assertTrue(true); // no exceptions here
 	}
 
 	@Test
@@ -265,19 +264,49 @@ public class FragmentResolverImplTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testAddDrawer() {
+	public void testAddStaticFragment() {
 		// Arrange
-		BaseFragment mock = mock(BaseFragment.class);
+		BaseFragment mock = mock(StaticFragment.class);
 		FragmentTransaction transaction = Tutils.mockBuilder(FragmentTransaction.class);
 		when(fragmentManager.beginTransaction()).thenReturn(transaction);
 
 		// Act
-		resolver.addDrawer(R.id.drawer_layout,mock);
+		resolver.addStaticFragment(R.id.drawer_layout,mock);
 
 		// Assert
 		InOrder inOrder = Mockito.inOrder(fragmentManager, transaction);
 		inOrder.verify(fragmentManager).beginTransaction();
 		inOrder.verify(transaction).add(eq(R.id.drawer_layout),eq(mock));
 		inOrder.verify(transaction).commit();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddStaticFragment_fragment_notStatic() {
+		// Arrange
+		BaseFragment mock = mock(BaseFragment.class);
+		FragmentTransaction transaction = Tutils.mockBuilder(FragmentTransaction.class);
+		when(fragmentManager.beginTransaction()).thenReturn(transaction);
+
+		// Act
+		resolver.addStaticFragment(R.id.drawer_layout,mock);
+
+	}
+
+	public static class StaticFragment extends BaseFragment implements ISingletonFragment{
+
+		@Override
+		public void daggerInject() {
+
+		}
+
+		@Override
+		protected void onCreateView(View view, Bundle savedInstanceState) {
+
+		}
+
+		@Override
+		protected int getLayoutId() {
+			return 0;
+		}
 	}
 }
