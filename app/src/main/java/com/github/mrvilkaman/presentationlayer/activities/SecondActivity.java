@@ -9,10 +9,11 @@ import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
 import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 
-public class SecondActivity extends BaseActivity<SecondActivityComponent,BasePresenter> {
+import javax.inject.Inject;
+
+public class SecondActivity extends BaseActivity<SecondActivityComponent, SecondActivityPresenter> {
 
 	@Override
 	protected void injectMe(SecondActivityComponent activityComponent) {
@@ -31,8 +32,14 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent,BasePre
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
-				.toolbarModule(new ToolbarModule(rootView,this))
+				.toolbarModule(new ToolbarModule(rootView, this))
 				.build();
+	}
+
+	@Override
+	@Inject
+	public void setPresenter(SecondActivityPresenter presenter) {
+		super.setPresenter(presenter);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import javax.inject.Inject;
 public abstract class BaseActivity<C extends ActivityCoreComponent,P extends BasePresenter> extends AppCompatActivity
 		implements BaseActivityView,BaseView, IHasComponent<C> {
 
-	@Inject @Nullable P presenter;
+	@Nullable protected P presenter;
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ThrowableResolver throwableResolver;
@@ -59,7 +59,14 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 		afterOnCreate();
 	}
 
+	@Nullable
+	public P getPresenter() {
+		return presenter;
+	}
 
+	public void setPresenter(P presenter) {
+		this.presenter = presenter;
+	}
 
 	protected abstract void afterOnCreate();
 
