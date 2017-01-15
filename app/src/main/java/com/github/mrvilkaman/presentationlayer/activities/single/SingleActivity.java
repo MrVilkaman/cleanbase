@@ -9,6 +9,7 @@ import com.github.mrvilkaman.di.AppComponent;
 import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
 import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
+import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
@@ -37,12 +38,12 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 		AppComponent appComponent = getComponent(AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
-						getContainerID(), () -> null);
+				new CommonActivityModule(this, this, rootView, () -> null);
 
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
+				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
 				.toolbarModule(new ToolbarModule(rootView, this))
 				.build();
 	}

@@ -8,12 +8,11 @@ import com.github.mrvilkaman.di.AppComponent;
 import com.github.mrvilkaman.di.DaggerActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
+import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
-
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
@@ -23,12 +22,12 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 		AppComponent appComponent = getComponent(AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
-						getContainerID(), SimpleListScreenFragment::open);
+				new CommonActivityModule(this, this, rootView, SimpleListScreenFragment::open);
 
 		return DaggerActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
+				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
 				.toolbarModule(new ToolbarModule(rootView, this))
 				.drawerModule(new DrawerModule(DrawerScreenFragment::open))
 				.build();
