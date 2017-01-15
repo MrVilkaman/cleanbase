@@ -64,7 +64,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 
 		if (!fragmentManager.hasFragment()) {
-			fragmentManager.showRootFragment(createStartFragment());
+			fragmentManager.showRootFragment(this.callback.createFragment());
 
 			if (hasDrawer()) {
 				//noinspection ConstantConditions
@@ -76,11 +76,6 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	private boolean hasDrawer() {
 		return drawerHelper != null && drawerHelper.hasDrawer();
-	}
-
-	@Override
-	public BaseFragment createStartFragment() {
-		return callback.createFragment();
 	}
 
 	@Override
