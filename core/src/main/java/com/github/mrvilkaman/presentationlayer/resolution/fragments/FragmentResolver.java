@@ -10,7 +10,7 @@ public interface FragmentResolver {
 
 	boolean hasFragment();
 
-	void addDrawer(int drawerContentFrame, BaseFragment drawerFragment);
+	void addStaticFragment(int drawerContentFrame, BaseFragment drawerFragment);
 
 	void startActivityForResult(Intent intent, int requestCode);
 

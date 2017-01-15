@@ -1,12 +1,15 @@
 package com.github.mrvilkaman.presentationlayer.resolution.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.Tutils;
 
@@ -261,19 +264,49 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testAddDrawer() {
+	public void testAddStaticFragment() {
 		// Arrange
-		BaseFragment mock = mock(BaseFragment.class);
+		BaseFragment mock = mock(StaticFragment.class);
 		FragmentTransaction transaction = Tutils.mockBuilder(FragmentTransaction.class);
 		when(fragmentManager.beginTransaction()).thenReturn(transaction);
 
 		// Act
-		resolver.addDrawer(R.id.drawer_layout,mock);
+		resolver.addStaticFragment(R.id.drawer_layout,mock);
 
 		// Assert
 		InOrder inOrder = Mockito.inOrder(fragmentManager, transaction);
 		inOrder.verify(fragmentManager).beginTransaction();
 		inOrder.verify(transaction).add(eq(R.id.drawer_layout),eq(mock));
 		inOrder.verify(transaction).commit();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddStaticFragment_fragment_notStatic() {
+		// Arrange
+		BaseFragment mock = mock(BaseFragment.class);
+		FragmentTransaction transaction = Tutils.mockBuilder(FragmentTransaction.class);
+		when(fragmentManager.beginTransaction()).thenReturn(transaction);
+
+		// Act
+		resolver.addStaticFragment(R.id.drawer_layout,mock);
+
+	}
+
+	public static class StaticFragment extends BaseFragment implements ISingletonFragment{
+
+		@Override
+		public void daggerInject() {
+
+		}
+
+		@Override
+		protected void onCreateView(View view, Bundle savedInstanceState) {
+
+		}
+
+		@Override
+		protected int getLayoutId() {
+			return 0;
+		}
 	}
 }

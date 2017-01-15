@@ -13,6 +13,7 @@
 		android:id="@+id/content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:layout_above="@+id/single_botton_content"
 		android:layout_below="@+id/toolbar_actionbar">
 
 		<TextView
@@ -31,6 +32,17 @@
 			android:text="Кнопка"/>
 
 	</FrameLayout>
+
+
+	<FrameLayout
+
+		android:id="@+id/single_botton_content"
+		android:layout_width="match_parent"
+		android:layout_height="70dp"
+		android:layout_alignParentBottom="true">
+
+	</FrameLayout>
+
 
 	<com.pnikosis.materialishprogress.ProgressWheel
 		android:id="@+id/progress_wheel"

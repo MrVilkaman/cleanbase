@@ -68,7 +68,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 			if (hasDrawer()) {
 				//noinspection ConstantConditions
-				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(),
+				fragmentManager.addStaticFragment(drawerHelper.getDrawerContentFrame(),
 						drawerHelper.getDrawerFragment());
 			}
 		}

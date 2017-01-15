@@ -12,6 +12,7 @@ import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
+import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 
 import javax.inject.Inject;
@@ -20,8 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SingleActivity extends BaseActivity<SecondActivityComponent, SinglePresenter> implements
-		SingleView {
+public class SingleActivity extends BaseActivity<SecondActivityComponent, SinglePresenter>
+		implements SingleView {
 
 	@Inject IToolbar toolbar;
 
@@ -43,7 +44,9 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
-				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
+				.fragmentModule(new FragmentModule(getSupportFragmentManager(), getContainerID(),
+						resolver -> resolver.addStaticFragment(R.id.single_botton_content,
+								DrawerScreenFragment.open())))
 				.toolbarModule(new ToolbarModule(rootView, this))
 				.build();
 	}

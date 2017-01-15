@@ -174,14 +174,14 @@ public class AndroidFragmentResolver implements FragmentResolver {
 		fragments = new ArrayList<>(fragments);
 		for (int i = fragments.size() - 1; 0 <= i; i--) {
 			Fragment fragment = fragments.get(i);
-			if (!isSimpleFragment(fragment)) {
+			if (!isSingletonFragment(fragment)) {
 				fragments.remove(i);
 			}
 		}
 		return fragments;
 	}
 
-	private boolean isSimpleFragment(Fragment fragment) {
+	private boolean isSingletonFragment(Fragment fragment) {
 		return fragment != null && !(fragment instanceof ISingletonFragment);
 	}
 
@@ -206,9 +206,13 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	}
 
 	@Override
-	public void addDrawer(int drawerContentFrame, BaseFragment drawerFragment) {
+	public void addStaticFragment(int contentId, BaseFragment fragment) {
+		if (!(fragment instanceof ISingletonFragment)) {
+			throw new IllegalArgumentException("fragment must impliment ISingletonFragment");
+		}
+
 		fragmentManager.beginTransaction()
-				.add(drawerContentFrame, drawerFragment)
+				.add(contentId, fragment)
 				.commit();
 	}
 }

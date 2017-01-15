@@ -119,7 +119,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(drawerHelper)
 				.hasDrawer();
 		inOrder.verify(fragmentManager)
-				.addDrawer(eq(11), eq(mockDrawer));
+				.addStaticFragment(eq(11), eq(mockDrawer));
 	}
 
 	@Test
