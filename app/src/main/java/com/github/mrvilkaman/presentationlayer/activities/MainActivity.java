@@ -13,6 +13,8 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
 
@@ -39,7 +41,6 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 
 	@Override
 	protected void afterOnCreate() {
-
 	}
 
 	protected int getActivityLayoutResourceID() {

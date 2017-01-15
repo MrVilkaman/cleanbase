@@ -31,7 +31,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 
 	@Inject NavigationResolver navigationResolver;
 	@Inject ThrowableResolver throwableResolver;
-	@Inject @Nullable ToolbarResolver toolbarResolver;
+	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
