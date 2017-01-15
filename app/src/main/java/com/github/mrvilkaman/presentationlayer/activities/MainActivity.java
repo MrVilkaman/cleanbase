@@ -9,11 +9,12 @@ import com.github.mrvilkaman.di.DaggerActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 
 
-public class MainActivity extends BaseActivity<ActivityComponent> {
+public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
 
 	@Override
 	protected ActivityComponent createComponent() {

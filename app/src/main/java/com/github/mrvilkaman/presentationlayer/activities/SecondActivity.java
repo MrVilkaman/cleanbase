@@ -9,9 +9,10 @@ import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
 import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 
-public class SecondActivity extends BaseActivity<SecondActivityComponent> {
+public class SecondActivity extends BaseActivity<SecondActivityComponent,BasePresenter> {
 
 	@Override
 	protected void injectMe(SecondActivityComponent activityComponent) {
