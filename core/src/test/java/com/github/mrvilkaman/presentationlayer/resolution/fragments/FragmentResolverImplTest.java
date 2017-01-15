@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.testsutils.BaseTestCase;
+import com.github.mrvilkaman.testsutils.Tutils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,10 +17,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
-
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.github.mrvilkaman.testsutils.BaseTestCase;
-import com.github.mrvilkaman.testsutils.Tutils;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -158,6 +157,16 @@ public class FragmentResolverImplTest extends BaseTestCase {
 		// Assert
 		verify(mockFrag).startActivityForResult(eq(mock),eq(99));
 
+	}
+
+	@Test
+	public void testStartActivityForResult_fragmentNotFound() {
+		// Act
+		Intent mock = mock(Intent.class);
+		resolver.startActivityForResult(mock,99);
+
+		// Assert
+		Assert.assertTrue(true); // no exceptions here
 	}
 
 	@Test

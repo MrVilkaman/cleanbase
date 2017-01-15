@@ -6,13 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FragmentResolverImpl implements FragmentResolver {
 
@@ -140,7 +140,10 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
-		getCurrentFragment().startActivityForResult(intent, requestCode);
+		Fragment currentFragment = getCurrentFragment();
+		if (currentFragment != null) {
+			currentFragment.startActivityForResult(intent, requestCode);
+		}
 	}
 
 	private Fragment getCurrentFragment() {
