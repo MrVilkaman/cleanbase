@@ -15,13 +15,13 @@ import org.mockito.Mockito;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 
 
 public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 
+	@Mock BaseFragment baseFragment;
 	@Mock Activity currentActivity;
 	@Mock FragmentResolver fragmentManager;
 	@Mock UIResolver uiResolver;
@@ -33,7 +33,7 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 	public void init() {
 		resolver = Mockito.spy(
 				new NavigationResolverImpl(currentActivity, fragmentManager, null,
-						null, uiResolver, activityView, () -> mock(BaseFragment.class)));
+						null, uiResolver, activityView, () -> baseFragment));
 	}
 
 	@Test
@@ -54,8 +54,6 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 	public void testInit_noFragment_noDrawer() {
 		// Arrange
 		when(fragmentManager.hasFragment()).thenReturn(false);
-		BaseFragment mock = mock(BaseFragment.class);
-		when(resolver.createStartFragment()).thenReturn(mock);
 
 		// Act
 		resolver.init();
@@ -64,16 +62,13 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 		InOrder inOrder = Mockito.inOrder(fragmentManager);
 		inOrder.verify(fragmentManager,never()).setCallback(any());
 		inOrder.verify(fragmentManager).hasFragment();
-		inOrder.verify(fragmentManager).showRootFragment(mock);
+		inOrder.verify(fragmentManager).showRootFragment(baseFragment);
 	}
 
 	@Test
 	public void testInit_noFragment_withDrawer() {
 		// Arrange
 		when(fragmentManager.hasFragment()).thenReturn(false);
-		BaseFragment mock = mock(BaseFragment.class);
-		when(resolver.createStartFragment()).thenReturn(mock);
-		BaseFragment mockDrawer = mock(BaseFragment.class);
 
 		// Act
 		resolver.init();
@@ -82,7 +77,7 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 		InOrder inOrder = Mockito.inOrder(fragmentManager);
 		inOrder.verify(fragmentManager,never()).setCallback(any());
 		inOrder.verify(fragmentManager).hasFragment();
-		inOrder.verify(fragmentManager).showRootFragment(mock);
+		inOrder.verify(fragmentManager).showRootFragment(baseFragment);
 		inOrder.verify(fragmentManager,never()).addDrawer(anyInt(), any());
 	}
 
