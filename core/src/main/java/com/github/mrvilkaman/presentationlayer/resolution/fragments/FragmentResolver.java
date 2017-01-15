@@ -26,8 +26,6 @@ public interface FragmentResolver {
 
 	void setTargetFragmentCode(int code);
 
-	void back();
-
 	void setCallback(FragmentResolverCallback callback);
 
 	boolean isRootScreen();

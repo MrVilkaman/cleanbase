@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 
 @SuppressWarnings("ResourceType")
-public class FragmentResolverImplTest extends BaseTestCase {
+public class AndroidFragmentResolverTest extends BaseTestCase {
 
 
 	private static final int containerID = 90;
@@ -37,7 +37,7 @@ public class FragmentResolverImplTest extends BaseTestCase {
 
 	@Override
 	public void init() {
-		resolver = new FragmentResolverImpl(fragmentManager, containerID);
+		resolver = new AndroidFragmentResolver(fragmentManager, containerID);
 	}
 
 	@Test
@@ -167,19 +167,6 @@ public class FragmentResolverImplTest extends BaseTestCase {
 
 		// Assert
 		Assert.assertTrue(true); // no exceptions here
-	}
-
-	@Test
-	public void testBack() {
-		// Arrange
-		FragmentResolver spy = Mockito.spy(resolver);
-
-		// Act
-		spy.back();
-
-		// Assert
-		verify(spy).onBackPressed();
-
 	}
 
 	@Test

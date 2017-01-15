@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolverImpl;
+import com.github.mrvilkaman.presentationlayer.resolution.fragments.AndroidFragmentResolver;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,7 +24,7 @@ public class FragmentModule {
 	@Provides
 	@PerActivity
 	public FragmentResolver createFragmentResolver() {
-		return new FragmentResolverImpl(fm, contentId);
+		return new AndroidFragmentResolver(fm, contentId);
 	}
 
 }

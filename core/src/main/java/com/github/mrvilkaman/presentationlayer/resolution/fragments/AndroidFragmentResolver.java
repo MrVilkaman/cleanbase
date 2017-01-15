@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FragmentResolverImpl implements FragmentResolver {
+public class AndroidFragmentResolver implements FragmentResolver {
 
 	private static final int EMTPY_CODE = -1;
 	private FragmentResolverCallback callback;
@@ -25,7 +25,7 @@ public class FragmentResolverImpl implements FragmentResolver {
 	private boolean isRoot;
 	private int code = EMTPY_CODE;
 
-	public FragmentResolverImpl(FragmentManager fragmentManager, int containerID) {
+	public AndroidFragmentResolver(FragmentManager fragmentManager, int containerID) {
 		this.fragmentManager = fragmentManager;
 		this.containerID = containerID;
 	}
@@ -183,11 +183,6 @@ public class FragmentResolverImpl implements FragmentResolver {
 
 	private boolean isSimpleFragment(Fragment fragment) {
 		return fragment != null && !(fragment instanceof ISingletonFragment);
-	}
-
-	@Override
-	public void back() {
-		onBackPressed();
 	}
 
 	@Override
