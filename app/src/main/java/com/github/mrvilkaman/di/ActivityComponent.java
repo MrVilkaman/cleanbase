@@ -12,7 +12,7 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class,
 		modules = {CommonActivityModule.class, FragmentModule.class, DrawerModule.class, ToolbarModule.class})
-public interface ActivityComponent extends ActivityCoreComponent {
+public interface ActivityComponent extends ActivityCoreComponent,CommonComponent {
 
 	void inject(MainActivity activity);
 }
