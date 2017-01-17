@@ -50,21 +50,23 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
-	protected final <T> void subscribe(Observable<T> observable) {
-		subscribe(observable, new ViewSubscriber<>());
+	protected final <T> void subscribeUI(Observable<T> observable) {
+		subscribeUI(observable, new ViewSubscriber<>());
 	}
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	protected final <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
+		subscribeUI(observable,subscriber);
+	}
+
+	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
 		if (subscriber instanceof ViewSubscriber) {
 			ViewSubscriber viewSubscriber = (ViewSubscriber) subscriber;
 			viewSubscriber.setView(view);
 			viewSubscriber.setUiResolver(uiResolver);
 		}
-		compositeSubscription.add(observable.subscribe(subscriber));
-	}
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
 
-	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
-		subscribe(observable.observeOn(schedulersProvider.mainThread()), subscriber);
 	}
 }
