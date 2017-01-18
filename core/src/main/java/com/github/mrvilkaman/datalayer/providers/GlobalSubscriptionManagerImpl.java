@@ -1,6 +1,10 @@
 package com.github.mrvilkaman.datalayer.providers;
 
+import android.util.Log;
+
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
+import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
+import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
 
 import net.jokubasdargis.rxbus.Bus;
 
@@ -20,18 +24,29 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@Override
 	public <T> void subscribe(Observable<T> qwer) {
-		subscription.add(qwer.subscribe(t -> Actions.empty(),
-				throwable -> bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable)));
+		String string =
+				CleanBaseSettings.needSubscribeLogs() ? AppUtils.getGlobalSubscriberStartStack() : "";
+		subscription.add(qwer.subscribe(t -> Actions.empty(), throwable -> {
+			if (CleanBaseSettings.needSubscribeLogs()) {
+				Log.e("GlobalSubscription", "Start by:" + string, throwable);
+			}
+			bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
+		}));
 	}
 
 	@Override
 	public <T> Observable<T> subscribeWithResult(Observable<T> qwer) {
+		String string =
+				CleanBaseSettings.needSubscribeLogs() ? AppUtils.getGlobalSubscriberStartStack() : "";
 		return Observable.create(subscriber -> {
 			subscription.add(qwer.subscribe((t) -> {
 				if (!subscriber.isUnsubscribed())
 					subscriber.onNext(t);
 			}, throwable -> {
 				if (subscriber.isUnsubscribed()) {
+					if (CleanBaseSettings.needSubscribeLogs()) {
+						Log.e("GlobalSubscription", "Start by:" + string, throwable);
+					}
 					bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
 				} else {
 					subscriber.onError(throwable);
