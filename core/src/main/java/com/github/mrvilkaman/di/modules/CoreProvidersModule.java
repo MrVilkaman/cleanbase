@@ -1,7 +1,11 @@
 package com.github.mrvilkaman.di.modules;
 
+import com.github.mrvilkaman.datalayer.providers.GlobalSubscriptionManagerImpl;
 import com.github.mrvilkaman.datalayer.providers.MainSchedulersProvider;
+import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+
+import net.jokubasdargis.rxbus.Bus;
 
 import javax.inject.Singleton;
 
@@ -13,7 +17,7 @@ import dagger.Provides;
  */
 @Module
 @Singleton
-public class ProvidersModule {
+public class CoreProvidersModule {
 
 	@Singleton
 	@Provides
@@ -21,4 +25,9 @@ public class ProvidersModule {
 		return new MainSchedulersProvider();
 	}
 
+	@Provides
+	@Singleton
+	public GlobalSubscriptionManager getGlobalSubscriptionManager(Bus bus) {
+		return new GlobalSubscriptionManagerImpl(bus);
+	}
 }

@@ -17,6 +17,7 @@ import rx.observers.TestSubscriber;
 import rx.subjects.PublishSubject;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 
@@ -173,7 +174,7 @@ public class BasePresenterTest extends BaseTestCase {
 		// Act
 		presenter.onViewAttached();
 		presenter.subscribeUI(obs, subscriber);
-		presenter.subscribe(obs2, subscriber2);
+		presenter.subscribeUI(obs2, subscriber2);
 		presenter.subscribe(obs3, subscriber3);
 		holders.onNext("1");
 		presenter.onViewDetached();
@@ -182,7 +183,7 @@ public class BasePresenterTest extends BaseTestCase {
 
 		// Assert
 		holders.assertIt();
-		Mockito.verify(prov)
+		Mockito.verify(prov,atLeastOnce())
 				.mainThread();
 	}
 
