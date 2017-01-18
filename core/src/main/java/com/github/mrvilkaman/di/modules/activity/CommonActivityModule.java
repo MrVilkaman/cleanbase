@@ -2,7 +2,6 @@ package com.github.mrvilkaman.di.modules.activity;
 
 
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -15,7 +14,6 @@ import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolverImpl;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolverImpl;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolverImpl;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
@@ -29,18 +27,13 @@ public class CommonActivityModule {
 	protected AppCompatActivity activity;
 	protected BaseActivityView baseActivityView;
 	protected View view;
-	protected FragmentManager fm;
-	protected int contentId;
 	private ProvideFragmentCallback callback;
 
 	public CommonActivityModule(AppCompatActivity activity, BaseActivityView baseActivityView,
-								View view, FragmentManager fm, int contentId,
-								ProvideFragmentCallback callback) {
+								View view, ProvideFragmentCallback callback) {
 		this.activity = activity;
 		this.baseActivityView = baseActivityView;
 		this.view = view;
-		this.fm = fm;
-		this.contentId = contentId;
 		this.callback = callback;
 	}
 
@@ -64,13 +57,6 @@ public class CommonActivityModule {
 													   UIResolver ui) {
 		return new NavigationResolverImpl(activity, fragmentResolver, drawer, toolbarResolver, ui,
 				baseActivityView, callback);
-	}
-
-
-	@Provides
-	@PerActivity
-	public FragmentResolver createFragmentResolver() {
-		return new FragmentResolverImpl(fm, contentId);
 	}
 
 	@Provides

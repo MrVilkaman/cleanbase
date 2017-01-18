@@ -23,7 +23,7 @@ public class SimpleDiffUtils extends BaseDiffCallback<SimpleModel> {
 	}
 
 	@Override
-	protected Object getChangePayload(SimpleModel newItem, SimpleModel oldItem) {
+	protected Set<String> getChangePayload(SimpleModel newItem, SimpleModel oldItem) {
 		Set<String> set = new HashSet<>(2);
 		put(set, newItem.getNumber(), oldItem.getNumber(), "number");
 		put(set, newItem.getImage(), oldItem.getImage(), "image");

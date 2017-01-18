@@ -8,10 +8,13 @@ import com.github.mrvilkaman.di.AppComponent;
 import com.github.mrvilkaman.di.DaggerSecondActivityComponent;
 import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
+import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 
-public class SecondActivity extends BaseActivity<SecondActivityComponent> {
+import javax.inject.Inject;
+
+public class SecondActivity extends BaseActivity<SecondActivityComponent, SecondActivityPresenter> {
 
 	@Override
 	protected void injectMe(SecondActivityComponent activityComponent) {
@@ -24,14 +27,20 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent> {
 		AppComponent appComponent = getComponent(AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, rootView, getSupportFragmentManager(),
-						getContainerID(), ImageloadScreenFragment::open);
+				new CommonActivityModule(this, this, rootView, ImageloadScreenFragment::open);
 
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
-				.toolbarModule(new ToolbarModule(rootView,this))
+				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
+				.toolbarModule(new ToolbarModule(rootView, this))
 				.build();
+	}
+
+	@Override
+	@Inject
+	public void setPresenter(SecondActivityPresenter presenter) {
+		super.setPresenter(presenter);
 	}
 
 	@Override

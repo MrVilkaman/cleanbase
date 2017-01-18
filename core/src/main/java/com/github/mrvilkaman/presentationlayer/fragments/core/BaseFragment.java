@@ -2,7 +2,6 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,7 +144,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	protected abstract int getLayoutId();
 
-	@Override
 	public P getPresenter() {
 		return relationPresenter;
 	}
@@ -155,38 +153,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
-	public void showToast(@StringRes int text) {
-		uiResolver.showToast(text);
-	}
-
-	@Override
-	public void showToast(@StringRes int resId, Object... arg) {
-		uiResolver.showToast(resId, arg);
-	}
-
-	@Override
 	public void handleError(Throwable throwable) {
 		throwableResolver.handleError(throwable);
-	}
-
-	@Override
-	public void showMessage(@StringRes int text) {
-		uiResolver.showMessage(text);
-	}
-
-	@Override
-	public void showMessage(@StringRes int text, Runnable callback) {
-		uiResolver.showMessage(text, callback);
-	}
-
-	@Override
-	public void showMessage(@StringRes int resId, Object... arg) {
-		uiResolver.showMessage(resId, arg);
-	}
-
-	@Override
-	public void showSnackbar(@StringRes int textId) {
-		uiResolver.showSnackbar(textId);
 	}
 
 	public String getName() {
@@ -197,6 +165,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	//// TODO: 07.11.16 must return protected...
 	public <T> T getComponent(Class<T> componentType) {
 		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
+	}
+
+	public UIResolver getUiResolver() {
+		return uiResolver;
 	}
 
 	public NavigationResolver getNavigation() {

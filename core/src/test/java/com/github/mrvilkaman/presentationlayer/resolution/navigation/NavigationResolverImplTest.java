@@ -9,8 +9,7 @@ import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
-		.LeftDrawerHelperCallback;
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper.LeftDrawerHelperCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
@@ -21,7 +20,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -42,6 +40,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	@Mock ToolbarResolver toolbarResolver;
 	@Mock UIResolver uiResolver;
 	@Mock BaseActivityView activityView;
+	@Mock BaseFragment baseFragment;
 
 	private NavigationResolver resolver;
 
@@ -49,8 +48,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	public void init() {
 		resolver = Mockito.spy(
 				new NavigationResolverImpl(currentActivity, fragmentManager, drawerHelper,
-						toolbarResolver, uiResolver, activityView, () -> mock(BaseFragment
-						.class)));
+						toolbarResolver, uiResolver, activityView, () -> baseFragment));
 		when(drawerHelper.hasDrawer()).thenReturn(true);
 
 	}
@@ -78,8 +76,6 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		// Arrange
 		when(fragmentManager.hasFragment()).thenReturn(false);
 		when(drawerHelper.hasDrawer()).thenReturn(false);
-		BaseFragment mock = mock(BaseFragment.class);
-		when(resolver.createStartFragment()).thenReturn(mock);
 
 		// Act
 		resolver.init();
@@ -93,7 +89,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(fragmentManager)
 				.hasFragment();
 		inOrder.verify(fragmentManager)
-				.showRootFragment(mock);
+				.showRootFragment(baseFragment);
 		inOrder.verify(drawerHelper)
 				.hasDrawer();
 	}
@@ -103,8 +99,6 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		// Arrange
 		when(fragmentManager.hasFragment()).thenReturn(false);
 		when(drawerHelper.hasDrawer()).thenReturn(true);
-		BaseFragment mock = mock(BaseFragment.class);
-		when(resolver.createStartFragment()).thenReturn(mock);
 		when(drawerHelper.getDrawerContentFrame()).thenReturn(11);
 		BaseFragment mockDrawer = mock(BaseFragment.class);
 		when(drawerHelper.getDrawerFragment()).thenReturn(mockDrawer);
@@ -121,20 +115,11 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(fragmentManager)
 				.hasFragment();
 		inOrder.verify(fragmentManager)
-				.showRootFragment(mock);
+				.showRootFragment(baseFragment);
 		inOrder.verify(drawerHelper)
 				.hasDrawer();
 		inOrder.verify(fragmentManager)
-				.addDrawer(eq(11), eq(mockDrawer));
-	}
-
-	@Test
-	public void testCreateStartFragment() {
-		// Act
-		BaseFragment startFragment = resolver.createStartFragment();
-
-		// Assert
-		assertThat(startFragment).isNotNull();
+				.addStaticFragment(eq(11), eq(mockDrawer));
 	}
 
 	@Test
@@ -154,10 +139,14 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue() {
+	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue_withOutToolbar() {
 		// Arrange
+		resolver = Mockito.spy(
+				new NavigationResolverImpl(currentActivity, fragmentManager, drawerHelper,
+						null, uiResolver, activityView, () -> baseFragment));
+
 		when(fragmentManager.processBackFragment()).thenReturn(true);
-		when(fragmentManager.onBackPressed()).thenReturn(true);
+		when(fragmentManager.checkBackStack()).thenReturn(true);
 
 		// Act
 		resolver.onBackPressed();
@@ -170,11 +159,43 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(activityView)
 				.hideProgress();
 		inOrder.verify(fragmentManager)
-				.onBackPressed();
-		inOrder.verify(toolbarResolver)
+				.checkBackStack();
+		inOrder.verify(toolbarResolver,never())
+				.clear();
+		inOrder.verify(fragmentManager).popBackStack();
+		inOrder.verify(toolbarResolver,never())
 				.updateIcon();
+
+
+		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
+		inOrder.verify(resolver, never())
+				.exit();
+	}
+
+	@Test
+	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue() {
+		// Arrange
+		when(fragmentManager.processBackFragment()).thenReturn(true);
+		when(fragmentManager.checkBackStack()).thenReturn(true);
+
+		// Act
+		resolver.onBackPressed();
+
+		// Assert
+		InOrder inOrder = Mockito.inOrder(fragmentManager, activityView, resolver,
+				toolbarResolver);
+		inOrder.verify(fragmentManager)
+				.processBackFragment();
+		inOrder.verify(activityView)
+				.hideProgress();
+		inOrder.verify(fragmentManager)
+				.checkBackStack();
 		inOrder.verify(toolbarResolver)
 				.clear();
+		inOrder.verify(fragmentManager).popBackStack();
+		inOrder.verify(toolbarResolver)
+				.updateIcon();
+
 
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		inOrder.verify(resolver, never())
@@ -186,7 +207,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		// Arrange
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		when(fragmentManager.processBackFragment()).thenReturn(true);
-		when(fragmentManager.onBackPressed()).thenReturn(false);
+		when(fragmentManager.checkBackStack()).thenReturn(false);
 		doNothing().when(resolver)
 				.exit();
 
@@ -201,7 +222,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(activityView)
 				.hideProgress();
 		inOrder.verify(fragmentManager)
-				.onBackPressed();
+				.checkBackStack();
 		inOrder.verify(toolbarResolver, never())
 				.updateIcon();
 		inOrder.verify(toolbarResolver,never())

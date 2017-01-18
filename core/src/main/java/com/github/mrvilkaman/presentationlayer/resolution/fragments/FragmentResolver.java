@@ -10,9 +10,11 @@ public interface FragmentResolver {
 
 	boolean hasFragment();
 
-	void addDrawer(int drawerContentFrame, BaseFragment drawerFragment);
+	void addStaticFragment(int drawerContentFrame, BaseFragment drawerFragment);
 
 	void startActivityForResult(Intent intent, int requestCode);
+
+	void popBackStack();
 
 	void showFragment(BaseFragment fragment);
 
@@ -22,11 +24,9 @@ public interface FragmentResolver {
 
 	boolean processBackFragment();
 
-	boolean onBackPressed();
+	boolean checkBackStack();
 
 	void setTargetFragmentCode(int code);
-
-	void back();
 
 	void setCallback(FragmentResolverCallback callback);
 

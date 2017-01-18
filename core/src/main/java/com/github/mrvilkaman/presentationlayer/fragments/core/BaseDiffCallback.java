@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import java.util.List;
+import java.util.Set;
 
 public abstract class BaseDiffCallback<Type> extends DiffUtil.Callback {
 
@@ -62,7 +63,7 @@ public abstract class BaseDiffCallback<Type> extends DiffUtil.Callback {
 		return getChangePayload(newItem, oldItem);
 	}
 
-	protected Object getChangePayload(Type newItem, Type oldItem) {
+	protected Set<String> getChangePayload(Type newItem, Type oldItem) {
 		return null;
 	}
 }

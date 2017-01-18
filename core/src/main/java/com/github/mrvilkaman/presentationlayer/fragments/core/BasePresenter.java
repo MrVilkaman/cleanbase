@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
 import javax.inject.Inject;
@@ -16,13 +17,18 @@ public class BasePresenter<V extends BaseView> {
 	private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
 	private SchedulersProvider schedulersProvider;
+	private UIResolver uiResolver;
 
 	public BasePresenter() {
 	}
 
 	@Inject
-	public void setSchedulersProvider(SchedulersProvider schedulersProvider) {
+	public final void setSchedulersProvider(SchedulersProvider schedulersProvider) {
 		this.schedulersProvider = schedulersProvider;
+	}
+	@Inject
+	public final void setSchedulersProvider(UIResolver uiResolver) {
+		this.uiResolver = uiResolver;
 	}
 
 	public void onViewAttached() {
@@ -36,22 +42,32 @@ public class BasePresenter<V extends BaseView> {
 		return view;
 	}
 
+	public final UIResolver uiResolver() {
+		return uiResolver;
+	}
+
 	public final void setView(V view) {
 		this.view = view;
 	}
 
-	protected final <T> void subscribe(Observable<T> observable) {
-		subscribe(observable, new ViewSubscriber<>());
+	@Deprecated
+	protected final <T> void subscribeUI(Observable<T> observable) {
+		subscribeUI(observable, new ViewSubscriber<>());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Deprecated
 	protected final <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
-		if (subscriber instanceof ViewSubscriber) {
-			((ViewSubscriber) subscriber).setView(view);
-		}
-		compositeSubscription.add(observable.subscribe(subscriber));
+		subscribeUI(observable,subscriber);
 	}
 
 	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
-		subscribe(observable.observeOn(schedulersProvider.mainThread()), subscriber);
+		if (subscriber instanceof ViewSubscriber) {
+			ViewSubscriber viewSubscriber = (ViewSubscriber) subscriber;
+			viewSubscriber.setView(view);
+			viewSubscriber.setUiResolver(uiResolver);
+		}
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
+
 	}
 }

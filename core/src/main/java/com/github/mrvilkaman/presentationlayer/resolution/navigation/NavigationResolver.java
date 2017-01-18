@@ -9,8 +9,6 @@ public interface NavigationResolver {
 
 	void init();
 
-	BaseFragment createStartFragment();
-
 	void showFragment(BaseFragment fragment);
 
 	void showRootFragment(BaseFragment fragment);

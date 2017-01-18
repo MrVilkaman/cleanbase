@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#f00"
+	android:background="#fff"
 	android:orientation="vertical">
 
 	<RadioGroup
@@ -14,27 +14,32 @@
 		<RadioButton
 			android:id="@+id/menu_1"
 			style="@style/LeftMenuItem"
-			android:text="Экран 1"/>
+			android:text="Демонстрация работы со стеком фрагментов"/>
 
 		<RadioButton
 			android:id="@+id/menu_2"
 			style="@style/LeftMenuItem"
-			android:text="Экран 2"/>
+			android:text="Image Loadger. примеры работы"/>
 
 		<RadioButton
 			android:id="@+id/menu_3"
 			style="@style/LeftMenuItem"
-			android:text="Экран 3"/>
+			android:text="Работа с камерой"/>
 
 		<RadioButton
 			android:id="@+id/menu_4"
 			style="@style/LeftMenuItem"
-			android:text="Экран 4"/>
+			android:text="Списки DiffUtils"/>
 
 		<RadioButton
 			android:id="@+id/menu_5"
 			style="@style/LeftMenuItem"
-			android:text="Экран 5"/>
+			android:text="Списки DiffUtils (Отдельная activity)"/>
+
+		<RadioButton
+			android:id="@+id/menu_single_activity"
+			style="@style/LeftMenuItem"
+			android:text="Активити без фрагмента"/>
 	</RadioGroup>
 
 </LinearLayout>

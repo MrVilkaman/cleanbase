@@ -14,6 +14,9 @@ import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.app.CoreApp;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
@@ -21,11 +24,14 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
-public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppCompatActivity
-		implements BaseActivityView, IHasComponent<C> {
+public abstract class BaseActivity<C extends ActivityCoreComponent,P extends BasePresenter> extends AppCompatActivity
+		implements BaseActivityView,BaseView, IHasComponent<C> {
+
+	@Nullable protected P presenter;
 
 	@Inject NavigationResolver navigationResolver;
-	@Inject @Nullable ToolbarResolver toolbarResolver;
+	@Inject ThrowableResolver throwableResolver;
+	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
@@ -46,7 +52,20 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 		}
 		navigationResolver.init();
 		configureProgressBar();
+		if (presenter != null) {
+			presenter.setView(this);
+			presenter.onViewAttached();
+		}
 		afterOnCreate();
+	}
+
+	@Nullable
+	public P getPresenter() {
+		return presenter;
+	}
+
+	public void setPresenter(P presenter) {
+		this.presenter = presenter;
 	}
 
 	protected abstract void afterOnCreate();
@@ -137,7 +156,17 @@ public abstract class BaseActivity<C extends ActivityCoreComponent> extends AppC
 	protected abstract C createComponent();
 
 	@Override
+	public void handleError(Throwable throwable) {
+		throwableResolver.handleError(throwable);
+	}
+
+	@Override
 	protected void onDestroy() {
+		if (presenter != null) {
+			presenter.onViewDetached();
+			//noinspection unchecked
+			presenter.setView(null);
+		}
 		super.onDestroy();
 		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {

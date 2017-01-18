@@ -4,9 +4,8 @@ import android.util.Log;
 
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
-
-import java.lang.ref.WeakReference;
 
 
 /**
@@ -16,7 +15,8 @@ import java.lang.ref.WeakReference;
 public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 	private final String string;
-	private WeakReference<V> viewRef;
+	private V view;
+	private UIResolver uiResolver;
 	private boolean skipNextError;
 
 
@@ -31,13 +31,13 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	}
 
 	public void setView(V view) {
-		this.viewRef = new WeakReference<>(view);
+		this.view = view;
 	}
 
 	@Override
 	public void onError(Throwable e) {
 		if (CleanBaseSettings.needSubscribeLogs()) {
-			Log.e("LoadSubscriber", "Start by:" + string, e);
+			Log.e("ViewSubscriber", "Start by:" + string, e);
 		}
 		BaseView view = view();
 		if (view == null)
@@ -58,7 +58,15 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	}
 
 	protected V view() {
-		return viewRef.get();
+		return view;
+	}
+
+	protected UIResolver getUiResolver() {
+		return uiResolver;
+	}
+
+	public void setUiResolver(UIResolver uiResolver) {
+		this.uiResolver = uiResolver;
 	}
 
 	protected void skipNextError() {
@@ -68,5 +76,4 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	protected boolean showError() {
 		return !skipNextError;
 	}
-
 }

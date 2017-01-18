@@ -64,11 +64,11 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 
 		if (!fragmentManager.hasFragment()) {
-			fragmentManager.showRootFragment(createStartFragment());
+			fragmentManager.showRootFragment(this.callback.createFragment());
 
 			if (hasDrawer()) {
 				//noinspection ConstantConditions
-				fragmentManager.addDrawer(drawerHelper.getDrawerContentFrame(),
+				fragmentManager.addStaticFragment(drawerHelper.getDrawerContentFrame(),
 						drawerHelper.getDrawerFragment());
 			}
 		}
@@ -79,19 +79,15 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public BaseFragment createStartFragment() {
-		return callback.createFragment();
-	}
-
-	@Override
 	public void onBackPressed() {
 		if (fragmentManager.processBackFragment()) {
 			activityView.hideProgress();
-			if (fragmentManager.onBackPressed()) {
-				if (toolbarResolver != null) {
-					toolbarResolver.updateIcon();
+			if (fragmentManager.checkBackStack()) {
+				if (toolbarResolver != null)
 					toolbarResolver.clear();
-				}
+				fragmentManager.popBackStack();
+				if (toolbarResolver != null)
+					toolbarResolver.updateIcon();
 			} else {
 				exit();
 			}

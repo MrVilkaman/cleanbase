@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="NoGenerate" pattern="!file:*intermediates*/&amp;&amp;!file:*generated*/&amp;&amp;!lib:*..*" />
+</component>

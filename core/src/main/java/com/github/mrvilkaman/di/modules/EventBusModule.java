@@ -21,7 +21,6 @@ public class EventBusModule {
 	@Provides
 	@Singleton
 	public Bus provideBus(){
-		// TODO: 25.12.16 mode to global setting
 		RxBus.Logger logger = CleanBaseSettings.rxBusLogs() ? message -> Log.d(TAG, message) : null;
 		return AndroidRxBus.create(logger);
 	}
