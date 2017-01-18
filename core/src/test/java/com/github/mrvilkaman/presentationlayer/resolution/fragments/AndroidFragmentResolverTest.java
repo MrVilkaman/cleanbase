@@ -86,7 +86,7 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 		// Arrange
 
 		// Act
-		boolean b = resolver.onBackPressed();
+		boolean b = resolver.checkBackStack();
 
 		// Assert
 		Assert.assertFalse(b);
@@ -100,7 +100,7 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 		when(fragmentManager.findFragmentById(containerID)).thenReturn(mock);
 
 		// Act
-		boolean b = resolver.onBackPressed();
+		boolean b = resolver.checkBackStack();
 
 		// Assert
 		verify(fragmentManager,never()).popBackStackImmediate(anyString(),anyInt());
@@ -115,14 +115,29 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 		when(fragmentManager.findFragmentById(containerID)).thenReturn(mock);
 
 		// Act
-		boolean b = resolver.onBackPressed();
+		boolean b = resolver.checkBackStack();
 
 		// Assert
-		verify(fragmentManager).popBackStackImmediate(eq("qwer"),anyInt());
 		Assert.assertTrue(b);
 	}
 
-//	@Test
+	@Test
+	public void testPopBackStack() {
+		// Arrange
+		BaseFragment mock = mock(BaseFragment.class);
+		when(mock.getPreviousFragment()).thenReturn("qwer");
+		when(fragmentManager.findFragmentById(containerID)).thenReturn(mock);
+
+		// Act
+		resolver.popBackStack();
+		// Assert
+		verify(fragmentManager).popBackStackImmediate(eq("qwer"),anyInt());
+
+	}
+
+
+
+	//	@Test
 //	public void testShowFragment() {
 //		Assert.fail();
 //	}
