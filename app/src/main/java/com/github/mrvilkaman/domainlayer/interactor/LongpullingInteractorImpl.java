@@ -3,6 +3,7 @@ package com.github.mrvilkaman.domainlayer.interactor;
 import android.util.Log;
 
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
+import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 
 import java.util.UUID;
@@ -15,17 +16,20 @@ import rx.subscriptions.CompositeSubscription;
 public class LongpullingInteractorImpl implements LongpullingInteractor {
 
 	private final SchedulersProvider schedulersProvider;
+	private final GlobalSubscriptionManager subscribtionManager;
 	private final CompositeSubscription subscription;
 
-	public LongpullingInteractorImpl(SchedulersProvider schedulersProvider) {
+	public LongpullingInteractorImpl(SchedulersProvider schedulersProvider,
+									 GlobalSubscriptionManager subscribtionManager) {
 		this.schedulersProvider = schedulersProvider;
+		this.subscribtionManager = subscribtionManager;
 
 		subscription = new CompositeSubscription();
 	}
 
 	@Override
 	public void doWorkWithError() {
-		Log.d("QWER","doWorkWithError start");
+		Log.d("QWER", "doWorkWithError start");
 		Observable<String> qwer = Observable.error(new NotFoundException())
 				.delay(3, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
@@ -33,12 +37,14 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 				.doOnNext(s -> Log.d("QWER", "doWorkWithError doOnNext"))
 				.subscribeOn(schedulersProvider.io())
 				.doOnError(throwable -> Log.d("QWER", "doWorkWithError doOnError"));
-		subscription.add(qwer.subscribe());
+		subscribtionManager.subscribe(qwer);
+
 	}
 
 	@Override
 	public void doWork() {
-		Log.d("QWER","doWork start");
+		Log.d("QWER", "doWork start");
+
 		Observable<String> qwer = Observable.just("")
 				.delay(3, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
@@ -46,12 +52,12 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 				.doOnNext(s -> Log.d("QWER", "doWork doOnNext"))
 				.subscribeOn(schedulersProvider.io())
 				.doOnCompleted(() -> Log.d("QWER", "doWork doOnCompleted"));
-		subscription.add(qwer.subscribe());
+		subscribtionManager.subscribe(qwer);
 	}
 
 	@Override
 	public Observable<String> doWorkWithResponse() {
-		Log.d("QWER","doWorkWithResponse start");
+		Log.d("QWER", "doWorkWithResponse start");
 		PublishSubject<String> subject = PublishSubject.create();
 		Observable<String> qwer = Observable.just("")
 				.delay(3, TimeUnit.SECONDS)
@@ -59,9 +65,6 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWorkWithResponse doOnNext"))
 				.subscribeOn(schedulersProvider.io());
-
-		subscription.add(qwer.subscribe(subject));
-
-		return subject.asObservable();
+		return subscribtionManager.subscribeWithResult(qwer);
 	}
 }
