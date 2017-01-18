@@ -50,6 +50,7 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
+	@Deprecated
 	protected final <T> void subscribeUI(Observable<T> observable) {
 		subscribeUI(observable, new ViewSubscriber<>());
 	}

@@ -3,7 +3,7 @@ package com.github.mrvilkaman.domainlayer.interactor;
 import rx.Observable;
 
 public interface LongpullingInteractor {
-	void doWorkWithError();
+	Observable<String> doWorkWithError();
 
 	void doWork();
 

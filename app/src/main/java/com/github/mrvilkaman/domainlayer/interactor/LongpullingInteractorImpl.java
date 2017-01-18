@@ -28,16 +28,16 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 	}
 
 	@Override
-	public void doWorkWithError() {
+	public Observable<String> doWorkWithError() {
 		Log.d("QWER", "doWorkWithError start");
-		Observable<String> qwer = Observable.error(new NotFoundException())
+		Observable<String> qwer = Observable.just("")
 				.delay(3, TimeUnit.SECONDS)
-				.map(o -> UUID.randomUUID()
-						.toString())
+				.flatMap(s -> Observable.error(new NotFoundException()))
+				.map(o -> "")
 				.doOnNext(s -> Log.d("QWER", "doWorkWithError doOnNext"))
 				.subscribeOn(schedulersProvider.io())
 				.doOnError(throwable -> Log.d("QWER", "doWorkWithError doOnError"));
-		subscribtionManager.subscribe(qwer);
+		return subscribtionManager.subscribeWithResult(qwer);
 
 	}
 
