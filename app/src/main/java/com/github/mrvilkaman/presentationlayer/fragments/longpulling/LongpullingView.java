@@ -4,4 +4,5 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 
 public interface LongpullingView extends BaseView {
 
+	void showString(String s);
 }
