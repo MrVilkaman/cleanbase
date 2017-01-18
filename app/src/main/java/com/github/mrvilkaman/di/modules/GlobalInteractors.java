@@ -24,9 +24,4 @@ public class GlobalInteractors {
 		return new LongpullingInteractorImpl(schedulersProvider, subscribtionManager);
 	}
 
-	@Provides
-	@Singleton
-	public GlobalSubscriptionManager getGlobalSubscriptionManager(Bus bus) {
-		return new GlobalSubscriptionManagerImpl(bus);
-	}
 }
