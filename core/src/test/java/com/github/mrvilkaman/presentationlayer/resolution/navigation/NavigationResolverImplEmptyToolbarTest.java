@@ -86,7 +86,7 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue() {
 		// Arrange
 		when(fragmentManager.processBackFragment()).thenReturn(true);
-		when(fragmentManager.onBackPressed()).thenReturn(true);
+		when(fragmentManager.checkBackStack()).thenReturn(true);
 
 		// Act
 		resolver.onBackPressed();
@@ -95,7 +95,7 @@ public class NavigationResolverImplEmptyToolbarTest extends BaseTestCase {
 		InOrder inOrder = Mockito.inOrder(fragmentManager, activityView, resolver);
 		inOrder.verify(fragmentManager).processBackFragment();
 		inOrder.verify(activityView).hideProgress();
-		inOrder.verify(fragmentManager).onBackPressed();
+		inOrder.verify(fragmentManager).checkBackStack();
 
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		inOrder.verify(resolver, never()).exit();

@@ -14,6 +14,8 @@ public interface FragmentResolver {
 
 	void startActivityForResult(Intent intent, int requestCode);
 
+	void popBackStack();
+
 	void showFragment(BaseFragment fragment);
 
 	void showRootFragment(BaseFragment fragment);
@@ -22,7 +24,7 @@ public interface FragmentResolver {
 
 	boolean processBackFragment();
 
-	boolean onBackPressed();
+	boolean checkBackStack();
 
 	void setTargetFragmentCode(int code);
 

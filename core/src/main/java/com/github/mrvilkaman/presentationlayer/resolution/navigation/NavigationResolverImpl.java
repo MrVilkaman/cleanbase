@@ -82,11 +82,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 	public void onBackPressed() {
 		if (fragmentManager.processBackFragment()) {
 			activityView.hideProgress();
-			if (fragmentManager.onBackPressed()) {
-				if (toolbarResolver != null) {
-					toolbarResolver.updateIcon();
+			if (fragmentManager.checkBackStack()) {
+				if (toolbarResolver != null)
 					toolbarResolver.clear();
-				}
+				fragmentManager.popBackStack();
+				if (toolbarResolver != null)
+					toolbarResolver.updateIcon();
 			} else {
 				exit();
 			}

@@ -139,10 +139,14 @@ public class NavigationResolverImplTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue() {
+	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue_withOutToolbar() {
 		// Arrange
+		resolver = Mockito.spy(
+				new NavigationResolverImpl(currentActivity, fragmentManager, drawerHelper,
+						null, uiResolver, activityView, () -> baseFragment));
+
 		when(fragmentManager.processBackFragment()).thenReturn(true);
-		when(fragmentManager.onBackPressed()).thenReturn(true);
+		when(fragmentManager.checkBackStack()).thenReturn(true);
 
 		// Act
 		resolver.onBackPressed();
@@ -155,11 +159,43 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(activityView)
 				.hideProgress();
 		inOrder.verify(fragmentManager)
-				.onBackPressed();
-		inOrder.verify(toolbarResolver)
+				.checkBackStack();
+		inOrder.verify(toolbarResolver,never())
+				.clear();
+		inOrder.verify(fragmentManager).popBackStack();
+		inOrder.verify(toolbarResolver,never())
 				.updateIcon();
+
+
+		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
+		inOrder.verify(resolver, never())
+				.exit();
+	}
+
+	@Test
+	public void testOnBackPressed_noFragmentActionHasOnBackPressedTrue() {
+		// Arrange
+		when(fragmentManager.processBackFragment()).thenReturn(true);
+		when(fragmentManager.checkBackStack()).thenReturn(true);
+
+		// Act
+		resolver.onBackPressed();
+
+		// Assert
+		InOrder inOrder = Mockito.inOrder(fragmentManager, activityView, resolver,
+				toolbarResolver);
+		inOrder.verify(fragmentManager)
+				.processBackFragment();
+		inOrder.verify(activityView)
+				.hideProgress();
+		inOrder.verify(fragmentManager)
+				.checkBackStack();
 		inOrder.verify(toolbarResolver)
 				.clear();
+		inOrder.verify(fragmentManager).popBackStack();
+		inOrder.verify(toolbarResolver)
+				.updateIcon();
+
 
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		inOrder.verify(resolver, never())
@@ -171,7 +207,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		// Arrange
 		NavigationResolverImpl resolver = (NavigationResolverImpl) this.resolver;
 		when(fragmentManager.processBackFragment()).thenReturn(true);
-		when(fragmentManager.onBackPressed()).thenReturn(false);
+		when(fragmentManager.checkBackStack()).thenReturn(false);
 		doNothing().when(resolver)
 				.exit();
 
@@ -186,7 +222,7 @@ public class NavigationResolverImplTest extends BaseTestCase {
 		inOrder.verify(activityView)
 				.hideProgress();
 		inOrder.verify(fragmentManager)
-				.onBackPressed();
+				.checkBackStack();
 		inOrder.verify(toolbarResolver, never())
 				.updateIcon();
 		inOrder.verify(toolbarResolver,never())

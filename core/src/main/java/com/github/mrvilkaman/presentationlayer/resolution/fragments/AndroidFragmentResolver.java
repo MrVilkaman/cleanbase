@@ -39,15 +39,16 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	}
 
 	@Override
-	public boolean onBackPressed() {
+	public boolean checkBackStack() {
 		BaseFragment current = (BaseFragment) getCurrentFragment();
-		if (current != null && current.getPreviousFragment() != null) {
-			fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			return true;
-		} else {
-			return false;
-		}
+		return current != null && current.getPreviousFragment() != null;
+	}
+
+	@Override
+	public void popBackStack() {
+		BaseFragment current = (BaseFragment) getCurrentFragment();
+		fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
+				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	}
 
 	@Override
