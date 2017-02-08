@@ -24,8 +24,10 @@ public class ToolbarMenuHelper {
 	}
 
 	public void onOptionsItemSelected(MenuItem item) {
-		runnableMap.get(item.getItemId())
-				.run();
+		Runnable runnable = runnableMap.get(item.getItemId());
+		if (runnable != null)
+			runnable.run();
+
 	}
 
 	public void showIcon(int res, Runnable callback) {
