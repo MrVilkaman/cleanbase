@@ -53,7 +53,6 @@ public class DPUtilsImpl implements DPUtils {
 				HttpException httpException = (HttpException) throwable;
 				Response response = httpException.response();
 				return Observable.error(getThrowable(response.message(), response.code(), throwable));
-//					RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
 			} else if (throwable instanceof IOException) {
 				return Observable.error(new InternetConnectionException());
 			} else if (throwable instanceof NetworkErrorException) {
