@@ -59,10 +59,9 @@
 
 	</RelativeLayout>
 
-	<!-- The main content view -->
 	<FrameLayout
 		android:id="@+id/menu_frame"
-		android:layout_width="match_parent"
+		android:layout_width="@dimen/cleanbase_drawer_layout_width"
 		android:layout_height="match_parent"
 		android:layout_gravity="left"/>
 
