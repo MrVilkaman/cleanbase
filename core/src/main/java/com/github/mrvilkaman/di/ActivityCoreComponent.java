@@ -1,25 +1,16 @@
 package com.github.mrvilkaman.di;
 
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.github.mrvilkaman.dev.LeakCanaryProxy;
-import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
-import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
-import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 
-public interface ActivityCoreComponent {
-
-	SchedulersProvider getSchedulersProvider();
-
-	Context getContext();
+public interface ActivityCoreComponent extends CoreCommonComponent {
 
 	UIResolver getUIResolver();
 
@@ -30,11 +21,5 @@ public interface ActivityCoreComponent {
 	@Nullable IToolbar getIToolbar();
 
 	BaseActivityView provideBaseActivityView();
-
-	ImageLoader provideImageLoader();
-
-	StorageUtils storageUtils();
-
-	@Nullable LeakCanaryProxy provideLeakCanaryProxy();
 
 }
