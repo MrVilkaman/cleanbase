@@ -72,6 +72,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 				return false;
 			});
 		}
+
+		View parent = view.findViewById(R.id.parent);
+		if (parent != null) {
+			parent.setOnTouchListener((v, event) -> {
+				hideKeyboard();
+				return true;
+			});
+		}
+
 	}
 
 	@Override
@@ -177,6 +186,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Override
 	public boolean isTaskRoot() {
-		throw Exceptions.propagate(new NoSuchMethodException("Plaese dont use this method in fragment!"));
+		throw Exceptions.propagate(
+				new NoSuchMethodException("Plaese dont use this method in fragment!"));
 	}
 }

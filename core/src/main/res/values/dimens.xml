@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<dimen name="wrap_content">-2dp</dimen>
+	<dimen name="match_parent">-1dp</dimen>
+
 	<dimen name="cleanbase_toolbar_text_size">16dp</dimen>
+	<dimen name="cleanbase_drawer_layout_width">@dimen/match_parent</dimen>
 </resources>

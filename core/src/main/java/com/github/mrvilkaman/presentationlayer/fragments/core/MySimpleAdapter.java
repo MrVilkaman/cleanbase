@@ -19,7 +19,7 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T, MySimpleAdapter.V
 		return android.R.layout.simple_list_item_1;
 	}
 
-	static class ViewHolder<T> extends BaseVH<T> {
+	public final static class ViewHolder<T> extends BaseVH<T> {
 
 		TextView textView;
 		ViewHolder(View view) {
@@ -30,7 +30,6 @@ public class MySimpleAdapter<T> extends MySimpleBaseAdapter<T, MySimpleAdapter.V
 		@Override
 		public void bind(T item, int position, Set<String> payloads) {
 			textView.setText(item.toString());
-
 		}
 	}
 }

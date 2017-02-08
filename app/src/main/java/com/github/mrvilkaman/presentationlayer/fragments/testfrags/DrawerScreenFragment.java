@@ -11,6 +11,7 @@ import com.github.mrvilkaman.presentationlayer.activities.single.SingleActivity;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.longpulling.LongpullingScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.photomaker.PhotoMakerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 
@@ -63,6 +64,12 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 	void onClickSingleActivity(){
 		getNavigation().startActivityForResult(new Intent(getContext(),SingleActivity.class),-1);
 	}
+
+	@OnClick(R.id.menu_6)
+	void onClick6(){
+		getNavigation().showRootFragment(LongpullingScreenFragment.open());
+	}
+
 
 	@Override
 	public void daggerInject() {

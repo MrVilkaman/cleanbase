@@ -10,7 +10,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
 
 public class LongpullingInteractorImpl implements LongpullingInteractor {
@@ -58,7 +57,6 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 	@Override
 	public Observable<String> doWorkWithResponse() {
 		Log.d("QWER", "doWorkWithResponse start");
-		PublishSubject<String> subject = PublishSubject.create();
 		Observable<String> qwer = Observable.just("")
 				.delay(3, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()

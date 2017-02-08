@@ -37,12 +37,14 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 	private C activityComponent;
 
 	private ProgressWheel progress;
+	private InputMethodManager inputMethodManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
+		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		View rootView = getRootView();
 		if (drawerHelper != null) {
 			drawerHelper.init(rootView);
@@ -106,12 +108,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 
 	@Override
 	public void hideKeyboard() {
-		InputMethodManager imm =
-				(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		View view = getCurrentFocus();
 		if (view != null) {
 			view.clearFocus();
-			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+			inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
 	}
 

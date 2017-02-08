@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,8 +78,6 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
 		T item = getItem(position);
 		holder.itemView.setTag(item);
-		//// TODO: 11.01.17 removeit!
-		holder.bind(item);
 		if (payloads.isEmpty()) {
 			holder.bind(item, position, Collections.EMPTY_SET);
 		}else{
