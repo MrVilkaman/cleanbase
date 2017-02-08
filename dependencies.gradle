@@ -9,7 +9,7 @@ ext.versions = [
         buildTools        : '25.0.2',
 
 
-        dagger            : '2.8',
+        dagger            : '2.9',
         rxJava            : '1.2.5',
         rxandroid         : '1.2.1',
         rxBus             : '2.0.0',
