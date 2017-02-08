@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 				.commonActivityModule(commonActivityModule)
 				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
 				.toolbarModule(new ToolbarModule(rootView, this))
-				.drawerModule(new DrawerModule(DrawerScreenFragment::open))
+				.drawerModule(new DrawerModule(DrawerScreenFragment::open,false))
 				.build();
 	}
 

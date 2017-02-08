@@ -18,6 +18,7 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	private DrawerLayout drawerLayout;
 	private View contentView;
 	private final ProvideFragmentCallback callback;
+	private boolean needDrawerSlide = true;
 
 
 	public LeftDrawerHelperImpl(ProvideFragmentCallback callback) {
@@ -74,9 +75,11 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 
 	@Override
 	public void onDrawerSlide(View drawerView, float slideOffset) {
-		if (drawerView.getId() == getDrawerContentFrame()) {
-			float moveFactor = drawerView.getWidth() * slideOffset;
-			contentView.setTranslationX(moveFactor);
+		if (needDrawerSlide) {
+			if (drawerView.getId() == getDrawerContentFrame()) {
+				float moveFactor = drawerView.getWidth() * slideOffset;
+				contentView.setTranslationX(moveFactor);
+			}
 		}
 	}
 
@@ -96,5 +99,9 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	@Override
 	public void onDrawerStateChanged(int newState) {
 
+	}
+
+	public void setNeedDrawerSlide(boolean needDrawerSlide) {
+		this.needDrawerSlide = needDrawerSlide;
 	}
 }
