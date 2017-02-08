@@ -2,6 +2,6 @@
 <resources>
 	<dimen name="image_height">128dp</dimen>
 
-	<dimen name="cleanbase_drawer_layout_width">160dp</dimen>
+	<dimen name="cleanbase_drawer_layout_width">320dp</dimen>
 
 </resources>

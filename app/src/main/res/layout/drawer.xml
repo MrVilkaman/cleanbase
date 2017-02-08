@@ -40,6 +40,11 @@
 			android:id="@+id/menu_single_activity"
 			style="@style/LeftMenuItem"
 			android:text="Активити без фрагмента"/>
+
+		<RadioButton
+			android:id="@+id/menu_6"
+			style="@style/LeftMenuItem"
+			android:text="Долгие запросы"/>
 	</RadioGroup>
 
 </LinearLayout>
