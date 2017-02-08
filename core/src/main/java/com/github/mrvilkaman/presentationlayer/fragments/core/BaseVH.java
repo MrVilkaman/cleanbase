@@ -18,15 +18,8 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 		ButterKnife.bind(this, view);
 	}
 
-	@Deprecated
-	public BaseVH(View view, ItemListener<Type> onClick) {
-		this(view);
-		ButterKnife.bind(this, view);
-		setListeners(view, onClick, null);
-	}
-
 	@SuppressWarnings("unchecked")
-	final void setListeners(View view, ItemListener<Type> onClick,
+	public void setListeners(View view, ItemListener<Type> onClick,
 							ItemListener<Type> onLongClick) {
 		view.setOnClickListener(view1 -> {
 			if (onClick != null) {
@@ -41,11 +34,6 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 			}
 			return false;
 		});
-	}
-
-	@Deprecated
-	public void bind(Type item){
-
 	}
 
 	public abstract void bind(Type item, int position, Set<String> payloads);
