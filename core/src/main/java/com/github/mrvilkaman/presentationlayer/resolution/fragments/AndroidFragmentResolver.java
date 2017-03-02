@@ -32,9 +32,9 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 	@Override
 	public boolean processBackFragment() {
-		Fragment fragmentById = getCurrentFragment();
-		OnBackPressedListener listener = fragmentById instanceof OnBackPressedListener ?
-				((OnBackPressedListener) fragmentById) : null;
+		Fragment fragment = getCurrentFragment();
+		OnBackPressedListener listener = fragment instanceof OnBackPressedListener ?
+				((OnBackPressedListener) fragment) : null;
 		return listener == null || !listener.onBackPressed();
 	}
 

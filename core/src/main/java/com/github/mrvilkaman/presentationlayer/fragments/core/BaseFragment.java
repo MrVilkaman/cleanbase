@@ -141,10 +141,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return true;
 	}
 
+	@Override
 	public String getPreviousFragment() {
 		return previousFragment;
 	}
 
+	@Override
 	public void setPreviousFragment(String previousFragment) {
 		this.previousFragment = previousFragment;
 	}
@@ -166,6 +168,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		throwableResolver.handleError(throwable);
 	}
 
+	@Override
 	public String getName() {
 		return getClass().getSimpleName();
 	}
