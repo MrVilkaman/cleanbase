@@ -5,13 +5,12 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
+import com.github.mrvilkaman.testsutils.BaseTestCase;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.github.mrvilkaman.testsutils.BaseTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
@@ -75,7 +74,7 @@ public class LeftDrawerHelperImplTest extends BaseTestCase {
 	@Test
 	public void testGetDrawerFragment() {
 		// Act
-		BaseFragment drawerFragment = drawerHelper.getDrawerFragment();
+		IBaseScreen drawerFragment = drawerHelper.getDrawerFragment();
 
 		// Assert
 		Assert.assertNull(drawerFragment);

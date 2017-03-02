@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.exceptions.Exceptions;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements IBaseScreen {
@@ -114,7 +113,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return false;
 	}
 
-	@Override
+//	@Override
 	public void hideKeyboard() {
 		activityView.hideKeyboard();
 	}
@@ -187,9 +186,4 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return navigationResolver;
 	}
 
-	@Override
-	public boolean isTaskRoot() {
-		throw Exceptions.propagate(
-				new NoSuchMethodException("Plaese dont use this method in fragment!"));
-	}
 }
