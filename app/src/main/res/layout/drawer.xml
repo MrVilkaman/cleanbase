@@ -50,6 +50,10 @@
 			android:id="@+id/menu_7"
 			style="@style/LeftMenuItem"
 			android:text="Legacy фрагмент"/>
+		<RadioButton
+			android:id="@+id/menu_8"
+			style="@style/LeftMenuItem"
+			android:text="Кастомные View"/>
 	</RadioGroup>
 
 </LinearLayout>

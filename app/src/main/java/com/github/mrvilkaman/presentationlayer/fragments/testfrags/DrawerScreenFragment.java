@@ -10,6 +10,8 @@ import com.github.mrvilkaman.presentationlayer.activities.SecondActivity;
 import com.github.mrvilkaman.presentationlayer.activities.single.SingleActivity;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer
+		.CustomViewContainerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.legacyfragment.LegacyFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.longpulling.LongpullingScreenFragment;
@@ -74,6 +76,11 @@ public class DrawerScreenFragment extends BaseFragment<FragBasePresenter> implem
 	@OnClick(R.id.menu_7)
 	void onClick7(){
 		getNavigation().showRootFragment(new LegacyFragment());
+	}
+
+	@OnClick(R.id.menu_8)
+	void onClick8(){
+		getNavigation().showRootFragment(CustomViewContainerScreenFragment.open());
 	}
 
 
