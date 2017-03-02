@@ -24,7 +24,7 @@ import butterknife.Unbinder;
 import rx.exceptions.Exceptions;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
-		implements BaseView, BaseActivityView, OnBackPressedListener {
+		implements IBaseScreen {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener;
 
@@ -20,7 +20,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	private FragmentResolverCallback callback;
 	private FragmentManager fragmentManager;
 	private int containerID;
-	private BaseFragment nextFragment;
+	private IBaseScreen nextScreen;
 	private boolean backStack;
 	private boolean isRoot;
 	private int code = EMTPY_CODE;
@@ -40,43 +40,45 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 	@Override
 	public boolean checkBackStack() {
-		BaseFragment current = (BaseFragment) getCurrentFragment();
+		IBaseScreen current = getCurrentScreen();
 		return current != null && current.getPreviousFragment() != null;
 	}
 
 	@Override
 	public void popBackStack() {
-		BaseFragment current = (BaseFragment) getCurrentFragment();
+		IBaseScreen current = getCurrentScreen();
 		fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
 				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	}
 
 	@Override
-	public void showFragment(BaseFragment fragment) {
+	public void showFragment(IBaseScreen fragment) {
 		loadRootFragment(fragment, true, false);
 	}
 
 	@Override
-	public void showRootFragment(BaseFragment fragment) {
+	public void showRootFragment(IBaseScreen fragment) {
 		loadRootFragment(fragment, false, true);
 	}
 
 	@Override
-	public void showFragmentWithoutBackStack(BaseFragment fragment) {
+	public void showFragmentWithoutBackStack(IBaseScreen fragment) {
 		loadRootFragment(fragment, false, false);
 	}
 
-	public void loadRootFragment(BaseFragment fragment, boolean addToBackStack, boolean isRoot) {
-		nextFragment = fragment;
+	private void loadRootFragment(IBaseScreen screen, boolean addToBackStack, boolean isRoot) {
+
+		nextScreen = screen;
 		backStack = addToBackStack;
 		this.isRoot = isRoot;
-		if (nextFragment != null) {
-			BaseFragment currentFragment = (BaseFragment) getCurrentFragment();
+		if (nextScreen != null) {
+			Fragment currentFragment = getCurrentFragment();
+			IBaseScreen currentScreen = getCurrentScreen();
 			boolean hasOldFragment = currentFragment != null;
 			boolean isAlreadyLoaded = false;
 			if (hasOldFragment) {
-				isAlreadyLoaded = currentFragment.getName()
-						.equals(nextFragment.getName());
+				isAlreadyLoaded = currentScreen.getName()
+						.equals(nextScreen.getName());
 			}
 
 			if (!(hasOldFragment && isAlreadyLoaded)) {
@@ -84,12 +86,13 @@ public class AndroidFragmentResolver implements FragmentResolver {
 			}
 
 			if (code != EMTPY_CODE) {
+				Fragment nextFragment = (Fragment) this.nextScreen;
 				nextFragment.setTargetFragment(currentFragment, code);
 				code = EMTPY_CODE;
 			}
-			doTransaction(currentFragment);
+			doTransaction(currentFragment,currentScreen);
 		}
-		nextFragment = null;
+		nextScreen = null;
 	}
 
 	public void updateToolbar() {
@@ -108,29 +111,29 @@ public class AndroidFragmentResolver implements FragmentResolver {
 		}
 	}
 
-	void doTransaction(BaseFragment currentFragment) {
+	void doTransaction(Fragment currentFragment,IBaseScreen screen) {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		boolean b = backStack || this.isRoot;
-		fragmentTransaction.replace(containerID, nextFragment, nextFragment.getName());
+		fragmentTransaction.replace(containerID, (Fragment) nextScreen, nextScreen.getName());
 		if (currentFragment != null && !this.isRoot) {
-			addChildFragment(currentFragment, fragmentTransaction,
-					b ? currentFragment.getName() : currentFragment.getPreviousFragment());
+			addChildFragment(screen, fragmentTransaction,
+					b ? screen.getName() : screen.getPreviousFragment());
 		} else {
 			addRootFragment(fragmentTransaction);
 		}
 		fragmentTransaction.commit();
 	}
 
-	void addChildFragment(BaseFragment currentFragment, FragmentTransaction fragmentTransaction,
+	void addChildFragment(IBaseScreen screen,FragmentTransaction fragmentTransaction,
 						  String previousFragment) {
-		nextFragment.setPreviousFragment(previousFragment);
-		fragmentTransaction.addToBackStack(currentFragment.getName());
+		nextScreen.setPreviousFragment(previousFragment);
+		fragmentTransaction.addToBackStack(screen.getName());
 	}
 
 	void addRootFragment(FragmentTransaction fragmentTransaction) {
 		if (callback != null)
 			callback.onRootFragment();
-		nextFragment.setPreviousFragment(null);
+		nextScreen.setPreviousFragment(null);
 		fragmentTransaction.addToBackStack(null);
 	}
 
@@ -149,6 +152,11 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 	private Fragment getCurrentFragment() {
 		return fragmentManager.findFragmentById(containerID);
+	}
+
+
+	private IBaseScreen getCurrentScreen() {
+		return (IBaseScreen) fragmentManager.findFragmentById(containerID);
 	}
 
 	void clearBackStack() {
@@ -193,7 +201,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 	@Override
 	public boolean isRootScreen() {
-		BaseFragment current = (BaseFragment) getCurrentFragment();
+		IBaseScreen current = getCurrentScreen();
 		boolean b = current != null && current.getPreviousFragment() != null;
 
 		boolean b1 = getFragments().isEmpty();
@@ -207,13 +215,13 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	}
 
 	@Override
-	public void addStaticFragment(int contentId, BaseFragment fragment) {
+	public void addStaticFragment(int contentId, IBaseScreen fragment) {
 		if (!(fragment instanceof ISingletonFragment)) {
 			throw new IllegalArgumentException("fragment must impliment ISingletonFragment");
 		}
 
 		fragmentManager.beginTransaction()
-				.add(contentId, fragment)
+				.add(contentId, (Fragment) fragment)
 				.commit();
 	}
 }

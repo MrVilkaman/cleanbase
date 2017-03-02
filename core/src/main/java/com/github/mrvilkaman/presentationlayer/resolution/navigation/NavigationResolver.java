@@ -3,17 +3,17 @@ package com.github.mrvilkaman.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 
 public interface NavigationResolver {
 
 	void init();
 
-	void showFragment(BaseFragment fragment);
+	void showFragment(IBaseScreen fragment);
 
-	void showRootFragment(BaseFragment fragment);
+	void showRootFragment(IBaseScreen fragment);
 
-	void showFragmentWithoutBackStack(BaseFragment fragment);
+	void showFragmentWithoutBackStack(IBaseScreen fragment);
 
 	void setTargetFragment(int cropPhotoRequestCode);
 
