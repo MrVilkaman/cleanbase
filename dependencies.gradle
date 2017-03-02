@@ -10,7 +10,7 @@ ext.versions = [
 
 
         dagger            : '2.9',
-        rxJava            : '1.2.6',
+        rxJava            : '1.2.7',
         rxandroid         : '1.2.1',
         rxBus             : '2.0.0',
 
@@ -21,7 +21,7 @@ ext.versions = [
         picasso2okhttp3downloader: '1.1.0',
 
         retrofit          : '1.9.0',
-        retrofit2         : '2.1.0',
+        retrofit2         : '2.2.0',
 
         okhttp            : '2.5.0',
         okHttp3           : '3.6.0',
