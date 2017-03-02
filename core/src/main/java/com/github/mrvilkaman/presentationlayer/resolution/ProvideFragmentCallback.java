@@ -1,9 +1,9 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 
 public interface ProvideFragmentCallback {
 
-	BaseFragment createFragment();
+	IBaseScreen createFragment();
 }

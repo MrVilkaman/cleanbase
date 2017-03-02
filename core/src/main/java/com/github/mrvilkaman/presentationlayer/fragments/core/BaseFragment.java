@@ -21,10 +21,9 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.exceptions.Exceptions;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
-		implements BaseView, BaseActivityView, OnBackPressedListener {
+		implements IBaseScreen {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
@@ -114,7 +113,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return false;
 	}
 
-	@Override
+//	@Override
 	public void hideKeyboard() {
 		activityView.hideKeyboard();
 	}
@@ -141,10 +140,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return true;
 	}
 
+	@Override
 	public String getPreviousFragment() {
 		return previousFragment;
 	}
 
+	@Override
 	public void setPreviousFragment(String previousFragment) {
 		this.previousFragment = previousFragment;
 	}
@@ -166,6 +167,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		throwableResolver.handleError(throwable);
 	}
 
+	@Override
 	public String getName() {
 		return getClass().getSimpleName();
 	}
@@ -184,9 +186,4 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return navigationResolver;
 	}
 
-	@Override
-	public boolean isTaskRoot() {
-		throw Exceptions.propagate(
-				new NoSuchMethodException("Plaese dont use this method in fragment!"));
-	}
 }

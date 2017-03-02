@@ -4,7 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 
 public interface LeftDrawerHelper {
 
@@ -26,7 +26,7 @@ public interface LeftDrawerHelper {
 
 	boolean hasDrawer();
 
-	BaseFragment getDrawerFragment();
+	IBaseScreen getDrawerFragment();
 
 	interface LeftDrawerHelperCallback {
 		void onClose();

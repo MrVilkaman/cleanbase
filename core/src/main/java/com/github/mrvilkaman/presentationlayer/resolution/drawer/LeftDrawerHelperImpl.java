@@ -6,8 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
 
 public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
@@ -48,7 +47,7 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	}
 
 	@Override
-	public BaseFragment getDrawerFragment(){
+	public IBaseScreen getDrawerFragment(){
 		return callback.createFragment();
 	}
 
