@@ -20,6 +20,14 @@ public class MyCustomPresenter extends BasePresenter<MyCustomView> {
 	}
 
 	public void loadValues() {
-		subscribeUI(Observable.just(true).delay(4, TimeUnit.SECONDS), new LoadSubscriber<>());
+		subscribeUI(Observable.just(true).delay(4, TimeUnit.SECONDS), new LoadSubscriber<MyCustomView,Boolean>(){
+
+
+			@Override
+			public void onNext(Boolean item) {
+				super.onNext(item);
+				view().changeText();
+			}
+		});
 	}
 }

@@ -16,7 +16,7 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 		implements CustomViewContainerView {
 
 	@BindView(R.id.custom_views) MyCustomWidget customWidget;
-	@Inject MyCustomPresenter presenter;
+	@Inject MyCustomPresenter customWidgetPresenter;
 
 	public static CustomViewContainerScreenFragment open() {
 		return new CustomViewContainerScreenFragment();
@@ -29,8 +29,7 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-		customWidget.setPresenter(presenter);
-		attachPresenter(presenter);
+		attachCustomView(customWidget, customWidgetPresenter);
 	}
 
 	@Override

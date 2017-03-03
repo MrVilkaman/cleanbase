@@ -204,4 +204,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return navigationResolver;
 	}
 
+	protected void attachCustomView(BaseCustomView customWidget,BasePresenter presenter) {
+		customWidget.setPresenter(presenter);
+		presenter.onViewAttached();
+		presenters.add(presenter);
+		customWidget.setParrentView(this);
+	}
+
 }
