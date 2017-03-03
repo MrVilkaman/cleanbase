@@ -12,9 +12,8 @@ import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
 public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayout
 		implements BaseView {
 
-
 	private View progressBar;
-	private BaseView parrentView;
+	private BaseView parentView;
 
 	private P presenter;
 
@@ -44,16 +43,12 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 
 	protected abstract int getLayoutId();
 
-	public void setParrentView(BaseView view) {
-		parrentView = view;
-	}
-
 	@Override
 	public void hideProgress() {
 		if (progressBar != null) {
 			UIUtils.changeVisibility(progressBar, false);
 		} else {
-			parrentView.hideProgress();
+			parentView.hideProgress();
 		}
 	}
 
@@ -62,21 +57,24 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		if (progressBar != null) {
 			UIUtils.changeVisibility(progressBar, true);
 		} else {
-			parrentView.showProgress();
+			parentView.showProgress();
 		}
 	}
 
 	@Override
 	public void handleError(Throwable throwable) {
-		parrentView.handleError(throwable);
+		parentView.handleError(throwable);
 	}
 
 	public P getPresenter() {
 		return presenter;
 	}
 
-	public void setPresenter(P presenter) {
+	@SuppressWarnings("unchecked")
+	public void bind(P presenter, BaseView view) {
 		this.presenter = presenter;
+		parentView = view;
 		presenter.setView(this);
 	}
+
 }
