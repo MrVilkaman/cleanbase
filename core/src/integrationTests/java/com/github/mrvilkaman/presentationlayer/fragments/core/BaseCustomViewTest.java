@@ -121,6 +121,33 @@ public class BaseCustomViewTest extends BaseTestCase {
 		Mockito.verify(parentView).handleError(eq(throwable));
 	}
 
+
+	@Test
+	public void testWithOutPresenter_HideProgress_fromParent() throws Exception {
+		// Arrange
+		customView = new CustomView(context, null);
+		customView.bind(null, parentView);
+
+		// Act
+		customView.hideProgress();
+
+		// Assert
+		Mockito.verify(parentView).hideProgress();
+	}
+
+	@Test
+	public void testWithOutPresenter_ShowProgress_fromParent() throws Exception {
+		// Arrange
+		customView = new CustomView(context, null);
+		customView.bind(null, parentView);
+
+		// Act
+		customView.showProgress();
+
+		// Assert
+		Mockito.verify(parentView).showProgress();
+	}
+
 	public class CustomView extends BaseCustomView {
 
 		public CustomView(Context context, AttributeSet attrs) {

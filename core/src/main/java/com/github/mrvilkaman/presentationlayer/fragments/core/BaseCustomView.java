@@ -74,7 +74,8 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 	public void bind(P presenter, BaseView view) {
 		this.presenter = presenter;
 		parentView = view;
-		presenter.setView(this);
+		if (presenter != null)
+			presenter.setView(this);
 	}
 
 }
