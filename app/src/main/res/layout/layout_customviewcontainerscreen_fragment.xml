@@ -5,7 +5,8 @@
 	android:layout_height="match_parent"
 	android:layout_gravity="center">
 
-	<com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.MyCustomVIew
+	<com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.MyCustomWidget
+		android:id="@+id/custom_views"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 

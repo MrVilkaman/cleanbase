@@ -9,7 +9,8 @@ import android.widget.EditText;
  */
 public class UIUtils {
 
-	private UIUtils(){}
+	private UIUtils() {
+	}
 
 	public static String asString(EditText view) {
 		if (view == null)
@@ -22,6 +23,7 @@ public class UIUtils {
 	}
 
 	public static void changeVisibility(View view, boolean show) {
-		view.setVisibility(show ? View.VISIBLE : View.GONE);
+		if (view != null)
+			view.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 }

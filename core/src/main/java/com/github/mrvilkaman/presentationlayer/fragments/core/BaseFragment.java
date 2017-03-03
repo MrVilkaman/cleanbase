@@ -17,6 +17,9 @@ import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -34,8 +37,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject public P relationPresenter;
 	@Inject @Nullable public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
-
 	View progressBar;
+	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
 	private Unbinder bind;
 
@@ -53,14 +56,19 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 			bind = ButterKnife.bind(this, view);
 			initView(view);
 			P presenter = getPresenter();
-			presenter.setView(this);
-			presenter.onViewAttached();
+			attachPresenter(presenter);
 			onCreateView(view, savedInstanceState);
 		}
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
 		}
 		return view;
+	}
+
+	protected void attachPresenter(BasePresenter presenter) {
+		presenter.setView(this);
+		presenter.onViewAttached();
+		presenters.add(presenter);
 	}
 
 	private void initView(View view) {
@@ -97,9 +105,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		if (bind != null) {
 			bind.unbind();
 		}
-		P presenter = getPresenter();
-		presenter.onViewDetached();
-		presenter.setView(null);
+		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =
 				getComponent(ActivityCoreComponent.class).provideLeakCanaryProxy();
@@ -108,12 +114,24 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		}
 	}
 
+	private void detachPresenters() {
+		for (int i = presenters.size() - 1; i >= 0; i--) {
+			detachPresenter(presenters.get(i));
+			presenters.remove(i);
+		}
+	}
+
+	protected void detachPresenter(BasePresenter presenter) {
+		presenter.onViewDetached();
+		presenter.setView(null);
+	}
+
 	@Override
 	public boolean onBackPressed() {
 		return false;
 	}
 
-//	@Override
+	//	@Override
 	public void hideKeyboard() {
 		activityView.hideKeyboard();
 	}

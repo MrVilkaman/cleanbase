@@ -3,38 +3,28 @@ package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 
 import com.github.mrvilkaman.R;
+import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
-import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
 
-public class MyCustomVIew extends BaseCustomView {
+public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements MyCustomView {
 
-	private View wheelView;
 	private Button button;
 
-	public MyCustomVIew(Context context, AttributeSet attrs) {
+	public MyCustomWidget(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public MyCustomVIew(Context context, AttributeSet attrs, int defStyleAttr) {
+	public MyCustomWidget(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 	}
 
 	@Override
 	protected void onViewCreate() {
 		button = (Button) findViewById(R.id.button);
-		wheelView = findViewById(R.id.progress_wheel);
-
-		button.setOnClickListener(v -> {
-			if (wheelView.getVisibility() == View.GONE) {
-				showProgress();
-			} else {
-				hideProgress();
-			}
-		});
+		button.setOnClickListener(v -> getPresenter().loadValues());
 	}
 
 	@Override
@@ -44,12 +34,13 @@ public class MyCustomVIew extends BaseCustomView {
 
 	@Override
 	public void hideProgress() {
-		UIUtils.changeVisibility(wheelView, false);
+		super.hideProgress();
+		button.setEnabled(true);
 	}
 
 	@Override
 	public void showProgress() {
-		UIUtils.changeVisibility(wheelView, true);
+		super.showProgress();
+		button.setEnabled(false);
 	}
-
 }

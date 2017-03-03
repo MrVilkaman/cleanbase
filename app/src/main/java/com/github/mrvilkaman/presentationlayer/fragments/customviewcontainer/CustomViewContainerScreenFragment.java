@@ -8,9 +8,15 @@ import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+
 public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewContainerPresenter>
 		implements CustomViewContainerView {
 
+	@BindView(R.id.custom_views) MyCustomWidget customWidget;
+	@Inject MyCustomPresenter presenter;
 
 	public static CustomViewContainerScreenFragment open() {
 		return new CustomViewContainerScreenFragment();
@@ -23,7 +29,8 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-
+		customWidget.setPresenter(presenter);
+		attachPresenter(presenter);
 	}
 
 	@Override
