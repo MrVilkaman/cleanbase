@@ -37,7 +37,7 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 	}
 
 	protected int getProgressWheelId() {
-		return R.id.progress_wheel;
+		return R.id.progress_wheel_widget;
 	}
 
 	protected abstract void onViewCreate(View inflate);

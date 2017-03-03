@@ -20,7 +20,7 @@ public class MyCustomPresenter extends BasePresenter<MyCustomView> {
 	}
 
 	public void loadValues() {
-		subscribeUI(Observable.just(true).delay(4, TimeUnit.SECONDS), new LoadSubscriber<MyCustomView,Boolean>(){
+		subscribeUI(Observable.just(true).delay(2, TimeUnit.SECONDS), new LoadSubscriber<MyCustomView,Boolean>(){
 
 
 			@Override

@@ -11,6 +11,7 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewContainerPresenter>
 		implements CustomViewContainerView {
@@ -30,6 +31,11 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 		attachCustomView(customWidget, customWidgetPresenter);
+	}
+
+	@OnClick(R.id.customviewscontainter_button)
+	void onClick(){
+		getPresenter().doWork();
 	}
 
 	@Override

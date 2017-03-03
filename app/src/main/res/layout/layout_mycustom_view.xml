@@ -27,7 +27,7 @@
 	</LinearLayout>
 
 	<com.pnikosis.materialishprogress.ProgressWheel
-		android:id="@+id/progress_wheel2"
+		android:id="@id/progress_wheel_widget"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
