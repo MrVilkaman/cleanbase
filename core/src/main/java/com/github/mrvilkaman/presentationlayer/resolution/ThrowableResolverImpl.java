@@ -8,6 +8,7 @@ import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
 import com.github.mrvilkaman.domainlayer.exceptions.ServerNotAvailableException;
 import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 public class ThrowableResolverImpl implements ThrowableResolver {
 
@@ -25,7 +26,11 @@ public class ThrowableResolverImpl implements ThrowableResolver {
 		} else if (throwable instanceof ServerNotAvailableException) {
 			uiResolver.showMessage(R.string.dialog_server_notavailable_error);
 		} else if (throwable instanceof InternetConnectionException) {
-			uiResolver.showSnackbar(R.string.dialog_internet_error);
+			if (DevUtils.isSnackbarInTheClassPath()) {
+				uiResolver.showSnackbar(R.string.dialog_internet_error);
+			}else{
+				uiResolver.showToast(R.string.dialog_internet_error);
+			}
 		} else if (throwable instanceof NotFoundException) {
 			uiResolver.showMessage(R.string.dialog_default_404_error);
 		} else if (throwable instanceof UncheckedException) {

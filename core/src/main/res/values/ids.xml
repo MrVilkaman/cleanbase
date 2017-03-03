@@ -2,4 +2,5 @@
 <resources>
 	<item name="parent" type="id" />
 	<item name="progress_wheel_widget" type="id" />
+	<item name="snackbar_text" type="id" />
 </resources>
