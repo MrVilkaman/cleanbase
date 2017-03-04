@@ -15,7 +15,7 @@ public class DrawerEmptyModule {
 	@Provides
 	@PerActivity
 	@Nullable
-	public LeftDrawerHelper createLeftDrawerHelper() {
+	public static LeftDrawerHelper createLeftDrawerHelper() {
 		return null;
 	}
 

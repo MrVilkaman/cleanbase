@@ -16,14 +16,14 @@ public class ToolbarEmptyModule {
 	@Provides
 	@PerActivity
 	@Nullable
-	public ToolbarResolver getToolbarResolver() {
+	public static ToolbarResolver getToolbarResolver() {
 		return null;
 	}
 
 	@Provides
 	@PerActivity
 	@Nullable
-	public IToolbar getToolbar() {
+	public static IToolbar getToolbar() {
 		return null;
 	}
 }
