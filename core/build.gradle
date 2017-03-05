@@ -90,6 +90,7 @@ dependencies {
     compile libraries.rxBus
     compile libraries.rxBusAndroid
     compile libraries.rxJava
+    compile libraries.rxpermissions
 
     compile libraries.materialDialog
     compile libraries.materialProgress

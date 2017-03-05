@@ -1,4 +1,5 @@
 <resources>
 	<!--  GLOBAL  -->
 	<string name="app_name">Foo</string>
+	<string name="photo_gallary_denied">Доступ в галерее запрещен</string>
 </resources>
