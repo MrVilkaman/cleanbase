@@ -90,7 +90,7 @@ dependencies {
     compile libraries.rxBus
     compile libraries.rxBusAndroid
     compile libraries.rxJava
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
+    compile libraries.rxpermissions
 
     compile libraries.materialDialog
     compile libraries.materialProgress
