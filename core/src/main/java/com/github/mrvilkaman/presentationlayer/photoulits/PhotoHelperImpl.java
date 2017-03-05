@@ -8,15 +8,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
+import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
+import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-
-import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
-import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
-import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 public class PhotoHelperImpl implements PhotoHelper {
 
