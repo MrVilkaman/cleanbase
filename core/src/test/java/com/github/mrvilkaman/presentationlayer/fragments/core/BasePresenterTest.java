@@ -55,7 +55,7 @@ public class BasePresenterTest extends BaseTestCase {
 
 		presenter.setView(mockView);
 		// Act
-		presenter.subscribe(obs, subscriber);
+		presenter.subscribeUI(obs, subscriber);
 
 		// Assert
 		verify(subscriber).setView(mockView);
@@ -69,7 +69,7 @@ public class BasePresenterTest extends BaseTestCase {
 		presenter.setView(mockView);
 
 		// Act
-		presenter.subscribe(obs, subscriber);
+		presenter.subscribeUI(obs, subscriber);
 
 		// Assert
 		verify(subscriber).setView(mockView);
@@ -87,7 +87,7 @@ public class BasePresenterTest extends BaseTestCase {
 		presenter.onViewDetached();
 		presenter.onViewAttached();
 
-		presenter.subscribe(obs, subscriber);
+		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
 		obs.onCompleted();
 		obs.onNext("2");
@@ -106,7 +106,7 @@ public class BasePresenterTest extends BaseTestCase {
 		TestSubscriber<Object> subscriber = new TestSubscriber<>();
 
 		// Act
-		presenter.subscribe(obs, subscriber);
+		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
 		obs.onCompleted();
 
@@ -124,7 +124,7 @@ public class BasePresenterTest extends BaseTestCase {
 
 		// Act
 		presenter.onViewAttached();
-		presenter.subscribe(obs, subscriber);
+		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
 		presenter.onViewDetached();
 		obs.onNext("2");
@@ -175,7 +175,7 @@ public class BasePresenterTest extends BaseTestCase {
 		presenter.onViewAttached();
 		presenter.subscribeUI(obs, subscriber);
 		presenter.subscribeUI(obs2, subscriber2);
-		presenter.subscribe(obs3, subscriber3);
+		presenter.subscribeUI(obs3, subscriber3);
 		holders.onNext("1");
 		presenter.onViewDetached();
 		holders.onNext("2");

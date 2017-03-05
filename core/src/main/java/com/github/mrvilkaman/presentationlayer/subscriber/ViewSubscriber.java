@@ -5,7 +5,7 @@ import android.util.Log;
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
-import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 
 /**
@@ -21,14 +21,9 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 
 
 	public ViewSubscriber() {
-		string = CleanBaseSettings.needSubscribeLogs() ? AppUtils.getSubscriberStartStack() : "";
+		string = CleanBaseSettings.needSubscribeLogs() ? DevUtils.getSubscriberStartStack() : "";
 	}
 
-	@Deprecated
-	public ViewSubscriber(V view) {
-		this();
-		setView(view);
-	}
 
 	public void setView(V view) {
 		this.view = view;

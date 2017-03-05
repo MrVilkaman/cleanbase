@@ -17,7 +17,7 @@ public class DevModule {
 	@Provides
 	@Singleton
 	@Nullable
-	public LeakCanaryProxy provideLeakCanaryProxy() {
+	public static LeakCanaryProxy provideLeakCanaryProxy() {
 		return null;
 	}
 }

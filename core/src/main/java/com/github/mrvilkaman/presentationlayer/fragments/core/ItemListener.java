@@ -1,5 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
-public interface ItemListener<T> extends MySimpleBaseAdapter.OnClickListener<T> {
+import android.support.annotation.NonNull;
+
+public interface ItemListener<T> {
+	void click(@NonNull T category);
 }

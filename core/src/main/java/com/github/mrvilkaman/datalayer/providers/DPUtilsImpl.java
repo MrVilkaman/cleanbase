@@ -15,7 +15,7 @@ import com.github.mrvilkaman.domainlayer.providers.DPUtils;
 import java.io.IOException;
 
 import retrofit2.Response;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
 import rx.Observable;
 import rx.functions.Func1;
 
