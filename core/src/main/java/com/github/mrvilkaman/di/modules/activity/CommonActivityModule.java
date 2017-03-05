@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.github.mrvilkaman.datalayer.providers.PermissionManagerImpl;
 import com.github.mrvilkaman.di.PerActivity;
+import com.github.mrvilkaman.domainlayer.providers.PermissionManager;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -64,4 +66,11 @@ public class CommonActivityModule {
 	public BaseActivityView getBaseActivityView() {
 		return baseActivityView;
 	}
+
+	@Provides
+	@PerActivity
+	public PermissionManager getPermissionManager() {
+		return new PermissionManagerImpl(activity);
+	}
+
 }
