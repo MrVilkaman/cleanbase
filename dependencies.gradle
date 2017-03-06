@@ -1,38 +1,44 @@
 ext.versions = [
 
-        code                     : 1,
-        name                     : '0.1',
+        code             : 1,
+        name             : '0.1',
 
-        minSdk                   : 15,
-        targetSdk                : 25,
-        compileSdk               : 25,
-        buildTools               : '25.0.2',
+        minSdk           : 15,
+        targetSdk        : 25,
+        compileSdk       : 25,
+        buildTools       : '25.0.2',
 
-        dagger                   : '2.9',
-        rxBus                    : '2.0.0',
+        dagger           : '2.9',
+        rxBus            : '2.0.0',
 
-        supportLibs              : '25.1.0',
-        gcm                      : '8.4.0',
-        butterKnife              : '8.5.1',
+        supportLibs      : '25.1.0',
+        gcm              : '10.0.1',
+        butterKnife      : '8.5.1',
 
-        retrofit2                : '2.2.0',
+        retrofit2        : '2.2.0',
 
-        okHttp3                  : '3.6.0',
+        okHttp3          : '3.6.0',
 
-        storio                   : '1.12.0',
+        storio           : '1.12.3',
 
-        powermock                : '1.6.5',
-        robolectric              : '3.3',
-        assertJandroid           : '1.1.1',
-        supportTestRunner        : '0.5',
+        powermock        : '1.6.5',
+        robolectric      : '3.3',
+        assertJandroid   : '1.1.1',
+        supportTestRunner: '0.5',
 
-        hamcrest                 : '1.3',
-        espresso                 : '2.2.1',//'2.2.2'
-        moxy                     : '0.4.2',
+        hamcrest         : '1.3',
+        espresso         : '2.2.1',//'2.2.2'
+        moxy             : '0.4.2',
+
+        papercut         : '0.0.4',
+        cleanbase        : '0.7',
 
 ]
 
 ext.libraries = [
+        cleanbase                 : "com.github.MrVilkaman.cleanbase:core:$versions.cleanbase",
+        cleanbaseTest             : "com.github.MrVilkaman.cleanbase:testutils:$versions.cleanbase",
+
         dagger                    : "com.google.dagger:dagger:$versions.dagger",
         daggerCompiler            : "com.google.dagger:dagger-compiler:$versions.dagger",
 
@@ -92,6 +98,9 @@ ext.libraries = [
         storioAnnotationsProcessor: "com.pushtorefresh.storio:sqlite-annotations-processor:$versions.storio",
 
         slidinguppanel            : "com.sothree.slidinguppanel:library:3.3.0",
+
+        papercutAnnotations       : "ie.stu:papercut-annotations:$versions.papercut",
+        papercutCompiler          : "ie.stu:papercut-compiler:$versions.papercut",
 
         // Test dependencies
         junit                     : "junit:junit:4.12",
