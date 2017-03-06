@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.photomaker;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,10 +9,12 @@ import android.widget.ImageView;
 
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
+import com.github.mrvilkaman.domainlayer.providers.PermissionManager;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 import com.github.mrvilkaman.presentationlayer.photoulits.PhotoHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
+import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
 
 import javax.inject.Inject;
 
@@ -23,6 +26,7 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@Inject PhotoHelper photoHelper;
 	@Inject ImageLoader imageLoader;
+	@Inject PermissionManager permissionManager;
 
 	@BindView(R.id.image_view) ImageView imageView;
 
@@ -53,13 +57,26 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 
 	@OnClick(R.id.photo_gallary)
 	void onClickGallary() {
-		photoHelper.openGallery(CropImageFragment.MODE.FREE);
+
+		permissionManager.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(state -> {
+			switch (state) {
+				case ALLOWED:
+					photoHelper.openGallery(CropImageFragment.MODE.FREE);
+					break;
+				case DENIED:
+				case NOT_ASK:
+					getUiResolver().showSnackbar(R.string.photo_gallary_denied,
+							R.string.cleanbase_setting_btn,
+							() -> UIUtils.openSettings(getNavigation(),
+									getContext().getPackageName()));
+					break;
+			}
+		});
 	}
 
 	@Override
 	public void showImage(String lastPath) {
-		imageLoader.loadFile(lastPath)
-				.into(imageView);
+		imageLoader.loadFile(lastPath).into(imageView);
 	}
 
 	@Override

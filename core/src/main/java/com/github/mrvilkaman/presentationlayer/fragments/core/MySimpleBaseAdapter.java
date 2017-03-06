@@ -36,13 +36,6 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return holder;
 	}
 
-	@Deprecated
-	@NonNull
-	protected VH getHolder(View view, ItemListener<T> onClick) {
-		return getHolder(view);
-	}
-
-	//	@NonNull
 	protected abstract VH getHolder(View view);
 
 	protected abstract int getLayoutId();
@@ -59,8 +52,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	public void setItems(@NonNull List<T> items) {
 		DiffUtil.Callback cb = getDiffCallback(this.items, items);
 		if (cb != null) {
-			DiffUtil.calculateDiff(cb)
-					.dispatchUpdatesTo(this);
+			DiffUtil.calculateDiff(cb).dispatchUpdatesTo(this);
 			this.items = new ArrayList<>(items);
 		} else {
 			this.items = new ArrayList<>(items);
@@ -80,7 +72,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		holder.itemView.setTag(item);
 		if (payloads.isEmpty()) {
 			holder.bind(item, position, Collections.EMPTY_SET);
-		}else{
+		} else {
 			holder.bind(item, position, (Set<String>) payloads.get(0));
 		}
 	}
@@ -103,8 +95,4 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return null;
 	}
 
-	@Deprecated
-	public interface OnClickListener<T> {
-		void click(@NonNull T category);
-	}
 }

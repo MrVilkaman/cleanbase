@@ -1,7 +1,5 @@
 package com.github.mrvilkaman.presentationlayer.subscriber;
 
-import android.support.v4.media.MediaMetadataCompat;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
@@ -39,9 +37,9 @@ public class LoadSubscriberTest extends BaseTestCase {
 	}
 
 	@Test
-	@MediaMetadataCompat.RatingKey
 	public void testProgress_onSuccess_oldSignature() {
-		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>(view);
+		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
+		subscriber.setView(view);
 		subject.subscribe(subscriber);
 		subject.onCompleted();
 

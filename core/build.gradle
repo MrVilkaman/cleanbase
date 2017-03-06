@@ -59,6 +59,8 @@ android {
     }
 }
 
+
+
 configurations.all {
     resolutionStrategy {
         // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
@@ -75,23 +77,20 @@ dependencies {
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
     compile libraries.supportRecyclerView
-    compile libraries.supportDesign
+    provided libraries.supportDesign
 
     compile libraries.butterKnife
 
-    compile libraries.retrofit2
-    compile libraries.retrofit2rxjava
-    compile libraries.retrofit2gson
-    compile libraries.okHttp3
+    provided libraries.retrofit2
+    provided libraries.retrofit2rxjava
+    provided libraries.okHttpLoggingInterceptor
 
     // Developer tools (Developer Settings)
-    compile libraries.okHttpLoggingInterceptor
 
     compile libraries.rxBus
     compile libraries.rxBusAndroid
     compile libraries.rxJava
-    compile libraries.rxAndroid
-    compile libraries.rxBindingAppcompat
+    compile libraries.rxpermissions
 
     compile libraries.materialDialog
     compile libraries.materialProgress

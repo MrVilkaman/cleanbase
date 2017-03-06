@@ -26,8 +26,14 @@ public class BasePresenter<V extends BaseView> {
 	public final void setSchedulersProvider(SchedulersProvider schedulersProvider) {
 		this.schedulersProvider = schedulersProvider;
 	}
-	@Inject
+
+	@Deprecated
 	public final void setSchedulersProvider(UIResolver uiResolver) {
+		setUIResolver(uiResolver);
+	}
+
+	@Inject
+	public final void setUIResolver(UIResolver uiResolver) {
 		this.uiResolver = uiResolver;
 	}
 
@@ -50,17 +56,7 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
-	@Deprecated
-	protected final <T> void subscribeUI(Observable<T> observable) {
-		subscribeUI(observable, new ViewSubscriber<>());
-	}
-
 	@SuppressWarnings("unchecked")
-	@Deprecated
-	protected final <T> void subscribe(Observable<T> observable, Subscriber<T> subscriber) {
-		subscribeUI(observable,subscriber);
-	}
-
 	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
 		if (subscriber instanceof ViewSubscriber) {
 			ViewSubscriber viewSubscriber = (ViewSubscriber) subscriber;

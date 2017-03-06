@@ -3,24 +3,24 @@ package com.github.mrvilkaman.presentationlayer.resolution.fragments;
 
 import android.content.Intent;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 
 public interface FragmentResolver {
 
 
 	boolean hasFragment();
 
-	void addStaticFragment(int drawerContentFrame, BaseFragment drawerFragment);
+	void addStaticFragment(int drawerContentFrame, IBaseScreen drawerFragment);
 
 	void startActivityForResult(Intent intent, int requestCode);
 
 	void popBackStack();
 
-	void showFragment(BaseFragment fragment);
+	void showFragment(IBaseScreen fragment);
 
-	void showRootFragment(BaseFragment fragment);
+	void showRootFragment(IBaseScreen fragment);
 
-	void showFragmentWithoutBackStack(BaseFragment fragment);
+	void showFragmentWithoutBackStack(IBaseScreen fragment);
 
 	boolean processBackFragment();
 

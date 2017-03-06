@@ -13,4 +13,7 @@
 	<string name="toast_exit">Для выхода нажмите еще раз!</string>
 	<string name="cleanbase_crop_done">Готово</string>
 
+	<string name="cleanbase_setting_btn">Настройки</string>
+
+
 </resources>

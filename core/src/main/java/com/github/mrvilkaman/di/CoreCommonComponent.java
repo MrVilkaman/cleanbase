@@ -24,5 +24,6 @@ public interface CoreCommonComponent {
 
 	@Nullable
 	LeakCanaryProxy provideLeakCanaryProxy();
-
 }
+
+

@@ -11,8 +11,8 @@ import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
+import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.CustomViewContainerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
-import com.github.mrvilkaman.presentationlayer.fragments.testfrags.Frag1ScreenFragment;
 
 
 public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 		AppComponent appComponent = getComponent(AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, rootView, Frag1ScreenFragment::open);
+				new CommonActivityModule(this, this, rootView, CustomViewContainerScreenFragment::open);
 
 		return DaggerActivityComponent.builder()
 				.appComponent(appComponent)

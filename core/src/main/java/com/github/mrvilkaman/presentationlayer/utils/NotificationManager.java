@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.github.mrvilkaman.core.R;
 
-
+@Deprecated
 public class NotificationManager {
 
 	public static final long PUSH_VIBRO_TIMES_ON = 300L;
@@ -83,6 +83,7 @@ public class NotificationManager {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	protected Notification showNotification(NotificationCompat.Builder nb) {
 		Notification notification;
 		try {

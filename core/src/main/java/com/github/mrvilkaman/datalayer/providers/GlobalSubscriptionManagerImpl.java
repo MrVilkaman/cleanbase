@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
-import com.github.mrvilkaman.presentationlayer.utils.AppUtils;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import net.jokubasdargis.rxbus.Bus;
 
@@ -25,7 +25,7 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	@Override
 	public <T> void subscribe(Observable<T> qwer) {
 		String string =
-				CleanBaseSettings.needSubscribeLogs() ? AppUtils.getGlobalSubscriberStartStack() : "";
+				CleanBaseSettings.needSubscribeLogs() ? DevUtils.getGlobalSubscriberStartStack() : "";
 		subscription.add(qwer.subscribe(t -> Actions.empty(), throwable -> {
 			if (CleanBaseSettings.needSubscribeLogs()) {
 				Log.e("GlobalSubscription", "Start by:" + string, throwable);
@@ -37,8 +37,8 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	@Override
 	public <T> Observable<T> subscribeWithResult(Observable<T> qwer) {
 		String string =
-				CleanBaseSettings.needSubscribeLogs() ? AppUtils.getGlobalSubscriberStartStack() : "";
-		return Observable.create(subscriber -> {
+				CleanBaseSettings.needSubscribeLogs() ? DevUtils.getGlobalSubscriberStartStack() : "";
+		return Observable.unsafeCreate(subscriber -> {
 			subscription.add(qwer.subscribe((t) -> {
 				if (!subscriber.isUnsubscribed())
 					subscriber.onNext(t);

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -95,7 +95,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showFragment(BaseFragment fragment) {
+	public void showFragment(IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
 			if (toolbarResolver != null)
 				toolbarResolver.clear();
@@ -105,7 +105,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showRootFragment(BaseFragment fragment) {
+	public void showRootFragment(IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
 			if (toolbarResolver != null)
 				toolbarResolver.clear();
@@ -115,7 +115,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showFragmentWithoutBackStack(BaseFragment fragment) {
+	public void showFragmentWithoutBackStack(IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
 			if (toolbarResolver != null)
 				toolbarResolver.clear();

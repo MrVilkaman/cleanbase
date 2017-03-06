@@ -3,6 +3,7 @@ package com.github.mrvilkaman.di;
 
 import android.support.annotation.Nullable;
 
+import com.github.mrvilkaman.domainlayer.providers.PermissionManager;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
@@ -22,4 +23,5 @@ public interface ActivityCoreComponent extends CoreCommonComponent {
 
 	BaseActivityView provideBaseActivityView();
 
+	PermissionManager providePermissionManager();
 }
