@@ -2,7 +2,6 @@ package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.github.mrvilkaman.R;
@@ -45,9 +44,8 @@ public class CustomViewContainerScreenFragment
 	}
 
 	@Override
-	protected void injectMe(CustomViewContainerScreenComponent activityComponent) {
-		Log.d("QWER", "daggerInject");
-		activityComponent.inject(this);
+	protected void injectMe(CustomViewContainerScreenComponent screenComponent) {
+		screenComponent.inject(this);
 	}
 
 	@Override

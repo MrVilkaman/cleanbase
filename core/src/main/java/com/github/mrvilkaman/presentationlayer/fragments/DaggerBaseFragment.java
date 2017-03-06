@@ -1,9 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments;
 
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 
@@ -16,11 +13,6 @@ public abstract class DaggerBaseFragment<P extends BasePresenter,C> extends Base
 
 	public C getFragmentComponent() {
 		return fragmentComponent;
-	}
-
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override

@@ -20,18 +20,18 @@ import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
-public abstract class BaseActivity<C extends ActivityCoreComponent,P extends BasePresenter> extends AppCompatActivity
-		implements BaseActivityView,BaseView, IHasComponent<C> {
+public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
+		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C> {
 
 	@Nullable protected P presenter;
-
+	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject NavigationResolver navigationResolver;
 	@Inject ThrowableResolver throwableResolver;
-	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
@@ -133,8 +133,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 	}
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
+	// use DevUtils.getComponent(Object,Component.class)
 	public <T> T getComponent(Class<T> componentType) {
-		return componentType.cast(((IHasComponent<T>) CoreApp.get(this)).getComponent());
+		return DevUtils.getComponent(CoreApp.get(this), componentType);
 	}
 
 	@Override

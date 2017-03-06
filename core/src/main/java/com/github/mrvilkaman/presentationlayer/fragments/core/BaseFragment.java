@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
-import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +109,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =
-				getComponent(ActivityCoreComponent.class).provideLeakCanaryProxy();
+				DevUtils.getComponent(getActivity(),ActivityCoreComponent.class).provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
 			leakCanaryProxy.init();
 		}
@@ -193,8 +193,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@SuppressWarnings("unchecked")
 	//// TODO: 07.11.16 must return protected...
+	@Deprecated
 	public <T> T getComponent(Class<T> componentType) {
-		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
+		return DevUtils.getComponent(getActivity(),componentType);
 	}
 
 	public UIResolver getUiResolver() {

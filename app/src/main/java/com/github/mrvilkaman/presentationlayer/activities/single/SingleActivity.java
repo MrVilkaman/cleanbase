@@ -12,8 +12,10 @@ import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
+import com.github.mrvilkaman.presentationlayer.app.App;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import javax.inject.Inject;
 
@@ -36,7 +38,7 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 	@Override
 	protected SecondActivityComponent createComponent() {
 
-		AppComponent appComponent = getComponent(AppComponent.class);
+		AppComponent appComponent = DevUtils.getComponent(App.get(this),AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
 				new CommonActivityModule(this, this, rootView, () -> null);
