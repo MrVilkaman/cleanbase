@@ -11,9 +11,9 @@ import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 
-import java.util.UUID;
-
 public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements MyCustomView {
+
+	private FormatterForCustomView formatterForCustomView;
 
 	private Button button;
 	private TextView textView;
@@ -50,8 +50,12 @@ public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements
 		button.setEnabled(false);
 	}
 
+	public void setFormatterForCustomView(FormatterForCustomView formatterForCustomView) {
+		this.formatterForCustomView = formatterForCustomView;
+	}
+
 	@Override
 	public void changeText() {
-		textView.setText(UUID.randomUUID().toString());
+		textView.setText(formatterForCustomView.getString());
 	}
 }
