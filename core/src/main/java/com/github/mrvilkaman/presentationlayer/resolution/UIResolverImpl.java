@@ -73,10 +73,10 @@ public class UIResolverImpl implements UIResolver {
 
 	public void configSnackbar(Snackbar snackbar) {
 		View snackBarView = snackbar.getView();
-		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+		snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.cleanbase_snackbar_bgcolor));
 		TextView textView =
 				(TextView) snackBarView.findViewById(R.id.snackbar_text);
-		textView.setTextColor(ContextCompat.getColor(context, R.color.cleanbase_main_text_color));
+		textView.setTextColor(ContextCompat.getColor(context, R.color.cleanbase_snackbar_textcolor));
 		snackbar.show();
 	}
 
@@ -95,6 +95,7 @@ public class UIResolverImpl implements UIResolver {
 			return;
 		}
 		Snackbar snackbar = Snackbar.make(rootView, textId, Snackbar.LENGTH_LONG)
+				.setActionTextColor(ContextCompat.getColor(context, R.color.cleanbase_snackbar_actioncolor))
 				.setAction(actionId, v -> callback.run());
 		configSnackbar(snackbar);
 	}
