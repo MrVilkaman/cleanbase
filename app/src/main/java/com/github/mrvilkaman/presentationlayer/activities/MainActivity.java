@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 	}
 
 	@Override
-	protected void injectMe(ActivityComponent activityComponent) {
+	public void injectMe(ActivityComponent activityComponent) {
 		activityComponent.inject(this);
 	}
 

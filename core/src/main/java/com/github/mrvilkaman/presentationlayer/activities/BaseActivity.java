@@ -13,6 +13,7 @@ import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
+import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.app.CoreApp;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
@@ -26,7 +27,8 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import javax.inject.Inject;
 
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
-		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C> {
+		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
+		INeedInject<C> {
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
@@ -152,8 +154,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		activityComponent = createComponent();
 		injectMe(activityComponent);
 	}
-
-	protected abstract void injectMe(C activityComponent);
 
 	protected abstract C createComponent();
 

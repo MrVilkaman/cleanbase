@@ -192,8 +192,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@SuppressWarnings("unchecked")
-	//// TODO: 07.11.16 must return protected...
 	@Deprecated
+	// use DevUtils.getComponent(Object,Component.class)
 	public <T> T getComponent(Class<T> componentType) {
 		return DevUtils.getComponent(getActivity(),componentType);
 	}

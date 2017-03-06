@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
-import com.github.mrvilkaman.presentationlayer.fragments.DaggerBaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.core.DaggerBaseFragment;
 
 import javax.inject.Inject;
 
@@ -34,7 +34,6 @@ public class CustomViewContainerScreenFragment
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 		//		customWidget.setFormatterForCustomView(formatterForCustomView);
-		customWidget.inject(getFragmentComponent());
 		attachCustomView(customWidget, customWidgetPresenter);
 	}
 
@@ -44,7 +43,7 @@ public class CustomViewContainerScreenFragment
 	}
 
 	@Override
-	protected void injectMe(CustomViewContainerScreenComponent screenComponent) {
+	public void injectMe(CustomViewContainerScreenComponent screenComponent) {
 		screenComponent.inject(this);
 	}
 

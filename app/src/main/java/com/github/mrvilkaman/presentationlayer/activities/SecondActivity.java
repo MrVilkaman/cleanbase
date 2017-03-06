@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class SecondActivity extends BaseActivity<SecondActivityComponent, SecondActivityPresenter> {
 
 	@Override
-	protected void injectMe(SecondActivityComponent activityComponent) {
+	public void injectMe(SecondActivityComponent activityComponent) {
 		activityComponent.inject(this);
 	}
 

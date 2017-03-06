@@ -31,7 +31,7 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 	@BindView(R.id.single_some_text) TextView textView;
 
 	@Override
-	protected void injectMe(SecondActivityComponent activityComponent) {
+	public void injectMe(SecondActivityComponent activityComponent) {
 		activityComponent.inject(this);
 	}
 
