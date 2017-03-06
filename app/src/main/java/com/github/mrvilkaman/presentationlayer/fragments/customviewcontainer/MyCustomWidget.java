@@ -11,9 +11,11 @@ import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 
+import javax.inject.Inject;
+
 public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements MyCustomView {
 
-	private FormatterForCustomView formatterForCustomView;
+	@Inject FormatterForCustomView formatterForCustomView;
 
 	private Button button;
 	private TextView textView;
@@ -50,12 +52,12 @@ public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements
 		button.setEnabled(false);
 	}
 
-	public void setFormatterForCustomView(FormatterForCustomView formatterForCustomView) {
-		this.formatterForCustomView = formatterForCustomView;
-	}
-
 	@Override
 	public void changeText() {
 		textView.setText(formatterForCustomView.getString());
+	}
+
+	public void inject(CustomViewContainerScreenComponent build) {
+		build.inject(this);
 	}
 }

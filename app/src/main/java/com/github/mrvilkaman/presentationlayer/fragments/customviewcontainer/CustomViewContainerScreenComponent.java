@@ -4,18 +4,13 @@ import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.di.PerScreen;
 
 import dagger.Component;
-import dagger.Module;
 
 @PerScreen
-@Component(dependencies = ActivityComponent.class,
-		modules = {CustomViewContainerScreenComponent.CustomViewContainerScreenModule.class})
+@Component(dependencies = ActivityComponent.class)
 public interface CustomViewContainerScreenComponent {
 
 	void inject(CustomViewContainerScreenFragment fragment);
 
+	void inject(MyCustomWidget fragment);
 
-	@Module
-	class CustomViewContainerScreenModule {
-
-	}
 }

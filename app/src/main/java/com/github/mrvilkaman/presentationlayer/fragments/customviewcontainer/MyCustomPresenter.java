@@ -1,5 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
+import android.util.Log;
+
 import com.github.mrvilkaman.di.PerScreen;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
@@ -16,7 +18,7 @@ public class MyCustomPresenter extends BasePresenter<MyCustomView> {
 
 	@Inject
 	public MyCustomPresenter() {
-
+		Log.d("QWER","MyCustomPresenter");
 	}
 
 	public void loadValues() {

@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.github.mrvilkaman.R;
@@ -31,8 +32,8 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-		formatterForCustomView = new FormatterForCustomView();
-		customWidget.setFormatterForCustomView(formatterForCustomView);
+//		customWidget.setFormatterForCustomView(formatterForCustomView);
+		customWidget.inject(getBuild());
 		attachCustomView(customWidget, customWidgetPresenter);
 	}
 
@@ -43,11 +44,15 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 
 	@Override
 	public void daggerInject() {
-		ActivityComponent component = getComponent(ActivityComponent.class);
-		DaggerCustomViewContainerScreenComponent.builder()
-				.activityComponent(component)
-				.build()
-				.inject(this);
+		Log.d("QWER","daggerInject");
+
+		getBuild().inject(this);
+	}
+
+	public CustomViewContainerScreenComponent getBuild() {
+		return  DaggerCustomViewContainerScreenComponent.builder()
+				.activityComponent(getComponent(ActivityComponent.class))
+				.build();
 	}
 
 }

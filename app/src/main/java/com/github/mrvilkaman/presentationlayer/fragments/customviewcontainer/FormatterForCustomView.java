@@ -1,6 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
 
+import android.util.Log;
+
 import com.github.mrvilkaman.di.PerScreen;
 
 import java.util.UUID;
@@ -12,6 +14,7 @@ public class FormatterForCustomView {
 
 	@Inject
 	public FormatterForCustomView() {
+		Log.d("QWER","FormatterForCustomView");
 	}
 
 	public String getString(){
