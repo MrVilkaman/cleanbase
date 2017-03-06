@@ -15,4 +15,8 @@
 	<color name="cleanbase_progress_bg_color">#88000000</color>
 	<color name="cleanbase_progress_bar_color">@color/cleanbase_app_background</color>
 
+	<color name="cleanbase_snackbar_textcolor">#fff</color>
+	<color name="cleanbase_snackbar_bgcolor">@color/colorPrimary</color>
+	<color name="cleanbase_snackbar_actioncolor">@color/colorAccent</color>
+
 </resources>
