@@ -7,14 +7,16 @@ import android.view.View;
 
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.DaggerBaseFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewContainerPresenter>
+public class CustomViewContainerScreenFragment
+		extends DaggerBaseFragment<CustomViewContainerPresenter,
+		CustomViewContainerScreenComponent>
 		implements CustomViewContainerView {
 
 	@BindView(R.id.custom_views) MyCustomWidget customWidget;
@@ -32,27 +34,26 @@ public class CustomViewContainerScreenFragment extends BaseFragment<CustomViewCo
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-//		customWidget.setFormatterForCustomView(formatterForCustomView);
-		customWidget.inject(getBuild());
+		//		customWidget.setFormatterForCustomView(formatterForCustomView);
+		customWidget.inject(getFragmentComponent());
 		attachCustomView(customWidget, customWidgetPresenter);
 	}
 
 	@OnClick(R.id.customviewscontainter_button)
-	void onClick(){
+	void onClick() {
 		getPresenter().doWork();
 	}
 
 	@Override
-	public void daggerInject() {
-		Log.d("QWER","daggerInject");
-
-		getBuild().inject(this);
+	protected void injectMe(CustomViewContainerScreenComponent activityComponent) {
+		Log.d("QWER", "daggerInject");
+		activityComponent.inject(this);
 	}
 
-	public CustomViewContainerScreenComponent getBuild() {
-		return  DaggerCustomViewContainerScreenComponent.builder()
+	@Override
+	protected CustomViewContainerScreenComponent createComponent() {
+		return DaggerCustomViewContainerScreenComponent.builder()
 				.activityComponent(getComponent(ActivityComponent.class))
 				.build();
 	}
-
 }
