@@ -10,16 +10,19 @@ import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
+import com.github.mrvilkaman.presentationlayer.app.App;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
-import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.CustomViewContainerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer
+		.CustomViewContainerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 
 public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
 
 	@Override
 	protected ActivityComponent createComponent() {
-		AppComponent appComponent = getComponent(AppComponent.class);
+		AppComponent appComponent = DevUtils.getComponent(App.get(this),AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
 				new CommonActivityModule(this, this, rootView, CustomViewContainerScreenFragment::open);
@@ -34,7 +37,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 	}
 
 	@Override
-	protected void injectMe(ActivityComponent activityComponent) {
+	public void injectMe(ActivityComponent activityComponent) {
 		activityComponent.inject(this);
 	}
 

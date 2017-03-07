@@ -1,7 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
+import android.util.Log;
+
 import com.github.mrvilkaman.di.PerScreen;
-import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.subscriber.LoadSubscriber;
@@ -17,13 +18,12 @@ public class MyCustomPresenter extends BasePresenter<MyCustomView> {
 
 	@Inject
 	public MyCustomPresenter() {
-
+		Log.d("QWER","MyCustomPresenter");
 	}
 
 	public void loadValues() {
 		subscribeUI(Observable.just(true)
-						.delay(2, TimeUnit.SECONDS)
-						.flatMap(aBoolean -> Observable.error(new InternetConnectionException())),
+						.delay(2, TimeUnit.SECONDS),
 				new LoadSubscriber<MyCustomView, Boolean>() {
 					@Override
 					public void onNext(Boolean item) {

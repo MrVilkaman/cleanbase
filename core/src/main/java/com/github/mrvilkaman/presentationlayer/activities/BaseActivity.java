@@ -13,25 +13,26 @@ import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
-import com.github.mrvilkaman.presentationlayer.app.CoreApp;
+import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
-public abstract class BaseActivity<C extends ActivityCoreComponent,P extends BasePresenter> extends AppCompatActivity
-		implements BaseActivityView,BaseView, IHasComponent<C> {
+public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
+		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
+		INeedInject<C> {
 
 	@Nullable protected P presenter;
-
+	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject NavigationResolver navigationResolver;
 	@Inject ThrowableResolver throwableResolver;
-	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
@@ -134,7 +135,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<T> componentType) {
-		return componentType.cast(((IHasComponent<T>) CoreApp.get(this)).getComponent());
+		return DevUtils.getComponent(getApplicationContext(), componentType);
 	}
 
 	@Override
@@ -150,8 +151,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent,P extends Bas
 		activityComponent = createComponent();
 		injectMe(activityComponent);
 	}
-
-	protected abstract void injectMe(C activityComponent);
 
 	protected abstract C createComponent();
 
