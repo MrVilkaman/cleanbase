@@ -8,8 +8,6 @@ import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.DaggerBaseFragment;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -19,8 +17,6 @@ public class CustomViewContainerScreenFragment
 		implements CustomViewContainerView {
 
 	@BindView(R.id.custom_views) MyCustomWidget customWidget;
-	@Inject MyCustomPresenter customWidgetPresenter;
-	@Inject FormatterForCustomView formatterForCustomView;
 
 	public static CustomViewContainerScreenFragment open() {
 		return new CustomViewContainerScreenFragment();
@@ -33,8 +29,7 @@ public class CustomViewContainerScreenFragment
 
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
-		//		customWidget.setFormatterForCustomView(formatterForCustomView);
-		attachCustomView(customWidget, customWidgetPresenter);
+		attachCustomView(customWidget);
 	}
 
 	@OnClick(R.id.customviewscontainter_button)

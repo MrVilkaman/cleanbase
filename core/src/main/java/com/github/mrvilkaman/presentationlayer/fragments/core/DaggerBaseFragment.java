@@ -2,7 +2,6 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.di.INeedInject;
@@ -31,12 +30,12 @@ public abstract class DaggerBaseFragment<P extends BasePresenter, C> extends Bas
 	protected abstract C createComponent();
 
 	@SuppressWarnings("unchecked")
+
 	@Override
-	protected void attachCustomView(@NonNull BaseCustomView customWidget,
-									@Nullable BasePresenter presenter) {
+	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
 		if (customWidget instanceof INeedInject) {
 			((INeedInject) customWidget).injectMe(getComponent());
 		}
-		super.attachCustomView(customWidget, presenter);
+		super.attachCustomView(customWidget);
 	}
 }

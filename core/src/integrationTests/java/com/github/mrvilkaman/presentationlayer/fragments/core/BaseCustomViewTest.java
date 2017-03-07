@@ -49,7 +49,8 @@ public class BaseCustomViewTest extends BaseTestCase {
 
 	public void bind() {
 		customView = new CustomView(context, null);
-		customView.bind(presenter, parentView);
+		customView.presenter = presenter;
+		customView.bind(parentView);
 	}
 
 	@Test
@@ -125,8 +126,7 @@ public class BaseCustomViewTest extends BaseTestCase {
 	@Test
 	public void testWithOutPresenter_HideProgress_fromParent() throws Exception {
 		// Arrange
-		customView = new CustomView(context, null);
-		customView.bind(null, parentView);
+		bind();
 
 		// Act
 		customView.hideProgress();
@@ -139,7 +139,7 @@ public class BaseCustomViewTest extends BaseTestCase {
 	public void testWithOutPresenter_ShowProgress_fromParent() throws Exception {
 		// Arrange
 		customView = new CustomView(context, null);
-		customView.bind(null, parentView);
+		customView.bind(parentView);
 
 		// Act
 		customView.showProgress();
@@ -147,6 +147,7 @@ public class BaseCustomViewTest extends BaseTestCase {
 		// Assert
 		Mockito.verify(parentView).showProgress();
 	}
+
 
 	public class CustomView extends BaseCustomView {
 

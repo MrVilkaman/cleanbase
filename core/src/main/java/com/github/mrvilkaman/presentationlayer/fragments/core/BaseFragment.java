@@ -205,17 +205,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
-		attachCustomView(customWidget, null);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void attachCustomView(@NonNull BaseCustomView customWidget,
-									@Nullable BasePresenter presenter) {
-		customWidget.bind(presenter, this);
+		customWidget.bind(this);
+		BasePresenter presenter = customWidget.getPresenter();
 		if (presenter != null) {
 			presenter.onViewAttached();
 			presenters.add(presenter);
 		}
 	}
-
 }
