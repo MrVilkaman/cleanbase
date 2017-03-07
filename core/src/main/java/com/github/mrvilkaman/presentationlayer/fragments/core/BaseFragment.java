@@ -192,8 +192,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@SuppressWarnings("unchecked")
-	@Deprecated
-	// use DevUtils.getComponent(Object,Component.class)
 	public <T> T getComponent(Class<T> componentType) {
 		return DevUtils.getComponent(getActivity(),componentType);
 	}

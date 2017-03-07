@@ -14,7 +14,6 @@ import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.di.INeedInject;
-import com.github.mrvilkaman.presentationlayer.app.CoreApp;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -135,10 +134,8 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	}
 
 	@SuppressWarnings("unchecked")
-	@Deprecated
-	// use DevUtils.getComponent(Object,Component.class)
 	public <T> T getComponent(Class<T> componentType) {
-		return DevUtils.getComponent(CoreApp.get(this), componentType);
+		return DevUtils.getComponent(getApplicationContext(), componentType);
 	}
 
 	@Override
