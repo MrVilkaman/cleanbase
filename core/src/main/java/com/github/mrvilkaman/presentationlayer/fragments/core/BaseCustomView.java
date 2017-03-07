@@ -14,10 +14,9 @@ import javax.inject.Inject;
 public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayout
 		implements BaseView {
 
+	@Inject P presenter;
 	private View progressBar;
 	private BaseView parentView;
-
-	@Inject P presenter;
 
 	public BaseCustomView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -70,6 +69,10 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 
 	public P getPresenter() {
 		return presenter;
+	}
+
+	public <T> T getParentView(Class<T> tClass) {
+		return tClass.cast(parentView);
 	}
 
 	@SuppressWarnings("unchecked")
