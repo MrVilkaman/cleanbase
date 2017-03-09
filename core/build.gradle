@@ -83,7 +83,6 @@ dependencies {
 
     provided libraries.retrofit2
     provided libraries.retrofit2rxjava
-    provided libraries.okHttpLoggingInterceptor
 
     // Developer tools (Developer Settings)
 
@@ -98,6 +97,8 @@ dependencies {
     compile libraries.simplecropview
     compile libraries.picasso
     compile libraries.picassoOkhttp
+    compile libraries.okHttp3
+    compile libraries.okHttpLoggingInterceptor
 
 
     //tests

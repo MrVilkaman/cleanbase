@@ -10,21 +10,23 @@ import com.github.mrvilkaman.di.SecondActivityComponent;
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
+import com.github.mrvilkaman.presentationlayer.app.App;
 import com.github.mrvilkaman.presentationlayer.fragments.imageload.ImageloadScreenFragment;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import javax.inject.Inject;
 
 public class SecondActivity extends BaseActivity<SecondActivityComponent, SecondActivityPresenter> {
 
 	@Override
-	protected void injectMe(SecondActivityComponent activityComponent) {
+	public void injectMe(SecondActivityComponent activityComponent) {
 		activityComponent.inject(this);
 	}
 
 	@Override
 	protected SecondActivityComponent createComponent() {
 
-		AppComponent appComponent = getComponent(AppComponent.class);
+		AppComponent appComponent = DevUtils.getComponent(App.get(this),AppComponent.class);
 		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
 				new CommonActivityModule(this, this, rootView, ImageloadScreenFragment::open);

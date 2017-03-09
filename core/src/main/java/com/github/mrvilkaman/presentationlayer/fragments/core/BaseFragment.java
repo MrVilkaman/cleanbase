@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,12 +11,12 @@ import android.view.ViewGroup;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
-import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =
-				getComponent(ActivityCoreComponent.class).provideLeakCanaryProxy();
+				DevUtils.getComponent(getActivity(),ActivityCoreComponent.class).provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
 			leakCanaryProxy.init();
 		}
@@ -191,9 +192,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@SuppressWarnings("unchecked")
-	//// TODO: 07.11.16 must return protected...
 	public <T> T getComponent(Class<T> componentType) {
-		return componentType.cast(((IHasComponent<T>) getActivity()).getComponent());
+		return DevUtils.getComponent(getActivity(),componentType);
 	}
 
 	public UIResolver getUiResolver() {
@@ -204,11 +204,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return navigationResolver;
 	}
 
-	@SuppressWarnings("unchecked")
-	protected void attachCustomView(BaseCustomView customWidget,BasePresenter presenter) {
-		customWidget.bind(presenter,this);
-		presenter.onViewAttached();
-		presenters.add(presenter);
+	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
+		customWidget.bind(this);
+		BasePresenter presenter = customWidget.getPresenter();
+		if (presenter != null) {
+			presenter.onViewAttached();
+			presenters.add(presenter);
+		}
 	}
-
 }

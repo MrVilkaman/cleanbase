@@ -9,13 +9,14 @@ import android.widget.FrameLayout;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
 
+import javax.inject.Inject;
+
 public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayout
 		implements BaseView {
 
+	@Inject P presenter;
 	private View progressBar;
 	private BaseView parentView;
-
-	private P presenter;
 
 	public BaseCustomView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -70,9 +71,12 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		return presenter;
 	}
 
+	public <T> T getParentView(Class<T> tClass) {
+		return tClass.cast(parentView);
+	}
+
 	@SuppressWarnings("unchecked")
-	public void bind(P presenter, BaseView view) {
-		this.presenter = presenter;
+	public void bind(BaseView view) {
 		parentView = view;
 		if (presenter != null)
 			presenter.setView(this);

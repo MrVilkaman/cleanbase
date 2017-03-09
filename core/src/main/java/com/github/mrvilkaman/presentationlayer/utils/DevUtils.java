@@ -4,6 +4,8 @@ package com.github.mrvilkaman.presentationlayer.utils;
 import android.content.res.Resources;
 import android.os.Build;
 
+import com.github.mrvilkaman.di.IHasComponent;
+
 public class DevUtils {
 
 	public static boolean isSnackbarInTheClassPath() {
@@ -51,5 +53,11 @@ public class DevUtils {
 		return String.format("\n%s\n%s\n%s", stackTrace[i].toString(), stackTrace[i + 1].toString(),
 				stackTrace[i + 2].toString());
 
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public static  <T> T getComponent(Object obj,Class<T> componentType) {
+		return componentType.cast(((IHasComponent<T>) obj).getComponent());
 	}
 }
