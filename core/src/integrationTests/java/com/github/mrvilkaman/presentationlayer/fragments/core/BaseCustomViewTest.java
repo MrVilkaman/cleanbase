@@ -160,7 +160,7 @@ public class BaseCustomViewTest extends BaseTestCase {
 		}
 
 		@Override
-		protected void onViewCreate(View inflate) {
+		protected void onViewCreate(View inflate, Context context, AttributeSet attrs) {
 
 		}
 

@@ -31,7 +31,7 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		LayoutInflater mInflater =
 				(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View inflate = mInflater.inflate(getLayoutId(), this, false);
-		onViewCreate(inflate);
+		onViewCreate(inflate,context,attrs);
 		progressBar = inflate.findViewById(getProgressWheelId());
 		addView(inflate);
 	}
@@ -40,7 +40,7 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		return R.id.progress_wheel_widget;
 	}
 
-	protected abstract void onViewCreate(View inflate);
+	protected abstract void onViewCreate(View inflate, Context context, AttributeSet attrs);
 
 	protected abstract int getLayoutId();
 
