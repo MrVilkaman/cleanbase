@@ -30,7 +30,7 @@ public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements
 	}
 
 	@Override
-	protected void onViewCreate(View inflate) {
+	protected void onViewCreate(View inflate, Context context, AttributeSet attrs) {
 		button = (Button) inflate.findViewById(R.id.button);
 		textView = (TextView) inflate.findViewById(R.id.text);
 		button.setOnClickListener(v -> getPresenter().loadValues());
