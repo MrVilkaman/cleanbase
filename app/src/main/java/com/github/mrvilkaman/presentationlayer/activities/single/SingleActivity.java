@@ -49,7 +49,7 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 				.fragmentModule(new FragmentModule(getSupportFragmentManager(), getContainerID(),
 						resolver -> resolver.addStaticFragment(R.id.single_botton_content,
 								DrawerScreenFragment.open())))
-				.toolbarModule(new ToolbarModule(rootView, this))
+				.toolbarModule(new ToolbarModule(this))
 				.build();
 	}
 

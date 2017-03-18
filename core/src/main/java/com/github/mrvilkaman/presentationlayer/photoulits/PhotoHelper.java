@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 
+@SuppressWarnings("SameParameterValue")
 public interface PhotoHelper {
 
 	interface PhotoHelperCallback{

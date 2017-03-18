@@ -178,14 +178,12 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 		List<Fragment> fragments = getFragments();
 		FragmentTransaction trans = fragmentManager.beginTransaction();
-		for (Fragment fragment : fragments) {
-			trans.remove(fragment);
-		}
+		fragments.forEach(trans::remove);
 		trans.commit();
 	}
 
 	private List<Fragment> getFragments() {
-		List<Fragment> fragments = fragmentManager.getFragments();
+		@SuppressWarnings("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
 		if (fragments == null) {
 			return Collections.emptyList();
 		}

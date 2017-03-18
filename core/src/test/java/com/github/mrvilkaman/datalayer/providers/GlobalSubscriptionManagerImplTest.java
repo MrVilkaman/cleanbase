@@ -34,7 +34,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		PublishSubject<String> subject = PublishSubject.create();
 		TestSubscriber<String> client = new TestSubscriber<>();
 		Observable<String> stringObservable = subject.asObservable()
-				.doOnNext((t) -> client.onNext(t));
+				.doOnNext(client::onNext);
 
 		// Act
 		subject.onNext("qwer1");

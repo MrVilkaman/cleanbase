@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+@SuppressWarnings("unchecked")
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		implements IBaseScreen {
 
@@ -177,6 +178,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return relationPresenter;
 	}
 
+	@Nullable
 	public IToolbar getToolbar() {
 		return toolbar;
 	}

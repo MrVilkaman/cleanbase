@@ -42,8 +42,10 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 
 		activity.setSupportActionBar(toolbar);
 		supportActionBar = activity.getSupportActionBar();
-		supportActionBar.setHomeButtonEnabled(true);
-		supportActionBar.setDisplayHomeAsUpEnabled(true);
+		if (supportActionBar != null) {
+			supportActionBar.setHomeButtonEnabled(true);
+			supportActionBar.setDisplayHomeAsUpEnabled(true);
+		}
 		toolbar.setNavigationOnClickListener(v -> {
 			if (callback != null)
 				callback.onClickHome();

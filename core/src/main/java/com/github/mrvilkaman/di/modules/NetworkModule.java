@@ -32,9 +32,7 @@ public class NetworkModule {
 		}
 
 		List<Interceptor> networkInterceptors = provideOkHttpNetworkInterceptors();
-		for (Interceptor networkInterceptor : networkInterceptors) {
-			okHttpBuilder.addNetworkInterceptor(networkInterceptor);
-		}
+		networkInterceptors.forEach(okHttpBuilder::addNetworkInterceptor);
 
 		return okHttpBuilder.build();
 	}
@@ -50,6 +48,7 @@ public class NetworkModule {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private List<Interceptor> provideOkHttpNetworkInterceptors() {
 		return Collections.EMPTY_LIST;
 		//		return singletonList(new StethoInterceptor());

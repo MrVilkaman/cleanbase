@@ -35,7 +35,7 @@ public class SecondActivity extends BaseActivity<SecondActivityComponent, Second
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
 				.fragmentModule(new FragmentModule(getSupportFragmentManager(),getContainerID()))
-				.toolbarModule(new ToolbarModule(rootView, this))
+				.toolbarModule(new ToolbarModule(this))
 				.build();
 	}
 

@@ -38,23 +38,21 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	public <T> Observable<T> subscribeWithResult(Observable<T> qwer) {
 		String string =
 				CleanBaseSettings.needSubscribeLogs() ? DevUtils.getGlobalSubscriberStartStack() : "";
-		return Observable.unsafeCreate(subscriber -> {
-			subscription.add(qwer.subscribe((t) -> {
-				if (!subscriber.isUnsubscribed())
-					subscriber.onNext(t);
-			}, throwable -> {
-				if (subscriber.isUnsubscribed()) {
-					if (CleanBaseSettings.needSubscribeLogs()) {
-						Log.e("GlobalSubscription", "Start by:" + string, throwable);
-					}
-					bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
-				} else {
-					subscriber.onError(throwable);
+		return Observable.unsafeCreate(subscriber -> subscription.add(qwer.subscribe((t) -> {
+			if (!subscriber.isUnsubscribed())
+				subscriber.onNext(t);
+		}, throwable -> {
+			if (subscriber.isUnsubscribed()) {
+				if (CleanBaseSettings.needSubscribeLogs()) {
+					Log.e("GlobalSubscription", "Start by:" + string, throwable);
 				}
-			}, () -> {
-				if (!subscriber.isUnsubscribed())
-					subscriber.onCompleted();
-			}));
-		});
+				bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
+			} else {
+				subscriber.onError(throwable);
+			}
+		}, () -> {
+			if (!subscriber.isUnsubscribed())
+				subscriber.onCompleted();
+		})));
 	}
 }

@@ -202,9 +202,7 @@ public class BasePresenterTest extends BaseTestCase {
 		}
 
 		void assertIt() {
-			for (Holder holder : holders) {
-				holder.assertIt();
-			}
+			holders.forEach(Holder::assertIt);
 		}
 	}
 

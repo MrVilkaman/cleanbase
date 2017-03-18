@@ -11,7 +11,7 @@ public abstract class CoreApp<C extends AppCoreComponent> extends Application
 		implements IHasComponent<C> {
 
 
-	@NonNull protected C appComponent;
+	protected C appComponent;
 
 	@NonNull
 	public static CoreApp get(@NonNull Context context) {

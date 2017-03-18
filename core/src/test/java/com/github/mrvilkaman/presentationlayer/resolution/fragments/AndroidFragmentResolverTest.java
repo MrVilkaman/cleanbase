@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.resolution.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.when;
 
 
 @SuppressWarnings("ResourceType")
+@SuppressLint("CommitTransaction")
 public class AndroidFragmentResolverTest extends BaseTestCase {
 
 
@@ -188,11 +190,6 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 
 		// Assert
 		Assert.assertTrue(true); // no exceptions here
-	}
-
-	@Test
-	public void testSetCallback() {
-
 	}
 
 	@Test
