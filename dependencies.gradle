@@ -1,14 +1,14 @@
 ext.versions = [
 
-        minSdk            : 15,
-        targetSdk         : 22,
-        compileSdk        : 25,
-        buildTools        : '25.0.2',
+        minSdk           : 15,
+        targetSdk        : 22,
+        compileSdk       : 25,
+        buildTools       : '25.0.2',
 
         dagger           : '2.9',
         rxBus            : '2.0.0',
 
-        supportLibs      : '25.1.0',
+        supportLibs      : '25.2.0',
         gcm              : '10.0.1',
         butterKnife      : '8.5.1',
 
@@ -19,7 +19,7 @@ ext.versions = [
         storio           : '1.12.3',
 
         powermock        : '1.6.5',
-        robolectric      : '3.3',
+        robolectric      : '3.3.1',
         assertJandroid   : '1.1.1',
         supportTestRunner: '0.5',
 
@@ -28,8 +28,17 @@ ext.versions = [
         moxy             : '0.4.2',
 
         papercut         : '0.0.4',
+        leakcanary       : '1.5',
         cleanbase        : '0.7.3',
 
+]
+
+ext.gradlePlugins = [
+        gradleBuildPlugin: 'com.android.tools.build:gradle:2.3.0',
+        aptPlugin        : "com.neenbedankt.gradle.plugins:android-apt:1.8",
+        retrolambdaPlugin: "me.tatarka:gradle-retrolambda:3.6.0",
+        versionsPlugin   : 'com.github.ben-manes:gradle-versions-plugin:0.14.0',
+        dexcountPlugin   : 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.3',
 ]
 
 ext.libraries = [
@@ -119,4 +128,9 @@ ext.libraries = [
         powermockApi              : "org.powermock:powermock-api-mockito:$versions.powermock",
         powermockModulej4Rule     : "org.powermock:powermock-module-junit4-rule-agent:$versions.powermock",
         powermockModulej4         : "org.powermock:powermock-module-junit4:$versions.powermock",
+
+        leakcanary                : "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary",
+        leakcanaryNoOp            : "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+
+
 ]
