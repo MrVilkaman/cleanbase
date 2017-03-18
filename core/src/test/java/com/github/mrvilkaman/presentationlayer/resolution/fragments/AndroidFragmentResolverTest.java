@@ -13,6 +13,8 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.Tutils;
 
+import net.jokubasdargis.rxbus.Bus;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -37,10 +39,11 @@ public class AndroidFragmentResolverTest extends BaseTestCase {
 	private static final int containerID = 90;
 	@Mock FragmentManager fragmentManager;
 	private FragmentResolver resolver;
+	@Mock Bus bus;
 
 	@Override
 	public void init() {
-		resolver = new AndroidFragmentResolver(fragmentManager, containerID);
+		resolver = new AndroidFragmentResolver(fragmentManager, containerID,bus);
 	}
 
 	@Test

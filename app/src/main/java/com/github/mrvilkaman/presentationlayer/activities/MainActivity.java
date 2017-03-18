@@ -11,14 +11,14 @@ import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.app.App;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
-import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer
-		.CustomViewContainerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.CustomViewContainerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
+import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> {
+
+public class MainActivity extends BaseActivity<ActivityComponent,SecondActivityPresenter> {
 
 	@Override
 	protected ActivityComponent createComponent() {
@@ -43,6 +43,12 @@ public class MainActivity extends BaseActivity<ActivityComponent,BasePresenter> 
 
 	@Override
 	protected void afterOnCreate() {
+	}
+
+	@Override
+	@Inject
+	public void setPresenter(SecondActivityPresenter presenter) {
+		super.setPresenter(presenter);
 	}
 
 	protected int getActivityLayoutResourceID() {
