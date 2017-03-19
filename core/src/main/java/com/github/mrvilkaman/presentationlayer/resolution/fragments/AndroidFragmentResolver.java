@@ -178,7 +178,9 @@ public class AndroidFragmentResolver implements FragmentResolver {
 
 		List<Fragment> fragments = getFragments();
 		FragmentTransaction trans = fragmentManager.beginTransaction();
-		fragments.forEach(trans::remove);
+		for (Fragment fragment : fragments) {
+			trans.remove(fragment);
+		}
 		trans.commit();
 	}
 

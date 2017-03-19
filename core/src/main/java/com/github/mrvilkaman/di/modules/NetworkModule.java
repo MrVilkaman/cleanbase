@@ -32,7 +32,9 @@ public class NetworkModule {
 		}
 
 		List<Interceptor> networkInterceptors = provideOkHttpNetworkInterceptors();
-		networkInterceptors.forEach(okHttpBuilder::addNetworkInterceptor);
+		for (Interceptor networkInterceptor : networkInterceptors) {
+			okHttpBuilder.addNetworkInterceptor(networkInterceptor);
+		}
 
 		return okHttpBuilder.build();
 	}

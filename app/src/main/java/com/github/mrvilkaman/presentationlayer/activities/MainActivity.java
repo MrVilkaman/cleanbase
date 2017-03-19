@@ -1,7 +1,5 @@
 package com.github.mrvilkaman.presentationlayer.activities;
 
-import android.view.View;
-
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.di.AppComponent;
@@ -11,7 +9,7 @@ import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.app.App;
-import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.CustomViewContainerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.simplelist.SimpleListScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
@@ -23,10 +21,8 @@ public class MainActivity extends BaseActivity<ActivityComponent,SecondActivityP
 	@Override
 	protected ActivityComponent createComponent() {
 		AppComponent appComponent = DevUtils.getComponent(App.get(this),AppComponent.class);
-		View rootView = getRootView();
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, rootView, CustomViewContainerScreenFragment::open);
-
+				new CommonActivityModule(this, this, getRootView(), SimpleListScreenFragment::open);
 		return DaggerActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
