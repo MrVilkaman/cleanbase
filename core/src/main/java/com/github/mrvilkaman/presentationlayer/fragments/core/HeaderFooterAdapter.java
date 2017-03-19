@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
+import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 
 import java.util.List;
 

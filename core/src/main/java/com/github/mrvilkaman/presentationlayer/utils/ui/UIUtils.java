@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.presentationlayer.utils;
+package com.github.mrvilkaman.presentationlayer.utils.ui;
 
 import android.content.Intent;
 import android.net.Uri;

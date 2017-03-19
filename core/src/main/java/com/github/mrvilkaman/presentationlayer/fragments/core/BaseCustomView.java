@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
+import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 
 import javax.inject.Inject;
 
