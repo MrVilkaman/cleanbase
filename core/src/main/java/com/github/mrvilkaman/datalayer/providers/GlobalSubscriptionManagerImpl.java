@@ -63,17 +63,16 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@SuppressWarnings({"SuspiciousMethodCalls", "unchecked"})
 	@Override
-	public <T> Observable<T> createCached(String key, Observable<T> observable) {
-		Observable<T> o = objectObjectHashMap.get(key);
-		if (o == null) {
-			Observable<T> cache =
-					observable
-							.doOnTerminate(() -> objectObjectHashMap.remove(key)).cache()
-							.doOnUnsubscribe(() -> objectObjectHashMap.remove(key));
+	public <T> Observable<T> createCached(String key, Observable<T> source) {
+		Observable<T> observable = objectObjectHashMap.get(key);
+		if (observable == null) {
+			Observable<T> cache = source.doOnTerminate(() -> objectObjectHashMap.remove(key))
+					.cache()
+					.doOnUnsubscribe(() -> objectObjectHashMap.remove(key));
 			objectObjectHashMap.put(key, cache);
-			o = cache;
+			observable = cache;
 		}
 
-		return o;
+		return observable;
 	}
 }
