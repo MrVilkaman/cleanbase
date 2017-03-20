@@ -50,6 +50,7 @@ public class NetworkModule {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private List<Interceptor> provideOkHttpNetworkInterceptors() {
 		return Collections.EMPTY_LIST;
 		//		return singletonList(new StethoInterceptor());

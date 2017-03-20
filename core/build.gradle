@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
 apply from: '../jacoco.gradle'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.getkeepsafe.dexcount'
 
@@ -73,7 +72,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     compile libraries.dagger
-    apt libraries.daggerCompiler
+    annotationProcessor libraries.daggerCompiler
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
     compile libraries.supportRecyclerView

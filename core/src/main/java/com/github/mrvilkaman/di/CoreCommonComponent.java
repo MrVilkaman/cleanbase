@@ -10,6 +10,8 @@ import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
+import net.jokubasdargis.rxbus.Bus;
+
 public interface CoreCommonComponent {
 
 	SchedulersProvider getSchedulersProvider();
@@ -24,6 +26,8 @@ public interface CoreCommonComponent {
 
 	@Nullable
 	LeakCanaryProxy provideLeakCanaryProxy();
+
+	Bus provideBus();
 }
 
 

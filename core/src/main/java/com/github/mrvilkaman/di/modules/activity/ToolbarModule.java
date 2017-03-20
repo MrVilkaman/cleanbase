@@ -3,7 +3,6 @@ package com.github.mrvilkaman.di.modules.activity;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -17,11 +16,9 @@ import dagger.Provides;
 
 @Module
 public class ToolbarModule {
-	private View view;
 	private AppCompatActivity activity;
 
-	public ToolbarModule(View view, AppCompatActivity activity) {
-		this.view = view;
+	public ToolbarModule(AppCompatActivity activity) {
 		this.activity = activity;
 	}
 

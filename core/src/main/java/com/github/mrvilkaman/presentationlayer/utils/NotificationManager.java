@@ -50,7 +50,7 @@ public class NotificationManager {
 		  .setVibrate(pattern).setContentTitle(title) //заголовок уведомления
 		  .setContentText(message); //заголовок уведомления
 
-		if (AppUtils.isSamsung()) {
+		if (DevUtils.isSamsung()) {
 			if (iconId != -1)
 				nb.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), iconId));
 		}

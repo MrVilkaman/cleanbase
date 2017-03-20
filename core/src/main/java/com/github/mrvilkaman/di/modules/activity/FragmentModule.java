@@ -9,6 +9,8 @@ import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.AndroidFragmentResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
 
+import net.jokubasdargis.rxbus.Bus;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -32,9 +34,9 @@ public class FragmentModule {
 
 	@Provides
 	@PerActivity
-	public FragmentResolver createFragmentResolver() {
+	public FragmentResolver createFragmentResolver(Bus bus) {
 		AndroidFragmentResolver androidFragmentResolver =
-				new AndroidFragmentResolver(fm, contentId);
+				new AndroidFragmentResolver(fm, contentId,bus);
 		if (callback != null) {
 			callback.addFragment(androidFragmentResolver);
 		}

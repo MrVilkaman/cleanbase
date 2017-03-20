@@ -25,6 +25,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import javax.inject.Inject;
 
+@SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
 		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
 		INeedInject<C> {
@@ -67,7 +68,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		return presenter;
 	}
 
-	public void setPresenter(P presenter) {
+	public void setPresenter(@Nullable P presenter) {
 		this.presenter = presenter;
 	}
 

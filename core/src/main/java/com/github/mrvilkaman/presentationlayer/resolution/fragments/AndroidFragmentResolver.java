@@ -6,9 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.github.mrvilkaman.datalayer.providers.GlobalBusQuery;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener;
+
+import net.jokubasdargis.rxbus.Bus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +20,7 @@ import java.util.List;
 public class AndroidFragmentResolver implements FragmentResolver {
 
 	private static final int EMTPY_CODE = -1;
+	private final Bus bus;
 	private FragmentResolverCallback callback;
 	private FragmentManager fragmentManager;
 	private int containerID;
@@ -25,16 +29,18 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	private boolean isRoot;
 	private int code = EMTPY_CODE;
 
-	public AndroidFragmentResolver(FragmentManager fragmentManager, int containerID) {
+	public AndroidFragmentResolver(FragmentManager fragmentManager, int containerID, Bus bus) {
 		this.fragmentManager = fragmentManager;
 		this.containerID = containerID;
+		this.bus = bus;
 	}
 
 	@Override
 	public boolean processBackFragment() {
 		Fragment fragment = getCurrentFragment();
-		OnBackPressedListener listener = fragment instanceof OnBackPressedListener ?
-				((OnBackPressedListener) fragment) : null;
+		OnBackPressedListener listener =
+				fragment instanceof OnBackPressedListener ? ((OnBackPressedListener) fragment) :
+						null;
 		return listener == null || !listener.onBackPressed();
 	}
 
@@ -77,8 +83,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 			boolean hasOldFragment = currentFragment != null;
 			boolean isAlreadyLoaded = false;
 			if (hasOldFragment) {
-				isAlreadyLoaded = currentScreen.getName()
-						.equals(nextScreen.getName());
+				isAlreadyLoaded = currentScreen.getName().equals(nextScreen.getName());
 			}
 
 			if (!(hasOldFragment && isAlreadyLoaded)) {
@@ -90,9 +95,14 @@ public class AndroidFragmentResolver implements FragmentResolver {
 				nextFragment.setTargetFragment(currentFragment, code);
 				code = EMTPY_CODE;
 			}
-			doTransaction(currentFragment,currentScreen);
+			doTransaction(currentFragment, currentScreen);
+			notifyCurrentScreen(this.nextScreen);
 		}
 		nextScreen = null;
+	}
+
+	protected void notifyCurrentScreen(IBaseScreen nextScreen) {
+		bus.publish(GlobalBusQuery.CURRENT_SCREEN_NAME, nextScreen.getName());
 	}
 
 	public void updateToolbar() {
@@ -111,7 +121,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 		}
 	}
 
-	void doTransaction(Fragment currentFragment,IBaseScreen screen) {
+	void doTransaction(Fragment currentFragment, IBaseScreen screen) {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		boolean b = backStack || this.isRoot;
 		fragmentTransaction.replace(containerID, (Fragment) nextScreen, nextScreen.getName());
@@ -124,7 +134,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 		fragmentTransaction.commit();
 	}
 
-	void addChildFragment(IBaseScreen screen,FragmentTransaction fragmentTransaction,
+	void addChildFragment(IBaseScreen screen, FragmentTransaction fragmentTransaction,
 						  String previousFragment) {
 		nextScreen.setPreviousFragment(previousFragment);
 		fragmentTransaction.addToBackStack(screen.getName());
@@ -162,8 +172,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	void clearBackStack() {
 
 		if (0 < fragmentManager.getBackStackEntryCount()) {
-			int id = fragmentManager.getBackStackEntryAt(0)
-					.getId();
+			int id = fragmentManager.getBackStackEntryAt(0).getId();
 			fragmentManager.popBackStackImmediate(id, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 
@@ -176,7 +185,7 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	}
 
 	private List<Fragment> getFragments() {
-		List<Fragment> fragments = fragmentManager.getFragments();
+		@SuppressWarnings("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
 		if (fragments == null) {
 			return Collections.emptyList();
 		}
@@ -220,8 +229,6 @@ public class AndroidFragmentResolver implements FragmentResolver {
 			throw new IllegalArgumentException("fragment must impliment ISingletonFragment");
 		}
 
-		fragmentManager.beginTransaction()
-				.add(contentId, (Fragment) fragment)
-				.commit();
+		fragmentManager.beginTransaction().add(contentId, (Fragment) fragment).commit();
 	}
 }

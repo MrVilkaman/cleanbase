@@ -3,13 +3,13 @@ package com.github.mrvilkaman.presentationlayer.fragments.photocrop;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.inject.Inject;
-
-import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 
 
 /**
@@ -30,16 +30,16 @@ public class CropImagePresenter extends BasePresenter<CropImageScreenView> {
 			return;
 		}
 		File file = new File(view().getOutPath());
-		saveToFile(croppedBitmap, file, Bitmap.CompressFormat.JPEG);
+		saveToFile(croppedBitmap, file);
 
 		view().sendResults();
 	}
 
-	private void saveToFile(Bitmap bmp, File filename, Bitmap.CompressFormat format) {
+	private void saveToFile(Bitmap bmp, File filename) {
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(filename);
-			bmp.compress(format, 90, out); // bmp is your Bitmap instance
+			bmp.compress(Bitmap.CompressFormat.JPEG, 90, out); // bmp is your Bitmap instance
 		} catch (Exception e) {
 			Log.d(TAG, "saveToFile error", e);
 		} finally {

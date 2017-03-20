@@ -14,7 +14,7 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
 import com.github.mrvilkaman.presentationlayer.photoulits.PhotoHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
-import com.github.mrvilkaman.presentationlayer.utils.UIUtils;
+import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 
 import javax.inject.Inject;
 

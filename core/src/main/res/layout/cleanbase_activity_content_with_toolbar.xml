@@ -12,8 +12,7 @@
 	<FrameLayout
 		android:id="@+id/content"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_below="@+id/toolbar_actionbar"/>
+		android:layout_height="match_parent"/>
 
 	<com.pnikosis.materialishprogress.ProgressWheel
 		android:id="@+id/progress_wheel"

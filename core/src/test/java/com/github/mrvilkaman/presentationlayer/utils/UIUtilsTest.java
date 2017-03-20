@@ -4,6 +4,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 
+import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 
 import org.assertj.core.api.Assertions;
