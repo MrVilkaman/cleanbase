@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge>
+<merge xmlns:tools="http://schemas.android.com/tools">
 
 	<android.support.v7.widget.Toolbar
 		android:id="@+id/toolbar_actionbar"
@@ -18,7 +18,9 @@
 			android:layout_height="match_parent"
 			android:layout_gravity="center"
 			android:gravity="center"
+			tools:text="asdasdasdasdas"
 			android:textColor="@color/cleanbase_toolbar_text_color"
+			tools:textColor="#fff"
 			android:textSize="@dimen/cleanbase_toolbar_text_size"/>
 	</android.support.v7.widget.Toolbar>
 </merge>
