@@ -1,6 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 
+import android.support.annotation.Nullable;
+
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
@@ -10,17 +12,28 @@ import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
+import rx.annotations.Experimental;
+
 public class ThrowableResolverImpl implements ThrowableResolver {
 
-	private UIResolver uiResolver;
+	private final UIResolver uiResolver;
+	private final Processor customThrowableResolver;
 
-	//	@Inject
 	public ThrowableResolverImpl(UIResolver uiResolver) {
+		this(uiResolver,null);
+	}
+
+	public ThrowableResolverImpl(UIResolver uiResolver, @Nullable Processor customThrowableResolver) {
 		this.uiResolver = uiResolver;
+		this.customThrowableResolver = customThrowableResolver;
 	}
 
 	@Override
 	public void handleError(Throwable throwable) {
+		if (customThrowableResolver != null && customThrowableResolver.handleError(throwable)) {
+			return;
+		}
+
 		if (throwable instanceof ServerException) {
 			String message = throwable.getMessage();
 			if (message != null) {
@@ -54,5 +67,12 @@ public class ThrowableResolverImpl implements ThrowableResolver {
 		} else {
 			uiResolver.showMessage(R.string.dialog_default_error, throwable.getMessage());
 		}
+	}
+
+	@Experimental
+	public interface Processor {
+
+		// true if error processed
+		boolean handleError(Throwable throwable);
 	}
 }
