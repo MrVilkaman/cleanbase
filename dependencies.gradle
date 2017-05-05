@@ -1,11 +1,11 @@
 ext.versions = [
 
         minSdk           : 15,
-        targetSdk        : 22,
-        compileSdk       : 25,
-        buildTools       : '25.0.2',
+        targetSdk         : 22,
+        compileSdk        : 25,
+        buildTools        : '25.0.2',
 
-        dagger           : '2.9',
+        dagger           : '2.10',
         rxBus            : '2.0.0',
 
         supportLibs      : '25.2.0',
@@ -14,12 +14,12 @@ ext.versions = [
 
         retrofit2        : '2.2.0',
 
-        okHttp3          : '3.6.0',
+        okHttp3          : '3.7.0',
 
         storio           : '1.12.3',
 
         powermock        : '1.6.5',
-        robolectric      : '3.3.1',
+        robolectric      : '3.3.2',
         assertJandroid   : '1.1.1',
         supportTestRunner: '0.5',
 
@@ -29,16 +29,16 @@ ext.versions = [
 
         papercut         : '0.0.4',
         leakcanary       : '1.5',
-        cleanbase        : '0.7.3',
+        cleanbase        : '0.7.5',
 
 ]
 
 ext.gradlePlugins = [
         gradleBuildPlugin: 'com.android.tools.build:gradle:2.3.0',
         aptPlugin        : "com.neenbedankt.gradle.plugins:android-apt:1.8",
-        retrolambdaPlugin: "me.tatarka:gradle-retrolambda:3.6.0",
+        retrolambdaPlugin: "me.tatarka:gradle-retrolambda:3.6.1",
         versionsPlugin   : 'com.github.ben-manes:gradle-versions-plugin:0.14.0',
-        dexcountPlugin   : 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.3',
+        dexcountPlugin   : 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.4',
 ]
 
 ext.libraries = [
@@ -80,12 +80,12 @@ ext.libraries = [
 
         gson                      : "com.google.code.gson:gson:2.4",
 
-        rxJava                    : "io.reactivex:rxjava:1.2.7",
+        rxJava                    : "io.reactivex:rxjava:1.3.0",
         rxBus                     : "net.jokubasdargis.rxbus:rxbus:$versions.rxBus",
         rxBusAndroid              : "net.jokubasdargis.rxbus:rxbus-android:$versions.rxBus",
         rxAndroid                 : "io.reactivex:rxandroid:1.2.1",
         rxBindingAppcompat        : "com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.1",
-        rxpermissions             : "com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar",
+        rxpermissions             : "com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar",
 
         otto                      : "com.squareup:otto:1.3.8",
         photoView                 : "com.commit451:PhotoView:1.2.4",

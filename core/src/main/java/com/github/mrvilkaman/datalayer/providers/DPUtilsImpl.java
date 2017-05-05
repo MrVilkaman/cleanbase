@@ -40,9 +40,8 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@NonNull
-	private <T> Observable<T> handleError(IBaseResponse response) {
-		Throwable exception = getThrowable(response.getMessage(), response.getCode(), null);
-		return Observable.error(exception);
+	protected <T> Observable<T> handleError(IBaseResponse response) {
+		return Observable.error(getThrowable(response.getMessage(), response.getCode(), null));
 	}
 
 	@Override
@@ -52,6 +51,7 @@ public class DPUtilsImpl implements DPUtils {
 			if (throwable instanceof HttpException) {
 				HttpException httpException = (HttpException) throwable;
 				Response response = httpException.response();
+
 				return Observable.error(getThrowable(response.message(), response.code(), throwable));
 			} else if (throwable instanceof IOException) {
 				return Observable.error(new InternetConnectionException());
@@ -63,7 +63,7 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@NonNull
-	private Throwable getThrowable(String message, int code, Throwable throwable) {
+	protected Throwable getThrowable(String message, int code, Throwable throwable) {
 		Throwable exception;
 		switch (code) {
 			case 404:
@@ -77,7 +77,7 @@ public class DPUtilsImpl implements DPUtils {
 			case 502:
 			case 503:
 			case 504:
-				exception = new ServerException(throwable);
+				exception = new ServerException(message, throwable);
 				break;
 			default:
 				exception = new UncheckedException(message);

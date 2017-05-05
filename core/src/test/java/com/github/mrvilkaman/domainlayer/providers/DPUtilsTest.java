@@ -12,6 +12,7 @@ import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import okhttp3.ResponseBody;
-import retrofit2.Response;
 import retrofit2.HttpException;
+import retrofit2.Response;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -87,7 +88,27 @@ public class DPUtilsTest extends BaseTestCase {
 		Response<Object> error = Response.error(499, mock(ResponseBody.class));
 		exceptionErrorText(new HttpException(error), UncheckedException.class);
 	}
+	///*************************
 
+	@Test
+	public void testHandleHttpErrorWithBody() {
+		// Arrange
+		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+
+		// Act
+		just(new BaseResponse(441, "qwer"))
+				.compose(dpUtils.handleAnswer())
+				.subscribe(subscriber);
+
+		// Assert
+		subscriber.assertNoValues();
+		subscriber.assertNotCompleted();
+		Throwable onErrorEvents = subscriber.getOnErrorEvents().get(0);
+		Assertions.assertThat(onErrorEvents).isInstanceOf(UncheckedException.class).hasMessage("qwer");
+
+	}
+
+	///*************************
 
 	@Test
 	public void testHandleError500() {

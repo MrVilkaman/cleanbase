@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.di.modules;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 
@@ -21,17 +22,44 @@ import okhttp3.logging.HttpLoggingInterceptor;
 @Module
 public class NetworkModule {
 
+
+	private final List<Interceptor> networkInterceptors;
+	@Nullable private final BuilderProcessor processor;
+
+	public NetworkModule() {
+		this(Collections.emptyList(), null);
+
+	}
+
+	public NetworkModule(List<Interceptor> networkInterceptors,
+						 @Nullable BuilderProcessor processor) {
+		this.networkInterceptors = networkInterceptors;
+		this.processor = processor;
+	}
+
+	public NetworkModule(List<Interceptor> networkInterceptors) {
+		this(networkInterceptors, null);
+	}
+
+	public NetworkModule(BuilderProcessor processor) {
+		this(Collections.emptyList(), processor);
+	}
+
 	@Provides
 	@NonNull
 	@Singleton
 	public OkHttpClient provideOkHttpClient() {
 		final OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
+
+		if (processor != null) {
+			processor.handle(okHttpBuilder);
+		}
+
 		Interceptor interceptor = provideHttpLoggingInterceptor();
 		if (interceptor != null) {
 			okHttpBuilder.addInterceptor(interceptor);
 		}
 
-		List<Interceptor> networkInterceptors = provideOkHttpNetworkInterceptors();
 		for (Interceptor networkInterceptor : networkInterceptors) {
 			okHttpBuilder.addNetworkInterceptor(networkInterceptor);
 		}
@@ -49,10 +77,8 @@ public class NetworkModule {
 		}
 	}
 
-
-	@SuppressWarnings("unchecked")
-	private List<Interceptor> provideOkHttpNetworkInterceptors() {
-		return Collections.EMPTY_LIST;
-		//		return singletonList(new StethoInterceptor());
+	interface BuilderProcessor {
+		void handle(OkHttpClient.Builder builder);
 	}
+
 }
