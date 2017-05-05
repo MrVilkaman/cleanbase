@@ -42,7 +42,31 @@ public class DPUtilsTest extends BaseTestCase {
 	public void testHandleAnswer() {
 		// Arrange
 		BaseResponse response = new BaseResponse(200, "");
-		TestSubscriber<BaseResponse> subscriber = new TestSubscriber<>();
+		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+
+		// Act
+		just(response)
+				.compose(dpUtils.handleAnswer())
+				.subscribe(subscriber);
+
+		// Assert
+		subscriber.assertValue(null);
+		subscriber.assertValueCount(1);
+		subscriber.assertCompleted();
+		subscriber.assertNoErrors();
+	}
+
+	@Test
+	public void testHandleAnswer_customResponse() {
+		// Arrange
+		IBaseResponse response = new BaseResponse(200, ""){
+
+			@Override
+			public Object getBody() {
+				return this;
+			}
+		};
+		TestSubscriber<Object> subscriber = new TestSubscriber<>();
 
 		// Act
 		just(response)
@@ -160,6 +184,37 @@ public class DPUtilsTest extends BaseTestCase {
 	public void testHandleAnotherException() {
 		exceptionErrorText(new RuntimeException(), RuntimeException.class);
 	}
+
+
+
+	@Test
+	public void testHandleAnotherException_customHandlerResponse_true() {
+		dpUtils = new DPUtilsImpl((message, code, throwable) -> new IOException());
+		errorResponseTest(401, IOException.class);
+	}
+
+
+	@Test
+	public void testHandleAnotherException_customHandlerResponse_false() {
+		dpUtils = new DPUtilsImpl((message, code, throwable) -> throwable);
+		errorResponseTest(401, UnauthorizedException.class);
+	}
+
+
+	@Test
+	public void testHandleAnotherException_customHandler_true() {
+		Response<Object> error = Response.error(500, mock(ResponseBody.class));
+		dpUtils = new DPUtilsImpl((message, code, throwable) -> new IOException());
+		exceptionErrorText(new HttpException(error), IOException.class);
+	}
+
+
+	@Test
+	public void testHandleAnotherException_customHandler_false() {
+		dpUtils = new DPUtilsImpl((message, code, throwable) -> throwable);
+		exceptionErrorText(new RuntimeException(), RuntimeException.class);
+	}
+
 
 	private void exceptionErrorText(Throwable exception, Class<? extends Throwable> clazz) {
 		// Arrange

@@ -77,7 +77,7 @@ public class NetworkModule {
 		}
 	}
 
-	interface BuilderProcessor {
+	public interface BuilderProcessor {
 		void handle(OkHttpClient.Builder builder);
 	}
 

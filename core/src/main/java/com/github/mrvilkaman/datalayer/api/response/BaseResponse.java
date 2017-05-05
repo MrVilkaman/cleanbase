@@ -1,6 +1,6 @@
 package com.github.mrvilkaman.datalayer.api.response;
 
-public class BaseResponse implements IBaseResponse {
+public class BaseResponse implements IBaseResponse<Object> {
 	private int code;
 	private String message;
 
@@ -18,6 +18,11 @@ public class BaseResponse implements IBaseResponse {
 	}
 
 	public boolean isSuccess() {
-		return code == 200;
+		return 200 <= code && code < 300;
+	}
+
+	@Override
+	public Object getBody() {
+		return null;
 	}
 }
