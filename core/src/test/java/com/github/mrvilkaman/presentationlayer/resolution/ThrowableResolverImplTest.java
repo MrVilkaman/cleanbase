@@ -1,10 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 import com.github.mrvilkaman.core.R;
-
-import org.junit.Test;
-import org.mockito.Mock;
-
 import com.github.mrvilkaman.domainlayer.exceptions.InternetConnectionException;
 import com.github.mrvilkaman.domainlayer.exceptions.NotFoundException;
 import com.github.mrvilkaman.domainlayer.exceptions.ServerException;
@@ -12,6 +8,9 @@ import com.github.mrvilkaman.domainlayer.exceptions.ServerNotAvailableException;
 import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
+
+import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -40,7 +39,7 @@ public class ThrowableResolverImplTest extends BaseTestCase {
 	@Test
 	public void testHandleServerException() {
 		// Act
-		resolver.handleError(new ServerException(null));
+		resolver.handleError(new ServerException("message", null));
 
 		// Assert
 		verify(ui).showMessage(R.string.dialog_server_error);
