@@ -37,9 +37,36 @@ public class ThrowableResolverImplTest extends BaseTestCase {
 
 
 	@Test
-	public void testHandleServerException() {
+	public void testHandleServerException_withMessage() {
 		// Act
 		resolver.handleError(new ServerException("message", null));
+
+		// Assert
+		verify(ui).showMessage(R.string.cleanbase_simple_text, "message");
+	}
+
+	@Test
+	public void testHandleServerException_withThrowableMessage() {
+		// Act
+		resolver.handleError(new ServerException(null, new RuntimeException("message Runtime")));
+
+		// Assert
+		verify(ui).showMessage(R.string.cleanbase_simple_text, "message Runtime");
+	}
+
+	@Test
+	public void testHandleServerException_withThrowable() {
+		// Act
+		resolver.handleError(new ServerException(null, new RuntimeException()));
+
+		// Assert
+		verify(ui).showMessage(R.string.dialog_server_error);
+	}
+
+	@Test
+	public void testHandleServerException_unknown() {
+		// Act
+		resolver.handleError(new ServerException());
 
 		// Assert
 		verify(ui).showMessage(R.string.dialog_server_error);

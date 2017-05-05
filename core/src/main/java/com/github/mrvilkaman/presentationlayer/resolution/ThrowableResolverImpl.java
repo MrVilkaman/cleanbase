@@ -22,6 +22,20 @@ public class ThrowableResolverImpl implements ThrowableResolver {
 	@Override
 	public void handleError(Throwable throwable) {
 		if (throwable instanceof ServerException) {
+			String message = throwable.getMessage();
+			if (message != null) {
+				this.uiResolver.showMessage(R.string.cleanbase_simple_text, message);
+				return;
+			} else {
+				Throwable cause = throwable.getCause();
+				if (cause != null) {
+					String message1 = cause.getMessage();
+					if (message1 != null) {
+						this.uiResolver.showMessage(R.string.cleanbase_simple_text, message1);
+						return;
+					}
+				}
+			}
 			uiResolver.showMessage(R.string.dialog_server_error);
 		} else if (throwable instanceof ServerNotAvailableException) {
 			uiResolver.showMessage(R.string.dialog_server_notavailable_error);
