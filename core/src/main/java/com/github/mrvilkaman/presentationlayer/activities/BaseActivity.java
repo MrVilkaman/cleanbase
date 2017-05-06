@@ -14,6 +14,7 @@ import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.di.INeedInject;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
@@ -23,12 +24,17 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolve
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
 		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
 		INeedInject<C> {
+
+	private List<BasePresenter> presenters = new ArrayList<>(1);
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
@@ -57,8 +63,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		navigationResolver.init();
 		configureProgressBar();
 		if (presenter != null) {
-			presenter.setView(this);
-			presenter.onViewAttached();
+			attachPresenter(presenter);
 		}
 		afterOnCreate();
 	}
@@ -166,11 +171,43 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 			presenter.onViewDetached();
 			//noinspection unchecked
 			presenter.setView(null);
+			detachPresenters();
 		}
 		super.onDestroy();
 		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
 			leakCanaryProxy.init();
+		}
+	}
+
+	protected void attachPresenter(BasePresenter presenter) {
+		presenter.setView(this);
+		presenter.onViewAttached();
+		presenters.add(presenter);
+	}
+
+	private void detachPresenters() {
+		for (int i = presenters.size() - 1; i >= 0; i--) {
+			detachPresenter(presenters.get(i));
+			presenters.remove(i);
+		}
+	}
+
+	protected void detachPresenter(BasePresenter presenter) {
+		presenter.onViewDetached();
+		presenter.setView(null);
+	}
+
+	protected void attachCustomView(BaseCustomView customWidget) {
+
+		if (customWidget instanceof INeedInject) {
+			((INeedInject) customWidget).injectMe(getComponent());
+		}
+		customWidget.bind(this);
+		BasePresenter presenter = customWidget.getPresenter();
+		if (presenter != null) {
+			presenter.onViewAttached();
+			presenters.add(presenter);
 		}
 	}
 }

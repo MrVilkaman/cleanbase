@@ -8,13 +8,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.R;
+import com.github.mrvilkaman.di.CustomWidgetComponent;
 import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 
 import javax.inject.Inject;
 
-public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements MyCustomView,INeedInject<CustomViewContainerScreenComponent> {
+public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements MyCustomView,INeedInject<CustomWidgetComponent> {
 
 	@Inject FormatterForCustomView formatterForCustomView;
 
@@ -59,7 +60,7 @@ public class MyCustomWidget extends BaseCustomView<MyCustomPresenter> implements
 	}
 
 	@Override
-	public void injectMe(CustomViewContainerScreenComponent component) {
+	public void injectMe(CustomWidgetComponent component) {
 		component.inject(this);
 	}
 }

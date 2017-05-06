@@ -2,7 +2,6 @@ package com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer;
 
 import android.util.Log;
 
-import com.github.mrvilkaman.di.PerScreen;
 import com.github.mrvilkaman.presentationlayer.activities.MyCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.subscriber.LoadSubscriber;
@@ -13,7 +12,6 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-@PerScreen
 public class MyCustomPresenter extends BasePresenter<MyCustomView> {
 
 	@Inject

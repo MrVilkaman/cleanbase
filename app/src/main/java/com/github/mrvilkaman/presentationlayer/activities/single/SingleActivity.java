@@ -13,7 +13,7 @@ import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity;
 import com.github.mrvilkaman.presentationlayer.app.App;
-import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.MyCustomWidget;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
@@ -29,6 +29,7 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 	@Inject IToolbar toolbar;
 
 	@BindView(R.id.single_some_text) TextView textView;
+	@BindView(R.id.custom_views) MyCustomWidget customWidget;
 
 	@Override
 	public void injectMe(SecondActivityComponent activityComponent) {
@@ -46,9 +47,7 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 		return DaggerSecondActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
-				.fragmentModule(new FragmentModule(getSupportFragmentManager(), getContainerID(),
-						resolver -> resolver.addStaticFragment(R.id.single_botton_content,
-								DrawerScreenFragment.open())))
+				.fragmentModule(new FragmentModule(getSupportFragmentManager(), getContainerID()))
 				.toolbarModule(new ToolbarModule(this))
 				.build();
 	}
@@ -65,6 +64,8 @@ public class SingleActivity extends BaseActivity<SecondActivityComponent, Single
 		ButterKnife.bind(this);
 		//noinspection ConstantConditions
 		toolbarResolver.setUseCustomTitle();
+
+		attachCustomView(customWidget);
 	}
 
 	@Override
