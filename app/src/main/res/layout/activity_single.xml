@@ -44,6 +44,13 @@
 	</FrameLayout>
 
 
+	<com.github.mrvilkaman.presentationlayer.fragments.customviewcontainer.MyCustomWidget
+		android:id="@+id/custom_views"
+		android:layout_marginBottom="72dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"/>
+
 	<com.pnikosis.materialishprogress.ProgressWheel
 		android:id="@+id/progress_wheel"
 		android:layout_width="fill_parent"

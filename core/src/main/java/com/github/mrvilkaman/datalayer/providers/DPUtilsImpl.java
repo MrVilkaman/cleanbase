@@ -32,7 +32,12 @@ public class DPUtilsImpl implements DPUtils {
 
 	public DPUtilsImpl(@Nullable Processor processor) {
 		this.processor = processor;
+
+
 	}
+
+
+
 
 	@Override
 	public <T extends IBaseResponse<R>, R> Observable.Transformer<T, R> handleAnswer() {
