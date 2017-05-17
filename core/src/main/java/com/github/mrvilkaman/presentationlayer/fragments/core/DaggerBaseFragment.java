@@ -38,4 +38,11 @@ public abstract class DaggerBaseFragment<P extends BasePresenter, C> extends Bas
 		}
 		super.attachCustomView(customWidget);
 	}
+
+	protected void attachCustomView(@NonNull BaseCustomView customWidget, Object component) {
+		if (customWidget instanceof INeedInject) {
+			((INeedInject) customWidget).injectMe(component);
+		}
+		super.attachCustomView(customWidget);
+	}
 }

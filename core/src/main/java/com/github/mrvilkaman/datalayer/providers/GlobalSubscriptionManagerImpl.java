@@ -3,8 +3,6 @@ package com.github.mrvilkaman.datalayer.providers;
 import android.util.Log;
 
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
-import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
-import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
 import net.jokubasdargis.rxbus.Bus;
 
@@ -13,6 +11,9 @@ import java.util.HashMap;
 import rx.Observable;
 import rx.functions.Actions;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings.needSubscribeLogs;
+import static com.github.mrvilkaman.presentationlayer.utils.DevUtils.getGlobalSubscriberStartStack;
 
 
 public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager {
@@ -27,11 +28,9 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@Override
 	public <T> void subscribe(Observable<T> qwer) {
-		String string =
-				CleanBaseSettings.needSubscribeLogs() ? DevUtils.getGlobalSubscriberStartStack() :
-						"";
+		String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
 		subscription.add(qwer.subscribe(t -> Actions.empty(), throwable -> {
-			if (CleanBaseSettings.needSubscribeLogs()) {
+			if (needSubscribeLogs()) {
 				Log.e("GlobalSubscription", "Start by:" + string, throwable);
 			}
 			bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
@@ -40,15 +39,13 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@Override
 	public <T> Observable<T> subscribeWithResult(Observable<T> qwer) {
-		String string =
-				CleanBaseSettings.needSubscribeLogs() ? DevUtils.getGlobalSubscriberStartStack() :
-						"";
+		String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
 		return Observable.unsafeCreate(subscriber -> subscription.add(qwer.subscribe((t) -> {
 			if (!subscriber.isUnsubscribed())
 				subscriber.onNext(t);
 		}, throwable -> {
 			if (subscriber.isUnsubscribed()) {
-				if (CleanBaseSettings.needSubscribeLogs()) {
+				if (needSubscribeLogs()) {
 					Log.e("GlobalSubscription", "Start by:" + string, throwable);
 				}
 				bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
