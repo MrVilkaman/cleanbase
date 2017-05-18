@@ -53,7 +53,9 @@ public class AndroidFragmentResolver implements FragmentResolver {
 	@Override
 	public void popBackStack() {
 		IBaseScreen current = getCurrentScreen();
-		fragmentManager.popBackStackImmediate(current.getPreviousFragment(),
+		String previousFragment = current.getPreviousFragment();
+		notifyCurrentScreen(previousFragment);
+		fragmentManager.popBackStackImmediate(previousFragment,
 				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	}
 
@@ -96,13 +98,13 @@ public class AndroidFragmentResolver implements FragmentResolver {
 				code = EMTPY_CODE;
 			}
 			doTransaction(currentFragment, currentScreen);
-			notifyCurrentScreen(this.nextScreen);
+			notifyCurrentScreen(this.nextScreen.getName());
 		}
 		nextScreen = null;
 	}
 
-	protected void notifyCurrentScreen(IBaseScreen nextScreen) {
-		bus.publish(GlobalBusQuery.CURRENT_SCREEN_NAME, nextScreen.getName());
+	protected void notifyCurrentScreen(String name) {
+		bus.publish(GlobalBusQuery.CURRENT_SCREEN_NAME, name);
 	}
 
 	public void updateToolbar() {
