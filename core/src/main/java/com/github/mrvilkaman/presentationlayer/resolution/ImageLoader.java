@@ -4,6 +4,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Transformation;
+
 public interface ImageLoader {
 
 	Builder load(@NonNull String url);
@@ -21,6 +23,8 @@ public interface ImageLoader {
 		Builder height(int dimension);
 
 		Builder width(int dimension);
+
+		Builder transformation(Transformation transformation);
 
 		void into(@NonNull ImageView target);
 	}

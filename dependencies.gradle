@@ -29,7 +29,7 @@ ext.versions = [
 
         papercut         : '0.0.4',
         leakcanary       : '1.5',
-        cleanbase        : '0.7.5',
+        cleanbase        : '0.7.11',
 
 ]
 

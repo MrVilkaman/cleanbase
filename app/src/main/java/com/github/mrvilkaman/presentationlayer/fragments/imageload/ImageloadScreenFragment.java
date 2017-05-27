@@ -78,6 +78,7 @@ public class ImageloadScreenFragment extends BaseFragment<ImageloadPresenter>
 		int dimension = (int) getResources().getDimension(R.dimen.image_height);
 		imageLoader.load(URL)
 				.size(dimension,dimension)
+				.transformation(new CropSquareTransformation())
 				.into(view3);
 	}
 

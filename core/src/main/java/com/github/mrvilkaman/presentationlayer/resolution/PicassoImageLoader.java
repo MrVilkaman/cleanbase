@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Transformation;
 
 import java.io.File;
 
@@ -70,6 +71,12 @@ public class PicassoImageLoader implements ImageLoader {
 		public Builder width(int dimension) {
 			creator.resize(dimension, 0)
 					.onlyScaleDown();
+			return this;
+		}
+
+		@Override
+		public Builder transformation(@NonNull Transformation transformation) {
+			creator.transform(transformation);
 			return this;
 		}
 
