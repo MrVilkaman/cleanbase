@@ -21,7 +21,9 @@ public class MyDevModule {
 	@Provides
 	@Singleton
 	public LeakCanaryProxy provideLeakCanaryProxy(Context context) {
-		return new MyLeakCanaryProxy(context);
+		MyLeakCanaryProxy myLeakCanaryProxy = new MyLeakCanaryProxy(context);
+		myLeakCanaryProxy.init();
+		return myLeakCanaryProxy;
 	}
 
 	private static class MyLeakCanaryProxy implements LeakCanaryProxy {
