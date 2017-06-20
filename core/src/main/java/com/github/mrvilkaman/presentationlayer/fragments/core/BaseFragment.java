@@ -112,7 +112,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		LeakCanaryProxy leakCanaryProxy =
 				DevUtils.getComponent(getActivity(),ActivityCoreComponent.class).provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
-			leakCanaryProxy.init();
+			leakCanaryProxy.watch(this);
 		}
 	}
 

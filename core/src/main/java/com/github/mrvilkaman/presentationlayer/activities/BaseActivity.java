@@ -176,7 +176,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		super.onDestroy();
 		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
-			leakCanaryProxy.init();
+			leakCanaryProxy.watch(this);
 		}
 	}
 

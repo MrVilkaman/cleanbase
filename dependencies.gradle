@@ -14,7 +14,7 @@ ext.versions = [
 
         retrofit2        : '2.3.0',
 
-        okHttp3          : '3.8.0',
+        okHttp3          : '3.8.1',
 
         storio           : '1.13.0',
 
@@ -28,8 +28,8 @@ ext.versions = [
         moxy             : '0.4.2',
 
         papercut         : '0.0.4',
-        leakcanary       : '1.5',
-        cleanbase        : '0.7.12',
+        leakcanary       : '1.5.1',
+        cleanbase        : '0.7.13',
 
 ]
 
@@ -37,7 +37,7 @@ ext.gradlePlugins = [
         gradleBuildPlugin: 'com.android.tools.build:gradle:2.3.2',
         aptPlugin        : "com.neenbedankt.gradle.plugins:android-apt:1.8",
         retrolambdaPlugin: "me.tatarka:gradle-retrolambda:3.6.1",
-        versionsPlugin   : 'com.github.ben-manes:gradle-versions-plugin:0.14.0',
+        versionsPlugin   : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
         dexcountPlugin   : 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.4',
 ]
 
@@ -92,7 +92,7 @@ ext.libraries = [
         photoView                 : "com.commit451:PhotoView:1.2.4",
         simplecropview            : "com.isseiaoki:simplecropview:1.1.4",
 
-        rxLocation                : "pl.charmas.android:android-reactive-location:0.8@aar",
+        rxLocation                : "pl.charmas.android:android-reactive-location:0.10@aar",
         materialDialog            : "com.github.afollestad.material-dialogs:core:0.9.1.0@aar",
         materialProgress          : "com.pnikosis:materialish-progress:1.5",
 
