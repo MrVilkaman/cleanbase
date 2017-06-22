@@ -19,11 +19,9 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	private UIResolver uiResolver;
 	private boolean skipNextError;
 
-
 	public ViewSubscriber() {
 		string = CleanBaseSettings.needSubscribeLogs() ? DevUtils.getSubscriberStartStack() : "";
 	}
-
 
 	public void setView(V view) {
 		this.view = view;

@@ -6,7 +6,6 @@ import com.github.mrvilkaman.testsutils.BaseTestCase;
 
 import net.jokubasdargis.rxbus.Bus;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -35,7 +34,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		manager = new GlobalSubscriptionManagerImpl(bus);
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSubscribe_success() {
 		// Arrange
@@ -53,7 +52,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		client.assertValue("qwer2");
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSubscribe_error() {
 		// Act
@@ -64,7 +63,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSubscribeWithResult_error_inUI() {
 		// Arrange
@@ -81,7 +80,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		subscriber.assertError(UnauthorizedException.class);
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSubscribeWithResult_error_inBg() {
 		// Arrange
@@ -100,7 +99,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		subscriber.assertUnsubscribed();
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSubscribeWithResult_nextAndCompletedWithResponse() {
 		// Arrange
@@ -125,7 +124,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	}
 
 
-	@Ignore
+	
 	@Test
 	public void testSubscribeWithResult_nextAndCompleted_NoUI() {
 		// Arrange
@@ -150,7 +149,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		client.assertCompleted();
 	}
 
-	@Ignore
+	
 	@Test
 	public void testsubscribeSingle_twoSubscribe_oneDate() {
 		// Arrange
