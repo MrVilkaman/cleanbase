@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
@@ -17,6 +18,7 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	private final String string;
 	private V view;
 	private UIResolver uiResolver;
+	private ThrowableResolver throwableResolver;
 	private boolean skipNextError;
 
 	public ViewSubscriber() {
@@ -32,11 +34,8 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 		if (CleanBaseSettings.needSubscribeLogs()) {
 			Log.e("ViewSubscriber", "Start by:" + string, e);
 		}
-		BaseView view = view();
-		if (view == null)
-			return;
-		if (showError()) {
-			view.handleError(e);
+		if (throwableResolver == null && showError()) {
+			throwableResolver.handleError(e);
 		}
 	}
 
@@ -48,6 +47,10 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 	@Override
 	public void onCompleted() {
 
+	}
+
+	public void setThrowableResolver(ThrowableResolver throwableResolver) {
+		this.throwableResolver = throwableResolver;
 	}
 
 	protected V view() {

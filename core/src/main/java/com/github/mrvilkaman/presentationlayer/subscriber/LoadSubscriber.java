@@ -5,12 +5,14 @@ import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
+import com.github.mrvilkaman.presentationlayer.fragments.core.INeedProgressState;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
 /**
  * Created by root on 16.03.16.
  */
-public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> {
+public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> implements
+		INeedProgressState {
 
 	private @Nullable IProgressState progressState;
 
@@ -65,12 +67,6 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> 
 	}
 
 	@Override
-	public void setView(V view) {
-		super.setView(view);
-		//Todo Remove it
-		setProgressState(view);
-	}
-
 	public void setProgressState(@Nullable IProgressState progressState) {
 		if (this.progressState == null) {
 			this.progressState = progressState;

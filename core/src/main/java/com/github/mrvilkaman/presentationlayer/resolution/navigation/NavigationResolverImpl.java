@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -81,7 +82,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void onBackPressed() {
 		if (fragmentManager.processBackFragment()) {
-			activityView.hideProgress();
+			if (activityView instanceof IProgressState)
+				((IProgressState)activityView).hideProgress();
 			if (fragmentManager.checkBackStack()) {
 				if (toolbarResolver != null)
 					toolbarResolver.clear();

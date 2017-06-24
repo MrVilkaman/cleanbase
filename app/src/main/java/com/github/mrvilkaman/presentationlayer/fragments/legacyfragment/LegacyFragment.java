@@ -35,21 +35,6 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 	}
 
 	@Override
-	public void showProgress() {
-
-	}
-
-	@Override
-	public void hideProgress() {
-
-	}
-
-	@Override
-	public void handleError(Throwable throwable) {
-
-	}
-
-	@Override
 	public String getPreviousFragment() {
 		return tag;
 	}

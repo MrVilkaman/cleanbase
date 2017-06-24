@@ -12,7 +12,7 @@ import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 import javax.inject.Inject;
 
 public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayout
-		implements BaseView {
+		implements BaseView,IProgressState {
 
 	@Inject P presenter;
 	private View progressBar;
@@ -49,7 +49,9 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		if (progressBar != null) {
 			UIUtils.changeVisibility(progressBar, false);
 		} else {
-			parentView.hideProgress();
+			if (parentView instanceof IProgressState) {
+				((IProgressState)parentView).hideProgress();
+			}
 		}
 	}
 
@@ -58,14 +60,12 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 		if (progressBar != null) {
 			UIUtils.changeVisibility(progressBar, true);
 		} else {
-			parentView.showProgress();
+			if (parentView instanceof IProgressState) {
+				((IProgressState)parentView).showProgress();
+			}
 		}
 	}
 
-	@Override
-	public void handleError(Throwable throwable) {
-		parentView.handleError(throwable);
-	}
 
 	public P getPresenter() {
 		return presenter;

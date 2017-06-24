@@ -5,10 +5,11 @@ import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.domainlayer.models.DataErrorWrapper;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
+import com.github.mrvilkaman.presentationlayer.fragments.core.INeedProgressState;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
 public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>, D>
-		extends ViewSubscriber<V, T> {
+		extends ViewSubscriber<V, T> implements INeedProgressState {
 
 	private @Nullable IProgressState progressState;
 
@@ -27,7 +28,8 @@ public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>,
 	public void onNext(T wrap) {
 		if (wrap.isSuccess()) {
 			onNextValue(wrap.getValue());
-		} if (wrap.isError()) {
+		}
+		if (wrap.isError()) {
 			onError(wrap.getThrowable());
 		}
 
@@ -41,12 +43,6 @@ public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>,
 	}
 
 	@Override
-	public void setView(V view) {
-		super.setView(view);
-		//Todo Remove it
-		setProgressState(view);
-	}
-
 	public void setProgressState(@Nullable IProgressState progressState) {
 		if (this.progressState == null) {
 			this.progressState = progressState;

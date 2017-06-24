@@ -17,7 +17,7 @@ import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
-import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
@@ -32,14 +32,13 @@ import javax.inject.Inject;
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
 		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
-		INeedInject<C> {
+		INeedInject<C>,IProgressState {
 
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject NavigationResolver navigationResolver;
-	@Inject ThrowableResolver throwableResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 
 	private C activityComponent;
@@ -158,11 +157,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	}
 
 	protected abstract C createComponent();
-
-	@Override
-	public void handleError(Throwable throwable) {
-		throwableResolver.handleError(throwable);
-	}
 
 	@Override
 	protected void onDestroy() {

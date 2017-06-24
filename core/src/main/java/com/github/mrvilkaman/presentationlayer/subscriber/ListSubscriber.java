@@ -21,7 +21,7 @@ public class ListSubscriber<T extends DataErrorWrapper<D>, D> extends ViewSubscr
 		if (listItemModels.isSuccess()) {
 			listener.click(listItemModels.getValue());
 		} else {
-			view().handleError(listItemModels.getThrowable());
+			onError(listItemModels.getThrowable());
 		}
 	}
 }
