@@ -68,7 +68,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		afterOnCreate();
 	}
 
-	@Nullable
 	public P getPresenter() {
 		return presenter;
 	}

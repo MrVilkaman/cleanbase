@@ -4,6 +4,9 @@ package com.github.mrvilkaman.domainlayer.models;
 public class DataErrorWrapper<D> {
 	public final D value;
 	public final Throwable throwable;
+	private boolean progress;
+
+//	public static DataErrorWrapper
 
 	public DataErrorWrapper(D value) {
 		this.value = value;
@@ -35,5 +38,9 @@ public class DataErrorWrapper<D> {
 	@Override
 	public String toString() {
 		return "DataErrorWrapper{" + "value=" + value + ", throwable=" + throwable + '}';
+	}
+
+	public boolean isProgress() {
+		return progress;
 	}
 }
