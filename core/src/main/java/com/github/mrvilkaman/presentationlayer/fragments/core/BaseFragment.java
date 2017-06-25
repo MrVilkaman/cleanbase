@@ -108,7 +108,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =
-				DevUtils.getComponent(getActivity(),ActivityCoreComponent.class).provideLeakCanaryProxy();
+				DevUtils.getComponent(getActivity(), ActivityCoreComponent.class)
+						.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
 			leakCanaryProxy.watch(this);
 		}
@@ -139,8 +140,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void showProgress() {
 		if (progressBar == null) {
-			if (activityView instanceof IProgressState)
-				((IProgressState)activityView).showProgress();
+			if (activityView != null)
+				activityView.showProgress();
 		} else {
 			progressBar.setVisibility(View.VISIBLE);
 		}
@@ -149,8 +150,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void hideProgress() {
 		if (progressBar == null) {
-			if (activityView instanceof IProgressState)
-				((IProgressState)activityView).hideProgress();
+			if (activityView != null)
+				activityView.hideProgress();
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}
@@ -190,7 +191,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<T> componentType) {
-		return DevUtils.getComponent(getActivity(),componentType);
+		return DevUtils.getComponent(getActivity(), componentType);
 	}
 
 	public UIResolver getUiResolver() {
