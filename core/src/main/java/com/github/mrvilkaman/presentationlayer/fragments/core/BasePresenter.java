@@ -35,7 +35,7 @@ public class BasePresenter<V extends BaseView> {
 	}
 
 	@Inject
-	public void setThrowableResolver(ThrowableResolver throwableResolver) {
+	public final void setThrowableResolver(ThrowableResolver throwableResolver) {
 		this.throwableResolver = throwableResolver;
 	}
 

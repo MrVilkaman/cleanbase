@@ -34,7 +34,7 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T> {
 		if (CleanBaseSettings.needSubscribeLogs()) {
 			Log.e("ViewSubscriber", "Start by:" + string, e);
 		}
-		if (throwableResolver == null && showError()) {
+		if (throwableResolver != null && showError()) {
 			throwableResolver.handleError(e);
 		}
 	}

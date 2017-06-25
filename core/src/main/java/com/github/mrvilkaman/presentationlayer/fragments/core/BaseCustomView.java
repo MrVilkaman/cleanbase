@@ -16,7 +16,7 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 
 	@Inject P presenter;
 	private View progressBar;
-	private BaseView parentView;
+	private Object parentView;
 
 	public BaseCustomView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -76,7 +76,7 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 	}
 
 	@SuppressWarnings("unchecked")
-	public void bind(BaseView view) {
+	public void bind(Object view) {
 		parentView = view;
 		if (presenter != null)
 			presenter.setView(this);

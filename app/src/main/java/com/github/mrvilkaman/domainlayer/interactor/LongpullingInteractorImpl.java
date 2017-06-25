@@ -30,7 +30,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 	public Observable<String> doWorkWithError() {
 		Log.d("QWER", "doWorkWithError start");
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.flatMap(s -> Observable.error(new NotFoundException()))
 				.map(o -> "")
 				.doOnNext(s -> Log.d("QWER", "doWorkWithError doOnNext"))
@@ -45,7 +45,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 		Log.d("QWER", "doWork start");
 
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWork doOnNext"))
@@ -58,7 +58,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 	public Observable<String> doWorkWithResponse() {
 		Log.d("QWER", "doWorkWithResponse start");
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWorkWithResponse doOnNext"))

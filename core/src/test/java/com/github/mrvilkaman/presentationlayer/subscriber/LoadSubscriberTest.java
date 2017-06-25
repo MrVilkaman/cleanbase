@@ -2,6 +2,8 @@ package com.github.mrvilkaman.presentationlayer.subscriber;
 
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 
 import org.junit.Test;
@@ -20,19 +22,23 @@ import static org.mockito.Mockito.verify;
 public class LoadSubscriberTest extends BaseTestCase {
 
 	@Mock BaseView view;
+	@Mock IProgressState progress;
+	@Mock ThrowableResolver throwableResolver;
 	private PublishSubject<Object> subject = PublishSubject.create();
 
 	@Test
 	public void testProgress_onSuccess() {
 		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
 		subscriber.setView(view);
+
+		subscriber.setProgressState(progress);
 		subject.subscribe(subscriber);
 		subject.onCompleted();
 
-		InOrder inOrder = Mockito.inOrder(view);
-		inOrder.verify(view)
+		InOrder inOrder = Mockito.inOrder(progress);
+		inOrder.verify(progress)
 				.showProgress();
-		inOrder.verify(view)
+		inOrder.verify(progress)
 				.hideProgress();
 	}
 
@@ -40,13 +46,14 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testProgress_onSuccess_oldSignature() {
 		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
 		subscriber.setView(view);
+		subscriber.setProgressState(progress);
 		subject.subscribe(subscriber);
 		subject.onCompleted();
 
-		InOrder inOrder = Mockito.inOrder(view);
-		inOrder.verify(view)
+		InOrder inOrder = Mockito.inOrder(progress);
+		inOrder.verify(progress)
 				.showProgress();
-		inOrder.verify(view)
+		inOrder.verify(progress)
 				.hideProgress();
 	}
 
@@ -56,15 +63,18 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
 		subscriber.setView(view);
+		subscriber.setThrowableResolver(throwableResolver);
+		subscriber.setProgressState(progress);
+
 		subject.subscribe(subscriber);
 		subject.onError(exception);
 
-		InOrder inOrder = Mockito.inOrder(view);
-		inOrder.verify(view)
+		InOrder inOrder = Mockito.inOrder(progress,throwableResolver);
+		inOrder.verify(progress)
 				.showProgress();
-		inOrder.verify(view)
+		inOrder.verify(progress)
 				.hideProgress();
-		inOrder.verify(view)
+		inOrder.verify(throwableResolver)
 				.handleError(exception);
 	}
 
@@ -72,13 +82,15 @@ public class LoadSubscriberTest extends BaseTestCase {
 	public void testNoNeedProgress_onSuccess() {
 		WithoutProgressSubscriber subscriber = new WithoutProgressSubscriber();
 		subscriber.setView(view);
+		subscriber.setThrowableResolver(throwableResolver);
+
 		subject.subscribe(subscriber);
 		subject.onCompleted();
 
-		InOrder inOrder = Mockito.inOrder(view);
-		inOrder.verify(view, never())
+		InOrder inOrder = Mockito.inOrder(progress,throwableResolver);
+		inOrder.verify(progress, never())
 				.showProgress();
-		inOrder.verify(view, never())
+		inOrder.verify(progress, never())
 				.hideProgress();
 	}
 
@@ -88,15 +100,17 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 		WithoutProgressSubscriber subscriber = new WithoutProgressSubscriber();
 		subscriber.setView(view);
+		subscriber.setThrowableResolver(throwableResolver);
+
 		subject.subscribe(subscriber);
 		subject.onError(exception);
 
-		InOrder inOrder = Mockito.inOrder(view);
-		inOrder.verify(view, never())
+		InOrder inOrder = Mockito.inOrder(progress,throwableResolver);
+		inOrder.verify(progress, never())
 				.showProgress();
-		inOrder.verify(view, never())
+		inOrder.verify(progress, never())
 				.hideProgress();
-		inOrder.verify(view)
+		inOrder.verify(throwableResolver)
 				.handleError(exception);
 	}
 
@@ -105,13 +119,13 @@ public class LoadSubscriberTest extends BaseTestCase {
 		Exception exception = mock(Exception.class);
 
 		LoadSubscriber<BaseView, Object> subscriber = new LoadSubscriber<>();
-		subscriber.setView(view);
+		subscriber.setThrowableResolver(throwableResolver);
 		subscriber.skipNextError();
 
 		subject.subscribe(subscriber);
 		subject.onError(exception);
 
-		verify(view, never()).handleError(exception);
+		verify(throwableResolver, never()).handleError(exception);
 	}
 
 
