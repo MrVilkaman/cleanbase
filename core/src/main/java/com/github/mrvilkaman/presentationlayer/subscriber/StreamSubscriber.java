@@ -11,13 +11,12 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>, D>
 		extends ViewSubscriber<V, T> implements INeedProgressState {
 
-	private @Nullable IProgressState progressState;
-
 	public StreamSubscriber() {
+		super();
 	}
 
 	public StreamSubscriber(@Nullable IProgressState progressState) {
-		this.progressState = progressState;
+		super(progressState);
 	}
 
 	public void onNextValue(D value) {
@@ -33,34 +32,22 @@ public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>,
 			onError(wrap.getThrowable());
 		}
 
-		if (progressState != null) {
-			if (wrap.isProgress()) {
-				progressState.showProgress();
-			} else {
-				progressState.hideProgress();
-			}
+		if (wrap.isProgress()) {
+			showProgress();
+		} else {
+			hideProgress();
 		}
 	}
 
-	@Override
-	public void setProgressState(@Nullable IProgressState progressState) {
-		if (this.progressState == null) {
-			this.progressState = progressState;
-		}
-	}
 
 	@Override
 	public void onError(Throwable e) {
-		if (progressState != null) {
-			progressState.hideProgress();
-		}
+		hideProgress();
 		super.onError(e);
 	}
 
 	@Override
 	public void onCompleted() {
-		if (progressState != null) {
-			progressState.hideProgress();
-		}
+		hideProgress();
 	}
 }

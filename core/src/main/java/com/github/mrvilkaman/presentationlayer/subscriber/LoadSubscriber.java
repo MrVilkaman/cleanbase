@@ -5,29 +5,25 @@ import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
-import com.github.mrvilkaman.presentationlayer.fragments.core.INeedProgressState;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
 /**
  * Created by root on 16.03.16.
  */
-public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> implements
-		INeedProgressState {
+public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T>{
 
-	private @Nullable IProgressState progressState;
 
 	public LoadSubscriber() {
 	}
 
 	public LoadSubscriber(@Nullable IProgressState progressState) {
-		this.progressState = progressState;
+		super(progressState);
 	}
 
 	@Override
 	public void onStart() {
 		if (needProgress()) {
-			if (progressState != null)
-				progressState.showProgress();
+			showProgress();
 		}
 	}
 
@@ -42,13 +38,9 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> 
 
 	@Override
 	public void onError(Throwable e) {
-		BaseView view = view();
-		if (view == null)
-			return;
 
 		if (needProgress()) {
-			if (progressState != null)
-				progressState.hideProgress();
+			hideProgress();
 		}
 		super.onError(e);
 	}
@@ -61,16 +53,7 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T> 
 	public void onCompleted() {
 		super.onCompleted();
 		if (needProgress()) {
-			if (progressState != null)
-				progressState.hideProgress();
+			hideProgress();
 		}
 	}
-
-	@Override
-	public void setProgressState(@Nullable IProgressState progressState) {
-		if (this.progressState == null) {
-			this.progressState = progressState;
-		}
-	}
-
 }

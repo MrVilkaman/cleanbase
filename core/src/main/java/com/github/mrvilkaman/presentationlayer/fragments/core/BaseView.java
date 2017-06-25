@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
-public interface BaseView  {
+@Deprecated
+public interface BaseView extends IProgressState {
 }
