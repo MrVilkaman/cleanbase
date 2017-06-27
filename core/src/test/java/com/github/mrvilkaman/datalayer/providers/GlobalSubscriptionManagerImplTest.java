@@ -63,7 +63,6 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
 	}
 
-	
 	@Test
 	public void testSubscribeWithResult_error_inUI() {
 		// Arrange

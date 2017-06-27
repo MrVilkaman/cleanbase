@@ -1,22 +1,29 @@
 package com.github.mrvilkaman.presentationlayer.subscriber;
 
 
+import android.support.annotation.Nullable;
+
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BindType;
+import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
 /**
  * Created by root on 16.03.16.
  */
-public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
+public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T>{
+
 
 	public LoadSubscriber() {
-		super();
+	}
+
+	public LoadSubscriber(@Nullable IProgressState progressState) {
+		super(progressState);
 	}
 
 	@Override
 	public void onStart() {
 		if (needProgress()) {
-			view().showProgress();
+			showProgress();
 		}
 	}
 
@@ -31,11 +38,9 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 
 	@Override
 	public void onError(Throwable e) {
-		BaseView view = view();
-		if (view  == null) return;
 
 		if (needProgress()) {
-			view.hideProgress();
+			hideProgress();
 		}
 		super.onError(e);
 	}
@@ -48,8 +53,7 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V,T> {
 	public void onCompleted() {
 		super.onCompleted();
 		if (needProgress()) {
-			view().hideProgress();
+			hideProgress();
 		}
 	}
-
 }

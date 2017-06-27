@@ -1,10 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.activities;
 
-public interface BaseActivityView {
+import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
-	void showProgress();
-
-	void hideProgress();
+public interface BaseActivityView extends IProgressState {
 
 	void hideKeyboard();
 

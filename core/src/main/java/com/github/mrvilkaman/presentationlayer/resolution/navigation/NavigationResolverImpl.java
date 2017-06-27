@@ -3,6 +3,7 @@ package com.github.mrvilkaman.presentationlayer.resolution.navigation;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.mrvilkaman.core.R;
@@ -29,14 +30,14 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Nullable private LeftDrawerHelper drawerHelper;
 	@Nullable private ToolbarResolver toolbarResolver;
 	private UIResolver uiResolver;
-	private BaseActivityView activityView;
+	private @NonNull BaseActivityView activityView;
 
 	private ProvideFragmentCallback callback;
 
 	public NavigationResolverImpl(Activity currentActivity, FragmentResolver fragmentManager,
 								  @Nullable LeftDrawerHelper drawerHelper,
 								  @Nullable ToolbarResolver toolbarResolver, UIResolver uiResolver,
-								  BaseActivityView activityView, ProvideFragmentCallback
+								  @NonNull BaseActivityView activityView, ProvideFragmentCallback
 										  callback) {
 		this.currentActivity = currentActivity;
 		this.fragmentManager = fragmentManager;
@@ -81,7 +82,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	@Override
 	public void onBackPressed() {
 		if (fragmentManager.processBackFragment()) {
-			activityView.hideProgress();
+				activityView.hideProgress();
 			if (fragmentManager.checkBackStack()) {
 				if (toolbarResolver != null)
 					toolbarResolver.clear();
