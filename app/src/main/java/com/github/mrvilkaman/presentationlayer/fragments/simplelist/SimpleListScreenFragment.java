@@ -58,7 +58,7 @@ public class SimpleListScreenFragment extends BaseFragment<SimpleListPresenter>
 		TextView footer = (TextView) LayoutInflater.from(getContext())
 				.inflate(android.R.layout.simple_list_item_1, null);
 		footer.setText("footer");
-		adapterFooter.addHeader(header);
+//		adapterFooter.addHeader(header);
 		adapterFooter.addFooter(footer);
 
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
