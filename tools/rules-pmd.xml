@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+	<!--For artem-zinnatullin/qualitymatters
+	https://github.com/artem-zinnatullin/qualitymatters/blob/master/code_quality_tools/findbugs-filter.xml-->
+
+	<description>Custom ruleset for Android application</description>
+
+	<exclude-pattern>.*/R.java</exclude-pattern>
+	<exclude-pattern>.*/gen/.*</exclude-pattern>
+
+
+	<rule ref="rulesets/java/basic.xml"/>
+	<rule ref="rulesets/java/android.xml"/>
+
+	<rule ref="rulesets/java/braces.xml">
+		<exclude name="IfStmtsMustUseBraces"/>
+	</rule>
+
+	<rule ref="rulesets/java/strings.xml"/>
+
+	<rule ref="rulesets/java/design.xml">
+		<exclude name="ConstantsInInterface"/>
+		<exclude name="ConfusingTernary"/>
+		<exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+	</rule>
+
+	<rule ref="rulesets/java/unusedcode.xml"/>
+	<rule ref="rulesets/java/junit.xml"/>
+	<rule ref="rulesets/java/logging-java.xml"/>
+	<rule ref="rulesets/java/typeresolution.xml"/>
+	<rule ref="rulesets/java/unnecessary.xml"/>
+	<rule ref="rulesets/java/imports.xml">
+		<exclude name="TooManyStaticImports"/>
+	</rule>
+
+
+</ruleset>
