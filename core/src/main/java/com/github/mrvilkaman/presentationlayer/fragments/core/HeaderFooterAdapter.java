@@ -65,38 +65,21 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 	}
 
 	protected void prepareHeaderFooter(HeaderFooterViewHolder vh, View view) {
-		//if it's a staggered grid, span the whole layout
-		//		if (manager instanceof StaggeredGridLayoutManager) {
-		//			StaggeredGridLayoutManager.LayoutParams layoutParams = new
-		// StaggeredGridLayoutManager.LayoutParams(
-		//					ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
-		// .MATCH_PARENT);
-		//			layoutParams.setFullSpan(true);
-		//			vh.itemView.setLayoutParams(layoutParams);
-		//		}
-		//if the view already belongs to another layout, remove it
 		if (view.getParent() != null) {
 			((ViewGroup) view.getParent()).removeView(view);
 		}
-		//empty out our FrameLayout and replace with our header/footer
 		((ViewGroup) vh.itemView).removeAllViews();
 		((ViewGroup) vh.itemView).addView(view);
 	}
 
 	@Override
 	final public int getItemViewType(int position) {
-		//check what type our position is, based on the assumption that the order is headers >
-		// items > footers
+
 		if (isHeader(position)) {
 			return TYPE_HEADER;
 		} else if (isFooter(position)) {
 			return TYPE_FOOTER;
 		}
-		//		int type = getItemType(position);
-		//		if (type == TYPE_HEADER || type == TYPE_FOOTER) {
-		//			throw new IllegalArgumentException("Item type cannot equal " + TYPE_HEADER + "
-		// or " + TYPE_FOOTER);
-		//		}
 		return 0;
 	}
 
@@ -121,8 +104,12 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 		boolean show = adapter.getItemCount() != 0;
 		if (footerView != null)
 			UIUtils.changeVisibility(footerView, show);
-		if (headerView != null)
+		if (headerView != null) {
 			UIUtils.changeVisibility(headerView, show);
+			adapter.setPosOffset(1);
+		}else{
+			adapter.setPosOffset(0);
+		}
 	}
 
 	public void addHeader(View view) {
@@ -165,14 +152,57 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 	}
 
 	@Override
+	public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+		super.registerAdapterDataObserver(observer);
+		adapter.registerAdapterDataObserver(observer);
+	}
+
+	@Override
+	public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+		super.unregisterAdapterDataObserver(observer);
+		adapter.unregisterAdapterDataObserver(observer);
+	}
+
+	@Override
+	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+		adapter.onAttachedToRecyclerView(recyclerView);
+	}
+
+	@Override
+	public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+		adapter.onDetachedFromRecyclerView(recyclerView);
+	}
+
+	@Override
+	public void onViewRecycled(RecyclerView.ViewHolder holder) {
+		super.onViewRecycled(holder);
+		adapter.onViewRecycled(holder);
+	}
+
+	@Override
+	public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+		return adapter.onFailedToRecycleView(holder);
+	}
+
+	@Override
+	public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+		adapter.onViewAttachedToWindow(holder);
+	}
+
+	@Override
+	public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+		adapter.onViewDetachedFromWindow(holder);
+	}
+
+	@Override
 	public int getItemCount() {
 		return adapter.getItemCount() + getHeaderOffset() + getFooterOffset();
 	}
 
 	public <T> void setItems(List<T> items) {
-		adapter.setItems(items);
-		this.notifyDataSetChanged();
 		updateFooterHeaderState();
+		adapter.setItems(items);
+//		this.notifyDataSetChanged();
 	}
 
 	//our header/footer RecyclerView.ViewHolder is just a FrameLayout
