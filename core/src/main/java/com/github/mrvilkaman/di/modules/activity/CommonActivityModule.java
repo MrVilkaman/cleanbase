@@ -10,8 +10,6 @@ import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.domainlayer.providers.PermissionManager;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
-import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolverImpl;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolverImpl;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
@@ -43,12 +41,6 @@ public class CommonActivityModule {
 	@PerActivity
 	public UIResolver createUiResolver() {
 		return new UIResolverImpl(view.getContext(), view);
-	}
-
-	@Provides
-	@PerActivity
-	public ThrowableResolver createThrowableResolver(UIResolver ui) {
-		return new ThrowableResolverImpl(ui);
 	}
 
 	@Provides
