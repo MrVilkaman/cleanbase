@@ -27,8 +27,8 @@ public class LongpullingPresenter extends BasePresenter<LongpullingView> {
 
 	public void doWorkWithError() {
 		subscribeUI(interactor.doWorkWithError(), new LongpullingViewStringViewSubscriber());
-		subscribeUI(interactor.doWorkWithError(), new LongpullingViewStringViewSubscriber());
-		subscribeUI(interactor.doWorkWithError(), new LongpullingViewStringViewSubscriber());
+//		subscribeUI(interactor.doWorkWithError(), new LongpullingViewStringViewSubscriber());
+//		subscribeUI(interactor.doWorkWithError(), new LongpullingViewStringViewSubscriber());
 	}
 
 	private static class LongpullingViewStringViewSubscriber

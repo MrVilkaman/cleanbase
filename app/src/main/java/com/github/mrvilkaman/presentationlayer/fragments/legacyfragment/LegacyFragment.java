@@ -53,4 +53,14 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 	public boolean onBackPressed() {
 		return false;
 	}
+
+	@Override
+	public void showProgress() {
+
+	}
+
+	@Override
+	public void hideProgress() {
+
+	}
 }
