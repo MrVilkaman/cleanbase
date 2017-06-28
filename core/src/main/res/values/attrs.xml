@@ -3,5 +3,9 @@
 	<declare-styleable name="BoundedView">
 		<attr name="boundedWidth" format="dimension" />
 		<attr name="boundedHeight" format="dimension" />
+		<attr name="mode" format="enum">
+			<enum name="max" value="0"/>
+			<enum name="calc" value="1"/>
+		</attr>
 	</declare-styleable>
 </resources>

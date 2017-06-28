@@ -18,6 +18,13 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 
 	private String tag;
 
+	public static LegacyFragment open() {
+		 Bundle args = new Bundle();
+		 LegacyFragment fragment = new LegacyFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
