@@ -10,20 +10,17 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
 
 public class LongpullingInteractorImpl implements LongpullingInteractor {
 
 	private final SchedulersProvider schedulersProvider;
 	private final GlobalSubscriptionManager subscribtionManager;
-	private final CompositeSubscription subscription;
 
 	public LongpullingInteractorImpl(SchedulersProvider schedulersProvider,
 									 GlobalSubscriptionManager subscribtionManager) {
 		this.schedulersProvider = schedulersProvider;
 		this.subscribtionManager = subscribtionManager;
 
-		subscription = new CompositeSubscription();
 	}
 
 	@Override
