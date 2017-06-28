@@ -17,7 +17,6 @@ public class BoundedViewHelper {
 	public static final int MODE_CALC = 1;
 	private int mMaxWidth = Integer.MAX_VALUE;
 	private int mMaxHeight = Integer.MAX_VALUE;
-	private int mode;
 
 
 	public BoundedViewHelper(Context context, AttributeSet attrs) {
@@ -27,38 +26,18 @@ public class BoundedViewHelper {
 					Integer.MAX_VALUE);
 			mMaxHeight = a.getDimensionPixelSize(R.styleable.BoundedView_boundedHeight,
 					Integer.MAX_VALUE);
-			mode = a.getInt(R.styleable.BoundedView_mode, 0);
 			a.recycle();
 		}
 	}
 
-	public int getBoundedMeasuredWidth(int widthMeasureSpec, int width) {
-		switch (mode) {
-			case MODE_MIN:
-				return Math.min(width, mMaxWidth);
-			case MODE_CALC:
-				return getBoundedMeasuredWidth2(widthMeasureSpec, width);
-			default:
-				return width;
+	public Bound getData(int widthMeasureSpec, int width, int heightMeasureSpec, int height) {
+		int mBoundedHeight = Math.min(height, mMaxHeight);
+		int measuredHeight = View.MeasureSpec.getSize(heightMeasureSpec);
+		if (0 < mBoundedHeight && mBoundedHeight < measuredHeight) {
+			int measureMode = View.MeasureSpec.getMode(heightMeasureSpec);
+			heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(mBoundedHeight, measureMode);
 		}
-	}
 
-	public int getBoundedMeasuredHeight(int heightMeasureSpec, int height) {
-		switch (mode) {
-			case MODE_MIN:
-				return Math.min(height, mMaxHeight);
-			case MODE_CALC:
-				return getBoundedMeasuredHeight2(heightMeasureSpec, height);
-			default:
-				return height;
-		}
-	}
-
-	public int getMode() {
-		return mode;
-	}
-
-	public int getBoundedMeasuredWidth2(int widthMeasureSpec, int width) {
 		int mBoundedWidth = Math.min(width, mMaxWidth);
 		int measuredWidth = View.MeasureSpec.getSize(widthMeasureSpec);
 		if (0 < mBoundedWidth && mBoundedWidth < measuredWidth) {
@@ -66,17 +45,33 @@ public class BoundedViewHelper {
 			widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(mBoundedWidth, measureMode);
 		}
 
-		return widthMeasureSpec;
+		return new Bound(mBoundedWidth, mBoundedHeight, widthMeasureSpec, heightMeasureSpec);
 	}
 
-	public int getBoundedMeasuredHeight2(int heightMeasureSpec, int height) {
-		int mBoundedHeight = Math.min(height, mMaxHeight);
-		int measuredHeight = View.MeasureSpec.getSize(heightMeasureSpec);
-		if (0 < mBoundedHeight && mBoundedHeight < measuredHeight) {
-			int measureMode = View.MeasureSpec.getMode(heightMeasureSpec);
-			heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(mBoundedHeight, measureMode);
+
+	///// ПРИМЕР!
+	//	@Override
+	//	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	//		BoundedViewHelper.Bound data =
+	//				boundedHelper.getData(widthMeasureSpec, getMeasuredWidth(), heightMeasureSpec,
+	//						getMeasuredHeight());
+	//		setMeasuredDimension(data.boundedMeasuredWidth, data.boundedMeasuredHeight);
+	//		super.onMeasure(data.widthMeasureSpec, data.heightMeasureSpec);
+	//	}
+
+	public class Bound {
+		public final int boundedMeasuredWidth;
+		public final int boundedMeasuredHeight;
+		public final int widthMeasureSpec;
+		public final int heightMeasureSpec;
+
+		public Bound(int boundedMeasuredWidth, int boundedMeasuredHeight, int widthMeasureSpec,
+					 int heightMeasureSpec) {
+			this.boundedMeasuredWidth = boundedMeasuredWidth;
+			this.boundedMeasuredHeight = boundedMeasuredHeight;
+			this.widthMeasureSpec = widthMeasureSpec;
+			this.heightMeasureSpec = heightMeasureSpec;
 		}
-		return heightMeasureSpec;
 	}
 
 

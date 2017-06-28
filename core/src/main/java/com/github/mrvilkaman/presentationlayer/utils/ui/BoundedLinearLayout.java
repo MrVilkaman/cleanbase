@@ -23,16 +23,11 @@ public class BoundedLinearLayout extends LinearLayout {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int boundedMeasuredWidth =
-				boundedHelper.getBoundedMeasuredWidth(widthMeasureSpec, getMeasuredWidth());
-		int boundedMeasuredHeight =
-				boundedHelper.getBoundedMeasuredHeight(heightMeasureSpec, getMeasuredHeight());
-
-		setMeasuredDimension(boundedMeasuredWidth, boundedMeasuredHeight);
-		super.onMeasure(
-				boundedHelper.getBoundedMeasuredWidth2(widthMeasureSpec, getMeasuredWidth()),
-				boundedHelper.getBoundedMeasuredHeight2(heightMeasureSpec, getMeasuredHeight()));
+		BoundedViewHelper.Bound data =
+				boundedHelper.getData(widthMeasureSpec, getMeasuredWidth(), heightMeasureSpec,
+						getMeasuredHeight());
+		setMeasuredDimension(data.boundedMeasuredWidth, data.boundedMeasuredHeight);
+		super.onMeasure(data.widthMeasureSpec, data.heightMeasureSpec);
 	}
 
 }
