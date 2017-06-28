@@ -2,8 +2,11 @@ package com.github.mrvilkaman.presentationlayer.utils.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,6 +18,7 @@ import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationR
 public class UIUtils {
 
 	private UIUtils() {
+		// пустой
 	}
 
 	public static String asString(EditText view) {
@@ -30,6 +34,15 @@ public class UIUtils {
 	public static void changeVisibility(View view, boolean show) {
 		if (view != null)
 			view.setVisibility(show ? View.VISIBLE : View.GONE);
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Spanned fromHtml(String source) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY);
+		} else {
+			return Html.fromHtml(source);
+		}
 	}
 
 	public static void openSettings(NavigationResolver navigation,String packageName) {
