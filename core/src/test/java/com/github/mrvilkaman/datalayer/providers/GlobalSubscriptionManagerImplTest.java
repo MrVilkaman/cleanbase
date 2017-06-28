@@ -63,6 +63,36 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
 	}
 
+
+
+	@Test
+	public void testSubscribeCompose_success() {
+		// Arrange
+		PublishSubject<String> subject = PublishSubject.create();
+		TestSubscriber<String> client = new TestSubscriber<>();
+		Observable<String> stringObservable = subject.asObservable().doOnNext(client::onNext);
+
+		// Act
+		subject.onNext("qwer1");
+		stringObservable.compose(manager.subscribe());
+		subject.onNext("qwer2");
+
+		// Assert
+		client.assertValueCount(1);
+		client.assertValue("qwer2");
+	}
+
+
+	@Test
+	public void testSubscribeCompose_error() {
+		// Act
+		UnauthorizedException exception = new UnauthorizedException();
+		Observable.error(exception).compose(manager.subscribe());
+
+		// Assert
+		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
+	}
+
 	@Test
 	public void testSubscribeWithResult_error_inUI() {
 		// Arrange
@@ -70,7 +100,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		TestSubscriber<Object> subscriber = new TestSubscriber<>();
 		PublishSubject<Object> subject = PublishSubject.create();
 		// Act
-		Observable<Object> objectObservable = manager.subscribeWithResult(subject.asObservable());
+		Observable<Object> objectObservable = subject.asObservable().compose(manager.subscribeWithResult());
 		objectObservable.subscribe(subscriber);
 		subject.onError(exception);
 
@@ -88,7 +118,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		PublishSubject<Object> subject = PublishSubject.create();
 
 		// Act
-		Observable<Object> objectObservable = manager.subscribeWithResult(subject.asObservable());
+		Observable<Object> objectObservable = subject.asObservable().compose(manager.subscribeWithResult());;
 		objectObservable.subscribe(subscriber).unsubscribe();
 		subject.onError(exception);
 
@@ -110,7 +140,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 
 		// Act
 		Observable<String> objectObservable =
-				manager.subscribeWithResult(stringObservable.asObservable());
+				stringObservable.asObservable().compose(manager.subscribeWithResult());
 		objectObservable.subscribe(subscriber);
 		subject.onNext("qwer");
 		subject.onCompleted();
@@ -123,7 +153,6 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	}
 
 
-	
 	@Test
 	public void testSubscribeWithResult_nextAndCompleted_NoUI() {
 		// Arrange
@@ -135,7 +164,7 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 
 		// Act
 		Observable<String> objectObservable =
-				manager.subscribeWithResult(stringObservable.asObservable());
+				stringObservable.asObservable().compose(manager.subscribeWithResult());
 		objectObservable.subscribe(subscriber).unsubscribe();
 		subject.onNext("qwer");
 		subject.onCompleted();
@@ -162,9 +191,9 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		// Act
 		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
 		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
+		stringObservable.asObservable().compose(manager.createCached("qwer")).subscribe(testSubscriber1);
 		testSubscriber1.assertValueCount(0);
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		stringObservable.asObservable().compose(manager.createCached("qwer")).subscribe(testSubscriber2);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
@@ -293,7 +322,6 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		testSubscriber2.assertValue("1");
 		verify(mock).getNext();
 	}
-
 
 	@Test
 	public void testsubscribeSingle_twoSubscribe_unsubscribeOnWork() {

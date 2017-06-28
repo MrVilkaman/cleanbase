@@ -9,11 +9,7 @@ import java.io.File;
 
 public class StorageUtils {
 
-	private StorageUtils() {
-		// пустой
-	}
-
-	public static String getStoragePath(Context context) {
+	public String getStoragePath(Context context) {
 		if (context == null)
 			return null;
 

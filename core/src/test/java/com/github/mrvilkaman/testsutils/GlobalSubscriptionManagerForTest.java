@@ -21,4 +21,22 @@ public class GlobalSubscriptionManagerForTest implements GlobalSubscriptionManag
 	public <T> Observable<T> createCached(String key, Observable<T> observable) {
 		return observable;
 	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> subscribe() {
+		return observable -> {
+			observable.subscribe();
+			return Observable.empty();
+		};
+	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> subscribeWithResult() {
+		return observable -> observable;
+	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> createCached(String key) {
+		return observable -> observable;
+	}
 }
