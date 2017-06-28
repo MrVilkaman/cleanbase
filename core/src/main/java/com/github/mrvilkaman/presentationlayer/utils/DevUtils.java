@@ -3,6 +3,7 @@ package com.github.mrvilkaman.presentationlayer.utils;
 
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.StrictMode;
 
 import com.github.mrvilkaman.di.IHasComponent;
 
@@ -54,10 +55,21 @@ public class DevUtils {
 				stackTrace[i + 2].toString());
 
 	}
-
-
 	@SuppressWarnings("unchecked")
 	public static  <T> T getComponent(Object obj,Class<T> componentType) {
 		return componentType.cast(((IHasComponent<T>) obj).getComponent());
+	}
+
+	public static void useStrictMode(){
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectAll()
+				.penaltyLog()
+				.penaltyDialog()
+				.build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+				.detectAll()
+				.penaltyLog()
+				.penaltyDeath()
+				.build());
 	}
 }
