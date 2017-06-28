@@ -51,25 +51,23 @@ public class DevUtils {
 	public static String getGlobalSubscriberStartStack() {
 		StackTraceElement[] stackTrace = new Exception().getStackTrace();
 		int i = 2;
-		return String.format("\n%s\n%s\n%s", stackTrace[i].toString(), stackTrace[i + 1].toString(),
+		return String.format("\n%s\n%s\n%s", stackTrace[i].toString(), stackTrace[i + 1]
+						.toString(),
 				stackTrace[i + 2].toString());
 
 	}
+
 	@SuppressWarnings("unchecked")
-	public static  <T> T getComponent(Object obj,Class<T> componentType) {
+	public static <T> T getComponent(Object obj, Class<T> componentType) {
 		return componentType.cast(((IHasComponent<T>) obj).getComponent());
 	}
 
-	public static void useStrictMode(){
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-				.detectAll()
+	public static void useStrictMode() {
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
 				.penaltyLog()
 				.penaltyDialog()
 				.build());
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-				.detectAll()
-				.penaltyLog()
-				.penaltyDeath()
-				.build());
+		StrictMode.setVmPolicy(
+				new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
 	}
 }
