@@ -99,6 +99,7 @@ dependencies {
     compile libraries.okHttp3
     compile libraries.okHttpLoggingInterceptor
 
+    provided libraries.playServicesGcm
 
     //tests
     testCompile project(':testutils')
