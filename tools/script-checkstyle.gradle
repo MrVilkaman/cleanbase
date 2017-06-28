@@ -1,0 +1,18 @@
+plugins.apply('checkstyle')
+
+checkstyle {
+    toolVersion = '6.16.1'
+}
+
+task checkstyle(type: Checkstyle) {
+    configFile rootProject.file('rules-checkstyle.xml')
+    configFile file("${project.rootDir}/tools/rules-checkstyle.xml")
+
+    ignoreFailures false // Fail early.
+    showViolations true
+
+    source 'src'
+    include '**/*.java'
+
+    classpath = files()
+}

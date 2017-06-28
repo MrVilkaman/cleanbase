@@ -17,4 +17,9 @@ public class ServerException extends Throwable {
 	public ServerException(Throwable cause) {
 		super(cause);
 	}
+
+	@Override
+	public synchronized Throwable fillInStackTrace() {
+		return this;
+	}
 }

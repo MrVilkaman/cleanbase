@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply from: '../artifacts.gradle'
-apply from: '../dependencies.gradle'
+//apply from: '../artifacts.gradle'
+apply from: "$project.rootDir/tools/tools.gradle"
 apply from: '../jacoco.gradle'
 apply plugin: 'com.github.ben-manes.versions'
 android {
