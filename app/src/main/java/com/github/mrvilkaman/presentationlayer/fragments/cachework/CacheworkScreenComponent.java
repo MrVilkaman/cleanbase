@@ -1,5 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.cachework;
 
+import com.github.mrvilkaman.datalayer.provider.CacheworkDp;
+import com.github.mrvilkaman.datalayer.provider.CacheworkDpImpl;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.di.PerScreen;
 import com.github.mrvilkaman.domainlayer.interactor.cache.CacheworkInteractor;
@@ -22,5 +24,9 @@ public interface CacheworkScreenComponent {
 		@Binds
 		@PerScreen
 		public abstract CacheworkInteractor getCacheworkInteractor(CacheworkInteractorImpl interactor);
+
+		@Binds
+		@PerScreen
+		public abstract CacheworkDp getCacheworkDp(CacheworkDpImpl interactor);
 	}
 }
