@@ -14,6 +14,7 @@ import rx.subjects.BehaviorSubject;
 public class CacheworkDpImpl implements CacheworkDp {
 
 	private BehaviorSubject<String> subject = BehaviorSubject.create();
+	private BehaviorSubject<Boolean> subjectProgress = BehaviorSubject.create(false);
 	private GlobalSubscriptionManager manager;
 
 	@Inject
@@ -27,10 +28,22 @@ public class CacheworkDpImpl implements CacheworkDp {
 	}
 
 	@Override
+	public Observable<Boolean> observeStringProgress() {
+		return subjectProgress.asObservable();
+	}
+
+	@Override
+	public boolean getCurrentProgress() {
+		return subjectProgress.getValue();
+	}
+
+	@Override
 	public void refreshString() {
 		Observable.just(UUID.randomUUID().toString())
 				.delay(2, TimeUnit.SECONDS)
 				.doOnNext(subject::onNext)
+				.doOnSubscribe(() -> subjectProgress.onNext(true))
+				.doOnTerminate(() -> subjectProgress.onNext(false))
 				.compose(manager.subscribe());
 	}
 }

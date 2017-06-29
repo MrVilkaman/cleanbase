@@ -9,11 +9,13 @@ public class StringDataWrapper extends DataErrorWrapper<String> {
 		super(progress);
 	}
 
-	public StringDataWrapper(String value) {
+	public StringDataWrapper(String value, boolean progress) {
 		super(value);
+		setProgress(progress);
 	}
 
-	public StringDataWrapper(Throwable throwable) {
+	public StringDataWrapper(Throwable throwable, boolean progress) {
 		super(throwable);
+		setProgress(progress);
 	}
 }

@@ -4,7 +4,7 @@ package com.github.mrvilkaman.domainlayer.models;
 public class DataErrorWrapper<D> {
 	private final D value;
 	private final Throwable throwable;
-	private final boolean progress;
+	private boolean progress;
 
 	//	public static DataErrorWrapper
 
@@ -44,6 +44,10 @@ public class DataErrorWrapper<D> {
 
 	public boolean isProgress() {
 		return progress;
+	}
+
+	protected void setProgress(boolean progress) {
+		this.progress = progress;
 	}
 
 	@Override

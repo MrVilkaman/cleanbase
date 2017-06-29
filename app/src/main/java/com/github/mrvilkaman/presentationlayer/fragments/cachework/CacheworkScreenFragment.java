@@ -3,11 +3,13 @@ package com.github.mrvilkaman.presentationlayer.fragments.cachework;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.R;
 import com.github.mrvilkaman.di.ActivityComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.longpulling.LongpullingScreenFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -16,6 +18,7 @@ public class CacheworkScreenFragment extends BaseFragment<CacheworkPresenter>
 		implements CacheworkView {
 
 	@BindView(R.id.text) TextView textView;
+	@BindView(R.id.update) Button buttonView;
 
 
 	public static CacheworkScreenFragment open() {
@@ -44,8 +47,24 @@ public class CacheworkScreenFragment extends BaseFragment<CacheworkPresenter>
 	}
 
 	@OnClick(R.id.update)
-	void onClickUpdate(){
+	void onClickUpdate() {
 		getPresenter().update();
 	}
 
+	@OnClick(R.id.screen)
+	void onClickOpen() {
+		getNavigation().showFragment(LongpullingScreenFragment.open());
+	}
+
+	@Override
+	public void showProgress() {
+		super.showProgress();
+		buttonView.setEnabled(false);
+	}
+
+	@Override
+	public void hideProgress() {
+		super.hideProgress();
+		buttonView.setEnabled(true);
+	}
 }
