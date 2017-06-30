@@ -9,7 +9,7 @@ import com.github.mrvilkaman.di.modules.activity.DrawerModule;
 import com.github.mrvilkaman.di.modules.activity.FragmentModule;
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule;
 import com.github.mrvilkaman.presentationlayer.app.App;
-import com.github.mrvilkaman.presentationlayer.fragments.legacyfragment.LegacyFragment;
+import com.github.mrvilkaman.presentationlayer.fragments.cachework.CacheworkScreenFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.testfrags.DrawerScreenFragment;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,SecondActivityP
 	protected ActivityComponent createComponent() {
 		AppComponent appComponent = DevUtils.getComponent(App.get(this),AppComponent.class);
 		CommonActivityModule commonActivityModule =
-				new CommonActivityModule(this, this, getRootView(), LegacyFragment::open);
+				new CommonActivityModule(this, this, getRootView(), CacheworkScreenFragment::open);
 		return DaggerActivityComponent.builder()
 				.appComponent(appComponent)
 				.commonActivityModule(commonActivityModule)
