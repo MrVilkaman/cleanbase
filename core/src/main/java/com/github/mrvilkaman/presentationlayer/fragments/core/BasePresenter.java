@@ -68,9 +68,7 @@ public class BasePresenter<V extends BaseView> {
 		}
 		if (subscriber instanceof INeedProgressState) {
 			INeedProgressState loadSubscriber = (INeedProgressState) subscriber;
-			if (view instanceof IProgressState) {
-				loadSubscriber.setProgressState((IProgressState) view);
-			}
+			loadSubscriber.setProgressState(view);
 		}
 		compositeSubscription.add(
 				observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
