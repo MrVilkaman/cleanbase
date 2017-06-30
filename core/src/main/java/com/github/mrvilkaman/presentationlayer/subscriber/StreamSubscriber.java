@@ -44,12 +44,6 @@ public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>,
 
 
 	@Override
-	public void onError(Throwable e) {
-		hideProgress();
-		super.onError(e);
-	}
-
-	@Override
 	public void onCompleted() {
 		hideProgress();
 	}

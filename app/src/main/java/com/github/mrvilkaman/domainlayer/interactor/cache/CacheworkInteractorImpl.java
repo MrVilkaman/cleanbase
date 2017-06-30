@@ -21,10 +21,7 @@ public class CacheworkInteractorImpl extends BaseInteractor implements Cachework
 	public Observable<StringDataWrapper> observeSomedata() {
 		return cacheworkDp.observeString()
 				.doOnSubscribe(() -> cacheworkDp.refreshString())
-				.map(value -> new StringDataWrapper(value, cacheworkDp.getCurrentProgress()))
-				.onErrorReturn(throwable -> new StringDataWrapper(throwable,
-						cacheworkDp.getCurrentProgress()))
-				.mergeWith(cacheworkDp.observeStringProgress().map(StringDataWrapper::new));
+				.map(StringDataWrapper::new);
 	}
 
 	@Override

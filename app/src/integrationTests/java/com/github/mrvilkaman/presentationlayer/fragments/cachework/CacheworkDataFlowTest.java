@@ -51,8 +51,6 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 		// Act
 		presenter.onViewAttached();
 		provider.getTestScheduler().advanceTimeBy(3, TimeUnit.SECONDS);
-		presenter.update();
-
 
 		// Assert
 		InOrder inOrder = Mockito.inOrder(view);
@@ -95,7 +93,7 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 		provider.getTestScheduler().advanceTimeBy(3, TimeUnit.SECONDS);
 
 		Observable<String> just = cacheworkDp.getJust();
-		when(just).thenReturn(Observable.error(new NotFoundException()));
+		when(cacheworkDp.getJust()).thenReturn(Observable.error(new NotFoundException()));
 		presenter.update();
 		provider.getTestScheduler().advanceTimeBy(3, TimeUnit.SECONDS);
 
@@ -112,7 +110,6 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 		inOrder.verify(view).showProgress();
 		inOrder.verify(throwableResolver).handleError(org.mockito.Matchers.isA(NotFoundException.class));
 		inOrder.verify(view).hideProgress();
-
 
 		inOrder.verify(view).showProgress();
 		inOrder.verify(view).bindText("q2");

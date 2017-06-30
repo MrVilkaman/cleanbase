@@ -2,11 +2,30 @@ package com.github.mrvilkaman.domainlayer.models;
 
 
 public class DataErrorWrapper<D> {
-	private final D value;
-	private final Throwable throwable;
-	private boolean progress;
+	protected D value;
+	protected Throwable throwable;
+	protected boolean progress;
 
 	//	public static DataErrorWrapper
+
+
+	protected DataErrorWrapper(DataErrorWrapper<D> wrapper) {
+		throwable = wrapper.getThrowable();
+		value = wrapper.getValue();
+		progress = wrapper.isProgress();
+	}
+
+	public DataErrorWrapper(D value, boolean progress) {
+		this.value = value;
+		this.progress = progress;
+		throwable = null;
+	}
+
+	public DataErrorWrapper(Throwable throwable, boolean progress) {
+		this.throwable = throwable;
+		this.progress = progress;
+		value = null;
+	}
 
 	public DataErrorWrapper(boolean progress) {
 		this.progress = progress;
@@ -14,17 +33,6 @@ public class DataErrorWrapper<D> {
 		value = null;
 	}
 
-	public DataErrorWrapper(D value) {
-		this.value = value;
-		throwable = null;
-		progress = false;
-	}
-
-	public DataErrorWrapper(Throwable throwable) {
-		this.throwable = throwable;
-		value = null;
-		progress = false;
-	}
 
 	public boolean isSuccess() {
 		return value != null;

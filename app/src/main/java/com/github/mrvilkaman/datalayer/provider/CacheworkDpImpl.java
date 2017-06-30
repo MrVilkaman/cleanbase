@@ -3,8 +3,11 @@ package com.github.mrvilkaman.datalayer.provider;
 
 import android.support.annotation.NonNull;
 
+import com.github.mrvilkaman.datalayer.tools.ProgressStateHolder;
+import com.github.mrvilkaman.domainlayer.models.DataErrorWrapper;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.jakewharton.rxrelay.BehaviorRelay;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -12,14 +15,14 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
 
 public class CacheworkDpImpl implements CacheworkDp {
 
-	private BehaviorSubject<String> subject = BehaviorSubject.create();
-	private BehaviorSubject<Boolean> subjectProgress = BehaviorSubject.create(false);
+	private BehaviorRelay<String> subject = BehaviorRelay.create();
 	private GlobalSubscriptionManager manager;
 	private SchedulersProvider provider;
+
+	private ProgressStateHolder stringProgress = ProgressStateHolder.create();
 
 	@Inject
 	public CacheworkDpImpl(GlobalSubscriptionManager manager, SchedulersProvider provider) {
@@ -28,26 +31,18 @@ public class CacheworkDpImpl implements CacheworkDp {
 	}
 
 	@Override
-	public Observable<String> observeString() {
-		return subject.asObservable();
-	}
+	public Observable<DataErrorWrapper<String>> observeString() {
+		return stringProgress.handle(subject.asObservable());
 
-	@Override
-	public Observable<Boolean> observeStringProgress() {
-		return subjectProgress.asObservable();
-	}
-
-	@Override
-	public boolean getCurrentProgress() {
-		return subjectProgress.getValue();
 	}
 
 	@Override
 	public void refreshString() {
 		getJust().delay(2, TimeUnit.SECONDS, provider.computation())
-				.doOnNext(subject::onNext)
-				.doOnSubscribe(() -> subjectProgress.onNext(true))
-				.doOnTerminate(() -> subjectProgress.onNext(false))
+				.doOnNext((v) -> subject.call(v))
+				// Знаю что так делать нельзя, то это для примера)
+				.compose(stringProgress.bindProgress())
+				.onErrorResumeNext(throwable -> Observable.empty())
 				.compose(manager.subscribe());
 	}
 
