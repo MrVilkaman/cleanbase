@@ -46,6 +46,7 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 
 	@Test
 	public void testOnViewAttached() {
+		provider.setUseTestScheduler();
 		// Arrange
 		when(cacheworkDp.getUuid()).thenReturn("q1", "q2", "q3");
 		// Act
@@ -62,6 +63,7 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 
 	@Test
 	public void testUpdate() {
+		provider.setUseTestScheduler();
 		// Arrange
 		when(cacheworkDp.getUuid()).thenReturn("q1", "q2", "q3");
 		// Act
@@ -86,6 +88,8 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 
 	@Test
 	public void testUpdate_withError() {
+		provider.setUseTestScheduler();
+
 		// Arrange
 		when(cacheworkDp.getUuid()).thenReturn("q1", "q2", "q3");
 		// Act
@@ -120,6 +124,7 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 
 	@Test
 	public void testReCreatete() {
+		provider.setUseTestScheduler();
 		// Arrange
 		when(cacheworkDp.getUuid()).thenReturn("q1", "q2", "q3");
 		// Act

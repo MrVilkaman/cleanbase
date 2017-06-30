@@ -3,6 +3,7 @@ package com.github.mrvilkaman.testsutils;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 
 import rx.Scheduler;
+import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
 /**
@@ -10,31 +11,41 @@ import rx.schedulers.TestScheduler;
  */
 public class TestSchedulers implements SchedulersProvider {
 
-	private TestScheduler immediate = new TestScheduler();
+	private Scheduler immediate = Schedulers.immediate();
+	private TestScheduler testScheduler = new TestScheduler();
 
+	private boolean useTestScheduler = false;
 
 	@Override
 	public Scheduler mainThread() {
-		return immediate;
+		return getScheduler();
 	}
 
 	@Override
 	public Scheduler io() {
-		return immediate;
+		return getScheduler();
 	}
 
 	@Override
 	public Scheduler computation() {
-		return immediate;
+		return getScheduler();
 	}
 
 	@Override
 	public Scheduler immediate() {
-		return immediate;
+		return getScheduler();
 	}
 
 
 	public TestScheduler getTestScheduler() {
-		return immediate;
+		return testScheduler;
 	}
+
+	public void setUseTestScheduler() {
+		this.useTestScheduler = true;
+	}
+
+
+	private Scheduler getScheduler() {return useTestScheduler ? testScheduler : immediate;}
+
 }

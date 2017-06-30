@@ -1,7 +1,12 @@
 package com.github.mrvilkaman.presentationlayer.resolution;
 
 
+import android.support.annotation.NonNull;
+
+import com.github.mrvilkaman.datalayer.providers.GlobalBusQuery;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+
+import net.jokubasdargis.rxbus.Bus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,13 +19,15 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 
 	private final SchedulersProvider provider;
 	private ThrowableResolver throwableResolver;
+	private Bus bus;
 
 	private PublishSubject<Throwable> subject = PublishSubject.create();
 
-	public ThrowableResolverRxImpl(ThrowableResolver throwableResolver,
-								   SchedulersProvider provider) {
+	public ThrowableResolverRxImpl(@NonNull ThrowableResolver throwableResolver, @NonNull Bus bus,
+								   @NonNull SchedulersProvider provider) {
 		this.throwableResolver = throwableResolver;
 		this.provider = provider;
+		this.bus = bus;
 	}
 
 	@Override
@@ -29,10 +36,10 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 	}
 
 	public void init() {
-		subject.groupBy(Throwable::getClass)
+		subject.mergeWith(bus.queue(GlobalBusQuery.GLOBAL_ERRORS))
+				.groupBy(Throwable::getClass)
 				.flatMap(obs -> obs.throttleFirst(500, TimeUnit.MILLISECONDS,
 						provider.computation()))
-
 				//		subject
 				.observeOn(provider.mainThread())
 				.subscribe(throwableResolver::handleError);
