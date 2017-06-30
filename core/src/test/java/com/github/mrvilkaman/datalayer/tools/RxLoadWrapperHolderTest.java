@@ -15,9 +15,9 @@ import rx.observers.TestSubscriber;
 import rx.subjects.PublishSubject;
 
 
-public class ProgressStateHolderTest extends BaseTestCase {
+public class RxLoadWrapperHolderTest extends BaseTestCase {
 
-	private ProgressStateHolder holder;
+	private RxLoadWrapperHolder holder;
 
 	@Override
 	public void init() {
@@ -26,14 +26,14 @@ public class ProgressStateHolderTest extends BaseTestCase {
 	@Test()
 	public void testHandle() {
 		// Arrange
-		holder = ProgressStateHolder.create();
+		holder = RxLoadWrapperHolder.create();
 		TestSubscriber<DataErrorWrapper<Object>> subscriber = new TestSubscriber<>();
 
 		// Act
-		holder.handle(PublishSubject.create()).subscribe(subscriber);
+		holder.modifyStream(PublishSubject.create()).subscribe(subscriber);
 
 		Observable.error(new ServerException())
-				.compose(holder.bindProgress())
+				.compose(holder.bindToLoad())
 				.onErrorResumeNext(throwable -> Observable.empty())
 				.subscribe();
 
@@ -58,18 +58,18 @@ public class ProgressStateHolderTest extends BaseTestCase {
 	@Test()
 	public void testHandle_errors() {
 		// Arrange
-		holder = ProgressStateHolder.create();
+		holder = RxLoadWrapperHolder.create();
 		TestSubscriber<DataErrorWrapper<Object>> subscriber = new TestSubscriber<>();
 
 		// Act
-		holder.handle(PublishSubject.create()).subscribe(subscriber);
+		holder.modifyStream(PublishSubject.create()).subscribe(subscriber);
 
 		Observable.error(new ServerException())
-				.compose(holder.bindProgress())
+				.compose(holder.bindToLoad())
 				.onErrorResumeNext(throwable -> Observable.empty())
 				.subscribe();
 		Observable.error(new IOException())
-				.compose(holder.bindProgress())
+				.compose(holder.bindToLoad())
 				.onErrorResumeNext(throwable -> Observable.empty())
 				.subscribe();
 

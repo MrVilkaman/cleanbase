@@ -3,7 +3,7 @@ package com.github.mrvilkaman.datalayer.provider;
 
 import android.support.annotation.NonNull;
 
-import com.github.mrvilkaman.datalayer.tools.ProgressStateHolder;
+import com.github.mrvilkaman.datalayer.tools.RxLoadWrapperHolder;
 import com.github.mrvilkaman.domainlayer.models.DataErrorWrapper;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
@@ -22,7 +22,7 @@ public class CacheworkDpImpl implements CacheworkDp {
 	private GlobalSubscriptionManager manager;
 	private SchedulersProvider provider;
 
-	private ProgressStateHolder stringProgress = ProgressStateHolder.create();
+	private RxLoadWrapperHolder stringProgress = RxLoadWrapperHolder.create();
 
 	@Inject
 	public CacheworkDpImpl(GlobalSubscriptionManager manager, SchedulersProvider provider) {
@@ -32,17 +32,14 @@ public class CacheworkDpImpl implements CacheworkDp {
 
 	@Override
 	public Observable<DataErrorWrapper<String>> observeString() {
-		return stringProgress.handle(subject.asObservable());
-
+		return stringProgress.modifyStream(subject.asObservable());
 	}
 
 	@Override
 	public void refreshString() {
 		getJust().delay(2, TimeUnit.SECONDS, provider.computation())
 				.doOnNext((v) -> subject.call(v))
-				// Знаю что так делать нельзя, то это для примера)
-				.compose(stringProgress.bindProgress())
-				.onErrorResumeNext(throwable -> Observable.empty())
+				.compose(stringProgress.bindToLoadSilent())
 				.compose(manager.subscribe());
 	}
 
