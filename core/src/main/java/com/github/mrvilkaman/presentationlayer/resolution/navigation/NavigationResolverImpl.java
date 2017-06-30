@@ -146,6 +146,11 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
+	public void startActivity(Class<? extends Activity> aClass) {
+		currentActivity.startActivity(new Intent(currentActivity, aClass));
+	}
+
+	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
 		currentActivity.startActivityForResult(intent, requestCode);
 	}
