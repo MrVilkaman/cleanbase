@@ -149,4 +149,29 @@ public class CacheworkDataFlowTest extends BaseTestCase {
 	}
 
 
+
+	@Test
+	public void testUpdate2() {
+		provider.setUseTestScheduler();
+		// Arrange
+		when(cacheworkDp.getUuid()).thenReturn("q1", "q2", "q3");
+		// Act
+		presenter.onViewAttached();
+		provider.getTestScheduler().advanceTimeBy(3, TimeUnit.SECONDS);
+		presenter.update2();
+		provider.getTestScheduler().advanceTimeBy(3, TimeUnit.SECONDS);
+
+
+		// Assert
+		InOrder inOrder = Mockito.inOrder(view);
+		inOrder.verify(view).showProgress();
+		inOrder.verify(view).bindText("q1");
+		inOrder.verify(view).hideProgress();
+
+		inOrder.verify(view).showProgress();
+		inOrder.verify(view).bindText("q2");
+		inOrder.verify(view).hideProgress();
+
+	}
+
 }

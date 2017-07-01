@@ -14,16 +14,21 @@ import rx.subjects.PublishSubject;
 public class RxLoadWrapperHolder {
 
 
-	private BehaviorSubject<Boolean> progress = BehaviorSubject.create(false);
+	private BehaviorSubject<Boolean> progress;
 	private PublishSubject<Throwable> error = PublishSubject.create();
 
-	private RxLoadWrapperHolder() {
-		//пустой
+	private RxLoadWrapperHolder(Boolean b) {
+		progress = b != null ? BehaviorSubject.create(b) : BehaviorSubject.create();
 	}
 
 	@Experimental
 	public static RxLoadWrapperHolder create() {
-		return new RxLoadWrapperHolder();
+		return new RxLoadWrapperHolder(false);
+	}
+
+	@Experimental
+	public static RxLoadWrapperHolder createSilent() {
+		return new RxLoadWrapperHolder(null);
 	}
 
 	@Experimental

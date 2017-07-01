@@ -8,4 +8,7 @@ public interface CacheworkInteractor {
 	Observable<StringDataWrapper> observeSomedata();
 
 	void update();
+
+	void update2();
+
 }

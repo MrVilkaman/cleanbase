@@ -7,5 +7,10 @@ import rx.Observable;
 
 public interface CacheworkDp {
 	Observable<DataErrorWrapper<String>> observeString();
+
+	Observable<DataErrorWrapper<StringBody>> observeStringModel();
+
 	void refreshString();
+
+	void refreshStringWrapper();
 }
