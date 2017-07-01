@@ -6,14 +6,11 @@ public class DataErrorWrapper<D> {
 	protected Throwable throwable;
 	protected boolean progress;
 
-	//	public static DataErrorWrapper
-
-
-	protected DataErrorWrapper(DataErrorWrapper<D> wrapper) {
+	protected DataErrorWrapper(DataErrorWrapper wrapper) {
 		throwable = wrapper.getThrowable();
-		value = wrapper.getValue();
 		progress = wrapper.isProgress();
 	}
+
 
 	public DataErrorWrapper(D value, boolean progress) {
 		this.value = value;
@@ -33,6 +30,11 @@ public class DataErrorWrapper<D> {
 		value = null;
 	}
 
+	public static <T> DataErrorWrapper<T> clone(DataErrorWrapper<T> wrapper) {
+		DataErrorWrapper<T> dataErrorWrapper = new DataErrorWrapper<>(wrapper);
+		dataErrorWrapper.value = wrapper.value;
+		return dataErrorWrapper;
+	}
 
 	public boolean isSuccess() {
 		return value != null;
@@ -52,10 +54,6 @@ public class DataErrorWrapper<D> {
 
 	public boolean isProgress() {
 		return progress;
-	}
-
-	protected void setProgress(boolean progress) {
-		this.progress = progress;
 	}
 
 	@Override
