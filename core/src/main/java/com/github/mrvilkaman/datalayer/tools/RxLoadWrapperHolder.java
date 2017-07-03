@@ -49,6 +49,24 @@ public class RxLoadWrapperHolder {
 				.mergeWith(progress.map(DataErrorWrapper::new));
 	}
 
+	@Experimental
+	public <T> Observable.Transformer<T, DataErrorWrapper<T>> modifyStream() {
+		return this::modifyStream;
+	}
+
+
+	@Experimental
+	public <D> Observable<DataErrorWrapper<D>> modifySingle(Observable<D> observable) {
+		return observable.map(d -> new DataErrorWrapper<>(d, false))
+				.startWith(new DataErrorWrapper<>(true))
+				.onErrorReturn(throwable -> new DataErrorWrapper(throwable, false));
+	}
+
+	@Experimental
+	public <T> Observable.Transformer<T, DataErrorWrapper<T>> modifySingle() {
+		return this::modifySingle;
+	}
+
 	@NonNull
 	private <T> Observable<T> bind(Observable<T> observable) {
 		return observable.doOnSubscribe(() -> progress.onNext(true))
