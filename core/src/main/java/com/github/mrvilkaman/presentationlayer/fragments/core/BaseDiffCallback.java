@@ -2,19 +2,22 @@ package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
 import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
 
 import java.util.List;
 import java.util.Set;
 
-public abstract class BaseDiffCallback<Type> extends DiffUtil.Callback {
+public abstract class BaseDiffCallback<Type> extends IDiffCallback<Type> {
 
 	private List<Type> mOldList;
 	private List<Type> mNewList;
 
-	public BaseDiffCallback(List<Type> mOldList, List<Type> mNewList) {
-		this.mOldList = mOldList;
-		this.mNewList = mNewList;
+	public BaseDiffCallback() {
+	}
+
+	@Override
+	public void update(List<Type> oldItems, List<Type> newItems) {
+		this.mOldList = oldItems;
+		this.mNewList = newItems;
 	}
 
 	@Override

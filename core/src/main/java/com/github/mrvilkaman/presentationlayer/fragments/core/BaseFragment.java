@@ -12,7 +12,6 @@ import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
-import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
@@ -28,13 +27,12 @@ import butterknife.Unbinder;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
-		implements IBaseScreen {
+		implements IBaseScreen, IProgressState {
 
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
 	//// TODO: 07.11.16 dont use public
 	@Inject public UIResolver uiResolver;
-	@Inject public ThrowableResolver throwableResolver;
 	@Inject public NavigationResolver navigationResolver;
 	@Inject public P relationPresenter;
 	@Inject @Nullable public IToolbar toolbar;
@@ -110,7 +108,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =
-				DevUtils.getComponent(getActivity(),ActivityCoreComponent.class).provideLeakCanaryProxy();
+				DevUtils.getComponent(getActivity(), ActivityCoreComponent.class)
+						.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
 			leakCanaryProxy.watch(this);
 		}
@@ -141,7 +140,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void showProgress() {
 		if (progressBar == null) {
-			activityView.showProgress();
+			if (activityView != null)
+				activityView.showProgress();
 		} else {
 			progressBar.setVisibility(View.VISIBLE);
 		}
@@ -150,7 +150,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void hideProgress() {
 		if (progressBar == null) {
-			activityView.hideProgress();
+			if (activityView != null)
+				activityView.hideProgress();
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}
@@ -184,18 +185,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
-	public void handleError(Throwable throwable) {
-		throwableResolver.handleError(throwable);
-	}
-
-	@Override
 	public String getName() {
 		return getClass().getSimpleName();
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getComponent(Class<T> componentType) {
-		return DevUtils.getComponent(getActivity(),componentType);
+		return DevUtils.getComponent(getActivity(), componentType);
 	}
 
 	public UIResolver getUiResolver() {

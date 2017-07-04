@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 
-public interface IBaseScreen extends BaseView, OnBackPressedListener,IBaseScreenSystemUtils {
+public interface IBaseScreen extends BaseView,IProgressState, OnBackPressedListener,IBaseScreenSystemUtils {
+
 }

@@ -1,6 +1,12 @@
 package com.github.mrvilkaman.presentationlayer.fragments;
 
 
+import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
+import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
+import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.mockito.Matchers;
@@ -8,12 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
-import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 
 public abstract class BaseFragmentTest {
 
@@ -39,7 +39,6 @@ public abstract class BaseFragmentTest {
 		fragment.uiResolver = uiRes;
 		fragment.toolbar = toolbar;
 		fragment.activityView = activityView;
-		fragment.throwableResolver = throwable;
 		fragment.activityView = baseActivityView;
 
 		//// TODO: 28.10.16 maybe need use dagger2 for inject test module?

@@ -4,12 +4,12 @@ package com.github.mrvilkaman.presentationlayer.fragments.simplelist;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseDiffCallback;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SimpleDiffUtils extends BaseDiffCallback<SimpleModel> {
-	public SimpleDiffUtils(List<SimpleModel> mOldList, List<SimpleModel> mNewList) {
-		super(mOldList, mNewList);
+
+	public SimpleDiffUtils() {
+		super();
 	}
 
 	@Override

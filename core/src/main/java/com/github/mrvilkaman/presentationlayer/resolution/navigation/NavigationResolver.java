@@ -25,6 +25,8 @@ public interface NavigationResolver {
 
 	void openActivity(Class<? extends Activity> aClass);
 
+	void startActivity(Class<? extends Activity> aClass);
+
 	void startActivityForResultFormFragment(Intent intent, int requestCode);
 
 	void startActivityForResult(Intent intent, int requestCode);

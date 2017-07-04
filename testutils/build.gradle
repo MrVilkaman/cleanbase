@@ -1,17 +1,6 @@
 apply plugin: 'com.android.library'
-apply from: '../dependencies.gradle'
-//apply plugin: 'com.github.hauner.jarTest'
-//
-//buildscript{
-//    repositories {
-//        maven {
-//            url "https://plugins.gradle.org/m2/"
-//        }
-//    }
-//    dependencies{
-//        classpath "gradle.plugin.gradle-plugins:jartest:1.0.1"
-//    }
-//}
+apply plugin: 'me.tatarka.retrolambda'
+apply from: "$project.rootDir/tools/dependencies.gradle"
 
 
 android {
@@ -42,6 +31,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

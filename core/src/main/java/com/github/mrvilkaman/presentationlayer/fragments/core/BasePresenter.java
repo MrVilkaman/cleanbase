@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
@@ -18,6 +19,7 @@ public class BasePresenter<V extends BaseView> {
 
 	private SchedulersProvider schedulersProvider;
 	private UIResolver uiResolver;
+	private ThrowableResolver throwableResolver;
 
 	public BasePresenter() {
 	}
@@ -27,14 +29,14 @@ public class BasePresenter<V extends BaseView> {
 		this.schedulersProvider = schedulersProvider;
 	}
 
-	@Deprecated
-	public final void setSchedulersProvider(UIResolver uiResolver) {
-		setUIResolver(uiResolver);
-	}
-
 	@Inject
 	public final void setUIResolver(UIResolver uiResolver) {
 		this.uiResolver = uiResolver;
+	}
+
+	@Inject
+	public final void setThrowableResolver(ThrowableResolver throwableResolver) {
+		this.throwableResolver = throwableResolver;
 	}
 
 	public void onViewAttached() {
@@ -62,8 +64,14 @@ public class BasePresenter<V extends BaseView> {
 			ViewSubscriber viewSubscriber = (ViewSubscriber) subscriber;
 			viewSubscriber.setView(view);
 			viewSubscriber.setUiResolver(uiResolver);
+			viewSubscriber.setThrowableResolver(throwableResolver);
 		}
-		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
+		if (subscriber instanceof INeedProgressState) {
+			INeedProgressState loadSubscriber = (INeedProgressState) subscriber;
+			loadSubscriber.setProgressState(view);
+		}
+		compositeSubscription.add(
+				observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
 
 	}
 }

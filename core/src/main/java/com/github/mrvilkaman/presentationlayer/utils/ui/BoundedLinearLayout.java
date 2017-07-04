@@ -13,7 +13,7 @@ public class BoundedLinearLayout extends LinearLayout {
 	private final BoundedViewHelper boundedHelper;
 
 	public BoundedLinearLayout(Context context) {
-		this(context,null);
+		this(context, null);
 	}
 
 	public BoundedLinearLayout(Context context, AttributeSet attrs) {
@@ -23,8 +23,11 @@ public class BoundedLinearLayout extends LinearLayout {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		setMeasuredDimension(boundedHelper.getBoundedMeasuredWidth(getMeasuredWidth()),
-				boundedHelper.getBoundedMeasuredHeight(getMeasuredHeight()));
+		BoundedViewHelper.Bound data =
+				boundedHelper.getData(widthMeasureSpec, getMeasuredWidth(), heightMeasureSpec,
+						getMeasuredHeight());
+		setMeasuredDimension(data.boundedMeasuredWidth, data.boundedMeasuredHeight);
+		super.onMeasure(data.widthMeasureSpec, data.heightMeasureSpec);
 	}
+
 }

@@ -18,6 +18,13 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 
 	private String tag;
 
+	public static LegacyFragment open() {
+		 Bundle args = new Bundle();
+		 LegacyFragment fragment = new LegacyFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -32,21 +39,6 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 		ActivityCoreComponent component =
 				((IHasComponent<ActivityCoreComponent>) getActivity()).getComponent();
 		component.getNavigationResolver().showFragment(LongpullingScreenFragment.open());
-	}
-
-	@Override
-	public void showProgress() {
-
-	}
-
-	@Override
-	public void hideProgress() {
-
-	}
-
-	@Override
-	public void handleError(Throwable throwable) {
-
 	}
 
 	@Override
@@ -67,5 +59,15 @@ public class LegacyFragment extends Fragment implements IBaseScreen {
 	@Override
 	public boolean onBackPressed() {
 		return false;
+	}
+
+	@Override
+	public void showProgress() {
+
+	}
+
+	@Override
+	public void hideProgress() {
+
 	}
 }

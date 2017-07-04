@@ -72,4 +72,22 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 		return observable;
 	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> subscribe() {
+		return observable -> {
+			subscribe(observable);
+			return Observable.empty();
+		};
+	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> subscribeWithResult() {
+		return this::subscribeWithResult;
+	}
+
+	@Override
+	public <T> Observable.Transformer<T, T> createCached(String key) {
+		return observable -> createCached(key, observable);
+	}
 }

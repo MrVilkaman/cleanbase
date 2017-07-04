@@ -10,27 +10,24 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
 
 public class LongpullingInteractorImpl implements LongpullingInteractor {
 
 	private final SchedulersProvider schedulersProvider;
 	private final GlobalSubscriptionManager subscribtionManager;
-	private final CompositeSubscription subscription;
 
 	public LongpullingInteractorImpl(SchedulersProvider schedulersProvider,
 									 GlobalSubscriptionManager subscribtionManager) {
 		this.schedulersProvider = schedulersProvider;
 		this.subscribtionManager = subscribtionManager;
 
-		subscription = new CompositeSubscription();
 	}
 
 	@Override
 	public Observable<String> doWorkWithError() {
 		Log.d("QWER", "doWorkWithError start");
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.flatMap(s -> Observable.error(new NotFoundException()))
 				.map(o -> "")
 				.doOnNext(s -> Log.d("QWER", "doWorkWithError doOnNext"))
@@ -45,7 +42,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 		Log.d("QWER", "doWork start");
 
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWork doOnNext"))
@@ -58,7 +55,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 	public Observable<String> doWorkWithResponse() {
 		Log.d("QWER", "doWorkWithResponse start");
 		Observable<String> qwer = Observable.just("")
-				.delay(3, TimeUnit.SECONDS)
+				.delay(2, TimeUnit.SECONDS)
 				.map(o -> UUID.randomUUID()
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWorkWithResponse doOnNext"))

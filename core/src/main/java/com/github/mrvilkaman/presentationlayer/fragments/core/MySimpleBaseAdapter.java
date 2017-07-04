@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,9 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	protected ItemListener<T> onClick;
 	protected List<T> items;
 	private ItemListener<T> onLongClick;
+	private IDiffCallback<T> diffCallback;
+	private MyListUpdateCallback updateCallback;
+	private int posOffset;
 
 	@Override
 	public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,13 +54,28 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	}
 
 	public void setItems(@NonNull List<T> items) {
-		DiffUtil.Callback cb = getDiffCallback(this.items, items);
-		if (cb != null) {
-			DiffUtil.calculateDiff(cb).dispatchUpdatesTo(this);
+		if (diffCallback == null) {
+			diffCallback = createDiffCallback();
+		}
+		if (diffCallback != null) {
+			diffCallback.update(this.items, items);
+
+			if (updateCallback == null) {
+				updateCallback = new MyListUpdateCallback(this);
+			}
+			updateCallback.setPosOffset(posOffset);
+
+			DiffUtil.calculateDiff(diffCallback).dispatchUpdatesTo(updateCallback);
 			this.items = new ArrayList<>(items);
 		} else {
-			this.items = new ArrayList<>(items);
-			notifyDataSetChanged();
+			if (this.items == null) {
+				this.items = new ArrayList<>(items);
+				notifyItemRangeInserted(0, items.size());
+
+			} else {
+				this.items = new ArrayList<>(items);
+				notifyDataSetChanged();
+			}
 		}
 	}
 
@@ -82,6 +101,10 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return (items != null) ? items.size() : 0;
 	}
 
+	public boolean isEmpty() {
+		return getItemCount() == 0;
+	}
+
 	public void setOnClick(ItemListener<T> onClick) {
 		this.onClick = onClick;
 	}
@@ -91,8 +114,45 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 	}
 
 	@Nullable
-	protected DiffUtil.Callback getDiffCallback(List<T> oldItems, List<T> newItems) {
+	protected IDiffCallback<T> createDiffCallback() {
 		return null;
 	}
 
+
+	public void setPosOffset(int posOffset) {
+		this.posOffset = posOffset;
+	}
+
+	private static class MyListUpdateCallback implements ListUpdateCallback {
+		private RecyclerView.Adapter<?> adapter;
+		private int posOffset;
+
+		public MyListUpdateCallback(RecyclerView.Adapter<?> adapter) {
+			this.adapter = adapter;
+		}
+
+		public void setPosOffset(int posOffset) {
+			this.posOffset = posOffset;
+		}
+
+		@Override
+		public void onInserted(int position, int count) {
+			adapter.notifyItemRangeInserted(posOffset + position, count);
+		}
+
+		@Override
+		public void onRemoved(int position, int count) {
+			adapter.notifyItemRangeRemoved(posOffset + position, count);
+		}
+
+		@Override
+		public void onMoved(int fromPosition, int toPosition) {
+			adapter.notifyItemMoved(posOffset + fromPosition, posOffset + toPosition);
+		}
+
+		@Override
+		public void onChanged(int position, int count, Object payload) {
+			adapter.notifyItemRangeChanged(posOffset + position, count, payload);
+		}
+	}
 }

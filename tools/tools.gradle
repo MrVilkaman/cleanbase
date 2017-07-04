@@ -1,0 +1,9 @@
+apply from: "$project.rootDir/tools/script-findbugs.gradle"
+apply from: "$project.rootDir/tools/script-pmd.gradle"
+apply from: "$project.rootDir/tools/script-lint.gradle"
+apply from: "$project.rootDir/tools/script-checkstyle.gradle"
+
+apply from: "$project.rootDir/tools/dependencies.gradle"
+//apply from: "$project.rootDir/tools/artifacts.gradle"
+
+
