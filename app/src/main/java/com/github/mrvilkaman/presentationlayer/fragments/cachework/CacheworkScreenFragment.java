@@ -19,6 +19,7 @@ public class CacheworkScreenFragment extends BaseFragment<CacheworkPresenter>
 
 	@BindView(R.id.text) TextView textView;
 	@BindView(R.id.update) Button buttonView;
+	@BindView(R.id.update2) Button button2View;
 
 
 	public static CacheworkScreenFragment open() {
@@ -51,6 +52,11 @@ public class CacheworkScreenFragment extends BaseFragment<CacheworkPresenter>
 		getPresenter().update();
 	}
 
+	@OnClick(R.id.update2)
+	void onClickUpdate2() {
+		getPresenter().update2();
+	}
+
 	@OnClick(R.id.screen)
 	void onClickOpen() {
 		getNavigation().showFragment(LongpullingScreenFragment.open());
@@ -60,11 +66,13 @@ public class CacheworkScreenFragment extends BaseFragment<CacheworkPresenter>
 	public void showProgress() {
 		super.showProgress();
 		buttonView.setEnabled(false);
+		button2View.setEnabled(false);
 	}
 
 	@Override
 	public void hideProgress() {
 		super.hideProgress();
 		buttonView.setEnabled(true);
+		button2View.setEnabled(true);
 	}
 }

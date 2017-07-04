@@ -14,16 +14,21 @@ import rx.subjects.PublishSubject;
 public class RxLoadWrapperHolder {
 
 
-	private BehaviorSubject<Boolean> progress = BehaviorSubject.create(false);
+	private BehaviorSubject<Boolean> progress;
 	private PublishSubject<Throwable> error = PublishSubject.create();
 
-	private RxLoadWrapperHolder() {
-		//пустой
+	private RxLoadWrapperHolder(Boolean b) {
+		progress = b != null ? BehaviorSubject.create(b) : BehaviorSubject.create();
 	}
 
 	@Experimental
 	public static RxLoadWrapperHolder create() {
-		return new RxLoadWrapperHolder();
+		return new RxLoadWrapperHolder(false);
+	}
+
+	@Experimental
+	public static RxLoadWrapperHolder createSilent() {
+		return new RxLoadWrapperHolder(null);
 	}
 
 	@Experimental
@@ -42,6 +47,24 @@ public class RxLoadWrapperHolder {
 				.mergeWith(error.map(
 						throwable -> new DataErrorWrapper<>(throwable, progress.getValue())))
 				.mergeWith(progress.map(DataErrorWrapper::new));
+	}
+
+	@Experimental
+	public <T> Observable.Transformer<T, DataErrorWrapper<T>> modifyStream() {
+		return this::modifyStream;
+	}
+
+
+	@Experimental
+	public <D> Observable<DataErrorWrapper<D>> modifySingle(Observable<D> observable) {
+		return observable.map(d -> new DataErrorWrapper<>(d, false))
+				.startWith(new DataErrorWrapper<>(true))
+				.onErrorReturn(throwable -> new DataErrorWrapper(throwable, false));
+	}
+
+	@Experimental
+	public <T> Observable.Transformer<T, DataErrorWrapper<T>> modifySingle() {
+		return this::modifySingle;
 	}
 
 	@NonNull

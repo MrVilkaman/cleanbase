@@ -24,6 +24,9 @@ public class CacheworkPresenter extends BasePresenter<CacheworkView> {
 	public void update() {
 		interactor.update();
 	}
+	public void update2() {
+		interactor.update2();
+	}
 
 	private static class MyStreamSubscriber
 			extends StreamSubscriber<CacheworkView, StringDataWrapper, String> {
