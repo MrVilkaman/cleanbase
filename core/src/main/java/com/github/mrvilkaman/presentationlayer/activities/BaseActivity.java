@@ -43,7 +43,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 	private C activityComponent;
 
-	private ProgressWheel progress;
+	private @Nullable ProgressWheel progress;
 	private InputMethodManager inputMethodManager;
 
 	@Override
@@ -83,7 +83,9 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 	private void configureProgressBar() {
 		progress = (ProgressWheel) findViewById(R.id.progress_wheel);
-		progress.setOnTouchListener((v, event) -> true);
+		if (progress != null) {
+			progress.setOnTouchListener((v, event) -> true);
+		}
 	}
 
 	@Override
@@ -122,7 +124,9 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 	@Override
 	public void showProgress() {
-		progress.setVisibility(View.VISIBLE);
+		if (progress != null) {
+			progress.setVisibility(View.VISIBLE);
+		}
 		hideKeyboard();
 	}
 
