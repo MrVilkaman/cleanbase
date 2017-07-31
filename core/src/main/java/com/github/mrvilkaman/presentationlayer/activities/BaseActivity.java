@@ -32,15 +32,13 @@ import javax.inject.Inject;
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
 		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
-		INeedInject<C>,IProgressState {
-
-	private List<BasePresenter> presenters = new ArrayList<>(1);
+		INeedInject<C>, IProgressState {
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	@Inject NavigationResolver navigationResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
-
+	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private C activityComponent;
 
 	private @Nullable ProgressWheel progress;
@@ -61,9 +59,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		}
 		navigationResolver.init();
 		configureProgressBar();
-		if (presenter != null) {
-			attachPresenter(presenter);
-		}
+		attachPresenter(presenter);
 		afterOnCreate();
 	}
 
@@ -168,8 +164,8 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 			presenter.onViewDetached();
 			//noinspection unchecked
 			presenter.setView(null);
-			detachPresenters();
 		}
+		detachPresenters();
 		super.onDestroy();
 		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
 		if (leakCanaryProxy != null) {
@@ -177,10 +173,12 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		}
 	}
 
-	protected void attachPresenter(BasePresenter presenter) {
-		presenter.setView(this);
-		presenter.onViewAttached();
-		presenters.add(presenter);
+	protected void attachPresenter(@Nullable BasePresenter presenter) {
+		if (presenter != null) {
+			presenter.setView(this);
+			presenter.onViewAttached();
+			presenters.add(presenter);
+		}
 	}
 
 	private void detachPresenters() {
@@ -191,8 +189,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	}
 
 	protected void detachPresenter(BasePresenter presenter) {
-		presenter.onViewDetached();
-		presenter.setView(null);
+		if (presenter != null) {
+			presenter.onViewDetached();
+			presenter.setView(null);
+		}
 	}
 
 	protected void attachCustomView(BaseCustomView customWidget) {
