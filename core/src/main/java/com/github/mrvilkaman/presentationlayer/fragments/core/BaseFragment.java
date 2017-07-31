@@ -52,17 +52,19 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
-		if (isWorkCall()) {
-			bind = ButterKnife.bind(this, view);
-			initView(view);
-			P presenter = getPresenter();
-			attachPresenter(presenter);
-			onCreateView(view, savedInstanceState);
-		}
+		bind = ButterKnife.bind(this, view);
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
 		}
 		return view;
+	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		initView(view);
+		P presenter = getPresenter();
+		attachPresenter(presenter);
+		onCreateView(view, savedInstanceState);
 	}
 
 	protected void attachPresenter(BasePresenter presenter) {
@@ -71,7 +73,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		presenters.add(presenter);
 	}
 
-	private void initView(View view) {
+	protected void initView(View view) {
 		progressBar = view.findViewById(R.id.progress_wheel);
 		if (progressBar != null) {
 			progressBar.setOnTouchListener((view1, motionEvent) -> {
