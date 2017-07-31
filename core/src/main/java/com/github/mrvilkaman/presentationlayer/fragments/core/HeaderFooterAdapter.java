@@ -11,6 +11,7 @@ import com.github.mrvilkaman.presentationlayer.utils.ui.UIUtils;
 
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 	private static final int TYPE_HEADER = Integer.MAX_VALUE;
@@ -19,6 +20,8 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 	private View headerView;
 	private View footerView;
+	private boolean showFooterAlways;
+	private boolean showHeaderAlways;
 
 	public HeaderFooterAdapter(@NonNull MySimpleBaseAdapter adapter) {
 		this.adapter = adapter;
@@ -100,12 +103,19 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 	}
 
+	public void showFooterAlways(boolean showFooterAlways){
+		this.showFooterAlways = showFooterAlways;
+	}
+	public void showHeaderAlways(boolean showHeaderAlways){
+		this.showHeaderAlways = showHeaderAlways;
+	}
+
 	protected void updateFooterHeaderState() {
 		boolean show = adapter.getItemCount() != 0;
 		if (footerView != null)
-			UIUtils.changeVisibility(footerView, show);
+			UIUtils.changeVisibility(footerView, show && showFooterAlways);
 		if (headerView != null) {
-			UIUtils.changeVisibility(headerView, show);
+			UIUtils.changeVisibility(headerView, show && showHeaderAlways);
 			adapter.setPosOffset(1);
 		}else{
 			adapter.setPosOffset(0);
@@ -200,8 +210,8 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 	}
 
 	public <T> void setItems(List<T> items) {
-		updateFooterHeaderState();
 		adapter.setItems(items);
+		updateFooterHeaderState();
 //		this.notifyDataSetChanged();
 	}
 
