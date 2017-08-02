@@ -195,10 +195,15 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		}
 	}
 
+
 	protected void attachCustomView(BaseCustomView customWidget) {
+		attachCustomView(customWidget,getComponent());
+	}
+
+	protected void attachCustomView(BaseCustomView customWidget,Object component) {
 
 		if (customWidget instanceof INeedInject) {
-			((INeedInject) customWidget).injectMe(getComponent());
+			((INeedInject) customWidget).injectMe(component);
 		}
 		customWidget.bind(this);
 		BasePresenter presenter = customWidget.getPresenter();

@@ -26,17 +26,14 @@ public abstract class DaggerBaseFragment<P extends BasePresenter, C> extends Bas
 
 	protected abstract C createComponent();
 
-	@SuppressWarnings("unchecked")
 
 	@Override
 	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
-		if (customWidget instanceof INeedInject) {
-			((INeedInject) customWidget).injectMe(getComponent());
-		}
-		super.attachCustomView(customWidget);
+		attachCustomView(customWidget,getComponent());
 	}
 
-	protected void attachCustomView(@NonNull BaseCustomView customWidget, C component) {
+	@SuppressWarnings("unchecked")
+	protected void attachCustomView(@NonNull BaseCustomView customWidget, Object component) {
 		if (customWidget instanceof INeedInject) {
 			((INeedInject) customWidget).injectMe(component);
 		}
