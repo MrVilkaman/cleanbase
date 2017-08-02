@@ -7,15 +7,22 @@ import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
+
 
 public class BasePresenter<V extends BaseView> {
 
 	private V view;
 
-	private CompositeSubscription compositeSubscription = new CompositeSubscription();
+	private CompositeDisposable compositeSubscription = new CompositeDisposable();
 
 	private SchedulersProvider schedulersProvider;
 	private UIResolver uiResolver;
@@ -58,20 +65,56 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
+
 	@SuppressWarnings("unchecked")
-	protected final <T> void subscribeUI(Observable<T> observable, Subscriber<T> subscriber) {
+	protected final <T> void subscribeUI(Single<T> observable, DisposableSingleObserver
+			subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
+
+	@SuppressWarnings("unchecked")
+	protected final <T> void subscribeUI(Maybe<T> observable, DisposableMaybeObserver
+			subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
+
+	@SuppressWarnings("unchecked")
+	protected final <T> void subscribeUI(Completable observable, DisposableCompletableObserver subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
+//
+//	@SuppressWarnings("unchecked")
+//	protected final <T> void subscribeUI(Flowable observable, ResourceObserver subscriber) {
+//		injectSubscriberDependencies(subscriber);
+//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+//				.subscribeWith(subscriber));
+//	}
+
+	protected final <T> void subscribeUI(Observable<T> observable, DisposableObserver<T> subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
+
+	@SuppressWarnings("unchecked")
+
+	private void injectSubscriberDependencies(Object subscriber) {
 		if (subscriber instanceof ViewSubscriber) {
 			ViewSubscriber viewSubscriber = (ViewSubscriber) subscriber;
 			viewSubscriber.setView(view);
 			viewSubscriber.setUiResolver(uiResolver);
 			viewSubscriber.setThrowableResolver(throwableResolver);
 		}
+
 		if (subscriber instanceof INeedProgressState) {
 			INeedProgressState loadSubscriber = (INeedProgressState) subscriber;
 			loadSubscriber.setProgressState(view);
 		}
-		compositeSubscription.add(
-				observable.observeOn(schedulersProvider.mainThread()).subscribe(subscriber));
-
 	}
 }

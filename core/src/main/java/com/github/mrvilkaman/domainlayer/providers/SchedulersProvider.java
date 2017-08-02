@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.domainlayer.providers;
 
-import rx.Scheduler;
+
+import io.reactivex.Scheduler;
 
 /**
  * Created by Zahar on 22.01.2016.

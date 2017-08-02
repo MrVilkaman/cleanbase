@@ -61,6 +61,7 @@ android {
 
 
 configurations.all {
+    exclude group: 'io.reactivex', module: 'rxjava'
     resolutionStrategy {
         // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
         force libraries.supportAnnotations
@@ -81,14 +82,14 @@ dependencies {
     compile libraries.butterKnife
 
     provided libraries.retrofit2
-    provided libraries.retrofit2rxjava
+    provided libraries.retrofit2rxjava2
 
     // Developer tools (Developer Settings)
 
     compile libraries.rxBus
     compile libraries.rxBusAndroid
-    compile libraries.rxJava
-    compile libraries.rxpermissions
+    compile libraries.rxJava2
+    compile libraries.rxpermissions2
 
     compile libraries.materialDialog
     compile libraries.materialProgress

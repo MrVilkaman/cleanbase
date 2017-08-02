@@ -1,7 +1,8 @@
 package com.github.mrvilkaman.domainlayer.providers;
 
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
 
 public interface GlobalSubscriptionManager {
 
@@ -11,9 +12,9 @@ public interface GlobalSubscriptionManager {
 
 	<T> Observable<T> createCached(String key, Observable<T> observable);
 
-	<T> Observable.Transformer<T, T> subscribe();
+	<T> ObservableTransformer<T, T> subscribe();
 
-	<T> Observable.Transformer<T, T> subscribeWithResult();
+	<T> ObservableTransformer<T, T> subscribeWithResult();
 
-	<T> Observable.Transformer<T, T> createCached(String key);
+	<T> ObservableTransformer<T, T> createCached(String key);
 }

@@ -11,13 +11,23 @@ import com.github.mrvilkaman.presentationlayer.resolution.ThrowableResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
+import io.reactivex.CompletableObserver;
+import io.reactivex.MaybeObserver;
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+
 
 /**
  * Created by root on 15.03.16.
  */
 @SuppressWarnings("WeakerAccess")
-public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T>
-		implements IProgressState, INeedProgressState {
+public class ViewSubscriber<V extends BaseView, T> extends DisposableObserver<T>
+		implements MaybeObserver<T>, Observer<T>, SingleObserver<T>,
+		CompletableObserver, Disposable,
+		IProgressState, INeedProgressState {
 
 	private final String string;
 	private V view;
@@ -42,6 +52,12 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T>
 		this.view = view;
 	}
 
+
+	@Override
+	public void onSuccess(@NonNull T t) {
+
+	}
+
 	@Override
 	public void onError(Throwable e) {
 		if (CleanBaseSettings.needSubscribeLogs()) {
@@ -53,14 +69,15 @@ public class ViewSubscriber<V extends BaseView, T> extends rx.Subscriber<T>
 	}
 
 	@Override
-	public void onNext(T t) {
+	public void onComplete() {
 
 	}
 
 	@Override
-	public void onCompleted() {
+	public void onNext(T t) {
 
 	}
+
 
 	public void setThrowableResolver(ThrowableResolver throwableResolver) {
 		this.throwableResolver = throwableResolver;

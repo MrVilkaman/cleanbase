@@ -45,7 +45,7 @@ android {
 
 dependencies {
 
-    provided libraries.rxJava
+    provided libraries.rxJava2
 
     //tests
     compile libraries.junit
