@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.di.INeedInject;
 
-import rx.annotations.Experimental;
-
-@Experimental
 public abstract class DaggerBaseFragment<P extends BasePresenter, C> extends BaseFragment<P>
 		implements INeedInject<C>, IHasComponent<C> {
 

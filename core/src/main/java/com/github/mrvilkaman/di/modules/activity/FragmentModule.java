@@ -8,8 +8,7 @@ import android.support.v4.app.FragmentManager;
 import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.AndroidFragmentResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.fragments.FragmentResolver;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import dagger.Module;
 import dagger.Provides;

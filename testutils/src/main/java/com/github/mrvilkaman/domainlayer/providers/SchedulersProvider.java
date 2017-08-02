@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.domainlayer.providers;
 
 
-import rx.Scheduler;
+import io.reactivex.Scheduler;
 
 public interface SchedulersProvider {
 

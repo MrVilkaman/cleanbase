@@ -9,7 +9,8 @@ import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public class LongpullingInteractorImpl implements LongpullingInteractor {
 
@@ -47,7 +48,7 @@ public class LongpullingInteractorImpl implements LongpullingInteractor {
 						.toString())
 				.doOnNext(s -> Log.d("QWER", "doWork doOnNext"))
 				.subscribeOn(schedulersProvider.io())
-				.doOnCompleted(() -> Log.d("QWER", "doWork doOnCompleted"));
+				.doOnComplete(() -> Log.d("QWER", "doWork doOnCompleted"));
 		subscribtionManager.subscribe(qwer);
 	}
 

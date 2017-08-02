@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
+import io.reactivex.subjects.PublishSubject;
 
 
 public class RxLoadWrapperHolderTest extends BaseTestCase {
@@ -40,10 +40,11 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 				.compose(holder.bindToLoad())
 				.subscribeOn(scheduler);
 
-		TestSubscriber<DataErrorWrapper<String>> subscriber = new TestSubscriber<>();
+		TestObserver<DataErrorWrapper<String>> subscriber = new TestObserver<>();
 
-		Observable.just(0, 1,2).concatMap(integer -> test.compose(holder.modifySingle())).subscribe
-				(subscriber);
+		Observable.just(0, 1, 2)
+				.concatMap(integer -> test.compose(holder.modifySingle()))
+				.subscribe(subscriber);
 
 		scheduler.advanceTimeBy(10, TimeUnit.SECONDS);
 
@@ -54,8 +55,8 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 		assertMy(subscriber, 4);
 	}
 
-	public void assertMy(TestSubscriber<DataErrorWrapper<String>> subscriber, int i) {
-		List<DataErrorWrapper<String>> onNextEvents = subscriber.getOnNextEvents();
+	public void assertMy(TestObserver<DataErrorWrapper<String>> subscriber, int i) {
+		List<DataErrorWrapper<String>> onNextEvents = subscriber.values();
 
 		DataErrorWrapper<String> stringDataErrorWrapper = onNextEvents.get(i + 0);
 		Assert.assertTrue(stringDataErrorWrapper.isProgress());
@@ -73,14 +74,15 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 	public void testHandle() {
 		// Arrange
 		holder = RxLoadWrapperHolder.create();
-		TestSubscriber<DataErrorWrapper<Object>> subscriber = new TestSubscriber<>();
+		TestObserver<DataErrorWrapper<Object>> subscriber = new TestObserver<>();
 
 		// Act
-		holder.modifyStream(PublishSubject.create()).subscribe(subscriber);
+		holder.modifyStream(PublishSubject.create())
+				.subscribe(subscriber);
 
 		Observable.error(new ServerException())
 				.compose(holder.bindToLoad())
-				.onErrorResumeNext(throwable -> Observable.empty())
+				.onErrorResumeNext(Observable.empty())
 				.subscribe();
 
 		// Assert
@@ -89,14 +91,21 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 		// 3 - терменальное состояние (в данном случае ошибка) false
 		// 4 - Сама ошибка  false
 		subscriber.assertValueCount(4);
-		List<DataErrorWrapper<Object>> onNextEvents = subscriber.getOnNextEvents();
+		List<DataErrorWrapper<Object>> onNextEvents = subscriber.values();
 
-		Assertions.assertThat(onNextEvents.get(0).isProgress()).isFalse();
-		Assertions.assertThat(onNextEvents.get(1).isProgress()).isTrue();
-		Assertions.assertThat(onNextEvents.get(2).isProgress()).isFalse();
+		Assertions.assertThat(onNextEvents.get(0)
+				.isProgress())
+				.isFalse();
+		Assertions.assertThat(onNextEvents.get(1)
+				.isProgress())
+				.isTrue();
+		Assertions.assertThat(onNextEvents.get(2)
+				.isProgress())
+				.isFalse();
 
 		DataErrorWrapper<Object> objectDataErrorWrapper = onNextEvents.get(3);
-		Assertions.assertThat(objectDataErrorWrapper.isError()).isTrue();
+		Assertions.assertThat(objectDataErrorWrapper.isError())
+				.isTrue();
 		Assertions.assertThat(objectDataErrorWrapper.getThrowable())
 				.isOfAnyClassIn(ServerException.class);
 	}
@@ -105,18 +114,19 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 	public void testHandle_errors() {
 		// Arrange
 		holder = RxLoadWrapperHolder.create();
-		TestSubscriber<DataErrorWrapper<Object>> subscriber = new TestSubscriber<>();
+		TestObserver<DataErrorWrapper<Object>> subscriber = new TestObserver<>();
 
 		// Act
-		holder.modifyStream(PublishSubject.create()).subscribe(subscriber);
+		holder.modifyStream(PublishSubject.create())
+				.subscribe(subscriber);
 
 		Observable.error(new ServerException())
 				.compose(holder.bindToLoad())
-				.onErrorResumeNext(throwable -> Observable.empty())
+				.onErrorResumeNext(Observable.empty())
 				.subscribe();
 		Observable.error(new IOException())
 				.compose(holder.bindToLoad())
-				.onErrorResumeNext(throwable -> Observable.empty())
+				.onErrorResumeNext(Observable.empty())
 				.subscribe();
 
 		// Assert
@@ -129,23 +139,35 @@ public class RxLoadWrapperHolderTest extends BaseTestCase {
 		// 6 - терменальное состояние (в данном случае ошибка) false
 		// 7 - Сама ошибка  false
 		subscriber.assertValueCount(7);
-		List<DataErrorWrapper<Object>> onNextEvents = subscriber.getOnNextEvents();
+		List<DataErrorWrapper<Object>> onNextEvents = subscriber.values();
 
-		Assertions.assertThat(onNextEvents.get(0).isProgress()).isFalse();
-		Assertions.assertThat(onNextEvents.get(1).isProgress()).isTrue();
-		Assertions.assertThat(onNextEvents.get(2).isProgress()).isFalse();
+		Assertions.assertThat(onNextEvents.get(0)
+				.isProgress())
+				.isFalse();
+		Assertions.assertThat(onNextEvents.get(1)
+				.isProgress())
+				.isTrue();
+		Assertions.assertThat(onNextEvents.get(2)
+				.isProgress())
+				.isFalse();
 
 		DataErrorWrapper<Object> objectDataErrorWrapper = onNextEvents.get(3);
-		Assertions.assertThat(objectDataErrorWrapper.isError()).isTrue();
+		Assertions.assertThat(objectDataErrorWrapper.isError())
+				.isTrue();
 		Assertions.assertThat(objectDataErrorWrapper.getThrowable())
 				.isOfAnyClassIn(ServerException.class);
 
-		Assertions.assertThat(onNextEvents.get(4).isProgress()).isTrue();
-		Assertions.assertThat(onNextEvents.get(5).isProgress()).isFalse();
+		Assertions.assertThat(onNextEvents.get(4)
+				.isProgress())
+				.isTrue();
+		Assertions.assertThat(onNextEvents.get(5)
+				.isProgress())
+				.isFalse();
 
 		DataErrorWrapper<Object> objectDataErrorWrapper2 = onNextEvents.get(6);
 
-		Assertions.assertThat(objectDataErrorWrapper2.isError()).isTrue();
+		Assertions.assertThat(objectDataErrorWrapper2.isError())
+				.isTrue();
 		Assertions.assertThat(objectDataErrorWrapper2.getThrowable())
 				.isOfAnyClassIn(IOException.class);
 	}

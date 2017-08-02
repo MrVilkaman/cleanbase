@@ -13,8 +13,7 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.Tutils;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import org.junit.Assert;
 import org.junit.Test;

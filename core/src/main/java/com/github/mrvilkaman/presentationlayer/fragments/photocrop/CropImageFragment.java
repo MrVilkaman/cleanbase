@@ -17,9 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class CropImageFragment extends BaseFragment<CropImagePresenter> implements CropImageScreenView {

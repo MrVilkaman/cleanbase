@@ -11,7 +11,9 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Single;
 
 public class GcmPushNotificationImpl extends BaseInteractor implements GcmPushNotification {
 
@@ -25,12 +27,11 @@ public class GcmPushNotificationImpl extends BaseInteractor implements GcmPushNo
 
 	@Override
 	@RequiresPermission("com.google.android.c2dm.permission.RECEIVE")
-	public Observable<String> register(String senderId) {
-		return Observable.<String>unsafeCreate(subscriber -> {
+	public Single<String> register(String senderId) {
+		return Single.<String>create(subscriber -> {
 			try {
 				String register = gcm.register(senderId);
-				subscriber.onNext(register);
-				subscriber.onCompleted();
+				subscriber.onSuccess(register);
 			} catch (IOException e) {
 				subscriber.onError(e);
 			}
@@ -39,14 +40,16 @@ public class GcmPushNotificationImpl extends BaseInteractor implements GcmPushNo
 
 	@Override
 	@RequiresPermission("com.google.android.c2dm.permission.RECEIVE")
-	public Observable<Void> logout() {
-		return Observable.<Void>unsafeCreate(subscriber -> {
+	public Completable logout() {
+		CompletableOnSubscribe completableOnSubscribe = subscriber -> {
 			try {
 				gcm.unregister();
-				subscriber.onCompleted();
+				subscriber.onComplete();
 			} catch (IOException e) {
 				subscriber.onError(e);
 			}
-		}).subscribeOn(schedulers.io());
+		};
+		return Completable.create(completableOnSubscribe)
+				.subscribeOn(schedulers.io());
 	}
 }

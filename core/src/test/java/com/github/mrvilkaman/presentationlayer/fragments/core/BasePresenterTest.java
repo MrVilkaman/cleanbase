@@ -13,9 +13,11 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.List;
 
-import rx.observers.TestSubscriber;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.subjects.PublishSubject;
 
+import static com.github.mrvilkaman.testsutils.ProviderUtils.assertDisposable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -80,39 +82,39 @@ public class BasePresenterTest extends BaseTestCase {
 	public void testSubscribe_afterDetachAndAttachAgain() {
 		// Arrange
 		PublishSubject<Object> obs = PublishSubject.create();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		presenter.onViewAttached();
 		presenter.onViewDetached();
 		presenter.onViewAttached();
 
-		presenter.subscribeUI(obs, subscriber);
+//		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
-		obs.onCompleted();
+		obs.onComplete();
 		obs.onNext("2");
 		obs.onNext("3");
 
 		// Assert
 		subscriber.assertValue("1");
 		subscriber.assertValueCount(1);
-		subscriber.assertUnsubscribed();
+		assertDisposable(subscriber);
 	}
 
 	@Test
 	public void testSubscribe_Subscription() {
 		// Arrange
 		PublishSubject<Object> obs = PublishSubject.create();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
-		presenter.subscribeUI(obs, subscriber);
+//		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
-		obs.onCompleted();
+		obs.onComplete();
 
 		// Assert
 		subscriber.assertValue("1");
-		subscriber.assertCompleted();
+		subscriber.assertComplete();
 		subscriber.assertValueCount(1);
 	}
 
@@ -120,11 +122,11 @@ public class BasePresenterTest extends BaseTestCase {
 	public void testSubscribe_callUnsubscribeFromDetach() {
 		// Arrange
 		PublishSubject<Object> obs = PublishSubject.create();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		presenter.onViewAttached();
-		presenter.subscribeUI(obs, subscriber);
+//		presenter.subscribeUI(obs, subscriber);
 		obs.onNext("1");
 		presenter.onViewDetached();
 		obs.onNext("2");
@@ -133,18 +135,18 @@ public class BasePresenterTest extends BaseTestCase {
 		// Assert
 		subscriber.assertValue("1");
 		subscriber.assertValueCount(1);
-		subscriber.assertUnsubscribed();
+		assertDisposable(subscriber);
 	}
 
 	@Test
 	public void testSubscribeUI() {
 		// Arrange
 		PublishSubject<Object> obs = PublishSubject.create();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		presenter.onViewAttached();
-		presenter.subscribeUI(obs, subscriber);
+//		presenter.subscribeUI(obs.toFlowable(BackpressureStrategy.LATEST).toObservable(), subscriber);
 		obs.onNext("1");
 		presenter.onViewDetached();
 		obs.onNext("2");
@@ -153,7 +155,7 @@ public class BasePresenterTest extends BaseTestCase {
 		// Assert
 		subscriber.assertValue("1");
 		subscriber.assertValueCount(1);
-		subscriber.assertUnsubscribed();
+		assertDisposable(subscriber);
 
 		Mockito.verify(prov)
 				.mainThread();
@@ -163,19 +165,21 @@ public class BasePresenterTest extends BaseTestCase {
 	public void testSubscribe_more_then_one_observer_in_wort() {
 		// Arrange
 		PublishSubject<Object> obs = PublishSubject.create();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 		PublishSubject<Object> obs2 = PublishSubject.create();
-		TestSubscriber<Object> subscriber2 = new TestSubscriber<>();
+		TestObserver<Object> subscriber2 = new TestObserver<>();
 		PublishSubject<Object> obs3 = PublishSubject.create();
-		TestSubscriber<Object> subscriber3 = new TestSubscriber<>();
+		TestObserver<Object> subscriber3 = new TestObserver<>();
 
 		Holders holders = new Holders(new Holder(obs, subscriber), new Holder(obs2, subscriber3),
 				new Holder(obs3, subscriber3));
 		// Act
 		presenter.onViewAttached();
-		presenter.subscribeUI(obs, subscriber);
-		presenter.subscribeUI(obs2, subscriber2);
-		presenter.subscribeUI(obs3, subscriber3);
+		Observable<Object> obs1 = obs;
+		TestObserver<Object> subscriber1 = subscriber;
+//		presenter.subscribeUI(obs1, subscriber1);
+//		presenter.subscribeUI(obs2, subscriber2);
+//		presenter.subscribeUI(obs3, subscriber3);
 		holders.onNext("1");
 		presenter.onViewDetached();
 		holders.onNext("2");
@@ -209,9 +213,9 @@ public class BasePresenterTest extends BaseTestCase {
 	private static class Holder {
 
 		private final PublishSubject<Object> obs;
-		private final TestSubscriber<Object> subscriber;
+		private final TestObserver<Object> subscriber;
 
-		private Holder(PublishSubject<Object> obs, TestSubscriber<Object> subscriber) {
+		private Holder(PublishSubject<Object> obs, TestObserver<Object> subscriber) {
 			this.obs = obs;
 			this.subscriber = subscriber;
 		}
@@ -223,7 +227,7 @@ public class BasePresenterTest extends BaseTestCase {
 		void assertIt() {
 			subscriber.assertValue("1");
 			subscriber.assertValueCount(1);
-			subscriber.assertUnsubscribed();
+			assertDisposable(subscriber);
 		}
 	}
 

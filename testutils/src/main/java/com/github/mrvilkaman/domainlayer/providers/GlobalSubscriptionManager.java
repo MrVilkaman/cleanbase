@@ -5,6 +5,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 
 public interface GlobalSubscriptionManager {
+	//// TODO: 02.08.17 Added maybe\Compliteble\Flowable\Single
 
 	<T> void subscribe(Observable<T> observable);
 

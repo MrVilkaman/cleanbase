@@ -12,8 +12,6 @@ import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.exceptions.UncheckedException;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
-import rx.annotations.Experimental;
-
 public class ThrowableResolverImpl implements ThrowableResolver {
 
 	private final UIResolver uiResolver;
@@ -69,7 +67,6 @@ public class ThrowableResolverImpl implements ThrowableResolver {
 		}
 	}
 
-	@Experimental
 	public interface Processor {
 
 		// true if error processed

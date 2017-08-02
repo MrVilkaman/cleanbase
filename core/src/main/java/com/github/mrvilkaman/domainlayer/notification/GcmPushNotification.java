@@ -1,11 +1,12 @@
 package com.github.mrvilkaman.domainlayer.notification;
 
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public interface GcmPushNotification {
 
-	Observable<String> register(String senderId);
+	Single<String> register(String senderId);
 
-	Observable<Void> logout();
+	Completable logout();
 }

@@ -15,11 +15,12 @@ import com.github.mrvilkaman.domainlayer.providers.DPUtils;
 
 import java.io.IOException;
 
+import io.reactivex.Single;
+import io.reactivex.SingleTransformer;
+import io.reactivex.functions.Function;
 import retrofit2.HttpException;
 import retrofit2.Response;
-import rx.Observable;
-import rx.annotations.Experimental;
-import rx.functions.Func1;
+
 
 public class DPUtilsImpl implements DPUtils {
 
@@ -27,7 +28,6 @@ public class DPUtilsImpl implements DPUtils {
 	@Nullable private Processor processor;
 
 	public DPUtilsImpl() {
-		this(null);
 	}
 
 	public DPUtilsImpl(@Nullable Processor processor) {
@@ -35,49 +35,50 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@Override
-	public <T extends IBaseResponse<R>, R> Observable.Transformer<T, R> handleAnswer() {
-		return obs -> obs.onErrorResumeNext(getThrowableObservableFunc1()).concatMap(r -> {
-			if (r.isSuccess()) {
-				return Observable.just(r.getBody());
-			} else {
-				return handleError(r);
-			}
-		});
+	public <T extends IBaseResponse<R>, R> SingleTransformer<T, R> handleAnswer() {
+		return obs -> obs.onErrorResumeNext(getThrowableObservableFunc1())
+				.flatMap(r -> {
+					if (r.isSuccess()) {
+						return Single.just(r.getBody());
+					} else {
+						return handleError(r);
+					}
+				});
 	}
 
 	@Override
-	public <T> Observable.Transformer<T, T> handleError() {
+	public <T> SingleTransformer<T, T> handleError() {
 		return obs -> obs.onErrorResumeNext(getThrowableObservableFunc1());
 	}
 
 	@NonNull
-	protected <T> Observable<T> handleError(IBaseResponse response) {
-		return Observable.error(getThrowable(response.getMessage(), response.getCode(), null));
+	protected <T> Single<T> handleError(IBaseResponse response) {
+		return Single.error(getThrowable(response.getMessage(), response.getCode(), null));
 	}
 
 	@Override
 	@NonNull
-	public <T> Func1<Throwable, Observable<T>> getThrowableObservableFunc1() {
+	public <T> Function<Throwable, Single<T>> getThrowableObservableFunc1() {
 		return throwable -> {
 			if (throwable instanceof HttpException) {
 				HttpException httpException = (HttpException) throwable;
 				Response response = httpException.response();
 
-				return Observable.error(
+				return Single.error(
 						getThrowable(response.message(), response.code(), throwable));
 			} else if (throwable instanceof IOException) {
-				return Observable.error(new InternetConnectionException());
+				return Single.error(new InternetConnectionException());
 			} else if (throwable instanceof NetworkErrorException) {
-				return Observable.error(new InternetConnectionException());
+				return Single.error(new InternetConnectionException());
 			}
 
 			if (processor != null) {
 				Throwable processorThrowable = processor.getThrowable(null, 0, throwable);
 				if (processorThrowable != null) {
-					return Observable.error(processorThrowable);
+					return Single.error(processorThrowable);
 				}
 			}
-			return Observable.error(throwable);
+			return Single.error(throwable);
 		};
 	}
 
@@ -115,7 +116,6 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@SuppressWarnings("WeakerAccess")
-	@Experimental
 	public interface Processor {
 		// return notnull if throwable processed
 		@Nullable

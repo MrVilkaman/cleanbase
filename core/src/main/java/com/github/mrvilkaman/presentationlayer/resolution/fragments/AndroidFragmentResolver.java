@@ -10,8 +10,7 @@ import com.github.mrvilkaman.datalayer.providers.GlobalBusQuery;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment;
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -6,7 +6,8 @@ import com.github.mrvilkaman.domainlayer.providers.BaseInteractor;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public class CacheworkInteractorImpl extends BaseInteractor implements CacheworkInteractor {
 
@@ -20,7 +21,7 @@ public class CacheworkInteractorImpl extends BaseInteractor implements Cachework
 	@Override
 	public Observable<StringDataWrapper> observeSomedata() {
 		Observable<StringDataWrapper> simpleStringObs = cacheworkDp.observeString()
-				.doOnSubscribe(() -> cacheworkDp.refreshString())
+				.doOnSubscribe(disposable -> cacheworkDp.refreshString())
 				.map(StringDataWrapper::fromString);
 
 		Observable<StringDataWrapper> wrapperdStringObs =

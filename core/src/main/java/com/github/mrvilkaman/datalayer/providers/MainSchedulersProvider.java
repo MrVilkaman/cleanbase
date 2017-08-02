@@ -2,9 +2,9 @@ package com.github.mrvilkaman.datalayer.providers;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Zahar on 22.01.2016.
@@ -28,6 +28,6 @@ public class MainSchedulersProvider implements SchedulersProvider {
 
 	@Override
 	public Scheduler immediate() {
-		return Schedulers.immediate();
+		return Schedulers.trampoline();
 	}
 }

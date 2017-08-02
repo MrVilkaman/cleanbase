@@ -19,14 +19,14 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import io.reactivex.Single;
+import io.reactivex.observers.TestObserver;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
+import static io.reactivex.Single.just;
 import static org.mockito.Mockito.mock;
-import static rx.Observable.just;
 
 
 public class DPUtilsTest extends BaseTestCase {
@@ -42,7 +42,7 @@ public class DPUtilsTest extends BaseTestCase {
 	public void testHandleAnswer() {
 		// Arrange
 		BaseResponse response = new BaseResponse(200, "");
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		just(response)
@@ -52,7 +52,7 @@ public class DPUtilsTest extends BaseTestCase {
 		// Assert
 		subscriber.assertValue(null);
 		subscriber.assertValueCount(1);
-		subscriber.assertCompleted();
+		subscriber.assertComplete();
 		subscriber.assertNoErrors();
 	}
 
@@ -66,7 +66,7 @@ public class DPUtilsTest extends BaseTestCase {
 				return this;
 			}
 		};
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		just(response)
@@ -76,7 +76,7 @@ public class DPUtilsTest extends BaseTestCase {
 		// Assert
 		subscriber.assertValue(response);
 		subscriber.assertValueCount(1);
-		subscriber.assertCompleted();
+		subscriber.assertComplete();
 		subscriber.assertNoErrors();
 	}
 
@@ -117,7 +117,7 @@ public class DPUtilsTest extends BaseTestCase {
 	@Test
 	public void testHandleHttpErrorWithBody() {
 		// Arrange
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		just(new BaseResponse(441, "qwer"))
@@ -126,8 +126,8 @@ public class DPUtilsTest extends BaseTestCase {
 
 		// Assert
 		subscriber.assertNoValues();
-		subscriber.assertNotCompleted();
-		Throwable onErrorEvents = subscriber.getOnErrorEvents().get(0);
+		subscriber.assertNotComplete();
+		Throwable onErrorEvents = subscriber.errors().get(0);
 		Assertions.assertThat(onErrorEvents).isInstanceOf(UncheckedException.class).hasMessage("qwer");
 
 	}
@@ -219,22 +219,22 @@ public class DPUtilsTest extends BaseTestCase {
 	private void exceptionErrorText(Throwable exception, Class<? extends Throwable> clazz) {
 		// Arrange
 
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
-		Observable.<IBaseResponse>error(exception)
+		Single.<IBaseResponse>error(exception)
 				.compose(dpUtils.handleAnswer())
 				.subscribe(subscriber);
 
 		// Assert
 		subscriber.assertNoValues();
-		subscriber.assertNotCompleted();
+		subscriber.assertNotComplete();
 		subscriber.assertError(clazz);
 	}
 
 	private <T extends Throwable> void errorResponseTest(int code, Class<T> exceptionClass) {
 		// Arrange
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
 		just(new BaseResponse(code, "qwer"))
@@ -243,7 +243,7 @@ public class DPUtilsTest extends BaseTestCase {
 
 		// Assert
 		subscriber.assertNoValues();
-		subscriber.assertNotCompleted();
+		subscriber.assertNotComplete();
 		subscriber.assertError(exceptionClass);
 	}
 }

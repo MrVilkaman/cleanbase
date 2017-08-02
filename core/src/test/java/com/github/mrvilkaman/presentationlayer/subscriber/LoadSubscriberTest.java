@@ -11,7 +11,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import rx.subjects.PublishSubject;
+import io.reactivex.subjects.PublishSubject;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -33,7 +33,7 @@ public class LoadSubscriberTest extends BaseTestCase {
 
 		subscriber.setProgressState(progress);
 		subject.subscribe(subscriber);
-		subject.onCompleted();
+		subject.onComplete();
 
 		InOrder inOrder = Mockito.inOrder(progress);
 		inOrder.verify(progress)
@@ -48,7 +48,7 @@ public class LoadSubscriberTest extends BaseTestCase {
 		subscriber.setView(view);
 		subscriber.setProgressState(progress);
 		subject.subscribe(subscriber);
-		subject.onCompleted();
+		subject.onComplete();
 
 		InOrder inOrder = Mockito.inOrder(progress);
 		inOrder.verify(progress)
@@ -85,7 +85,7 @@ public class LoadSubscriberTest extends BaseTestCase {
 		subscriber.setThrowableResolver(throwableResolver);
 
 		subject.subscribe(subscriber);
-		subject.onCompleted();
+		subject.onComplete();
 
 		InOrder inOrder = Mockito.inOrder(progress,throwableResolver);
 		inOrder.verify(progress, never())

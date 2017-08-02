@@ -3,7 +3,9 @@ package com.github.mrvilkaman.testsutils;
 
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+
 
 public class GlobalSubscriptionManagerForTest implements GlobalSubscriptionManager {
 
@@ -23,7 +25,7 @@ public class GlobalSubscriptionManagerForTest implements GlobalSubscriptionManag
 	}
 
 	@Override
-	public <T> Observable.Transformer<T, T> subscribe() {
+	public <T> ObservableTransformer<T, T> subscribe() {
 		return observable -> {
 			observable.subscribe();
 			return Observable.empty();
@@ -31,12 +33,12 @@ public class GlobalSubscriptionManagerForTest implements GlobalSubscriptionManag
 	}
 
 	@Override
-	public <T> Observable.Transformer<T, T> subscribeWithResult() {
+	public <T> ObservableTransformer<T, T> subscribeWithResult() {
 		return observable -> observable;
 	}
 
 	@Override
-	public <T> Observable.Transformer<T, T> createCached(String key) {
+	public <T> ObservableTransformer<T, T> createCached(String key) {
 		return observable -> observable;
 	}
 }

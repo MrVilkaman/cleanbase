@@ -9,8 +9,8 @@ import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.presentationlayer.resolution.ImageLoader;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
+import com.github.mrvilkaman.utils.bus.Bus;
 
-import net.jokubasdargis.rxbus.Bus;
 
 public interface CoreCommonComponent {
 

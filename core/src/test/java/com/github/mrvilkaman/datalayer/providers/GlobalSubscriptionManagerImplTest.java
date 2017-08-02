@@ -3,8 +3,8 @@ package com.github.mrvilkaman.datalayer.providers;
 import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.testsutils.ProviderUtils;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -12,11 +12,12 @@ import org.mockito.Mockito;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
+import io.reactivex.subjects.PublishSubject;
 
+import static com.github.mrvilkaman.testsutils.ProviderUtils.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -39,8 +40,8 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	public void testSubscribe_success() {
 		// Arrange
 		PublishSubject<String> subject = PublishSubject.create();
-		TestSubscriber<String> client = new TestSubscriber<>();
-		Observable<String> stringObservable = subject.asObservable().doOnNext(client::onNext);
+		TestObserver<String> client = new TestObserver<>();
+		Observable<String> stringObservable = subject.doOnNext(client::onNext);
 
 		// Act
 		subject.onNext("qwer1");
@@ -69,8 +70,8 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	public void testSubscribeCompose_success() {
 		// Arrange
 		PublishSubject<String> subject = PublishSubject.create();
-		TestSubscriber<String> client = new TestSubscriber<>();
-		Observable<String> stringObservable = subject.asObservable().doOnNext(client::onNext);
+		TestObserver<String> client = new TestObserver<>();
+		Observable<String> stringObservable = subject.doOnNext(client::onNext);
 
 		// Act
 		subject.onNext("qwer1");
@@ -97,10 +98,10 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	public void testSubscribeWithResult_error_inUI() {
 		// Arrange
 		UnauthorizedException exception = new UnauthorizedException();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 		PublishSubject<Object> subject = PublishSubject.create();
 		// Act
-		Observable<Object> objectObservable = subject.asObservable().compose(manager.subscribeWithResult());
+		Observable<Object> objectObservable = subject.compose(manager.subscribeWithResult());
 		objectObservable.subscribe(subscriber);
 		subject.onError(exception);
 
@@ -114,70 +115,69 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	public void testSubscribeWithResult_error_inBg() {
 		// Arrange
 		UnauthorizedException exception = new UnauthorizedException();
-		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+		TestObserver<Object> subscriber = new TestObserver<>();
 		PublishSubject<Object> subject = PublishSubject.create();
 
 		// Act
-		Observable<Object> objectObservable = subject.asObservable().compose(manager.subscribeWithResult());;
-		objectObservable.subscribe(subscriber).unsubscribe();
+		Observable<Object> objectObservable = subject.compose(manager.subscribeWithResult());;
+		objectObservable.subscribeWith(subscriber).dispose();
 		subject.onError(exception);
 
 		// Assert
 		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
 		subscriber.assertNoErrors();
-		subscriber.assertUnsubscribed();
+		assertDisposable(subscriber);
 	}
 
-	
+
 	@Test
-	public void testSubscribeWithResult_nextAndCompletedWithResponse() {
+	public void testSubscribeWithResult_nextAndCompleteWithResponse() {
 		// Arrange
-		TestSubscriber<String> subscriber = new TestSubscriber<>();
-		TestSubscriber<String> client = new TestSubscriber<>();
+		TestObserver<String> subscriber = new TestObserver<>();
+		TestObserver<String> client = new TestObserver<>();
 		PublishSubject<String> subject = PublishSubject.create();
 		Observable<String> stringObservable =
-				subject.asObservable().doOnNext(client::onNext).doOnCompleted(client::onCompleted);
+				subject.doOnNext(client::onNext).doOnComplete(client::onComplete);
 
 		// Act
 		Observable<String> objectObservable =
-				stringObservable.asObservable().compose(manager.subscribeWithResult());
-		objectObservable.subscribe(subscriber);
+				stringObservable.compose(manager.subscribeWithResult());
+		objectObservable.subscribeWith(subscriber);
 		subject.onNext("qwer");
-		subject.onCompleted();
+		subject.onComplete();
 
 		// Assert
 		subscriber.assertValue("qwer");
-		subscriber.assertCompleted();
+		subscriber.assertComplete();
 		client.assertValue("qwer");
-		client.assertCompleted();
+		client.assertComplete();
 	}
 
 
 	@Test
-	public void testSubscribeWithResult_nextAndCompleted_NoUI() {
+	public void testSubscribeWithResult_nextAndComplete_NoUI() {
 		// Arrange
-		TestSubscriber<String> subscriber = new TestSubscriber<>();
-		TestSubscriber<String> client = new TestSubscriber<>();
+		TestObserver<String> subscriber = new TestObserver<>();
+		TestObserver<String> client = new TestObserver<>();
 		PublishSubject<String> subject = PublishSubject.create();
 		Observable<String> stringObservable =
-				subject.asObservable().doOnNext(client::onNext).doOnCompleted(client::onCompleted);
+				subject.doOnNext(client::onNext).doOnComplete(client::onComplete);
 
 		// Act
 		Observable<String> objectObservable =
-				stringObservable.asObservable().compose(manager.subscribeWithResult());
-		objectObservable.subscribe(subscriber).unsubscribe();
+				stringObservable.compose(manager.subscribeWithResult());
+		objectObservable.subscribeWith(subscriber).dispose();
 		subject.onNext("qwer");
-		subject.onCompleted();
+		subject.onComplete();
 
 		// Assert
 		subscriber.assertNoValues();
-		subscriber.assertNotCompleted();
-		subscriber.assertUnsubscribed();
+		subscriber.assertNotComplete();
+		assertDisposable(subscriber);
 		client.assertValue("qwer");
-		client.assertCompleted();
+		client.assertComplete();
 	}
 
-	
 	@Test
 	public void testsubscribeSingle_twoSubscribe_oneDate() {
 		// Arrange
@@ -189,18 +189,18 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				.delay(1, TimeUnit.SECONDS, scheduler);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		stringObservable.asObservable().compose(manager.createCached("qwer")).subscribe(testSubscriber1);
-		testSubscriber1.assertValueCount(0);
-		stringObservable.asObservable().compose(manager.createCached("qwer")).subscribe(testSubscriber2);
+		TestObserver<String> testObserver1 = new TestObserver<>();
+		TestObserver<String> testObserver2 = new TestObserver<>();
+		stringObservable.compose(manager.createCached("qwer")).subscribe(testObserver1);
+		testObserver1.assertValueCount(0);
+		stringObservable.compose(manager.createCached("qwer")).subscribe(testObserver2);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertValueCount(1);
-		testSubscriber1.assertValue("1");
-		testSubscriber2.assertValueCount(1);
-		testSubscriber2.assertValue("1");
+		testObserver1.assertValueCount(1);
+		testObserver1.assertValue("1");
+		testObserver2.assertValueCount(1);
+		testObserver2.assertValue("1");
 		verify(mock).getNext();
 	}
 
@@ -215,24 +215,25 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				Observable.zip(
 				Observable.just(mock.getNext(), mock.getNext(), mock.getNext())
 						.toList()
-						.concatMap(Observable::from),
+						.toObservable()
+						.concatMap(Observable::fromIterable),
 						Observable.interval(1, TimeUnit.SECONDS, scheduler),
 						(s, aLong) -> s);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
+		TestObserver<String> TestObserver1 = new TestObserver<>();
+		TestObserver<String> TestObserver2 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver1);
 		scheduler.advanceTimeTo(2, TimeUnit.SECONDS);
-		testSubscriber1.assertValues("1", "2");
+		TestObserver1.assertValues("1", "2");
 
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver2);
 
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertValues("1", "2", "3");
-		testSubscriber2.assertValues("1", "2", "3");
+		TestObserver1.assertValues("1", "2", "3");
+		TestObserver2.assertValues("1", "2", "3");
 		verify(mock, times(3)).getNext();
 
 	}
@@ -251,15 +252,15 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				.concatMap(Observable::error);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		TestObserver<String> TestObserver1 = new TestObserver<>();
+		TestObserver<String> TestObserver2 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver1);
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver2);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertError(exception1);
-		testSubscriber2.assertError(exception1);
+		TestObserver1.assertError(exception1);
+		TestObserver2.assertError(exception1);
 		verify(mock).getNextException();
 	}
 
@@ -274,24 +275,24 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				.delay(1, TimeUnit.SECONDS, scheduler);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
-		testSubscriber1.assertValueCount(0);
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		TestObserver<String> TestObserver1 = new TestObserver<>();
+		TestObserver<String> TestObserver2 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver1);
+		TestObserver1.assertValueCount(0);
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver2);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
-		TestSubscriber<String> testSubscriber3 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber3);
+		TestObserver<String> TestObserver3 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver3);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertValueCount(1);
-		testSubscriber1.assertValue("1");
-		testSubscriber2.assertValueCount(1);
-		testSubscriber2.assertValue("1");
-		testSubscriber3.assertValueCount(1);
-		testSubscriber3.assertValue("2");
+		TestObserver1.assertValueCount(1);
+		TestObserver1.assertValue("1");
+		TestObserver2.assertValueCount(1);
+		TestObserver2.assertValue("1");
+		TestObserver3.assertValueCount(1);
+		TestObserver3.assertValue("2");
 		verify(mock, times(2)).getNext();
 	}
 
@@ -308,18 +309,18 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				.delay(1, TimeUnit.SECONDS, scheduler);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
-		testSubscriber1.assertValueCount(0);
-		manager.createCached("qwer", stringObservable2).subscribe(testSubscriber2);
+		TestObserver<String> TestObserver1 = new TestObserver<>();
+		TestObserver<String> TestObserver2 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(TestObserver1);
+		TestObserver1.assertValueCount(0);
+		manager.createCached("qwer", stringObservable2).subscribe(TestObserver2);
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertValueCount(1);
-		testSubscriber1.assertValue("1");
-		testSubscriber2.assertValueCount(1);
-		testSubscriber2.assertValue("1");
+		TestObserver1.assertValueCount(1);
+		TestObserver1.assertValue("1");
+		TestObserver2.assertValueCount(1);
+		TestObserver2.assertValue("1");
 		verify(mock).getNext();
 	}
 
@@ -334,25 +335,27 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				Observable.zip(
 						Observable.just(mock.getNext(), mock.getNext(), mock.getNext())
 								.toList()
-								.concatMap(Observable::from),
+								.toObservable()
+								.concatMap(Observable::fromIterable),
 						Observable.interval(1, TimeUnit.SECONDS, scheduler),
 						(s, aLong) -> s);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		TestObserver<String> testObserver1 = new TestObserver<>();
+		TestObserver<String> testObserver2 = new TestObserver<>();
+		manager.createCached("qwer", stringObservable).subscribe(testObserver1);
+		manager.createCached("qwer", stringObservable).subscribe(testObserver2);
 		scheduler.advanceTimeTo(1, TimeUnit.SECONDS);
-		testSubscriber2.unsubscribe();
+		testObserver2.dispose();
+
 		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
 
 		// Assert
-		testSubscriber1.assertValues("1", "2", "3");
-		testSubscriber1.assertCompleted();
-		testSubscriber2.assertValues("1");
-		testSubscriber2.assertNotCompleted();
-		testSubscriber2.assertUnsubscribed();
+		testObserver1.assertValues("1", "2", "3");
+		testObserver1.assertComplete();
+		testObserver2.assertValues("1");
+		testObserver2.assertNotComplete();
+		assertDisposable(testObserver2);
 		verify(mock, times(3)).getNext();
 	}
 
@@ -367,25 +370,25 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 				.delay(2, TimeUnit.SECONDS, scheduler);
 
 		// Act
-		TestSubscriber<String> testSubscriber1 = new TestSubscriber<>();
-		TestSubscriber<String> testSubscriber2 = new TestSubscriber<>();
+		TestObserver<String> testObserver1 = new TestObserver<>();
+		TestObserver<String> testObserver2 = new TestObserver<>();
 
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber1);
+		manager.createCached("qwer", stringObservable).subscribe(testObserver1);
 		scheduler.advanceTimeBy(1, TimeUnit.SECONDS);
-		testSubscriber1.unsubscribe();
+		testObserver1.dispose();
 		scheduler.advanceTimeBy(50, TimeUnit.MILLISECONDS);
 
 
-		manager.createCached("qwer", stringObservable).subscribe(testSubscriber2);
+		manager.createCached("qwer", stringObservable).subscribe(testObserver2);
 		scheduler.advanceTimeBy(3, TimeUnit.SECONDS);
 
 
 		// Assert
-		testSubscriber1.assertNoValues();
-		testSubscriber1.assertNotCompleted();
-		testSubscriber1.assertUnsubscribed();
-		testSubscriber2.assertValueCount(1);
-		testSubscriber2.assertValue("2");
+		testObserver1.assertNoValues();
+		testObserver1.assertNotComplete();
+		assertDisposable(testObserver1);
+		testObserver2.assertValueCount(1);
+		testObserver2.assertValue("2");
 		verify(mock, times(2)).getNext();
 	}
 

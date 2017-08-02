@@ -5,9 +5,7 @@ import com.github.mrvilkaman.domainlayer.models.DataErrorWrapper;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.ItemListener;
 
-import rx.annotations.Experimental;
 
-@Experimental
 public class ListSubscriber<T extends DataErrorWrapper<D>, D> extends ViewSubscriber<BaseView, T> {
 
 	private ItemListener<D> listener;

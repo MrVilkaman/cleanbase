@@ -8,9 +8,6 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.INeedProgressState;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 
-import rx.annotations.Experimental;
-
-@Experimental
 public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>, D>
 		extends ViewSubscriber<V, T> implements INeedProgressState {
 
@@ -44,7 +41,7 @@ public class StreamSubscriber<V extends BaseView, T extends DataErrorWrapper<D>,
 
 
 	@Override
-	public void onCompleted() {
+	public void onComplete() {
 		hideProgress();
 	}
 }

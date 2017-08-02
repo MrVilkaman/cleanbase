@@ -7,15 +7,9 @@ import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 
 
 public class BasePresenter<V extends BaseView> {
@@ -65,34 +59,34 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
-
-	@SuppressWarnings("unchecked")
-	protected final <T> void subscribeUI(Single<T> observable, DisposableSingleObserver
-			subscriber) {
-		injectSubscriberDependencies(subscriber);
-		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-				.subscribeWith(subscriber));
-	}
-
-	@SuppressWarnings("unchecked")
-	protected final <T> void subscribeUI(Maybe<T> observable, DisposableMaybeObserver
-			subscriber) {
-		injectSubscriberDependencies(subscriber);
-		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-				.subscribeWith(subscriber));
-	}
-
-	@SuppressWarnings("unchecked")
-	protected final <T> void subscribeUI(Completable observable, DisposableCompletableObserver subscriber) {
-		injectSubscriberDependencies(subscriber);
-		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-				.subscribeWith(subscriber));
-	}
 //
 //	@SuppressWarnings("unchecked")
-//	protected final <T> void subscribeUI(Flowable observable, ResourceObserver subscriber) {
+//	protected final <T> void subscribeUI(Single<T> observable, DisposableSingleObserver
+//			subscriber) {
 //		injectSubscriberDependencies(subscriber);
 //		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+//				.subscribeWith(subscriber));
+//	}
+//
+//	@SuppressWarnings("unchecked")
+//	protected final <T> void subscribeUI(Maybe<T> observable, DisposableMaybeObserver
+//			subscriber) {
+//		injectSubscriberDependencies(subscriber);
+//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+//				.subscribeWith(subscriber));
+//	}
+//
+//	@SuppressWarnings("unchecked")
+//	protected final <T> void subscribeUI(Completable observable, DisposableCompletableObserver subscriber) {
+//		injectSubscriberDependencies(subscriber);
+//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+//				.subscribeWith(subscriber));
+//	}
+
+//	@SuppressWarnings("unchecked")
+//	protected final <T> void subscribeUI(Flowable observable, ResourceSubscriber subscriber) {
+//		injectSubscriberDependencies(subscriber);
+//		compositeSubscription.add((ResourceSubscriber) observable.observeOn(schedulersProvider.mainThread())
 //				.subscribeWith(subscriber));
 //	}
 

@@ -1,7 +1,10 @@
 package com.github.mrvilkaman.testsutils;
 
 
-import rx.observers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.subscribers.TestSubscriber;
+
+import static junit.framework.Assert.fail;
 
 public class ProviderUtils {
 
@@ -11,13 +14,21 @@ public class ProviderUtils {
 //	}
 
 	public static void assetSuccuse(TestSubscriber<?> subscriber) {
-		subscriber.assertCompleted();
+		subscriber.assertComplete();
 		subscriber.assertNoErrors();
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public static <T> T getNextEvent(TestSubscriber<T> subscriber) {
-		return subscriber.getOnNextEvents()
-				.get(0);
+		return subscriber.values().get(0);
+	}
+
+	public static void assertDisposable(TestObserver<?> subscriber) {
+		subscriber.assertOf(stringTestObserver -> {
+			if (!stringTestObserver.isDisposed()) {
+				fail("is Not Disposed!");
+			}
+		});
 	}
 }

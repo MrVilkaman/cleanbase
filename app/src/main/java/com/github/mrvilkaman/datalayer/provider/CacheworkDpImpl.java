@@ -7,20 +7,21 @@ import com.github.mrvilkaman.datalayer.tools.RxLoadWrapperHolder;
 import com.github.mrvilkaman.domainlayer.models.DataErrorWrapper;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
-import com.jakewharton.rxrelay.BehaviorRelay;
-import com.jakewharton.rxrelay.PublishRelay;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+
 
 public class CacheworkDpImpl implements CacheworkDp {
 
-	private BehaviorRelay<String> subject = BehaviorRelay.create();
-	private PublishRelay<StringBody> subjectBody = PublishRelay.create();
+	private BehaviorSubject<String> subject = BehaviorSubject.create();
+	private PublishSubject<StringBody> subjectBody = PublishSubject.create();
 
 	private GlobalSubscriptionManager manager;
 	private SchedulersProvider provider;
@@ -36,18 +37,18 @@ public class CacheworkDpImpl implements CacheworkDp {
 
 	@Override
 	public Observable<DataErrorWrapper<String>> observeString() {
-		return stringProgress.modifyStream(subject.asObservable());
+		return stringProgress.modifyStream(subject);
 	}
 
 	@Override
 	public Observable<DataErrorWrapper<StringBody>> observeStringModel() {
-		return stringBodyProgress.modifyStream(subjectBody.asObservable());
+		return stringBodyProgress.modifyStream(subjectBody);
 	}
 
 	@Override
 	public void refreshString() {
 		getJust().delay(2, TimeUnit.SECONDS, provider.computation())
-				.doOnNext(subject)
+				.doOnNext(stringBody -> subject.onNext(stringBody))
 				.compose(stringProgress.bindToLoadSilent())
 				.compose(manager.subscribe());
 	}
@@ -56,7 +57,7 @@ public class CacheworkDpImpl implements CacheworkDp {
 	public void refreshStringWrapper() {
 		getJust().delay(2, TimeUnit.SECONDS, provider.computation())
 				.map(StringBody::new)
-				.doOnNext(subjectBody)
+				.doOnNext(stringBody -> subjectBody.onNext(stringBody))
 				.compose(stringBodyProgress.bindToLoadSilent())
 				.compose(manager.subscribe());
 	}

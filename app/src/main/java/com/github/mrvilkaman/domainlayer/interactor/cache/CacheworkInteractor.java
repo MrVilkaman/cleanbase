@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.domainlayer.interactor.cache;
 
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface CacheworkInteractor {
 

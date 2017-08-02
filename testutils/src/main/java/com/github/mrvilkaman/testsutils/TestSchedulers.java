@@ -2,16 +2,17 @@ package com.github.mrvilkaman.testsutils;
 
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
 
-import rx.Scheduler;
-import rx.schedulers.Schedulers;
-import rx.schedulers.TestScheduler;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.TestScheduler;
+
 
 /**
  * Created by Zahar on 19.03.16.
  */
 public class TestSchedulers implements SchedulersProvider {
 
-	private Scheduler immediate = Schedulers.immediate();
+	private Scheduler immediate = Schedulers.trampoline();
 	private TestScheduler testScheduler = new TestScheduler();
 
 	private boolean useTestScheduler = false;

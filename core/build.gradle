@@ -86,10 +86,9 @@ dependencies {
 
     // Developer tools (Developer Settings)
 
-    compile libraries.rxBus
-    compile libraries.rxBusAndroid
     compile libraries.rxJava2
     compile libraries.rxpermissions2
+    compile libraries.rxAndroid2
 
     compile libraries.materialDialog
     compile libraries.materialProgress

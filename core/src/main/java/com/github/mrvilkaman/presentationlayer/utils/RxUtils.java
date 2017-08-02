@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.exceptions.Exceptions;
-import rx.functions.Func1;
-import rx.subscriptions.Subscriptions;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Function;
+
 
 public final class RxUtils {
 
@@ -20,18 +21,18 @@ public final class RxUtils {
 		// пустой
 	}
 
-	public static <T1, T2> Observable.Transformer<List<T1>, List<T2>> mapList(Func1<T1, T2> func) {
+	public static <T1, T2> ObservableTransformer<List<T1>, List<T2>> mapList(Function<T1, T2> func) {
 		return t1Observable -> t1Observable.concatMap(
-				t1s -> Observable.from(t1s).map(func).toList());
+				t1s -> Observable.fromIterable(t1s).map(func).toList().toObservable());
 	}
 
 
 	public static Observable<Integer> getScrollObservable(RecyclerView recyclerView, int limit, int emptyListCount) {
-		Observable<Integer> integerObservable = Observable.unsafeCreate(subscriber -> {
+		Observable<Integer> integerObservable = Observable.create(subscriber -> {
 			final RecyclerView.OnScrollListener sl = new RecyclerView.OnScrollListener() {
 				@Override
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-					if (!subscriber.isUnsubscribed()) {
+					if (!subscriber.isDisposed()) {
 						int position = getLastVisibleItemPosition(recyclerView);
 						int updatePosition = recyclerView.getAdapter()
 								.getItemCount() - 1 - (limit / 2);
@@ -43,7 +44,7 @@ public final class RxUtils {
 				}
 			};
 			recyclerView.addOnScrollListener(sl);
-			subscriber.add(Subscriptions.create(() -> recyclerView.removeOnScrollListener(sl)));
+			subscriber.setCancellable(() -> recyclerView.removeOnScrollListener(sl));
 			if (recyclerView.getAdapter()
 					.getItemCount() == emptyListCount) {
 				subscriber.onNext(recyclerView.getAdapter()

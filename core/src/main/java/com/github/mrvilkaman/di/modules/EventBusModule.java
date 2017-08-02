@@ -2,12 +2,10 @@ package com.github.mrvilkaman.di.modules;
 
 import android.util.Log;
 
-
 import com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings;
-
-import net.jokubasdargis.rxbus.AndroidRxBus;
-import net.jokubasdargis.rxbus.Bus;
-import net.jokubasdargis.rxbus.RxBus;
+import com.github.mrvilkaman.utils.bus.AndroidRxBus;
+import com.github.mrvilkaman.utils.bus.Bus;
+import com.github.mrvilkaman.utils.bus.RxBus;
 
 import javax.inject.Singleton;
 

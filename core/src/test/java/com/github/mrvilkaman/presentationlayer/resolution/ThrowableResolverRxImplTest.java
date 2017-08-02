@@ -3,9 +3,8 @@ package com.github.mrvilkaman.presentationlayer.resolution;
 import com.github.mrvilkaman.datalayer.providers.GlobalBusQuery;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
 import com.github.mrvilkaman.testsutils.TestSchedulers;
-
-import net.jokubasdargis.rxbus.Bus;
-import net.jokubasdargis.rxbus.RxBus;
+import com.github.mrvilkaman.utils.bus.Bus;
+import com.github.mrvilkaman.utils.bus.RxBus;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.schedulers.TestScheduler;
+import io.reactivex.schedulers.TestScheduler;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Matchers.any;

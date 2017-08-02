@@ -7,10 +7,10 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
-import static rx.Observable.just;
+import static io.reactivex.Observable.just;
 
 
 public class RxUtilsTest extends BaseTestCase {
@@ -18,7 +18,7 @@ public class RxUtilsTest extends BaseTestCase {
 	@Test
 	public void testMapList() {
 		// Arrange
-		TestSubscriber<List<Integer>> subscriber = new TestSubscriber<>();
+		TestObserver<List<Integer>> subscriber = new TestObserver<>();
 
 		// Act
 		Observable<List<Integer>> observable =
@@ -32,7 +32,7 @@ public class RxUtilsTest extends BaseTestCase {
 	@Test
 	public void testMapList2() {
 		// Arrange
-		TestSubscriber<List<String>> subscriber = new TestSubscriber<>();
+		TestObserver<List<String>> subscriber = new TestObserver<>();
 
 		// Act
 		Observable<List<String>> observable =

@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.domainlayer.interactor;
 
-import rx.Observable;
+
+import io.reactivex.Observable;
 
 public interface LongpullingInteractor {
 	Observable<String> doWorkWithError();

@@ -4,8 +4,7 @@ import com.github.mrvilkaman.datalayer.providers.GlobalSubscriptionManagerImpl;
 import com.github.mrvilkaman.datalayer.providers.MainSchedulersProvider;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import javax.inject.Singleton;
 

@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;

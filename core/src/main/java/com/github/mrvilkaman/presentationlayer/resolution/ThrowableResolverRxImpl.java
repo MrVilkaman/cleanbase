@@ -5,15 +5,12 @@ import android.support.annotation.NonNull;
 
 import com.github.mrvilkaman.datalayer.providers.GlobalBusQuery;
 import com.github.mrvilkaman.domainlayer.providers.SchedulersProvider;
-
-import net.jokubasdargis.rxbus.Bus;
+import com.github.mrvilkaman.utils.bus.Bus;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.annotations.Experimental;
-import rx.subjects.PublishSubject;
+import io.reactivex.subjects.PublishSubject;
 
-@Experimental
 public class ThrowableResolverRxImpl implements ThrowableResolver {
 
 

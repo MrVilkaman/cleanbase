@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.domainlayer.providers;
 
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface PermissionManager {
 

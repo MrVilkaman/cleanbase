@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public class CustomViewContainerPresenter extends BasePresenter<CustomViewContainerView> {
 

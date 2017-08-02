@@ -3,15 +3,13 @@ package com.github.mrvilkaman.datalayer.providers;
 import android.app.Activity;
 
 import com.github.mrvilkaman.domainlayer.providers.PermissionManager;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-import static com.github.mrvilkaman.domainlayer.providers.PermissionManager.AnswerPermission
-		.ALLOWED;
+import static com.github.mrvilkaman.domainlayer.providers.PermissionManager.AnswerPermission.ALLOWED;
 import static com.github.mrvilkaman.domainlayer.providers.PermissionManager.AnswerPermission.DENIED;
-import static com.github.mrvilkaman.domainlayer.providers.PermissionManager.AnswerPermission
-		.NOT_ASK;
+import static com.github.mrvilkaman.domainlayer.providers.PermissionManager.AnswerPermission.NOT_ASK;
 
 public class PermissionManagerImpl implements PermissionManager {
 

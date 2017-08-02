@@ -19,7 +19,7 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolve
 
 import java.util.concurrent.TimeUnit;
 
-import static rx.Observable.just;
+import io.reactivex.Completable;
 
 
 public class NavigationResolverImpl implements NavigationResolver {
@@ -193,8 +193,8 @@ public class NavigationResolverImpl implements NavigationResolver {
 		} else {
 			uiResolver.showToast(R.string.toast_exit);
 			doubleBackToExitPressedOnce = true;
-			just(null).delay(1000, TimeUnit.MILLISECONDS)
-					.subscribe(o -> doubleBackToExitPressedOnce = false);
+			Completable.complete().delay(1000, TimeUnit.MILLISECONDS)
+					.subscribe(() -> doubleBackToExitPressedOnce = false);
 		}
 	}
 
