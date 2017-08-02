@@ -37,8 +37,7 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 				.groupBy(Throwable::getClass)
 				.flatMap(obs -> obs.throttleFirst(500, TimeUnit.MILLISECONDS,
 						provider.computation()))
-				//		subject
 				.observeOn(provider.mainThread())
-				.subscribe(throwableResolver::handleError);
+				.subscribe((throwable) -> throwableResolver.handleError(throwable));
 	}
 }

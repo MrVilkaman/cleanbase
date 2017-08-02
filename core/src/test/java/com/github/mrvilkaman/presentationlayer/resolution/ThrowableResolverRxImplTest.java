@@ -46,6 +46,7 @@ public class ThrowableResolverRxImplTest extends BaseTestCase {
 
 	@Test
 	public void testHandleError() {
+		provider.setUseTestScheduler();
 		resolver.handleError(new RuntimeException("1"));
 		resolver.handleError(new RuntimeException("2"));
 		resolver.handleError(new RuntimeException("3"));
@@ -94,6 +95,7 @@ public class ThrowableResolverRxImplTest extends BaseTestCase {
 
 	@Test
 	public void testHandleError_bus() {
+		provider.setUseTestScheduler();
 		resolver.handleError(new RuntimeException("1"));
 		resolver.handleError(new RuntimeException("2"));
 		resolver.handleError(new RuntimeException("3"));
@@ -108,6 +110,7 @@ public class ThrowableResolverRxImplTest extends BaseTestCase {
 
 	@Test
 	public void testHandleError_diff_2() {
+		provider.setUseTestScheduler();
 		resolver.handleError(new RuntimeException());
 		resolver.handleError(new IOException());
 		resolver.handleError(new RuntimeException());

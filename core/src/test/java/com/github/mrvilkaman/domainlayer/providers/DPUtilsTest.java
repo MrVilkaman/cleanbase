@@ -41,7 +41,12 @@ public class DPUtilsTest extends BaseTestCase {
 	@Test
 	public void testHandleAnswer() {
 		// Arrange
-		BaseResponse response = new BaseResponse(200, "");
+		BaseResponse response = new BaseResponse(200, ""){
+			@Override
+			public Object getBody() {
+				return new Object();
+			}
+		};
 		TestObserver<Object> subscriber = new TestObserver<>();
 
 		// Act
@@ -50,7 +55,6 @@ public class DPUtilsTest extends BaseTestCase {
 				.subscribe(subscriber);
 
 		// Assert
-		subscriber.assertValue(null);
 		subscriber.assertValueCount(1);
 		subscriber.assertComplete();
 		subscriber.assertNoErrors();
