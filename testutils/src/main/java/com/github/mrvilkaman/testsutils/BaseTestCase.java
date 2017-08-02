@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * Created by Zahar on 04.04.16.
  */
 @SuppressWarnings("ALL")
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public abstract class BaseTestCase {
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();

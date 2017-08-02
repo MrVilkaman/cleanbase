@@ -32,7 +32,10 @@ public class LoadSubscriber<V extends BaseView, T> extends ViewSubscriber<V, T>{
 	public void onNext(T item) {
 		V view = view();
 		if (view instanceof BindType) {
-			((BindType<T>) view).bind(item);
+			try {
+				((BindType) view).bind(item);
+			} catch (ClassCastException ignore) {
+			}
 		}
 	}
 
