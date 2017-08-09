@@ -25,6 +25,7 @@ import rx.schedulers.Schedulers;
 public class CropImageFragment extends BaseFragment<CropImagePresenter> implements CropImageScreenView {
 
 	public enum MODE {
+		NO,
 		FREE,
 		SQUARE,
 		ODOMETR
