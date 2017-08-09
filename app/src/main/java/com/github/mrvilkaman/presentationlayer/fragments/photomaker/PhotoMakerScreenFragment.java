@@ -61,7 +61,7 @@ public class PhotoMakerScreenFragment extends BaseFragment<PhotoMakerPresenter>
 		permissionManager.request(Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(state -> {
 			switch (state) {
 				case ALLOWED:
-					photoHelper.openGallery(CropImageFragment.MODE.FREE);
+					photoHelper.openGallery(CropImageFragment.MODE.NO);
 					break;
 				case DENIED:
 				case NOT_ASK:

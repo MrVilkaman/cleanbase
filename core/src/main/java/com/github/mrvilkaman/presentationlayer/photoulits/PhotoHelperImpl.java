@@ -63,14 +63,18 @@ public class PhotoHelperImpl implements PhotoHelper {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data,
-								 PhotoHelperCallback callback) {
+	                             PhotoHelperCallback callback) {
 		String pathToTempFiles = getPathToTempFiles();
 		if (requestCode == SELECT_PICTURE_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
 				final Uri selectedImage = data.getData();
 
-				if (selectedImage.getScheme().equals("file")) {
+				if (selectedImage.getScheme()
+						.equals("file")) {
 					showCrop(selectedImage.getEncodedPath(), pathToTempFiles + lastFileName, mode);
+					if (mode == CropImageFragment.MODE.NO) {
+						callback.onGetPath(pathToTempFiles + lastFileName);
+					}
 					return;
 				}
 
@@ -82,6 +86,9 @@ public class PhotoHelperImpl implements PhotoHelper {
 						int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 						String filePath = cursor.getString(columnIndex);
 						showCrop(filePath, pathToTempFiles + lastFileName, mode);
+						if (mode == CropImageFragment.MODE.NO) {
+							callback.onGetPath(pathToTempFiles + lastFileName);
+						}
 					}
 					cursor.close();
 				}
@@ -91,6 +98,9 @@ public class PhotoHelperImpl implements PhotoHelper {
 			if (resultCode == Activity.RESULT_OK) {
 				showCrop(pathToTempFiles + IMAGE_TEMP_FILE_NAME, pathToTempFiles + lastFileName,
 						mode);
+				if (mode == CropImageFragment.MODE.NO) {
+					callback.onGetPath(pathToTempFiles + lastFileName);
+				}
 			}
 		} else if (requestCode == CROP_PHOTO_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_CANCELED) {
@@ -100,6 +110,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 		}
 
 		if (requestCode == CROP_PHOTO_REQUEST_CODE && Activity.RESULT_OK == resultCode) {
+
 			callback.onGetPath(pathToTempFiles + lastFileName);
 		}
 	}
@@ -113,9 +124,11 @@ public class PhotoHelperImpl implements PhotoHelper {
 			Log.d(TAG, "copy file error", e);
 		}
 
-		resolver.setTargetFragment(CROP_PHOTO_REQUEST_CODE);
-		resolver.showFragment(
-				CropImageFragment.newInstance(from.getAbsolutePath(), to.getAbsolutePath(), mode));
+		if (mode != CropImageFragment.MODE.NO) {
+			resolver.setTargetFragment(CROP_PHOTO_REQUEST_CODE);
+			resolver.showFragment(
+					CropImageFragment.newInstance(from.getAbsolutePath(), to.getAbsolutePath(), mode));
+		}
 	}
 
 	@Override
