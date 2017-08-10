@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.exceptions.Exceptions;
 import io.reactivex.functions.Function;
@@ -22,33 +25,49 @@ public final class RxUtils {
 	}
 
 	public static <T1, T2> ObservableTransformer<List<T1>, List<T2>> mapList(Function<T1, T2> func) {
-		return t1Observable -> t1Observable.concatMap(
-				t1s -> Observable.fromIterable(t1s).map(func).toList().toObservable());
+		return new ObservableTransformer<List<T1>, List<T2>>() {
+			@Override
+			public ObservableSource<List<T2>> apply(Observable<List<T1>> t1Observable) {
+				return t1Observable.concatMap(
+						new Function<List<T1>, ObservableSource<? extends List<T2>>>() {
+							@Override
+							public ObservableSource<? extends List<T2>> apply(List<T1> t1s) throws Exception {
+								return Observable.fromIterable(t1s)
+										.map(func)
+										.toList()
+										.toObservable();
+							}
+						});
+			}
+		};
 	}
 
 
 	public static Observable<Integer> getScrollObservable(RecyclerView recyclerView, int limit, int emptyListCount) {
-		Observable<Integer> integerObservable = Observable.create(subscriber -> {
-			final RecyclerView.OnScrollListener sl = new RecyclerView.OnScrollListener() {
-				@Override
-				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-					if (!subscriber.isDisposed()) {
-						int position = getLastVisibleItemPosition(recyclerView);
-						int updatePosition = recyclerView.getAdapter()
-								.getItemCount() - 1 - (limit / 2);
-						if (position >= updatePosition) {
-							subscriber.onNext(recyclerView.getAdapter()
-									.getItemCount());
+		Observable<Integer> integerObservable = Observable.create(new ObservableOnSubscribe<Integer>() {
+			@Override
+			public void subscribe(ObservableEmitter<Integer> subscriber) throws Exception {
+				final RecyclerView.OnScrollListener sl = new RecyclerView.OnScrollListener() {
+					@Override
+					public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+						if (!subscriber.isDisposed()) {
+							int position = getLastVisibleItemPosition(recyclerView);
+							int updatePosition = recyclerView.getAdapter()
+									.getItemCount() - 1 - (limit / 2);
+							if (position >= updatePosition) {
+								subscriber.onNext(recyclerView.getAdapter()
+										.getItemCount());
+							}
 						}
 					}
+				};
+				recyclerView.addOnScrollListener(sl);
+				subscriber.setCancellable(() -> recyclerView.removeOnScrollListener(sl));
+				if (recyclerView.getAdapter()
+						.getItemCount() == emptyListCount) {
+					subscriber.onNext(recyclerView.getAdapter()
+							.getItemCount());
 				}
-			};
-			recyclerView.addOnScrollListener(sl);
-			subscriber.setCancellable(() -> recyclerView.removeOnScrollListener(sl));
-			if (recyclerView.getAdapter()
-					.getItemCount() == emptyListCount) {
-				subscriber.onNext(recyclerView.getAdapter()
-						.getItemCount());
 			}
 		});
 		return integerObservable.distinctUntilChanged();
