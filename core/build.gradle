@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../jacoco.gradle'
 apply from: "$project.rootDir/tools/tools.gradle"
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 buildscript{
@@ -100,6 +99,9 @@ dependencies {
     compile libraries.okHttpLoggingInterceptor
 
     provided libraries.playServicesGcm
+
+    testCompile libraries.retrofit2
+    testCompile libraries.retrofit2rxjava2
 
     //tests
     testCompile project(':testutils')

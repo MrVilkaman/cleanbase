@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 //apply from: '../artifacts.gradle'
 apply from: "$project.rootDir/tools/tools.gradle"
 apply from: '../jacoco.gradle'
@@ -32,15 +31,6 @@ android {
         }
     }
 
-    productFlavors {
-        dev {
-            minSdkVersion 21
-//            buildConfigField "String", "HOST", "\"api.byblos.su\""
-        }
-
-        prod {
-        }
-    }
 
     sourceSets {
         // Integration tests live in src/integrationTest.
