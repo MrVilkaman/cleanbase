@@ -4,6 +4,7 @@ package com.github.mrvilkaman.testsutils;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 
 
@@ -26,19 +27,32 @@ public class GlobalSubscriptionManagerForTest implements GlobalSubscriptionManag
 
 	@Override
 	public <T> ObservableTransformer<T, T> subscribe() {
-		return observable -> {
-			observable.subscribe();
-			return Observable.empty();
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(Observable<T> observable) {
+				observable.subscribe();
+				return Observable.empty();
+			}
 		};
 	}
 
 	@Override
 	public <T> ObservableTransformer<T, T> subscribeWithResult() {
-		return observable -> observable;
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(Observable<T> observable) {
+				return observable;
+			}
+		};
 	}
 
 	@Override
 	public <T> ObservableTransformer<T, T> createCached(String key) {
-		return observable -> observable;
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(Observable<T> observable) {
+				return observable;
+			}
+		};
 	}
 }

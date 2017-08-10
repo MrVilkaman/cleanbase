@@ -21,18 +21,24 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 	@SuppressWarnings("unchecked")
 	public void setListeners(View view, ItemListener<Type> onClick,
 							ItemListener<Type> onLongClick) {
-		view.setOnClickListener(view1 -> {
-			if (onClick != null) {
-				onClick.click((Type) view.getTag());
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view1) {
+				if (onClick != null) {
+					onClick.click((Type) view.getTag());
+				}
 			}
 		});
 
-		view.setOnLongClickListener(view1 -> {
-			if (onLongClick != null) {
-				onLongClick.click((Type) view.getTag());
-				return true;
+		view.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view1) {
+				if (onLongClick != null) {
+					onLongClick.click((Type) view.getTag());
+					return true;
+				}
+				return false;
 			}
-			return false;
 		});
 	}
 
