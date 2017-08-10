@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subjects.PublishSubject;
@@ -75,6 +76,9 @@ public class BasePresenterTest extends BaseTestCase {
 
 		// Assert
 		verify(subscriber).setView(mockView);
+
+		Completable complete = Completable.complete();
+		presenter.subscribeUI(complete, new LoadSubscriber<>());
 	}
 
 
