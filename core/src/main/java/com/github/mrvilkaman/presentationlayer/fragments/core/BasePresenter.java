@@ -7,9 +7,10 @@ import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
 
 
 public class BasePresenter<V extends BaseView> {
@@ -59,14 +60,13 @@ public class BasePresenter<V extends BaseView> {
 		this.view = view;
 	}
 
-//
-//	@SuppressWarnings("unchecked")
-//	protected final <T> void subscribeUI(Single<T> observable, DisposableSingleObserver
-//			subscriber) {
-//		injectSubscriberDependencies(subscriber);
-//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-//				.subscribeWith(subscriber));
-//	}
+	@SuppressWarnings("unchecked")
+	protected final <T> void subscribeUI(Single<T> observable, ViewSubscriber<V,T>
+			subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
 //
 //	@SuppressWarnings("unchecked")
 //	protected final <T> void subscribeUI(Maybe<T> observable, DisposableMaybeObserver
@@ -76,12 +76,12 @@ public class BasePresenter<V extends BaseView> {
 //				.subscribeWith(subscriber));
 //	}
 //
-//	@SuppressWarnings("unchecked")
-//	protected final <T> void subscribeUI(Completable observable, DisposableCompletableObserver subscriber) {
-//		injectSubscriberDependencies(subscriber);
-//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-//				.subscribeWith(subscriber));
-//	}
+	@SuppressWarnings("unchecked")
+	protected final void subscribeUI(Completable observable, ViewSubscriber<V,?> subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
 
 //	@SuppressWarnings("unchecked")
 //	protected final <T> void subscribeUI(Flowable observable, ResourceSubscriber subscriber) {
@@ -90,7 +90,7 @@ public class BasePresenter<V extends BaseView> {
 //				.subscribeWith(subscriber));
 //	}
 
-	protected final <T> void subscribeUI(Observable<T> observable, DisposableObserver<T> subscriber) {
+	protected final <T> void subscribeUI(Observable<T> observable, ViewSubscriber<V,T> subscriber) {
 		injectSubscriberDependencies(subscriber);
 		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
 				.subscribeWith(subscriber));
