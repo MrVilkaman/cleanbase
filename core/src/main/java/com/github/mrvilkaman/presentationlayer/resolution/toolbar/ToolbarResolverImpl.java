@@ -46,9 +46,12 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 			supportActionBar.setHomeButtonEnabled(true);
 			supportActionBar.setDisplayHomeAsUpEnabled(true);
 		}
-		toolbar.setNavigationOnClickListener(v -> {
-			if (callback != null)
-				callback.onClickHome();
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (callback != null)
+					callback.onClickHome();
+			}
 		});
 	}
 

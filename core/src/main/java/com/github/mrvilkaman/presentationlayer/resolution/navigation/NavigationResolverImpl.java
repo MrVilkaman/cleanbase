@@ -97,30 +97,39 @@ public class NavigationResolverImpl implements NavigationResolver {
 
 	@Override
 	public void showFragment(IBaseScreen fragment) {
-		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			if (toolbarResolver != null)
-				toolbarResolver.clear();
-			fragmentManager.showFragment(fragment);
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
+			@Override
+			public void onClose() {
+				if (toolbarResolver != null)
+					toolbarResolver.clear();
+				fragmentManager.showFragment(fragment);
+			}
 		};
 		close(callback);
 	}
 
 	@Override
 	public void showRootFragment(IBaseScreen fragment) {
-		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			if (toolbarResolver != null)
-				toolbarResolver.clear();
-			fragmentManager.showRootFragment(fragment);
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
+			@Override
+			public void onClose() {
+				if (toolbarResolver != null)
+					toolbarResolver.clear();
+				fragmentManager.showRootFragment(fragment);
+			}
 		};
 		close(callback);
 	}
 
 	@Override
 	public void showFragmentWithoutBackStack(IBaseScreen fragment) {
-		LeftDrawerHelper.LeftDrawerHelperCallback callback = () -> {
-			if (toolbarResolver != null)
-				toolbarResolver.clear();
-			fragmentManager.showFragmentWithoutBackStack(fragment);
+		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
+			@Override
+			public void onClose() {
+				if (toolbarResolver != null)
+					toolbarResolver.clear();
+				fragmentManager.showFragmentWithoutBackStack(fragment);
+			}
 		};
 		close(callback);
 	}
