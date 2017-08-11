@@ -32,7 +32,12 @@ public class ToolbarModule {
 	@Provides
 	@PerActivity
 	public ToolbarMenuHelper createToolbarMenuHelper() {
-		return new ToolbarMenuHelper(() -> activity.invalidateOptionsMenu());
+		return new ToolbarMenuHelper(new Runnable() {
+			@Override
+			public void run() {
+				activity.invalidateOptionsMenu();
+			}
+		});
 	}
 
 	@Provides
