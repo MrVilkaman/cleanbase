@@ -11,6 +11,7 @@ import net.jokubasdargis.rxbus.Bus;
 import java.util.concurrent.TimeUnit;
 
 import rx.annotations.Experimental;
+import rx.functions.Actions;
 import rx.subjects.PublishSubject;
 
 @Experimental
@@ -24,7 +25,7 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 	private PublishSubject<Throwable> subject = PublishSubject.create();
 
 	public ThrowableResolverRxImpl(@NonNull ThrowableResolver throwableResolver, @NonNull Bus bus,
-								   @NonNull SchedulersProvider provider) {
+	                               @NonNull SchedulersProvider provider) {
 		this.throwableResolver = throwableResolver;
 		this.provider = provider;
 		this.bus = bus;
@@ -42,6 +43,6 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 						provider.computation()))
 				//		subject
 				.observeOn(provider.mainThread())
-				.subscribe(throwableResolver::handleError);
+				.subscribe(throwableResolver::handleError, Actions.empty());
 	}
 }
