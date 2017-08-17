@@ -40,7 +40,13 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 	public void init() {
 
 		subject.mergeWith(bus.queue(GlobalBusQuery.GLOBAL_ERRORS))
-				.groupBy(Throwable::getClass)
+				.groupBy(new Function<Throwable, Class<? extends Throwable>>() {
+					@Override
+					public Class<? extends Throwable> apply(@io.reactivex.annotations.NonNull Throwable throwable) throws
+							Exception {
+						return throwable.getClass();
+					}
+				})
 				.flatMap(new Function<GroupedObservable<? extends Class<? extends Throwable>, Throwable>, Observable<Throwable>>() {
 					@Override
 					public Observable<Throwable> apply(GroupedObservable<? extends Class<? extends Throwable>, Throwable> obs) throws Exception {

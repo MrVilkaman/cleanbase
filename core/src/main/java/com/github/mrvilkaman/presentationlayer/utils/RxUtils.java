@@ -15,6 +15,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Function;
 
 
@@ -24,7 +25,7 @@ public final class RxUtils {
 		// пустой
 	}
 
-	public static <T1, T2> ObservableTransformer<List<T1>, List<T2>> mapList(Function<T1, T2> func) {
+	public static <T1, T2> ObservableTransformer<List<T1>, List<T2>> mapList(final Function<T1, T2> func) {
 		return new ObservableTransformer<List<T1>, List<T2>>() {
 			@Override
 			public ObservableSource<List<T2>> apply(Observable<List<T1>> t1Observable) {
@@ -43,10 +44,11 @@ public final class RxUtils {
 	}
 
 
-	public static Observable<Integer> getScrollObservable(RecyclerView recyclerView, int limit, int emptyListCount) {
+	public static Observable<Integer> getScrollObservable(final RecyclerView recyclerView, final
+	int limit, final int emptyListCount) {
 		Observable<Integer> integerObservable = Observable.create(new ObservableOnSubscribe<Integer>() {
 			@Override
-			public void subscribe(ObservableEmitter<Integer> subscriber) throws Exception {
+			public void subscribe(final ObservableEmitter<Integer> subscriber) throws Exception {
 				final RecyclerView.OnScrollListener sl = new RecyclerView.OnScrollListener() {
 					@Override
 					public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -62,7 +64,12 @@ public final class RxUtils {
 					}
 				};
 				recyclerView.addOnScrollListener(sl);
-				subscriber.setCancellable(() -> recyclerView.removeOnScrollListener(sl));
+				subscriber.setCancellable(new Cancellable() {
+					@Override
+					public void cancel() throws Exception {
+						recyclerView.removeOnScrollListener(sl);
+					}
+				});
 				if (recyclerView.getAdapter()
 						.getItemCount() == emptyListCount) {
 					subscriber.onNext(recyclerView.getAdapter()

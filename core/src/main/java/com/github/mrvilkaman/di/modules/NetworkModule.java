@@ -27,7 +27,7 @@ public class NetworkModule {
 	@Nullable private final BuilderProcessor processor;
 
 	public NetworkModule() {
-		this(Collections.emptyList(), null);
+		this(Collections.<Interceptor>emptyList(), null);
 
 	}
 
@@ -42,7 +42,7 @@ public class NetworkModule {
 	}
 
 	public NetworkModule(BuilderProcessor processor) {
-		this(Collections.emptyList(), processor);
+		this(Collections.<Interceptor>emptyList(), processor);
 	}
 
 	@Provides

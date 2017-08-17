@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.resolution;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -54,11 +55,16 @@ public class UIResolverImpl implements UIResolver {
 	}
 
 	@Override
-	public void showMessage(@StringRes int text, Runnable callback) {
+	public void showMessage(@StringRes int text, final Runnable callback) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
 		builder.content(text)
 				.positiveText(android.R.string.ok)
-				.dismissListener(dialog -> callback.run())
+				.dismissListener(new DialogInterface.OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						callback.run();
+					}
+				})
 				.show();
 	}
 
@@ -90,13 +96,18 @@ public class UIResolverImpl implements UIResolver {
 	}
 
 	@Override
-	public void showSnackbar(@StringRes int textId, @StringRes int actionId, Runnable callback) {
+	public void showSnackbar(@StringRes int textId, @StringRes int actionId, final Runnable callback) {
 		if (!DevUtils.isSnackbarInTheClassPath()) {
 			return;
 		}
 		Snackbar snackbar = Snackbar.make(rootView, textId, Snackbar.LENGTH_LONG)
 				.setActionTextColor(ContextCompat.getColor(context, R.color.cleanbase_snackbar_actioncolor))
-				.setAction(actionId, v -> callback.run());
+				.setAction(actionId, new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						callback.run();
+					}
+				});
 		configSnackbar(snackbar);
 	}
 }

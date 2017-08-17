@@ -19,6 +19,11 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -62,8 +67,13 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 			return;
 		}
 
-		cropImageView = (CropImageView) view.findViewById(R.id.cropImageView);
-		view.findViewById(R.id.ready).setOnClickListener(view1 -> onClick());
+		cropImageView = view.findViewById(R.id.cropImageView);
+		view.findViewById(R.id.ready).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				CropImageFragment.this.onClick();
+			}
+		});
 
 		MODE mode = MODE.valueOf(arguments.getString(EXTRA_AS_SQUARE));
 
@@ -86,25 +96,42 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 		showProgress();
 
 		Observable<BitmapFactory.Options> sizeObs = Observable.just(path)
-				.map(file -> {
-					BitmapFactory.Options options = new BitmapFactory.Options();
-					options.inJustDecodeBounds = true;
-					BitmapFactory.decodeFile(file, options);
-					return options;
+				.map(new Function<String, BitmapFactory.Options>() {
+					@Override
+					public BitmapFactory.Options apply(@NonNull String file) throws Exception {
+						BitmapFactory.Options options = new BitmapFactory.Options();
+						options.inJustDecodeBounds = true;
+						BitmapFactory.decodeFile(file, options);
+						return options;
+					}
 				});
 
 
-		Observable.zip(sizeObs, Observable.just(path), (options, file) -> {
-			int max = Math.max(options.outWidth, options.outHeight);
-			float scale = max / MAX;
-			int newWidth = (int) (options.outWidth / scale);
-			int newHeight = (int) (options.outHeight / scale);
-			return decodeSampledBitmap(file, newWidth, newHeight);
+		Observable.zip(sizeObs, Observable.just(path), new BiFunction<BitmapFactory.Options, String, Bitmap>() {
+			@Override
+			public Bitmap apply(@NonNull BitmapFactory.Options options, @NonNull String file)
+					throws
+					Exception {
+				int max = Math.max(options.outWidth, options.outHeight);
+				float scale = max / MAX;
+				int newWidth = (int) (options.outWidth / scale);
+				int newHeight = (int) (options.outHeight / scale);
+				return decodeSampledBitmap(file, newWidth, newHeight);
+			}
 		})
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
-				.doOnTerminate(this::hideProgress)
-				.subscribe(bitmap -> cropImageView.setImageBitmap(bitmap));
+				.doOnTerminate(new Action() {
+					@Override
+					public void run() throws Exception {hideProgress();
+					}
+				})
+				.subscribe(new Consumer<Bitmap>() {
+					@Override
+					public void accept(Bitmap bitmap) throws Exception {
+						cropImageView.setImageBitmap(bitmap);
+					}
+				});
 
 	}
 

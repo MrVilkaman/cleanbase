@@ -20,6 +20,7 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolve
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
+import io.reactivex.functions.Action;
 
 
 public class NavigationResolverImpl implements NavigationResolver {
@@ -96,7 +97,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showFragment(IBaseScreen fragment) {
+	public void showFragment(final IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
 			@Override
 			public void onClose() {
@@ -109,7 +110,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showRootFragment(IBaseScreen fragment) {
+	public void showRootFragment(final IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
 			@Override
 			public void onClose() {
@@ -122,7 +123,7 @@ public class NavigationResolverImpl implements NavigationResolver {
 	}
 
 	@Override
-	public void showFragmentWithoutBackStack(IBaseScreen fragment) {
+	public void showFragmentWithoutBackStack(final IBaseScreen fragment) {
 		LeftDrawerHelper.LeftDrawerHelperCallback callback = new LeftDrawerHelper.LeftDrawerHelperCallback() {
 			@Override
 			public void onClose() {
@@ -203,7 +204,12 @@ public class NavigationResolverImpl implements NavigationResolver {
 			uiResolver.showToast(R.string.toast_exit);
 			doubleBackToExitPressedOnce = true;
 			Completable.complete().delay(1000, TimeUnit.MILLISECONDS)
-					.subscribe(() -> doubleBackToExitPressedOnce = false);
+					.subscribe(new Action() {
+						@Override
+						public void run() throws Exception {
+							doubleBackToExitPressedOnce = false;
+						}
+					});
 		}
 	}
 

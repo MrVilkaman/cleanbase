@@ -8,8 +8,14 @@ import com.github.mrvilkaman.utils.bus.Bus;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.internal.functions.Functions;
 
 import static com.github.mrvilkaman.presentationlayer.app.CleanBaseSettings.needSubscribeLogs;
@@ -28,44 +34,71 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@Override
 	public <T> void subscribe(Observable<T> qwer) {
-		String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
-		subscription.add(qwer.subscribe(t -> Functions.emptyConsumer(), throwable -> {
-			if (needSubscribeLogs()) {
-				Log.e("GlobalSubscription", "Start by:" + string, throwable);
-			}
-			bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
-		}));
-	}
-
-	@Override
-	public <T> Observable<T> subscribeWithResult(Observable<T> qwer) {
-		String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
-		return Observable.create(subscriber -> subscription.add(qwer.subscribe((t) -> {
-			if (!subscriber.isDisposed())
-				subscriber.onNext(t);
-		}, throwable -> {
-			if (subscriber.isDisposed()) {
+		final String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
+		subscription.add(qwer.subscribe(Functions.emptyConsumer(), new Consumer<Throwable>() {
+			@Override
+			public void accept(Throwable throwable) throws Exception {
 				if (needSubscribeLogs()) {
 					Log.e("GlobalSubscription", "Start by:" + string, throwable);
 				}
 				bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
-			} else {
-				subscriber.onError(throwable);
 			}
-		}, () -> {
-			if (!subscriber.isDisposed())
-				subscriber.onComplete();
-		})));
+		}));
+	}
+
+	@Override
+	public <T> Observable<T> subscribeWithResult(final Observable<T> qwer) {
+		final String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
+		return Observable.create(new ObservableOnSubscribe<T>() {
+			@Override
+			public void subscribe(final @NonNull ObservableEmitter<T> subscriber) throws Exception {
+				subscription.add(qwer.subscribe(new Consumer<T>() {
+					@Override
+					public void accept(T t) throws Exception {
+						if (!subscriber.isDisposed())
+							subscriber.onNext(t);
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						if (subscriber.isDisposed()) {
+							if (needSubscribeLogs()) {
+								Log.e("GlobalSubscription", "Start by:" + string, throwable);
+							}
+							bus.publish(GlobalBusQuery.GLOBAL_ERRORS, throwable);
+						} else {
+							subscriber.onError(throwable);
+						}
+					}
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+						if (!subscriber.isDisposed())
+							subscriber.onComplete();
+					}
+				}));
+			}
+		});
 	}
 
 	@SuppressWarnings({"SuspiciousMethodCalls", "unchecked"})
 	@Override
-	public <T> Observable<T> createCached(String key, Observable<T> source) {
+	public <T> Observable<T> createCached(final String key, Observable<T> source) {
 		Observable<T> observable = objectObjectHashMap.get(key);
 		if (observable == null) {
-			Observable<T> cache = source.doOnTerminate(() -> objectObjectHashMap.remove(key))
+			Observable<T> cache = source.doOnTerminate(new Action() {
+				@Override
+				public void run() throws Exception {
+					objectObjectHashMap.remove(key);
+				}
+			})
 					.cache()
-					.doOnDispose(() -> objectObjectHashMap.remove(key));
+					.doOnDispose(new Action() {
+						@Override
+						public void run() throws Exception {
+							objectObjectHashMap.remove(key);
+						}
+					});
 			objectObjectHashMap.put(key, cache);
 			observable = cache;
 		}
@@ -75,19 +108,32 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 
 	@Override
 	public <T> ObservableTransformer<T, T> subscribe() {
-		return observable -> {
-			subscribe(observable);
-			return Observable.empty();
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+				subscribe(upstream);
+				return Observable.empty();
+			}
 		};
 	}
 
 	@Override
 	public <T> ObservableTransformer<T, T> subscribeWithResult() {
-		return this::subscribeWithResult;
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+				return subscribeWithResult(upstream);
+			}
+		};
 	}
 
 	@Override
-	public <T> ObservableTransformer<T, T> createCached(String key) {
-		return observable -> createCached(key, observable);
+	public <T> ObservableTransformer<T, T> createCached(final String key) {
+		return new ObservableTransformer<T, T>() {
+			@Override
+			public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+				return createCached(key, upstream);
+			}
+		};
 	}
 }

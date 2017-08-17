@@ -5,7 +5,7 @@ public class CleanBaseSettings {
 
 	private static Builder builder = new Builder();
 
-	static Builder changeSettings() {
+	public static Builder changeSettings() {
 		return new Builder();
 	}
 
@@ -13,7 +13,7 @@ public class CleanBaseSettings {
 		return builder.subscribeLogs;
 	}
 
-	static void save(Builder builder) {
+	public static void save(Builder builder) {
 		builder.save();
 	}
 

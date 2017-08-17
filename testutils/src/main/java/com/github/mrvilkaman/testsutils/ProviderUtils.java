@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.testsutils;
 
 
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.subscribers.TestSubscriber;
 
@@ -25,9 +26,12 @@ public class ProviderUtils {
 	}
 
 	public static void assertDisposable(TestObserver<?> subscriber) {
-		subscriber.assertOf(stringTestObserver -> {
-			if (!stringTestObserver.isDisposed()) {
-				fail("is Not Disposed!");
+		subscriber.assertOf(new Consumer<TestObserver<?>>() {
+			@Override
+			public void accept(TestObserver<?> testObserver) throws Exception {
+				if (!testObserver.isDisposed()) {
+					fail("is Not Disposed!");
+				}
 			}
 		});
 	}

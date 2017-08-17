@@ -22,7 +22,7 @@ public class RxLoadWrapperHolder {
 	private PublishSubject<Throwable> error = PublishSubject.create();
 
 	private RxLoadWrapperHolder(Boolean b) {
-		progress = b != null ? BehaviorSubject.createDefault(b) : BehaviorSubject.create();
+		progress = b != null ? BehaviorSubject.createDefault(b) : BehaviorSubject.<Boolean>create();
 	}
 
 	public static RxLoadWrapperHolder create() {
@@ -47,7 +47,7 @@ public class RxLoadWrapperHolder {
 			@Override
 			public ObservableSource<T> apply(Observable<T> observable) {
 				return RxLoadWrapperHolder.this.bind(observable)
-						.onErrorResumeNext(Observable.empty());
+						.onErrorResumeNext(Observable.<T>empty());
 			}
 		};
 	}
@@ -90,7 +90,7 @@ public class RxLoadWrapperHolder {
 				return new DataErrorWrapper<>(d, false);
 			}
 		})
-				.startWith(new DataErrorWrapper<>(true))
+				.startWith(new DataErrorWrapper<D>(true))
 				.onErrorReturn(new Function<Throwable, DataErrorWrapper<D>>() {
 					@Override
 					public DataErrorWrapper<D> apply(Throwable throwable) throws Exception {

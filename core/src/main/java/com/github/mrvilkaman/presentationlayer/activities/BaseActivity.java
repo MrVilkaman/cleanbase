@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -80,7 +81,12 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	private void configureProgressBar() {
 		progress = (ProgressWheel) findViewById(R.id.progress_wheel);
 		if (progress != null) {
-			progress.setOnTouchListener((v, event) -> true);
+			progress.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View view, MotionEvent motionEvent) {
+					return true;
+				}
+			});
 		}
 	}
 
@@ -197,10 +203,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 
 	protected void attachCustomView(BaseCustomView customWidget) {
-		attachCustomView(customWidget,getComponent());
+		attachCustomView(customWidget, getComponent());
 	}
 
-	protected void attachCustomView(BaseCustomView customWidget,Object component) {
+	protected void attachCustomView(BaseCustomView customWidget, Object component) {
 
 		if (customWidget instanceof INeedInject) {
 			((INeedInject) customWidget).injectMe(component);

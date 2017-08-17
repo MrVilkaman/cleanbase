@@ -19,8 +19,8 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setListeners(View view, ItemListener<Type> onClick,
-							ItemListener<Type> onLongClick) {
+	public void setListeners(final View view,final  ItemListener<Type> onClick,
+	                         final ItemListener<Type> onLongClick) {
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view1) {

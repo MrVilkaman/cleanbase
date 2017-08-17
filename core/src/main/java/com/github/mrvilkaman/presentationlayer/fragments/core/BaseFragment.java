@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -76,18 +77,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	protected void initView(View view) {
 		progressBar = view.findViewById(R.id.progress_wheel);
 		if (progressBar != null) {
-			progressBar.setOnTouchListener((view1, motionEvent) -> {
-				hideKeyboard();
-				return false;
-			});
+			progressBar.setOnTouchListener(new MyOnTouchListener());
 		}
 
 		View parent = view.findViewById(R.id.parent);
 		if (parent != null) {
-			parent.setOnTouchListener((v, event) -> {
-				hideKeyboard();
-				return true;
-			});
+			parent.setOnTouchListener(new MyOnTouchListener());
 		}
 
 	}
@@ -210,6 +205,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		if (presenter != null) {
 			presenter.onViewAttached();
 			presenters.add(presenter);
+		}
+	}
+
+	private class MyOnTouchListener implements View.OnTouchListener {
+		@Override
+		public boolean onTouch(View view, MotionEvent motionEvent) {
+			hideKeyboard();
+			return false;
 		}
 	}
 }

@@ -19,7 +19,14 @@ public class EventBusModule {
 	@Provides
 	@Singleton
 	public Bus provideBus(){
-		RxBus.Logger logger = CleanBaseSettings.rxBusLogs() ? message -> Log.d(TAG, message) : null;
+		RxBus.Logger logger = CleanBaseSettings.rxBusLogs() ? new MyLogger() : null;
 		return AndroidRxBus.create(logger);
+	}
+
+	private static class MyLogger implements RxBus.Logger {
+		@Override
+		public void log(String message) {
+			Log.d(TAG, message);
+		}
 	}
 }
