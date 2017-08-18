@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity<ActivityComponent,SecondActivityP
 
 	@Override
 	protected void afterOnCreate() {
+
 	}
 
 	@Override

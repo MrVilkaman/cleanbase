@@ -33,7 +33,7 @@ public class ThrowableResolverRxImplTest extends BaseTestCase {
 	@Override
 	public void init() {
 		provider = new TestSchedulers();
-		resolver = new ThrowableResolverRxImpl(throwableResolver, bus, provider);
+		resolver = new ThrowableResolverRxImpl(throwableResolver, bus, provider, control);
 
 		resolver.init();
 	}
