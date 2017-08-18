@@ -49,7 +49,7 @@ public class ThrowableResolverRxImpl implements ThrowableResolver {
 				.subscribe(throwableResolver::handleError, Actions.empty());
 	}
 
-	interface Control{
+	public interface Control{
 		boolean isEnabled();
 	}
 }
