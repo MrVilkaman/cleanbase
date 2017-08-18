@@ -36,13 +36,14 @@ public class DPUtilsImpl implements DPUtils {
 
 	@Override
 	public <T extends IBaseResponse<R>, R> Observable.Transformer<T, R> handleAnswer() {
-		return obs -> obs.onErrorResumeNext(getThrowableObservableFunc1()).concatMap(r -> {
-			if (r.isSuccess()) {
-				return Observable.just(r.getBody());
-			} else {
-				return handleError(r);
-			}
-		});
+		return obs -> obs.onErrorResumeNext(getThrowableObservableFunc1())
+				.concatMap(r -> {
+					if (r.isSuccess()) {
+						return Observable.just(r.getBody());
+					} else {
+						return handleError(r);
+					}
+				});
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class DPUtilsImpl implements DPUtils {
 
 	@NonNull
 	protected <T> Observable<T> handleError(IBaseResponse response) {
-		return Observable.error(getThrowable(response.getMessage(), response.getCode(), null));
+		return Observable.error(getThrowable(response.getMessage(), response.getCode(), null, response));
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class DPUtilsImpl implements DPUtils {
 				Response response = httpException.response();
 
 				return Observable.error(
-						getThrowable(response.message(), response.code(), throwable));
+						getThrowable(response.message(), response.code(), throwable, response));
 			} else if (throwable instanceof IOException) {
 				return Observable.error(new InternetConnectionException());
 			} else if (throwable instanceof NetworkErrorException) {
@@ -72,7 +73,7 @@ public class DPUtilsImpl implements DPUtils {
 			}
 
 			if (processor != null) {
-				Throwable processorThrowable = processor.getThrowable(null, 0, throwable);
+				Throwable processorThrowable = processor.getThrowable(null, 0, throwable, null);
 				if (processorThrowable != null) {
 					return Observable.error(processorThrowable);
 				}
@@ -82,12 +83,12 @@ public class DPUtilsImpl implements DPUtils {
 	}
 
 	@NonNull
-	protected Throwable getThrowable(String message, int code, Throwable throwable) {
+	protected Throwable getThrowable(String message, int code, Throwable throwable, Object rawResponse) {
 
 		Throwable exception;
 
 		if (processor != null) {
-			Throwable processorThrowable = processor.getThrowable(message, code, throwable);
+			Throwable processorThrowable = processor.getThrowable(message, code, throwable, rawResponse);
 			if (processorThrowable != null) {
 				return processorThrowable;
 			}
@@ -105,10 +106,10 @@ public class DPUtilsImpl implements DPUtils {
 			case 502:
 			case 503:
 			case 504:
-				exception = new ServerException(message, throwable);
+				exception = new ServerException(message, throwable, rawResponse);
 				break;
 			default:
-				exception = new UncheckedException(message);
+				exception = new UncheckedException(message, rawResponse);
 				break;
 		}
 		return exception;
@@ -119,6 +120,7 @@ public class DPUtilsImpl implements DPUtils {
 	public interface Processor {
 		// return notnull if throwable processed
 		@Nullable
-		Throwable getThrowable(@Nullable String message, int code, @Nullable Throwable throwable);
+		Throwable getThrowable(@Nullable String message, int code, @Nullable Throwable throwable,
+		                       @Nullable Object rawResponse);
 	}
 }

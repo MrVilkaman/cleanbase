@@ -1,9 +1,19 @@
 package com.github.mrvilkaman.domainlayer.exceptions;
 
+import android.support.annotation.Nullable;
+
 public class ServerException extends Throwable {
 
-	public ServerException(String message, Throwable throwable) {
-		super(message,throwable);
+	private Object body;
+
+	public ServerException(@Nullable String message, @Nullable Throwable throwable) {
+		this(message, throwable, null);
+	}
+
+	public ServerException(@Nullable String message, @Nullable Throwable throwable, @Nullable
+			Object body) {
+		super(message, throwable);
+		this.body = body;
 	}
 
 	public ServerException() {
@@ -16,6 +26,11 @@ public class ServerException extends Throwable {
 
 	public ServerException(Throwable cause) {
 		super(cause);
+	}
+
+	@Nullable
+	public Object getBody() {
+		return body;
 	}
 
 	@Override

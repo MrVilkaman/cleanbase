@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
@@ -59,7 +60,7 @@ public class DPUtilsTest extends BaseTestCase {
 	@Test
 	public void testHandleAnswer_customResponse() {
 		// Arrange
-		IBaseResponse response = new BaseResponse(200, ""){
+		IBaseResponse response = new BaseResponse(200, "") {
 
 			@Override
 			public Object getBody() {
@@ -112,6 +113,29 @@ public class DPUtilsTest extends BaseTestCase {
 		Response<Object> error = Response.error(499, mock(ResponseBody.class));
 		exceptionErrorText(new HttpException(error), UncheckedException.class);
 	}
+
+	@Test
+	public void testHandleErrorExceptionWithJson() {
+		MediaType JSON
+				= MediaType.parse("application/json; charset=utf-8");
+		ResponseBody responseBody = ResponseBody.create(JSON, "{\"errors\":{\"message\":[\"Can\\u0027t stop this " +
+				"broadcast. You " +
+				"can stop only your broadcast\"],\"field\":\"\",\"code\":422}," +
+				"\"live_stream\":true}");
+		Response<Object> error = Response.error(422, responseBody);
+		TestSubscriber<Object> subscriber = new TestSubscriber<>();
+
+		// Act
+		Observable.<IBaseResponse>error(new HttpException(error))
+				.compose(dpUtils.handleAnswer())
+				.subscribe(subscriber);
+
+		subscriber.assertNoValues();
+		subscriber.assertNotCompleted();
+		subscriber.assertError(UncheckedException.class);
+		subscriber.getOnErrorEvents().get(0);
+	}
+
 	///*************************
 
 	@Test
@@ -127,8 +151,11 @@ public class DPUtilsTest extends BaseTestCase {
 		// Assert
 		subscriber.assertNoValues();
 		subscriber.assertNotCompleted();
-		Throwable onErrorEvents = subscriber.getOnErrorEvents().get(0);
-		Assertions.assertThat(onErrorEvents).isInstanceOf(UncheckedException.class).hasMessage("qwer");
+		Throwable onErrorEvents = subscriber.getOnErrorEvents()
+				.get(0);
+		Assertions.assertThat(onErrorEvents)
+				.isInstanceOf(UncheckedException.class)
+				.hasMessage("qwer");
 
 	}
 
@@ -186,17 +213,16 @@ public class DPUtilsTest extends BaseTestCase {
 	}
 
 
-
 	@Test
 	public void testHandleAnotherException_customHandlerResponse_true() {
-		dpUtils = new DPUtilsImpl((message, code, throwable) -> new IOException());
+		dpUtils = new DPUtilsImpl((message, code, throwable, rawResponse) -> new IOException() );
 		errorResponseTest(401, IOException.class);
 	}
 
 
 	@Test
 	public void testHandleAnotherException_customHandlerResponse_false() {
-		dpUtils = new DPUtilsImpl((message, code, throwable) -> throwable);
+		dpUtils = new DPUtilsImpl((message, code, throwable, rawResponse) -> throwable);
 		errorResponseTest(401, UnauthorizedException.class);
 	}
 
@@ -204,15 +230,16 @@ public class DPUtilsTest extends BaseTestCase {
 	@Test
 	public void testHandleAnotherException_customHandler_true() {
 		Response<Object> error = Response.error(500, mock(ResponseBody.class));
-		dpUtils = new DPUtilsImpl((message, code, throwable) -> new IOException());
+		dpUtils = new DPUtilsImpl((message, code, throwable, rawResponse) -> new IOException());
 		exceptionErrorText(new HttpException(error), IOException.class);
 	}
 
 
 	@Test
 	public void testHandleAnotherException_customHandler_false() {
-		dpUtils = new DPUtilsImpl((message, code, throwable) -> throwable);
+		dpUtils = new DPUtilsImpl((message, code, throwable, rawResponse) -> throwable);
 		exceptionErrorText(new RuntimeException(), RuntimeException.class);
+
 	}
 
 
