@@ -48,14 +48,15 @@ public class ViewSubscriber<V extends BaseView, T> extends DisposableObserver<T>
 
 	}
 
-	public void setView(V view) {
+	public final void setView(V view) {
 		this.view = view;
 	}
 
 
 	@Override
-	public void onSuccess(@NonNull T t) {
-
+	public final void onSuccess(@NonNull T t) {
+		onNext(t);
+		onComplete();
 	}
 
 	@Override
