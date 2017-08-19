@@ -196,6 +196,11 @@ public class NavigationResolverImpl implements NavigationResolver {
 		}
 	}
 
+	@Override
+	public void finish() {
+		currentActivity.finish();
+	}
+
 	void exit() {
 
 		if (doubleBackToExitPressedOnce || !currentActivity.isTaskRoot()) {

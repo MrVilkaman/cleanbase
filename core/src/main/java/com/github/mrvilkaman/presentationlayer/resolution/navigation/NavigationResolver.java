@@ -23,6 +23,8 @@ public interface NavigationResolver {
 
 	void back();
 
+	void finish();
+
 	void openActivity(Class<? extends Activity> aClass);
 
 	void startActivity(Class<? extends Activity> aClass);
