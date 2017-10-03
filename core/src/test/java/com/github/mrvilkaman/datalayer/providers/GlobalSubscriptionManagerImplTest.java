@@ -3,7 +3,6 @@ package com.github.mrvilkaman.datalayer.providers;
 import com.github.mrvilkaman.domainlayer.exceptions.UnauthorizedException;
 import com.github.mrvilkaman.domainlayer.providers.GlobalSubscriptionManager;
 import com.github.mrvilkaman.testsutils.BaseTestCase;
-import com.github.mrvilkaman.testsutils.ProviderUtils;
 import com.github.mrvilkaman.utils.bus.Bus;
 
 import org.junit.Test;
@@ -13,11 +12,12 @@ import org.mockito.Mockito;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
 import io.reactivex.subjects.PublishSubject;
 
-import static com.github.mrvilkaman.testsutils.ProviderUtils.*;
+import static com.github.mrvilkaman.testsutils.ProviderUtils.assertDisposable;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -33,35 +33,6 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 	@Override
 	public void init() {
 		manager = new GlobalSubscriptionManagerImpl(bus);
-	}
-
-	
-	@Test
-	public void testSubscribe_success() {
-		// Arrange
-		PublishSubject<String> subject = PublishSubject.create();
-		TestObserver<String> client = new TestObserver<>();
-		Observable<String> stringObservable = subject.doOnNext(client::onNext);
-
-		// Act
-		subject.onNext("qwer1");
-		manager.subscribe(stringObservable);
-		subject.onNext("qwer2");
-
-		// Assert
-		client.assertValueCount(1);
-		client.assertValue("qwer2");
-	}
-
-	
-	@Test
-	public void testSubscribe_error() {
-		// Act
-		UnauthorizedException exception = new UnauthorizedException();
-		manager.subscribe(Observable.error(exception));
-
-		// Assert
-		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
 	}
 
 
@@ -101,8 +72,8 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		TestObserver<Object> subscriber = new TestObserver<>();
 		PublishSubject<Object> subject = PublishSubject.create();
 		// Act
-		Observable<Object> objectObservable = subject.compose(manager.subscribeWithResult());
-		objectObservable.subscribe(subscriber);
+		subject.compose(manager.subscribeWithResult())
+				.subscribe(subscriber);
 		subject.onError(exception);
 
 		// Assert
@@ -119,8 +90,8 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		PublishSubject<Object> subject = PublishSubject.create();
 
 		// Act
-		Observable<Object> objectObservable = subject.compose(manager.subscribeWithResult());;
-		objectObservable.subscribeWith(subscriber).dispose();
+		subject.compose(manager.subscribeWithResult())
+				.subscribeWith(subscriber).dispose();
 		subject.onError(exception);
 
 		// Assert
@@ -176,32 +147,6 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		assertDisposable(subscriber);
 		client.assertValue("qwer");
 		client.assertComplete();
-	}
-
-	@Test
-	public void testsubscribeSingle_twoSubscribe_oneDate() {
-		// Arrange
-		ITestClass mock = Mockito.mock(ITestClass.class);
-		when(mock.getNext()).thenReturn("1", "2", "3");
-		TestScheduler scheduler = new TestScheduler();
-
-		Observable<String> stringObservable = Observable.fromCallable(mock::getNext)
-				.delay(1, TimeUnit.SECONDS, scheduler);
-
-		// Act
-		TestObserver<String> testObserver1 = new TestObserver<>();
-		TestObserver<String> testObserver2 = new TestObserver<>();
-		stringObservable.compose(manager.createCached("qwer")).subscribe(testObserver1);
-		testObserver1.assertValueCount(0);
-		stringObservable.compose(manager.createCached("qwer")).subscribe(testObserver2);
-		scheduler.advanceTimeBy(2, TimeUnit.SECONDS);
-
-		// Assert
-		testObserver1.assertValueCount(1);
-		testObserver1.assertValue("1");
-		testObserver2.assertValueCount(1);
-		testObserver2.assertValue("1");
-		verify(mock).getNext();
 	}
 
 	@Test
@@ -391,6 +336,124 @@ public class GlobalSubscriptionManagerImplTest extends BaseTestCase {
 		testObserver2.assertValue("2");
 		verify(mock, times(2)).getNext();
 	}
+
+	/// Single
+
+	@Test
+	public void testSubscribe_single_success() {
+		// Arrange
+		PublishSubject<String> subject = PublishSubject.create();
+		TestObserver<String> client = new TestObserver<>();
+		Single<String> stringObservable = subject.firstOrError().doOnSuccess(client::onNext);
+
+		// Act
+		subject.onNext("qwer1");
+		stringObservable.compose(manager.subscribeSingle());
+		subject.onNext("qwer2");
+
+		// Assert
+		client.assertValueCount(1);
+		client.assertValue("qwer2");
+	}
+
+
+	@Test
+	public void testSubscribe_single_error() {
+		// Act
+		UnauthorizedException exception = new UnauthorizedException();
+		Single.error(exception).compose(manager.subscribeSingle());
+
+		// Assert
+		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
+	}
+
+
+	@Test
+	public void testSubscribeWithResult_single_error_inUI() {
+		// Arrange
+		UnauthorizedException exception = new UnauthorizedException();
+		TestObserver<Object> subscriber = new TestObserver<>();
+		PublishSubject<Object> subject = PublishSubject.create();
+		// Act
+		subject.firstOrError().compose(manager.subscribeWithResultSingle())
+				.subscribe(subscriber);
+		subject.onError(exception);
+
+		// Assert
+		verify(bus, never()).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
+		subscriber.assertError(UnauthorizedException.class);
+	}
+
+
+	@Test
+	public void testSubscribeWithResult_single_error_inBg() {
+		// Arrange
+		UnauthorizedException exception = new UnauthorizedException();
+		TestObserver<Object> subscriber = new TestObserver<>();
+		PublishSubject<Object> subject = PublishSubject.create();
+
+		// Act
+		subject.firstOrError().compose(manager.subscribeWithResultSingle())
+				.subscribeWith(subscriber).dispose();
+		subject.onError(exception);
+
+		// Assert
+		verify(bus).publish(eq(GlobalBusQuery.GLOBAL_ERRORS), eq(exception));
+		subscriber.assertNoErrors();
+		assertDisposable(subscriber);
+	}
+
+
+
+	@Test
+	public void testSubscribeWithResult_single_nextAndCompleteWithResponse() {
+		// Arrange
+		TestObserver<String> subscriber = new TestObserver<>();
+		TestObserver<String> client = new TestObserver<>();
+		PublishSubject<String> subject = PublishSubject.create();
+		Observable<String> stringObservable =
+				subject.doOnNext(client::onNext).doOnComplete(client::onComplete);
+
+		// Act
+		Single<String> objectObservable =
+				stringObservable.firstOrError().compose(manager.subscribeWithResultSingle());
+		objectObservable.subscribeWith(subscriber);
+		subject.onNext("qwer");
+		subject.onComplete();
+
+		// Assert
+		subscriber.assertValue("qwer");
+		subscriber.assertComplete();
+		client.assertValue("qwer");
+	}
+
+
+	@Test
+	public void testSubscribeWithResult_single_nextAndComplete_NoUI() {
+		// Arrange
+		TestObserver<String> subscriber = new TestObserver<>();
+		TestObserver<String> client = new TestObserver<>();
+		PublishSubject<String> subject = PublishSubject.create();
+		Observable<String> stringObservable =
+				subject.doOnNext(client::onNext).doOnComplete(client::onComplete);
+
+		// Act
+		Single<String> objectObservable =
+				stringObservable.firstOrError().compose(manager.subscribeWithResultSingle());
+		objectObservable.subscribeWith(subscriber).dispose();
+		subject.onNext("qwer");
+		subject.onComplete();
+
+		// Assert
+		subscriber.assertNoValues();
+		subscriber.assertNotComplete();
+		assertDisposable(subscriber);
+		client.assertValue("qwer");
+	}
+
+
+
+
 
 	interface ITestClass {
 		String getNext();
