@@ -6,9 +6,12 @@ import android.view.View
 import com.github.mrvilkaman.R
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment
 import kotlinx.android.synthetic.main.layout_fragscreen_fragment.*
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 abstract class FragBaseScreenFragment : BaseFragment<FragBasePresenter>() {
 
+    @Inject lateinit open var router:Router
 
     protected open val icon: Int
         get() = R.drawable.ic_home
@@ -25,11 +28,11 @@ abstract class FragBaseScreenFragment : BaseFragment<FragBasePresenter>() {
 //        toolbar.setTitle(text)
         frag_text.text = text
 
-        frag_stack.setOnClickListener { navigation.showFragment(nextFragment()) }
-        frag_no_stack.setOnClickListener { navigation.showFragmentWithoutBackStack(nextFragment()) }
-        frag_root.setOnClickListener { navigation.showRootFragment(nextFragment()) }
+        frag_stack.setOnClickListener { router.navigateTo(nextScreenKey()) }
+        frag_no_stack.setOnClickListener { router.replaceScreen(nextScreenKey()) }
+        frag_root.setOnClickListener { router.newRootScreen(nextScreenKey()) }
     }
 
-    protected abstract fun nextFragment(): BaseFragment<*>?
+    protected abstract fun nextScreenKey(): String?
 
 }

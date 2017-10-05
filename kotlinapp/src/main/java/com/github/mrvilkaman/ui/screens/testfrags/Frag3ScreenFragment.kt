@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.ui.screens.testfrags
 
-import com.github.mrvilkaman.di.ActivityCoreComponent
-import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment
+import com.github.mrvilkaman.di.ActivityComponent
+import com.github.mrvilkaman.ui.screens.ScreenKey
 
 class Frag3ScreenFragment : FragBaseScreenFragment() {
 
@@ -11,13 +11,11 @@ class Frag3ScreenFragment : FragBaseScreenFragment() {
     override val icon: Int
         get() = android.R.drawable.ic_delete
 
-    override fun nextFragment(): BaseFragment<*> {
-        return Frag4ScreenFragment.open()
-    }
+    override fun nextScreenKey(): String? = ScreenKey.FRAG3
 
     override fun daggerInject() {
-        val component = getComponent(ActivityCoreComponent::class.java)
-        DaggerFragScreenComponent.builder().activityCoreComponent(component).build().inject(this)
+        val component = getComponent(ActivityComponent::class.java)
+        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
     }
 
     companion object {

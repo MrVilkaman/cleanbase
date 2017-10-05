@@ -3,15 +3,15 @@ package com.github.mrvilkaman.ui.screens.testfrags
 import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.ui.screens.ScreenKey
 
-class Frag2ScreenFragment : FragBaseScreenFragment() {
+class Frag4ScreenFragment : FragBaseScreenFragment() {
 
     override val number: Int
-        get() = 2
+        get() = 4
 
     override val icon: Int
-        get() = android.R.drawable.ic_menu_add
+        get() = android.R.drawable.ic_dialog_map
 
-    override fun nextScreenKey(): String? = ScreenKey.FRAG3
+    override fun nextScreenKey(): String? = ScreenKey.FRAG5
 
 
     override fun daggerInject() {
@@ -22,8 +22,8 @@ class Frag2ScreenFragment : FragBaseScreenFragment() {
     companion object {
 
 
-        fun open(): Frag2ScreenFragment {
-            return Frag2ScreenFragment()
+        fun open(): Frag4ScreenFragment {
+            return Frag4ScreenFragment()
         }
     }
 }
