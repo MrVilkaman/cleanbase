@@ -186,7 +186,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 					@Override
 					public void onError() {
 						hideProgress();
-						getNavigation().back();
+//						getNavigation().back();
 					}
 				});
 	}
@@ -228,7 +228,7 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 		int targetRequestCode = getTargetRequestCode();
 		if (targetFragment != null) {
 			setTargetFragment(null, 0);
-			getNavigation().back();
+//			getNavigation().back();
 			targetFragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, null);
 		}
 	}

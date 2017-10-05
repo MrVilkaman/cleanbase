@@ -20,7 +20,6 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
-import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -37,7 +36,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
-	@Inject NavigationResolver navigationResolver;
 	@Inject @Nullable LeftDrawerHelper drawerHelper;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private C activityComponent;
@@ -58,7 +56,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		if (toolbarResolver != null) {
 			toolbarResolver.init(rootView, this);
 		}
-		navigationResolver.init();
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();
@@ -110,10 +107,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		return R.id.content;
 	}
 
-	@Override
-	public void onBackPressed() {
-		navigationResolver.onBackPressed();
-	}
 
 	@Override
 	public void hideKeyboard() {

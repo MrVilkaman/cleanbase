@@ -11,7 +11,7 @@ class Frag3ScreenFragment : FragBaseScreenFragment() {
     override val icon: Int
         get() = android.R.drawable.ic_delete
 
-    override fun nextScreenKey(): String? = ScreenKey.FRAG3
+    override fun nextScreenKey(): String? = ScreenKey.FRAG4
 
     override fun daggerInject() {
         val component = getComponent(ActivityComponent::class.java)

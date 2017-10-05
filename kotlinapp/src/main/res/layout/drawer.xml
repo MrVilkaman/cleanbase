@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-	<Button
-		android:id="@+id/menu_1"
-		android:text="НАЖМИ!"
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"/>
+
+	<RadioGroup
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<RadioButton
+			android:id="@+id/menu_1"
+			android:text="Экран 1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+		<RadioButton
+			android:id="@+id/menu_2"
+			android:text="Экран 2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+		<RadioButton
+			android:id="@+id/menu_3"
+			android:text="Экран 3"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+		<RadioButton
+			android:id="@+id/menu_4"
+			android:text="Экран 4"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+		<RadioButton
+			android:id="@+id/menu_5"
+			android:text="Экран 5"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	</RadioGroup>
 
 </LinearLayout>

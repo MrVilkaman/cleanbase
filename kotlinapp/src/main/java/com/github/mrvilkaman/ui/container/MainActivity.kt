@@ -6,12 +6,9 @@ import com.github.mrvilkaman.di.ActivityModule
 import com.github.mrvilkaman.di.AppComponent
 import com.github.mrvilkaman.di.DaggerActivityComponent
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule
-import com.github.mrvilkaman.di.modules.activity.FragmentModule
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter
-import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils
-import com.github.mrvilkaman.ui.screens.testfrags.Frag1ScreenFragment
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -30,15 +27,18 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
     }
 
     override fun afterOnCreate() {
+        val navigator1 = navigator
+        if (navigator1 is MainNavigator) {
+            navigator1.init()
+        }
     }
 
     override fun createComponent(): ActivityComponent {
         val appComponent = DevUtils.getComponent(App.get(this), AppComponent::class.java)
-        val commonActivityModule = CommonActivityModule(this, this, rootView, ProvideFragmentCallback { Frag1ScreenFragment.open() })
+        val commonActivityModule = CommonActivityModule(this, this, rootView)
         return DaggerActivityComponent.builder()
                 .appComponent(appComponent)
                 .commonActivityModule(commonActivityModule)
-                .fragmentModule(FragmentModule(supportFragmentManager, containerID))
                 .activityModule(ActivityModule(this,containerID))
                 .build()
     }

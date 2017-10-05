@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
-import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
@@ -34,7 +34,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	//// TODO: 07.11.16 dont use public
 	@Inject public UIResolver uiResolver;
-	@Inject public NavigationResolver navigationResolver;
 	@Inject public P relationPresenter;
 	@Inject @Nullable public IToolbar toolbar;
 	@Inject public BaseActivityView activityView;
@@ -61,6 +60,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Override
+	@CallSuper
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		initView(view);
 		P presenter = getPresenter();
@@ -168,7 +168,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		this.previousFragment = previousFragment;
 	}
 
-	protected abstract void onCreateView(View view, @Nullable Bundle savedInstanceState);
+	@Deprecated
+	protected void onCreateView(View view, @Nullable Bundle savedInstanceState){
+
+	}
 
 	protected abstract int getLayoutId();
 
@@ -195,9 +198,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		return uiResolver;
 	}
 
-	public NavigationResolver getNavigation() {
-		return navigationResolver;
-	}
 
 	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
 		customWidget.bind(this);

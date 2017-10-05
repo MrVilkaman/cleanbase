@@ -9,8 +9,9 @@ import com.github.mrvilkaman.ui.screens.testfrags.*
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Back
 import ru.terrakok.cicerone.commands.Command
+import ru.terrakok.cicerone.commands.Forward
 
-class MainNavigator(activity: FragmentActivity, containerId: Int) : SupportAppNavigator(activity, containerId) {
+class MainNavigator(activity: FragmentActivity, private val containerId: Int) : SupportAppNavigator(activity, containerId) {
 
     private val fragmentManager = activity.supportFragmentManager
 
@@ -40,4 +41,13 @@ class MainNavigator(activity: FragmentActivity, containerId: Int) : SupportAppNa
             super.applyCommand(command)
         }
     }
+
+    fun init(){
+        if (fragmentManager.findFragmentById(containerId) == null) {
+            applyCommand(Forward(getMainScreenKey(),null))
+        }
+    }
+
+    private fun getMainScreenKey(): String = ScreenKey.FRAG1
+
 }
