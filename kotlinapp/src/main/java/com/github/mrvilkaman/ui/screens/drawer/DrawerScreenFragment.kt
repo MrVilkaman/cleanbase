@@ -10,7 +10,7 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment
 
 class DrawerScreenFragment : BaseFragment<DrawerPresenter>(), ISingletonFragment {
 
-    override fun onCreateView(view: View, savedInstanceState: Bundle) {
+    override fun onCreateView(view: View, savedInstanceState: Bundle?) {
 
     }
 

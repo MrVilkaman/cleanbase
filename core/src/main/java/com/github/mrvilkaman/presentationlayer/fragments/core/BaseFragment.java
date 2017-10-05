@@ -168,7 +168,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		this.previousFragment = previousFragment;
 	}
 
-	protected abstract void onCreateView(View view, Bundle savedInstanceState);
+	protected abstract void onCreateView(View view, @Nullable Bundle savedInstanceState);
 
 	protected abstract int getLayoutId();
 

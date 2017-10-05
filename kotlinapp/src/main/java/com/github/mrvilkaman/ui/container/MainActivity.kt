@@ -10,7 +10,7 @@ import com.github.mrvilkaman.presentationlayer.activities.BaseActivity
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter
 import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils
-import com.github.mrvilkaman.ui.screens.start.StartScreenFragment
+import com.github.mrvilkaman.ui.screens.testfrags.Frag1ScreenFragment
 
 
 class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
@@ -24,7 +24,7 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
 
     override fun createComponent(): ActivityComponent {
         val appComponent = DevUtils.getComponent(App.get(this), AppComponent::class.java)
-        val commonActivityModule = CommonActivityModule(this, this, rootView, ProvideFragmentCallback { StartScreenFragment.open() })
+        val commonActivityModule = CommonActivityModule(this, this, rootView, ProvideFragmentCallback { Frag1ScreenFragment.open() })
         return DaggerActivityComponent.builder()
                 .appComponent(appComponent)
                 .commonActivityModule(commonActivityModule)
@@ -32,5 +32,5 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
                 .build()
     }
 
-    override fun getActivityLayoutResourceID(): Int = R.layout.cleanbase_activity_content_only
+    override fun getActivityLayoutResourceID(): Int = R.layout.cleanbase_activity_content_with_toolbar_and_drawer
 }

@@ -27,6 +27,12 @@ public class App extends CoreApp<AppComponent> {
 	}
 
 	@Override
+	public void onCreate() {
+		super.onCreate();
+
+	}
+
+	@Override
 	protected AppComponent createComponent() {
 		return DaggerAppComponent.builder()
 				.appModule(new AppModule(this))

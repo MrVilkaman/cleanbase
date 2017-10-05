@@ -62,6 +62,8 @@ dependencies {
     releaseCompile libraries.leakcanary
     testCompile libraries.leakcanary
 
+    compile 'ru.terrakok.cicerone:cicerone:2.1.0'
+
     compile libraries.supportDesign
     compile project(":core")
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
