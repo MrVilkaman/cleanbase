@@ -20,8 +20,8 @@ import ru.terrakok.cicerone.Navigator
                 ThrowableModule::class,
                 FragmentModule::class,
                 ActivityModule::class,
-                ToolbarEmptyModule::class,
-                DrawerEmptyModule::class))
+                ToolbarModule::class,
+                DrawerModule::class))
 interface ActivityComponent : ActivityCoreComponent, CommonComponent {
     fun inject(mainActivity: MainActivity)
 

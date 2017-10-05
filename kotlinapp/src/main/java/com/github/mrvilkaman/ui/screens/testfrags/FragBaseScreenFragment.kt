@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 abstract class FragBaseScreenFragment : BaseFragment<FragBasePresenter>() {
 
-    @Inject lateinit open var router:Router
+    @Inject lateinit open var router: Router
 
     protected open val icon: Int
         get() = R.drawable.ic_home
@@ -21,11 +21,16 @@ abstract class FragBaseScreenFragment : BaseFragment<FragBasePresenter>() {
     override fun getLayoutId(): Int = R.layout.layout_fragscreen_fragment
 
     override fun onCreateView(view: View, savedInstanceState: Bundle?) {
-//        val toolbar = getToolbar()
-//        toolbar!!.show()
-        //		toolbar.showIcon(getIcon(),() -> getUiResolver().showToast(R.string.app_name));
         val text = Integer.toString(number)
-//        toolbar.setTitle(text)
+        val toolbar = getToolbar()
+        if (toolbar != null) {
+            toolbar.show()
+            toolbar.showIcon(icon) {
+                getUiResolver().showToast(R.string.app_name)
+            }
+            toolbar.setTitle(text)
+        }
+
         frag_text.text = text
 
         frag_stack.setOnClickListener { router.navigateTo(nextScreenKey()) }

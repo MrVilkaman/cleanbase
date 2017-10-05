@@ -14,7 +14,7 @@ constructor(
 ) : BasePresenter<BaseView>() {
 
     fun onClickMenu(screenKey:String){
-        router.newRootScreen(screenKey)
+        router.newScreenChain(screenKey)
     }
 
 }
