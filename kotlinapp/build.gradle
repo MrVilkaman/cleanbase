@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$project.rootDir/tools/dependencies.gradle"
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+    defaultConfig {
+        applicationId "com.github.mrvilkaman"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+
+configurations.all {
+    resolutionStrategy {
+        // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
+        force libraries.supportAnnotations
+        force libraries.supportAppCompat
+        force libraries.mockitoCore
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+
+
+dependencies {
+    kapt libraries.daggerCompiler
+
+    debugCompile libraries.leakcanary
+    releaseCompile libraries.leakcanary
+    testCompile libraries.leakcanary
+
+    compile libraries.supportDesign
+    compile project(":core")
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+//    testCompile project(':testutils')
+}
+repositories {
+    mavenCentral()
+}

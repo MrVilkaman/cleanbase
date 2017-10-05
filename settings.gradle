@@ -1,2 +1,4 @@
-include ':app', ':core', ':testutils'
+include ':core', ':testutils', ':kotlinapp'
+//':app',
+
 
