@@ -2,7 +2,10 @@ package com.github.mrvilkaman.di
 
 
 import android.support.v4.app.FragmentActivity
-import com.github.mrvilkaman.di.modules.activity.*
+import com.github.mrvilkaman.di.modules.activity.CommonActivityModule
+import com.github.mrvilkaman.di.modules.activity.DrawerModule
+import com.github.mrvilkaman.di.modules.activity.ThrowableModule
+import com.github.mrvilkaman.di.modules.activity.ToolbarModule
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.container.MainActivity
@@ -20,7 +23,6 @@ import ru.terrakok.cicerone.Navigator
         modules = arrayOf(
                 CommonActivityModule::class,
                 ThrowableModule::class,
-                FragmentModule::class,
                 ActivityModule::class,
                 ToolbarModule::class,
                 DrawerModule::class))

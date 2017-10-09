@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.github.mrvilkaman.presentationlayer.fragments.photocrop.CropImageFragment;
-import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
+//import com.github.mrvilkaman.presentationlayer.resolution.navigation.NavigationResolver;
 import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 import java.io.File;
@@ -38,12 +38,14 @@ public class PhotoHelperImpl implements PhotoHelper {
 	private static CropImageFragment.MODE mode = CropImageFragment.MODE.FREE;
 
 	private final Context context;
-	private final NavigationResolver resolver;
+//	private final NavigationResolver resolver;
 	private final StorageUtils storageUtils;
 
-	public PhotoHelperImpl(Context context, NavigationResolver resolver, StorageUtils storageUtils) {
+	public PhotoHelperImpl(Context context,
+//	                       NavigationResolver resolver,
+	                       StorageUtils storageUtils) {
 		this.context = context;
-		this.resolver = resolver;
+//		this.resolver = resolver;
 		this.storageUtils = storageUtils;
 	}
 
@@ -112,10 +114,10 @@ public class PhotoHelperImpl implements PhotoHelper {
 		} catch (IOException e) {
 			Log.d(TAG, "copy file error", e);
 		}
-
-		resolver.setTargetFragment(CROP_PHOTO_REQUEST_CODE);
-		resolver.showFragment(
-				CropImageFragment.newInstance(from.getAbsolutePath(), to.getAbsolutePath(), mode));
+//
+//		resolver.setTargetFragment(CROP_PHOTO_REQUEST_CODE);
+//		resolver.showFragment(
+//				CropImageFragment.newInstance(from.getAbsolutePath(), to.getAbsolutePath(), mode));
 	}
 
 	@Override
@@ -137,7 +139,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-		resolver.startActivityForResultFormFragment(cameraIntent, TAKE_PHOTO_REQUEST_CODE);
+//		resolver.startActivityForResultFormFragment(cameraIntent, TAKE_PHOTO_REQUEST_CODE);
 	}
 
 	@Override
@@ -156,7 +158,7 @@ public class PhotoHelperImpl implements PhotoHelper {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		lastFileName = fileName;
 		intent.setType("image/*");
-		resolver.startActivityForResultFormFragment(intent, SELECT_PICTURE_REQUEST_CODE);
+//		resolver.startActivityForResultFormFragment(intent, SELECT_PICTURE_REQUEST_CODE);
 	}
 
 	public void clear(String avatarFileName) {
