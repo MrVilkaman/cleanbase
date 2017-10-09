@@ -3,15 +3,19 @@ package com.github.mrvilkaman.ui.container
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.widget.Toast
+import com.github.mrvilkaman.core.R
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.screens.ScreenKey
 import com.github.mrvilkaman.ui.screens.testfrags.*
+import io.reactivex.Completable
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Back
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.SystemMessage
+import java.util.concurrent.TimeUnit
 
 class MainNavigator(
         private val activity: FragmentActivity,
@@ -41,6 +45,21 @@ class MainNavigator(
 
 
     //core part
+
+
+    private var doubleBackToExitPressedOnce: Boolean = false
+    override fun exit() {
+        if (doubleBackToExitPressedOnce || !activity.isTaskRoot) {
+            activity.finish()
+        } else {
+            Toast.makeText(activity, R.string.toast_exit, Toast.LENGTH_SHORT).show()
+
+            doubleBackToExitPressedOnce = true
+            Completable.complete().delay(1000, TimeUnit.MILLISECONDS)
+                    .subscribe { doubleBackToExitPressedOnce = false }
+        }
+    }
+
     override fun applyCommand(command: Command?) {
         if (command !is SystemMessage) {
             toolbarResolver?.clear()
@@ -58,7 +77,7 @@ class MainNavigator(
                 }
 
             } else {
-                super.exit()
+                exit()
             }
         } else {
             super.applyCommand(command)
