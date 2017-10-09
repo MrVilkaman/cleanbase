@@ -1,6 +1,5 @@
 package com.github.mrvilkaman.ui.container
 
-
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -15,7 +14,7 @@ import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.SystemMessage
 
 class MainNavigator(
-        activity: FragmentActivity,
+        private val activity: FragmentActivity,
         private val containerId: Int,
         private val toolbarResolver: ToolbarResolver?,
         private val leftDrawerHelper: LeftDrawerHelper?
@@ -42,18 +41,6 @@ class MainNavigator(
 
 
     //core part
-
-
-//    private fun close(callback: () -> LeftDrawerHelper.LeftDrawerHelperCallback) {
-//        val needClose = leftDrawerHelper != null && leftDrawerHelper.hasDrawer() && leftDrawerHelper.isOpen
-//        if (needClose) {
-//            leftDrawerHelper?.close(callback.invoke())
-//        } else {
-//            callback.invoke().onClose()
-//        }
-//    }
-
-
     override fun applyCommand(command: Command?) {
         if (command !is SystemMessage) {
             toolbarResolver?.clear()
@@ -61,14 +48,21 @@ class MainNavigator(
         }
 
         if (command is Back) {
-
-            if (fragmentManager.backStackEntryCount > 1) {
+            if (1 < fragmentManager.backStackEntryCount) {
                 super.applyCommand(command)
+                val backStackEntryCount = fragmentManager.backStackEntryCount
+                if (1 < backStackEntryCount) {
+                    toolbarResolver?.showBackIcon()
+                } else {
+                    toolbarResolver?.showHomeIcon()
+                }
+
             } else {
                 super.exit()
             }
         } else {
             super.applyCommand(command)
+            value.updateIcon()
         }
     }
 
@@ -78,7 +72,28 @@ class MainNavigator(
             if (mainScreenKey != null)
                 applyCommand(Forward(mainScreenKey, null))
         }
+        value.updateIcon()
+        toolbarResolver?.setCallback(value)
     }
 
+    private val value: ToolbarResolver.ToolbarResolverCallback = object : ToolbarResolver.ToolbarResolverCallback {
+        override fun onClickHome() {
+            if (fragmentManager.backStackEntryCount <= 1 && activity.isTaskRoot) {
+                leftDrawerHelper?.open()
+            } else {
+                applyCommand(Back())
+//                    activityView.hideKeyboard()
+            }
+        }
+
+        override fun updateIcon() {
+            if (fragmentManager.backStackEntryCount < 1 && activity.isTaskRoot) {
+                toolbarResolver?.showHomeIcon()
+            } else {
+                toolbarResolver?.showBackIcon()
+            }
+        }
+
+    }
 
 }
