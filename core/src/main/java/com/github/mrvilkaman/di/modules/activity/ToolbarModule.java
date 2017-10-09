@@ -25,8 +25,10 @@ public class ToolbarModule {
 	@Provides
 	@PerActivity
 	public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper,
-											  @Nullable LeftDrawerHelper drawerHelper) {
-		return new ToolbarResolverImpl(menuHelper, drawerHelper);
+	                                          @Nullable LeftDrawerHelper drawerHelper) {
+		ToolbarResolverImpl toolbarResolver = new ToolbarResolverImpl(menuHelper, drawerHelper);
+		toolbarResolver.init(activity.findViewById(android.R.id.content), activity);
+		return toolbarResolver;
 	}
 
 	@Provides

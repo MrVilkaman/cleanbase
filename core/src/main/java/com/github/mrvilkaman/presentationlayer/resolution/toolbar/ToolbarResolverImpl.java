@@ -30,7 +30,6 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 		this.drawerHelper = drawerHelper;
 	}
 
-	@Override
 	public void init(View view, AppCompatActivity activity) {
 		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
 		if (toolbar == null) {

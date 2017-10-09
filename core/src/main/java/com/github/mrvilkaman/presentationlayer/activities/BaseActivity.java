@@ -53,9 +53,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		if (drawerHelper != null) {
 			drawerHelper.init(rootView);
 		}
-		if (toolbarResolver != null) {
-			toolbarResolver.init(rootView, this);
-		}
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();
