@@ -38,7 +38,7 @@ class MainNavigator(
             null
     }
 
-    protected fun getMainScreenKey(): String = ScreenKey.FRAG1
+    protected fun getMainScreenKey(): String? = ScreenKey.FRAG1
 
 
     //core part
@@ -74,7 +74,9 @@ class MainNavigator(
 
     fun init() {
         if (fragmentManager.findFragmentById(containerId) == null) {
-            applyCommand(Forward(getMainScreenKey(), null))
+            val mainScreenKey = getMainScreenKey()
+            if (mainScreenKey != null)
+                applyCommand(Forward(mainScreenKey, null))
         }
     }
 

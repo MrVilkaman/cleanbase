@@ -19,7 +19,6 @@ import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.IProgressState;
-import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -36,7 +35,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
-	@Inject @Nullable LeftDrawerHelper drawerHelper;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private C activityComponent;
 
@@ -49,10 +47,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
 		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		View rootView = getRootView();
-		if (drawerHelper != null) {
-			drawerHelper.init(rootView);
-		}
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();

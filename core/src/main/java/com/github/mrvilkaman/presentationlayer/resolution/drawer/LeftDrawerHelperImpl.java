@@ -24,9 +24,8 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 		this.callback = callback;
 	}
 
-	@Override
 	public void init(@NonNull View rootView) {
-		this.drawerLayout = (DrawerLayout) rootView.findViewById(getDrawerLayout());
+		this.drawerLayout = rootView.findViewById(getDrawerLayout());
 		contentView = rootView.findViewById(R.id.all_content);
 		this.drawerLayout.addDrawerListener(this);
 	}

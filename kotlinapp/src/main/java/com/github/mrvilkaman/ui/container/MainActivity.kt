@@ -50,7 +50,7 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
                 .commonActivityModule(commonActivityModule)
                 .activityModule(ActivityModule(this, containerID))
                 .toolbarModule(ToolbarModule(this))
-                .drawerModule(DrawerModule {
+                .drawerModule(DrawerModule(this) {
                     DrawerScreenFragment.open()
                 })
                 .build()
