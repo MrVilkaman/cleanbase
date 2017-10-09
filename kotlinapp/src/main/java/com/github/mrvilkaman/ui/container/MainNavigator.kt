@@ -4,6 +4,7 @@ package com.github.mrvilkaman.ui.container
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.screens.ScreenKey
 import com.github.mrvilkaman.ui.screens.testfrags.*
@@ -16,7 +17,8 @@ import ru.terrakok.cicerone.commands.SystemMessage
 class MainNavigator(
         activity: FragmentActivity,
         private val containerId: Int,
-        private val toolbarResolver: ToolbarResolver?
+        private val toolbarResolver: ToolbarResolver?,
+        private val leftDrawerHelper: LeftDrawerHelper?
 
 ) : SupportAppNavigator(activity, containerId) {
 
@@ -40,9 +42,22 @@ class MainNavigator(
 
 
     //core part
+
+
+//    private fun close(callback: () -> LeftDrawerHelper.LeftDrawerHelperCallback) {
+//        val needClose = leftDrawerHelper != null && leftDrawerHelper.hasDrawer() && leftDrawerHelper.isOpen
+//        if (needClose) {
+//            leftDrawerHelper?.close(callback.invoke())
+//        } else {
+//            callback.invoke().onClose()
+//        }
+//    }
+
+
     override fun applyCommand(command: Command?) {
         if (command !is SystemMessage) {
             toolbarResolver?.clear()
+            leftDrawerHelper?.close()
         }
 
         if (command is Back) {
@@ -57,12 +72,11 @@ class MainNavigator(
         }
     }
 
-    fun init(){
+    fun init() {
         if (fragmentManager.findFragmentById(containerId) == null) {
-            applyCommand(Forward(getMainScreenKey(),null))
+            applyCommand(Forward(getMainScreenKey(), null))
         }
     }
-
 
 
 }

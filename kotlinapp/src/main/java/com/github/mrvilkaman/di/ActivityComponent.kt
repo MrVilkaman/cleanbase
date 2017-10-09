@@ -3,6 +3,7 @@ package com.github.mrvilkaman.di
 
 import android.support.v4.app.FragmentActivity
 import com.github.mrvilkaman.di.modules.activity.*
+import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.container.MainActivity
 import com.github.mrvilkaman.ui.container.MainNavigator
@@ -40,6 +41,8 @@ class ActivityModule(
     @Provides
     @PerActivity
     fun provideMainNavigator(
-            toolbarResolver: ToolbarResolver?
-    ): Navigator = MainNavigator(activity, containerId, toolbarResolver)
+            toolbarResolver: ToolbarResolver?,
+            leftDrawerHelper: LeftDrawerHelper?
+
+    ): Navigator = MainNavigator(activity, containerId, toolbarResolver,leftDrawerHelper)
 }
