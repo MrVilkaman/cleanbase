@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 import com.github.mrvilkaman.core.R
+import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.screens.ScreenKey
@@ -16,6 +17,7 @@ import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.SystemMessage
 import java.util.concurrent.TimeUnit
+
 
 class MainNavigator(
         private val activity: FragmentActivity,
@@ -67,6 +69,13 @@ class MainNavigator(
         }
 
         if (command is Back) {
+            val listener = getCurrentFragment() as? OnBackPressedListener
+            val handleFragment = listener?.onBackPressed() ?: false
+            if (handleFragment) {
+                return
+            }
+
+
             if (1 < fragmentManager.backStackEntryCount) {
                 super.applyCommand(command)
                 val backStackEntryCount = fragmentManager.backStackEntryCount
@@ -85,14 +94,23 @@ class MainNavigator(
         }
     }
 
+    private fun getCurrentFragment(): Fragment? = fragmentManager.findFragmentById(containerId)
+
     fun init() {
-        if (fragmentManager.findFragmentById(containerId) == null) {
+        if (getCurrentFragment() == null) {
             val mainScreenKey = getMainScreenKey()
             if (mainScreenKey != null)
                 applyCommand(Forward(mainScreenKey, null))
         }
         value.updateIcon()
         toolbarResolver?.setCallback(value)
+
+        if (leftDrawerHelper != null) {
+            if (fragmentManager.findFragmentById(leftDrawerHelper.drawerContentFrame) == null) {
+                fragmentManager.beginTransaction().add(leftDrawerHelper.drawerContentFrame, leftDrawerHelper.drawerFragment as Fragment).commit()
+            }
+        }
+
     }
 
     private val value: ToolbarResolver.ToolbarResolverCallback = object : ToolbarResolver.ToolbarResolverCallback {

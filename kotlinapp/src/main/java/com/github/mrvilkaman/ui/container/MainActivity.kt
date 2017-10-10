@@ -1,6 +1,5 @@
 package com.github.mrvilkaman.ui.container
 
-import android.support.v4.app.Fragment
 import com.github.mrvilkaman.R
 import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.di.ActivityModule
@@ -33,8 +32,6 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
     }
 
     override fun afterOnCreate() {
-
-        supportFragmentManager.beginTransaction().add(leftDrawer.drawerContentFrame, leftDrawer.drawerFragment as Fragment).commit()
 
         val navigator1 = navigator
         if (navigator1 is MainNavigator) {
