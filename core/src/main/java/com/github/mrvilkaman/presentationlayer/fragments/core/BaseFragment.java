@@ -22,8 +22,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
@@ -38,7 +36,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	View progressBar;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
-	private Unbinder bind;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +47,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
-		bind = ButterKnife.bind(this, view);
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
 		}
@@ -66,7 +62,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 		onCreateView(view, savedInstanceState);
 	}
 
-	protected void attachPresenter(BasePresenter presenter) {
+	protected void attachPresenter(@NonNull BasePresenter presenter) {
 		presenter.setView(this);
 		presenter.onViewAttached();
 		presenters.add(presenter);
@@ -97,9 +93,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Override
 	public void onDestroyView() {
-		if (bind != null) {
-			bind.unbind();
-		}
 		detachPresenters();
 		super.onDestroyView();
 		LeakCanaryProxy leakCanaryProxy =

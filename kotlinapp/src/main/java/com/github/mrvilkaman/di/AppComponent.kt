@@ -1,7 +1,10 @@
 package com.github.mrvilkaman.di
 
 
-import com.github.mrvilkaman.di.modules.*
+import com.github.mrvilkaman.di.modules.AppModule
+import com.github.mrvilkaman.di.modules.CoreProvidersModule
+import com.github.mrvilkaman.di.modules.DevModule
+import com.github.mrvilkaman.di.modules.EventBusModule
 import dagger.Component
 import dagger.Module
 import dagger.Provides
@@ -14,11 +17,9 @@ import javax.inject.Singleton
         //@formatter:off
 		AppModule::class,
 		DevModule::class,
-		NetworkModule::class,
 		EventBusModule::class,
 		CoreProvidersModule::class,
-        NavigationModule::class,
-		ImageLoaderModule::class))
+        NavigationModule::class))
  //@formatter:on
 @Singleton
 interface AppComponent : AppCoreComponent, CommonComponent

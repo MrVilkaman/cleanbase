@@ -5,7 +5,6 @@ import android.view.View;
 
 import java.util.Set;
 
-import butterknife.ButterKnife;
 
 /**
  * Created by Zahar on 08.04.16.
@@ -15,7 +14,6 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 
 	public BaseVH(View view) {
 		super(view);
-		ButterKnife.bind(this, view);
 	}
 
 	@SuppressWarnings("unchecked")
