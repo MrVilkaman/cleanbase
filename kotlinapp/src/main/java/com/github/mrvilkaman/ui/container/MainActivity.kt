@@ -10,7 +10,6 @@ import com.github.mrvilkaman.di.modules.activity.DrawerModule
 import com.github.mrvilkaman.di.modules.activity.ToolbarModule
 import com.github.mrvilkaman.presentationlayer.activities.BaseActivity
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter
-import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils
 import com.github.mrvilkaman.ui.screens.drawer.DrawerScreenFragment
 import ru.terrakok.cicerone.Navigator
@@ -24,7 +23,6 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var navigatorHolder: NavigatorHolder
     @Inject lateinit var router: Router
-    @Inject lateinit var leftDrawer: LeftDrawerHelper
 
 
     override fun injectMe(component: ActivityComponent) {
@@ -41,10 +39,9 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
 
     override fun createComponent(): ActivityComponent {
         val appComponent = DevUtils.getComponent(App.get(this), AppComponent::class.java)
-        val commonActivityModule = CommonActivityModule(this, this, rootView)
         return DaggerActivityComponent.builder()
                 .appComponent(appComponent)
-                .commonActivityModule(commonActivityModule)
+                .commonActivityModule(CommonActivityModule(this, rootView))
                 .activityModule(ActivityModule(this, containerID))
                 .toolbarModule(ToolbarModule(this))
                 .drawerModule(DrawerModule(this) {
@@ -57,7 +54,6 @@ class MainActivity : BaseActivity<ActivityComponent, BasePresenter<*>>() {
 
     override fun onBackPressed() {
         router.exit()
-//        super.onBackPressed()
     }
 
     override fun onResume() {

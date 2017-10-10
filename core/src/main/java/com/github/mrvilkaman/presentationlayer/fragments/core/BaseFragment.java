@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
-import com.github.mrvilkaman.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
@@ -36,7 +35,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Inject public UIResolver uiResolver;
 	@Inject public P relationPresenter;
 	@Inject @Nullable public IToolbar toolbar;
-	@Inject public BaseActivityView activityView;
 	View progressBar;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
@@ -131,14 +129,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	//	@Override
 	public void hideKeyboard() {
-		activityView.hideKeyboard();
+		DevUtils.hideKeyboard(getActivity());
 	}
 
 	@Override
 	public void showProgress() {
 		if (progressBar == null) {
-			if (activityView != null)
-				activityView.showProgress();
+			IProgressState parentProgressState = (IProgressState) getActivity();
+			if (parentProgressState != null)
+				parentProgressState.showProgress();
 		} else {
 			progressBar.setVisibility(View.VISIBLE);
 		}
@@ -147,8 +146,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	@Override
 	public void hideProgress() {
 		if (progressBar == null) {
-			if (activityView != null)
-				activityView.hideProgress();
+			IProgressState parentProgressState = (IProgressState) getActivity();
+			if (parentProgressState != null)
+				parentProgressState.hideProgress();
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}

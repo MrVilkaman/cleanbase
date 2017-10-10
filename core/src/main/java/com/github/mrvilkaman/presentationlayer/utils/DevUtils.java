@@ -1,9 +1,13 @@
 package com.github.mrvilkaman.presentationlayer.utils;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.StrictMode;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.di.IHasComponent;
 
@@ -19,11 +23,13 @@ public class DevUtils {
 	}
 
 	public static int dpToPixel(float dp) {
-		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+		return (int) (dp * Resources.getSystem()
+				.getDisplayMetrics().density);
 	}
 
 	public static float pixelsToDp(float px) {
-		return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+		return (int) (px / Resources.getSystem()
+				.getDisplayMetrics().density);
 	}
 
 	public static boolean isSamsung() {
@@ -68,6 +74,20 @@ public class DevUtils {
 				.penaltyDialog()
 				.build());
 		StrictMode.setVmPolicy(
-				new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build());
+				new StrictMode.VmPolicy.Builder().detectAll()
+						.penaltyLog()
+						.penaltyDeath()
+						.build());
+	}
+
+
+	public static void hideKeyboard(Activity activity) {
+		View view = activity.getCurrentFocus();
+		if (view != null) {
+			view.clearFocus();
+			InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context
+					.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
 	}
 }

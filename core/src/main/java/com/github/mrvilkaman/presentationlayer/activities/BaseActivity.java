@@ -1,6 +1,5 @@
 package com.github.mrvilkaman.presentationlayer.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +29,7 @@ import javax.inject.Inject;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
-		extends AppCompatActivity implements BaseActivityView, BaseView, IHasComponent<C>,
+		extends AppCompatActivity implements BaseView, IHasComponent<C>,
 		INeedInject<C>, IProgressState {
 
 	@Nullable protected P presenter;
@@ -46,7 +45,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
 		injectDagger();
-		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();
@@ -98,22 +96,12 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		return R.id.content;
 	}
 
-
-	@Override
-	public void hideKeyboard() {
-		View view = getCurrentFocus();
-		if (view != null) {
-			view.clearFocus();
-			inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-		}
-	}
-
 	@Override
 	public void showProgress() {
 		if (progress != null) {
 			progress.setVisibility(View.VISIBLE);
 		}
-		hideKeyboard();
+		DevUtils.hideKeyboard(this);
 	}
 
 	@Override

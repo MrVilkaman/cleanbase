@@ -79,8 +79,6 @@ dependencies {
     compile libraries.supportRecyclerView
     provided libraries.supportDesign
 
-    compile libraries.butterKnife
-
     provided libraries.retrofit2
     provided libraries.retrofit2rxjava2
 
