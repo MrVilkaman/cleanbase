@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
 import com.github.mrvilkaman.di.INeedInject;
+import com.github.mrvilkaman.di.LazyActivityInitNotify;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseView;
@@ -30,15 +30,17 @@ public abstract class BaseActivity<P extends BasePresenter>
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
-	private List<BasePresenter> presenters = new ArrayList<>(1);
+	private List<BasePresenter> presenters = new ArrayList<>(0);
 
 	private @Nullable ProgressWheel progress;
-	private InputMethodManager inputMethodManager;
+
+	@Inject LazyActivityInitNotify lazyActivityInitNotify;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
+		lazyActivityInitNotify.onViewCreate();
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();
@@ -106,7 +108,7 @@ public abstract class BaseActivity<P extends BasePresenter>
 	}
 
 	protected View getRootView() {
-		return findViewById(android.R.id.content);
+		return DevUtils.getRootView(this);
 	}
 
 	@SuppressWarnings("unchecked")

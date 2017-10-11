@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.resolution.toolbar;
 
 
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,8 +11,13 @@ public class ToolbarMenuHelper {
 	private final Runnable refrashRun;
 	ArrayMap<Integer, Runnable> runnableMap = new ArrayMap<>();
 
-	public ToolbarMenuHelper(Runnable refrashRun) {
-		this.refrashRun = refrashRun;
+	public ToolbarMenuHelper(AppCompatActivity activity) {
+		refrashRun = new Runnable() {
+			@Override
+			public void run() {
+				activity.invalidateOptionsMenu();
+			}
+		};
 	}
 
 	public void onPrepareOptionsMenu(Menu menu) {

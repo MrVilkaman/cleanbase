@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.mrvilkaman.core.R
+import com.github.mrvilkaman.di.INeedActivityViewNotify
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
@@ -26,7 +27,7 @@ class MainNavigator(
         private val toolbarResolver: ToolbarResolver?,
         private val leftDrawerHelper: LeftDrawerHelper?
 
-) : SupportAppNavigator(activity, containerId) {
+) : SupportAppNavigator(activity, containerId), INeedActivityViewNotify {
 
     private val fragmentManager = activity.supportFragmentManager
 
@@ -97,7 +98,11 @@ class MainNavigator(
 
     private fun getCurrentFragment(): Fragment? = fragmentManager.findFragmentById(containerId)
 
-    fun init() {
+    override fun getInitPriority(): Int {
+        return INeedActivityViewNotify.INIT_PRIORITY_THIRD
+    }
+
+    override fun onInit() {
         if (getCurrentFragment() == null) {
             val mainScreenKey = getMainScreenKey()
             if (mainScreenKey != null)

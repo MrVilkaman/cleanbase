@@ -1,24 +1,39 @@
 package com.github.mrvilkaman.presentationlayer.resolution.drawer;
 
-import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.di.INeedActivityViewNotify;
+import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
 
-public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
+public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener,INeedActivityViewNotify {
 
 
 	private static final int MAIN_GRAVITY = Gravity.LEFT;
-	LeftDrawerHelperCallback leftDrawerHelperCallback;
+	private LeftDrawerHelperCallback leftDrawerHelperCallback;
 	private DrawerLayout drawerLayout;
 	private View contentView;
 	private boolean needDrawerSlide = true;
 
+	private AppCompatActivity activity;
 
-	public void init(@NonNull View rootView) {
-		this.drawerLayout = rootView.findViewById(getDrawerLayout());
+	public LeftDrawerHelperImpl(AppCompatActivity activity) {
+		this.activity = activity;
+	}
+
+	@Override
+	public int getInitPriority() {
+		return INeedActivityViewNotify.INIT_PRIORITY_FIRST;
+	}
+
+	@Override
+	public void onInit() {
+		View rootView = DevUtils.getRootView(activity);
+		this.drawerLayout = rootView
+				.findViewById(getDrawerLayout());
 		contentView = rootView.findViewById(R.id.all_content);
 		this.drawerLayout.addDrawerListener(this);
 	}

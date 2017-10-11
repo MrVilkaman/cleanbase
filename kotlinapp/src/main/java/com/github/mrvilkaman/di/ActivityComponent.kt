@@ -11,6 +11,7 @@ import com.github.mrvilkaman.ui.screens.testfrags.*
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoSet
 import ru.terrakok.cicerone.Navigator
 
 
@@ -26,6 +27,12 @@ class ActivityModule {
             leftDrawerHelper: LeftDrawerHelper?
 
     ): Navigator = MainNavigator(activity, R.id.content, toolbarResolver, leftDrawerHelper)
+
+    @IntoSet
+    @Provides
+    @PerActivity
+    fun createLeftDrawerHelperINeedActivityViewNotify(helper: Navigator): INeedActivityViewNotify =
+            helper as INeedActivityViewNotify
 }
 
 

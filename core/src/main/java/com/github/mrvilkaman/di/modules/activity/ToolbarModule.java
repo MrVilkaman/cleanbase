@@ -4,6 +4,7 @@ package com.github.mrvilkaman.di.modules.activity;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.mrvilkaman.di.INeedActivityViewNotify;
 import com.github.mrvilkaman.di.PerActivity;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
@@ -13,6 +14,7 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolve
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.multibindings.IntoSet;
 
 @Module
 public class ToolbarModule {
@@ -22,20 +24,21 @@ public class ToolbarModule {
 	public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper,
 	                                          AppCompatActivity activity,
 	                                          @Nullable LeftDrawerHelper drawerHelper) {
-		ToolbarResolverImpl toolbarResolver = new ToolbarResolverImpl(menuHelper, drawerHelper);
-//		toolbarResolver.init(activity.findViewById(android.R.id.content), activity);
-		return toolbarResolver;
+		return new ToolbarResolverImpl(activity,menuHelper, drawerHelper);
+	}
+
+	@IntoSet
+	@Provides
+	@PerActivity
+	public INeedActivityViewNotify
+	getToolbarResolverINeedActivityViewNotify(ToolbarResolver helper) {
+		return (INeedActivityViewNotify) helper;
 	}
 
 	@Provides
 	@PerActivity
 	public ToolbarMenuHelper createToolbarMenuHelper(AppCompatActivity activity) {
-		return new ToolbarMenuHelper(new Runnable() {
-			@Override
-			public void run() {
-				activity.invalidateOptionsMenu();
-			}
-		});
+		return new ToolbarMenuHelper(activity);
 	}
 
 	@Provides

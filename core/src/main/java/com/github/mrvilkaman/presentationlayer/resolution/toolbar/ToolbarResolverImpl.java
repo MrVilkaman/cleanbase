@@ -11,12 +11,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.core.R;
+import com.github.mrvilkaman.di.INeedActivityViewNotify;
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper;
 
 
-public class ToolbarResolverImpl implements ToolbarResolver{
+public class ToolbarResolverImpl implements ToolbarResolver,INeedActivityViewNotify {
 
 	private final LeftDrawerHelper drawerHelper;
+	private final AppCompatActivity activity;
 	private final ToolbarMenuHelper toolbarMenuHelper;
 	private Toolbar toolbar;
 	private ActionBar supportActionBar;
@@ -25,18 +27,27 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	private TextView mTitle;
 	private boolean useCustomTitle;
 
-	public ToolbarResolverImpl(ToolbarMenuHelper toolbarMenuHelper, @Nullable LeftDrawerHelper drawerHelper) {
+	public ToolbarResolverImpl(AppCompatActivity activity,ToolbarMenuHelper toolbarMenuHelper, @Nullable
+			LeftDrawerHelper
+			drawerHelper) {
+		this.activity = activity;
 		this.toolbarMenuHelper = toolbarMenuHelper;
 		this.drawerHelper = drawerHelper;
 	}
 
-	public void init(View view, AppCompatActivity activity) {
-		toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+	@Override
+	public int getInitPriority() {
+		return INeedActivityViewNotify.INIT_PRIORITY_SECOND;
+	}
+
+	@Override
+	public void onInit() {
+		toolbar = (Toolbar) activity.findViewById(R.id.toolbar_actionbar);
 		if (toolbar == null) {
 			throw new NullPointerException("Can`t find Toolbar with id R.id.toolbar_actionbar!\n Use R.layout.cleanbase_activity_content_with_toolbar");
 		}
 
-		mTitle = (TextView) view.findViewById(R.id.toolbar_actionbar_center_title);
+		mTitle = (TextView) activity.findViewById(R.id.toolbar_actionbar_center_title);
 		mTitle.setVisibility(View.VISIBLE);
 
 		activity.setSupportActionBar(toolbar);
@@ -151,4 +162,5 @@ public class ToolbarResolverImpl implements ToolbarResolver{
 	public void show() {
 		toolbar.setVisibility(View.VISIBLE);
 	}
+
 }

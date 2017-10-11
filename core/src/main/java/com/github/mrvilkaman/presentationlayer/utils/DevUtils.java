@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -89,5 +91,10 @@ public class DevUtils {
 					.INPUT_METHOD_SERVICE);
 			inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
+	}
+
+	@NonNull
+	public static View getRootView(@NonNull AppCompatActivity activity) {
+		return activity.findViewById(android.R.id.content);
 	}
 }
