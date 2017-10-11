@@ -1,8 +1,7 @@
 package com.github.mrvilkaman.di.modules.activity;
 
 
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v4.app.FragmentActivity;
 
 import com.github.mrvilkaman.datalayer.providers.PermissionManagerImpl;
 import com.github.mrvilkaman.di.PerActivity;
@@ -16,24 +15,15 @@ import dagger.Provides;
 @Module
 public class CommonActivityModule {
 
-	protected AppCompatActivity activity;
-	protected View view;
-
-	public CommonActivityModule(AppCompatActivity activity,
-								View view) {
-		this.activity = activity;
-		this.view = view;
+	@Provides
+	@PerActivity
+	public UIResolver createUiResolver(FragmentActivity activity) {
+		return new UIResolverImpl(activity, activity.findViewById(android.R.id.content));
 	}
 
 	@Provides
 	@PerActivity
-	public UIResolver createUiResolver() {
-		return new UIResolverImpl(view.getContext(), view);
-	}
-
-	@Provides
-	@PerActivity
-	public PermissionManager getPermissionManager() {
+	public PermissionManager getPermissionManager(FragmentActivity activity) {
 		return new PermissionManagerImpl(activity);
 	}
 

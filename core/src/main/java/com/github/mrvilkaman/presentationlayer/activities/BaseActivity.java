@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.dev.LeakCanaryProxy;
 import com.github.mrvilkaman.di.ActivityCoreComponent;
-import com.github.mrvilkaman.di.IHasComponent;
 import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
@@ -29,13 +27,11 @@ import javax.inject.Inject;
 
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
-		extends AppCompatActivity implements BaseView, IHasComponent<C>,
-		INeedInject<C>, IProgressState {
+		extends AppCompatActivity implements BaseView, IProgressState {
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
-	private C activityComponent;
 
 	private @Nullable ProgressWheel progress;
 	private InputMethodManager inputMethodManager;
@@ -44,7 +40,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
-		injectDagger();
 		configureProgressBar();
 		attachPresenter(presenter);
 		afterOnCreate();
@@ -92,7 +87,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		return super.onOptionsItemSelected(item);
 	}
 
-	protected int getContainerID() {
+	public int getContainerID() {
 		return R.id.content;
 	}
 
@@ -121,22 +116,6 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 	}
 
 	@Override
-	public C getComponent() {
-		injectDagger();
-		return activityComponent;
-	}
-
-	private void injectDagger() {
-		if (activityComponent != null) {
-			return;
-		}
-		activityComponent = createComponent();
-		injectMe(activityComponent);
-	}
-
-	protected abstract C createComponent();
-
-	@Override
 	protected void onDestroy() {
 		if (presenter != null) {
 			presenter.onViewDetached();
@@ -145,10 +124,10 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 		}
 		detachPresenters();
 		super.onDestroy();
-		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
-		if (leakCanaryProxy != null) {
-			leakCanaryProxy.watch(this);
-		}
+//		LeakCanaryProxy leakCanaryProxy = activityComponent.provideLeakCanaryProxy();
+//		if (leakCanaryProxy != null) {
+//			leakCanaryProxy.watch(this);
+//		}
 	}
 
 	protected void attachPresenter(@Nullable BasePresenter presenter) {
@@ -175,7 +154,7 @@ public abstract class BaseActivity<C extends ActivityCoreComponent, P extends Ba
 
 
 	protected void attachCustomView(BaseCustomView customWidget) {
-		attachCustomView(customWidget, getComponent());
+//		attachCustomView(customWidget, getComponent());
 	}
 
 	protected void attachCustomView(BaseCustomView customWidget, Object component) {

@@ -1,13 +1,11 @@
 package com.github.mrvilkaman.ui.screens.testfrags
 
-import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.di.PerScreen
-import dagger.Component
 import dagger.Module
 
 @PerScreen
-@Component(dependencies = arrayOf(ActivityComponent::class),
-        modules = arrayOf(FragScreenComponent.FragScreenModule::class))
+//@Component(dependencies = arrayOf(ActivityComponent::class),
+//        modules = arrayOf(FragScreenComponent.FragScreenModule::class))
 interface FragScreenComponent {
     fun inject(fragment: Frag1ScreenFragment)
     fun inject(fragment: Frag2ScreenFragment)

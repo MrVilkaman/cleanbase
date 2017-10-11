@@ -3,7 +3,6 @@ package com.github.mrvilkaman.ui.screens.drawer
 import android.os.Bundle
 import android.view.View
 import com.github.mrvilkaman.R
-import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment
 import com.github.mrvilkaman.ui.screens.ScreenKey
@@ -25,8 +24,8 @@ class DrawerScreenFragment : BaseFragment<DrawerPresenter>(), ISingletonFragment
 
 
     override fun daggerInject() {
-        val component = getComponent(ActivityComponent::class.java)
-        component.inject(this)
+//        val component = getComponent(ActivityComponent::class.java)
+//        component.inject(this)
     }
 
     companion object {

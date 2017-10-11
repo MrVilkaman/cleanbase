@@ -2,30 +2,29 @@ package com.github.mrvilkaman.di
 
 
 import android.support.v4.app.FragmentActivity
-import com.github.mrvilkaman.di.modules.activity.CommonActivityModule
-import com.github.mrvilkaman.di.modules.activity.DrawerModule
-import com.github.mrvilkaman.di.modules.activity.ThrowableModule
-import com.github.mrvilkaman.di.modules.activity.ToolbarModule
+import com.github.mrvilkaman.core.R
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.container.MainActivity
 import com.github.mrvilkaman.ui.container.MainNavigator
 import com.github.mrvilkaman.ui.screens.drawer.DrawerScreenFragment
 import com.github.mrvilkaman.ui.screens.start.StartScreenFragment
-import dagger.Component
 import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Navigator
 
 
 @PerActivity
-@Component(dependencies = arrayOf(AppComponent::class),
-        modules = arrayOf(
-                CommonActivityModule::class,
-                ThrowableModule::class,
-                ActivityModule::class,
-                ToolbarModule::class,
-                DrawerModule::class))
+//@Component(dependencies = arrayOf(AppComponent::class),
+//        modules = arrayOf(
+//                CommonActivityModule::class,
+//                ThrowableModule::class,
+//                ActivityModule::class,
+//                ToolbarEmptyModule::class,
+////                ToolbarModule::class,
+//                DrawerEmptyModule::class
+////                DrawerModule::class
+//        ))
 interface ActivityComponent : ActivityCoreComponent, CommonComponent {
     fun inject(mainActivity: MainActivity)
 
@@ -35,16 +34,15 @@ interface ActivityComponent : ActivityCoreComponent, CommonComponent {
 }
 
 @Module
-class ActivityModule(
-        private val activity: FragmentActivity,
-        private val containerId: Int) {
+class ActivityModule {
 
 
     @Provides
     @PerActivity
     fun provideMainNavigator(
+            activity: FragmentActivity,
             toolbarResolver: ToolbarResolver?,
             leftDrawerHelper: LeftDrawerHelper?
 
-    ): Navigator = MainNavigator(activity, containerId, toolbarResolver,leftDrawerHelper)
+    ): Navigator = MainNavigator(activity, R.id.content, toolbarResolver,leftDrawerHelper)
 }

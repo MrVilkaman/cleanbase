@@ -3,11 +3,12 @@ package com.github.mrvilkaman.di.modules;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import com.github.mrvilkaman.presentationlayer.utils.StorageUtils;
 
 /**
  * Created by Zahar on 24.03.16.

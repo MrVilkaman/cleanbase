@@ -1,7 +1,6 @@
 package com.github.mrvilkaman.ui.screens.testfrags
 
 import com.github.mrvilkaman.R
-import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.ui.screens.ScreenKey
 
 class Frag3ScreenFragment : FragBaseScreenFragment() {
@@ -15,8 +14,8 @@ class Frag3ScreenFragment : FragBaseScreenFragment() {
     override fun nextScreenKey(): String? = ScreenKey.FRAG4
 
     override fun daggerInject() {
-        val component = getComponent(ActivityComponent::class.java)
-        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
+//        val component = getComponent(ActivityComponent::class.java)
+//        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
     }
 
     override fun onBackPressed(): Boolean {

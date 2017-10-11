@@ -1,6 +1,5 @@
 package com.github.mrvilkaman.ui.screens.testfrags
 
-import com.github.mrvilkaman.di.ActivityComponent
 import com.github.mrvilkaman.ui.screens.ScreenKey
 
 class Frag4ScreenFragment : FragBaseScreenFragment() {
@@ -15,8 +14,8 @@ class Frag4ScreenFragment : FragBaseScreenFragment() {
 
 
     override fun daggerInject() {
-        val component = getComponent(ActivityComponent::class.java)
-        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
+//        val component = getComponent(ActivityComponent::class.java)
+//        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
     }
 
     companion object {
