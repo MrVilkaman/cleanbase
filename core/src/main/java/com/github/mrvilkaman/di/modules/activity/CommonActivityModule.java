@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.di.modules.activity;
 
 
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.mrvilkaman.datalayer.providers.PermissionManagerImpl;
 import com.github.mrvilkaman.di.PerActivity;
@@ -17,13 +17,13 @@ public class CommonActivityModule {
 
 	@Provides
 	@PerActivity
-	public UIResolver createUiResolver(FragmentActivity activity) {
+	public UIResolver createUiResolver(AppCompatActivity activity) {
 		return new UIResolverImpl(activity, activity.findViewById(android.R.id.content));
 	}
 
 	@Provides
 	@PerActivity
-	public PermissionManager getPermissionManager(FragmentActivity activity) {
+	public PermissionManager getPermissionManager(AppCompatActivity activity) {
 		return new PermissionManagerImpl(activity);
 	}
 

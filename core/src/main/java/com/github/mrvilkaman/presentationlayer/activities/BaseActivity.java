@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.di.INeedInject;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseCustomView;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter;
@@ -26,7 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @SuppressWarnings("unchecked")
-public abstract class BaseActivity<C extends ActivityCoreComponent, P extends BasePresenter>
+public abstract class BaseActivity<P extends BasePresenter>
 		extends AppCompatActivity implements BaseView, IProgressState {
 
 	@Nullable protected P presenter;

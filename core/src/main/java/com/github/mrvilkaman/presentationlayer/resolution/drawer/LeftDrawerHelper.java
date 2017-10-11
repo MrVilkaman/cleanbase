@@ -2,8 +2,6 @@ package com.github.mrvilkaman.presentationlayer.resolution.drawer;
 
 import android.support.annotation.IdRes;
 
-import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
-
 public interface LeftDrawerHelper {
 
 	@IdRes
@@ -21,7 +19,7 @@ public interface LeftDrawerHelper {
 
 	boolean hasDrawer();
 
-	IBaseScreen getDrawerFragment();
+	void setNeedDrawerSlide(boolean needDrawerSlide);
 
 	interface LeftDrawerHelperCallback {
 		void onClose();

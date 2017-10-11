@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment;
 import com.isseiaoki.simplecropview.CropImageView;
 import com.squareup.picasso.Callback;
@@ -193,11 +192,11 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 
 	@Override
 	public void daggerInject() {
-		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
-		DaggerCropImageScreenComponent.builder()
-				.activityCoreComponent(component)
-				.build()
-				.inject(this);
+//		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
+//		DaggerCropImageScreenComponent.builder()
+//				.activityCoreComponent(component)
+//				.build()
+//				.inject(this);
 	}
 
 	@Override

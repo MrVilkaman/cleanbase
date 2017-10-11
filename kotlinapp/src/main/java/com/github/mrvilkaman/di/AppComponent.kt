@@ -2,14 +2,14 @@ package com.github.mrvilkaman.di
 
 
 import android.content.Context
-import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import com.github.mrvilkaman.di.modules.CoreProvidersModule
 import com.github.mrvilkaman.di.modules.DevModule
 import com.github.mrvilkaman.di.modules.EventBusModule
 import com.github.mrvilkaman.di.modules.activity.CommonActivityModule
-import com.github.mrvilkaman.di.modules.activity.DrawerEmptyModule
+import com.github.mrvilkaman.di.modules.activity.DrawerModule
 import com.github.mrvilkaman.di.modules.activity.ThrowableModule
-import com.github.mrvilkaman.di.modules.activity.ToolbarEmptyModule
+import com.github.mrvilkaman.di.modules.activity.ToolbarModule
 import com.github.mrvilkaman.ui.container.App
 import com.github.mrvilkaman.ui.container.MainActivity
 import dagger.*
@@ -68,7 +68,7 @@ interface MyAppModule {
 
     @Binds
     @PerActivity
-    fun provideFeatureView(featureActivity: MainActivity): FragmentActivity
+    fun provideFeatureView(featureActivity: MainActivity): AppCompatActivity
 
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(
@@ -76,8 +76,8 @@ interface MyAppModule {
             ThrowableModule::class,
             ActivityModule::class,
             ActivityFragModule::class,
-            ToolbarEmptyModule::class,
-            DrawerEmptyModule::class
+            ToolbarModule::class,
+            DrawerModule::class
     ))
     fun mainActivityInjector(): MainActivity
 }

@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.di
 
 
-import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import com.github.mrvilkaman.core.R
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
@@ -21,7 +21,7 @@ class ActivityModule {
     @Provides
     @PerActivity
     fun provideMainNavigator(
-            activity: FragmentActivity,
+            activity: AppCompatActivity,
             toolbarResolver: ToolbarResolver?,
             leftDrawerHelper: LeftDrawerHelper?
 

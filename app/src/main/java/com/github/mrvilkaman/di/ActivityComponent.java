@@ -14,7 +14,7 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class,
 		modules = {CommonActivityModule.class, ThrowableModule.class,
 				FragmentModule.class, DrawerModule.class, ToolbarModule.class})
-public interface ActivityComponent extends ActivityCoreComponent,CommonComponent {
+public interface ActivityComponent {
 
 	void inject(MainActivity activity);
 }

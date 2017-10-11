@@ -6,8 +6,6 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.presentationlayer.fragments.core.IBaseScreen;
-import com.github.mrvilkaman.presentationlayer.resolution.ProvideFragmentCallback;
 
 public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.DrawerListener {
 
@@ -16,13 +14,8 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	LeftDrawerHelperCallback leftDrawerHelperCallback;
 	private DrawerLayout drawerLayout;
 	private View contentView;
-	private final ProvideFragmentCallback callback;
 	private boolean needDrawerSlide = true;
 
-
-	public LeftDrawerHelperImpl(ProvideFragmentCallback callback) {
-		this.callback = callback;
-	}
 
 	public void init(@NonNull View rootView) {
 		this.drawerLayout = rootView.findViewById(getDrawerLayout());
@@ -43,11 +36,6 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	@Override
 	public boolean hasDrawer() {
 		return true;
-	}
-
-	@Override
-	public IBaseScreen getDrawerFragment(){
-		return callback.createFragment();
 	}
 
 	@Override
@@ -99,6 +87,7 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 
 	}
 
+	@Override
 	public void setNeedDrawerSlide(boolean needDrawerSlide) {
 		this.needDrawerSlide = needDrawerSlide;
 	}

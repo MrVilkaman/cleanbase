@@ -16,24 +16,20 @@ import dagger.Provides;
 
 @Module
 public class ToolbarModule {
-	private AppCompatActivity activity;
-
-	public ToolbarModule(AppCompatActivity activity) {
-		this.activity = activity;
-	}
 
 	@Provides
 	@PerActivity
 	public ToolbarResolver getToolbarResolver(ToolbarMenuHelper menuHelper,
+	                                          AppCompatActivity activity,
 	                                          @Nullable LeftDrawerHelper drawerHelper) {
 		ToolbarResolverImpl toolbarResolver = new ToolbarResolverImpl(menuHelper, drawerHelper);
-		toolbarResolver.init(activity.findViewById(android.R.id.content), activity);
+//		toolbarResolver.init(activity.findViewById(android.R.id.content), activity);
 		return toolbarResolver;
 	}
 
 	@Provides
 	@PerActivity
-	public ToolbarMenuHelper createToolbarMenuHelper() {
+	public ToolbarMenuHelper createToolbarMenuHelper(AppCompatActivity activity) {
 		return new ToolbarMenuHelper(new Runnable() {
 			@Override
 			public void run() {

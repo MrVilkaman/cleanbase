@@ -2,13 +2,14 @@ package com.github.mrvilkaman.ui.container
 
 import android.content.Intent
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.github.mrvilkaman.core.R
 import com.github.mrvilkaman.presentationlayer.fragments.core.OnBackPressedListener
 import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelper
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolver
 import com.github.mrvilkaman.ui.screens.ScreenKey
+import com.github.mrvilkaman.ui.screens.drawer.DrawerScreenFragment
 import com.github.mrvilkaman.ui.screens.testfrags.*
 import io.reactivex.Completable
 import ru.terrakok.cicerone.android.SupportAppNavigator
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit
 
 
 class MainNavigator(
-        private val activity: FragmentActivity,
+        private val activity: AppCompatActivity,
         private val containerId: Int,
         private val toolbarResolver: ToolbarResolver?,
         private val leftDrawerHelper: LeftDrawerHelper?
@@ -107,7 +108,7 @@ class MainNavigator(
 
         if (leftDrawerHelper != null) {
             if (fragmentManager.findFragmentById(leftDrawerHelper.drawerContentFrame) == null) {
-                fragmentManager.beginTransaction().add(leftDrawerHelper.drawerContentFrame, leftDrawerHelper.drawerFragment as Fragment).commit()
+                fragmentManager.beginTransaction().add(leftDrawerHelper.drawerContentFrame, DrawerScreenFragment.open() as Fragment).commit()
             }
         }
 
