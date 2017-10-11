@@ -1,10 +1,12 @@
 package com.github.mrvilkaman.ui.screens.testfrags
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.github.mrvilkaman.R
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.layout_fragscreen_fragment.*
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -36,6 +38,11 @@ abstract class FragBaseScreenFragment : BaseFragment<FragBasePresenter>() {
         frag_stack.setOnClickListener { router.navigateTo(nextScreenKey()) }
         frag_no_stack.setOnClickListener { router.replaceScreen(nextScreenKey()) }
         frag_root.setOnClickListener { router.newRootScreen(nextScreenKey()) }
+    }
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     protected abstract fun nextScreenKey(): String?

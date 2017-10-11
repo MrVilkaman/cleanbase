@@ -1,11 +1,13 @@
 package com.github.mrvilkaman.ui.screens.drawer
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.github.mrvilkaman.R
 import com.github.mrvilkaman.presentationlayer.fragments.core.BaseFragment
 import com.github.mrvilkaman.presentationlayer.fragments.core.ISingletonFragment
 import com.github.mrvilkaman.ui.screens.ScreenKey
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.drawer.*
 
 class DrawerScreenFragment : BaseFragment<DrawerPresenter>(), ISingletonFragment {
@@ -22,6 +24,11 @@ class DrawerScreenFragment : BaseFragment<DrawerPresenter>(), ISingletonFragment
 
     override fun getLayoutId(): Int = R.layout.drawer
 
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun daggerInject() {
 //        val component = getComponent(ActivityComponent::class.java)

@@ -75,6 +75,7 @@ interface MyAppModule {
             CommonActivityModule::class,
             ThrowableModule::class,
             ActivityModule::class,
+            ActivityFragModule::class,
             ToolbarEmptyModule::class,
             DrawerEmptyModule::class
     ))

@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mrvilkaman.core.R;
-import com.github.mrvilkaman.dev.LeakCanaryProxy;
-import com.github.mrvilkaman.di.ActivityCoreComponent;
 import com.github.mrvilkaman.presentationlayer.resolution.UIResolver;
 import com.github.mrvilkaman.presentationlayer.resolution.toolbar.IToolbar;
 import com.github.mrvilkaman.presentationlayer.utils.DevUtils;
@@ -36,6 +34,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	View progressBar;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
+
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,12 +94,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	public void onDestroyView() {
 		detachPresenters();
 		super.onDestroyView();
-		LeakCanaryProxy leakCanaryProxy =
-				DevUtils.getComponent(getActivity(), ActivityCoreComponent.class)
-						.provideLeakCanaryProxy();
-		if (leakCanaryProxy != null) {
-			leakCanaryProxy.watch(this);
-		}
+//		LeakCanaryProxy leakCanaryProxy =
+//				DevUtils.getComponent(getActivity(), ActivityCoreComponent.class)
+//						.provideLeakCanaryProxy();
+//		if (leakCanaryProxy != null) {
+//			leakCanaryProxy.watch(this);
+//		}
 	}
 
 	private void detachPresenters() {
