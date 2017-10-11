@@ -65,10 +65,6 @@ class MainNavigator(
     }
 
     override fun applyCommand(command: Command?) {
-        if (command !is SystemMessage) {
-            toolbarResolver?.clear()
-            leftDrawerHelper?.close()
-        }
 
         if (command is Back) {
             val listener = getCurrentFragment() as? OnBackPressedListener
@@ -79,6 +75,7 @@ class MainNavigator(
 
 
             if (1 < fragmentManager.backStackEntryCount) {
+                clearAndClose(command)
                 super.applyCommand(command)
                 val backStackEntryCount = fragmentManager.backStackEntryCount
                 if (1 < backStackEntryCount) {
@@ -91,8 +88,16 @@ class MainNavigator(
                 exit()
             }
         } else {
+            clearAndClose(command)
             super.applyCommand(command)
             value.updateIcon()
+        }
+    }
+
+    private fun clearAndClose(command: Command?) {
+        if (command !is SystemMessage) {
+            toolbarResolver?.clear()
+            leftDrawerHelper?.close()
         }
     }
 
