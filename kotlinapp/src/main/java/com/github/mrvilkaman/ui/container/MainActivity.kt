@@ -35,7 +35,6 @@ class MainActivity : BaseActivity<BasePresenter<*>>(), HasSupportFragmentInjecto
     @Inject lateinit var toolbar: ToolbarResolver
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)

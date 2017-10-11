@@ -20,6 +20,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
+
 
 @SuppressWarnings("unchecked")
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
@@ -28,9 +30,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
 	//// TODO: 07.11.16 dont use public
-	@Inject public UIResolver uiResolver;
-	@Inject public P relationPresenter;
-	@Inject @Nullable public IToolbar toolbar;
+	@Inject Lazy<UIResolver> uiResolver;
+	@Inject P relationPresenter;
+	@Inject @Nullable Lazy<IToolbar> toolbar;
 	View progressBar;
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
@@ -159,7 +161,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Nullable
 	public IToolbar getToolbar() {
-		return toolbar;
+		return toolbar != null?toolbar.get(): null;
 	}
 
 
@@ -169,7 +171,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	public UIResolver getUiResolver() {
-		return uiResolver;
+		return uiResolver.get();
 	}
 
 
