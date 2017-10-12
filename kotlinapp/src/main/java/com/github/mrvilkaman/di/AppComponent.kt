@@ -21,17 +21,9 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 
-
-
-
-
-
-
-
 @Component(modules = arrayOf(
         //@formatter:off
 		MyAppModule::class,
-		MyAppModule2::class,
 		DevModule::class,
 		EventBusModule::class,
 		CoreProvidersModule::class,
@@ -51,18 +43,6 @@ interface MyAppComponent {
 }
 
 
-interface CommonComponent {
-    fun provideRouter(): Router
-    fun provideNavigatorHolder(): NavigatorHolder
-}
-
-@Module()
-class MyAppModule2 {
-//    @Named("containerId")
-//    @Provides
-//    fun containerId(featureActivity: MainActivity):Int = featureActivity.containerID
-
-}
 @Module(includes = arrayOf(AndroidSupportInjectionModule::class))
 interface MyAppModule {
 

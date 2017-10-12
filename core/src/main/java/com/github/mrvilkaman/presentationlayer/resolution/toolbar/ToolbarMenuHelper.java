@@ -11,7 +11,7 @@ public class ToolbarMenuHelper {
 	private final Runnable refrashRun;
 	ArrayMap<Integer, Runnable> runnableMap = new ArrayMap<>();
 
-	public ToolbarMenuHelper(AppCompatActivity activity) {
+	public ToolbarMenuHelper(final AppCompatActivity activity) {
 		refrashRun = new Runnable() {
 			@Override
 			public void run() {

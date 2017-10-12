@@ -130,7 +130,7 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	}
 
 	@Override
-	public <T> Single<T> createCachedSingle(String key, Single<T> source) {
+	public <T> Single<T> createCachedSingle(final String key, Single<T> source) {
 		Single<T> observable = (Single<T>) objectObjectHashMap.get(key);
 		if (observable == null) {
 			Single<T> cache = source.doAfterTerminate(new Action() {
@@ -178,10 +178,10 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	public <T> SingleTransformer<T, T> subscribeWithResultSingle() {
 		return new SingleTransformer<T, T>() {
 			@Override
-			public SingleSource<T> apply(@NonNull Single<T> upstream) {
+			public SingleSource<T> apply(final @NonNull Single<T> upstream) {
 				return Single.create(new SingleOnSubscribe<T>() {
 					@Override
-					public void subscribe(@NonNull SingleEmitter<T> subscriber) throws Exception {
+					public void subscribe(final @NonNull SingleEmitter<T> subscriber) throws Exception {
 						final String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
 						subscription.add(upstream.subscribe(
 								new Consumer<T>() {
@@ -212,7 +212,7 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	}
 
 	@Override
-	public Completable createCachedCompletable(String key, Completable source) {
+	public Completable createCachedCompletable(final String key, Completable source) {
 		Completable observable = (Completable) objectObjectHashMap.get(key);
 		if (observable == null) {
 			Completable cache = source.doOnTerminate(new Action() {
@@ -259,15 +259,19 @@ public class GlobalSubscriptionManagerImpl implements GlobalSubscriptionManager 
 	public CompletableTransformer subscribeWithResultCompletable() {
 		return new CompletableTransformer() {
 			@Override
-			public CompletableSource apply(@NonNull Completable upstream) {
+			public CompletableSource apply(final @NonNull Completable upstream) {
 				return Completable.create(new CompletableOnSubscribe() {
 					@Override
-					public void subscribe(@NonNull CompletableEmitter subscriber) throws Exception {
+					public void subscribe(final @NonNull CompletableEmitter subscriber) throws
+							Exception {
 						final String string = needSubscribeLogs() ? getGlobalSubscriberStartStack() : "";
 						subscription.add(upstream.subscribe(
-								() -> {
-									if (!subscriber.isDisposed())
-										subscriber.onComplete();
+								new Action() {
+									@Override
+									public void run() throws Exception {
+										if (!subscriber.isDisposed())
+											subscriber.onComplete();
+									}
 								}
 								, new Consumer<Throwable>() {
 									@Override

@@ -58,7 +58,7 @@ public abstract class BaseNavigator extends SupportAppNavigator implements INeed
 		}
 	};
 
-	public BaseNavigator(AppCompatActivity activity, int containerId,
+	public BaseNavigator(@Nullable AppCompatActivity activity, @Nullable int containerId,
 	                     @Nullable ToolbarResolver toolbarResolver,
 	                     @Nullable LeftDrawerHelper leftDrawerHelper
 	) {
@@ -139,10 +139,6 @@ public abstract class BaseNavigator extends SupportAppNavigator implements INeed
 		return fragmentManager.findFragmentById(containerId);
 	}
 
-	public int getInitPriority() {
-		return INeedActivityViewNotify.INIT_PRIORITY_THIRD;
-	}
-
 	@Override
 	public void onInit() {
 		if (getCurrentFragment() == null) {
@@ -172,7 +168,7 @@ public abstract class BaseNavigator extends SupportAppNavigator implements INeed
 	@Nullable
 	protected abstract Fragment getDrawer();
 
-
+	@Nullable
 	protected abstract String getMainScreenKey();
 
 }

@@ -191,15 +191,6 @@ public class CropImageFragment extends BaseFragment<CropImagePresenter> implemen
 	}
 
 	@Override
-	public void daggerInject() {
-//		ActivityCoreComponent component = getComponent(ActivityCoreComponent.class);
-//		DaggerCropImageScreenComponent.builder()
-//				.activityCoreComponent(component)
-//				.build()
-//				.inject(this);
-	}
-
-	@Override
 	public boolean onBackPressed() {
 		Fragment targetFragment = getTargetFragment();
 		int targetRequestCode = getTargetRequestCode();

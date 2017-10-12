@@ -15,14 +15,6 @@ public abstract class DaggerBaseFragment<P extends BasePresenter, C> extends Bas
 		return fragmentComponent;
 	}
 
-	@Override
-	public void daggerInject() {
-		if (fragmentComponent != null) {
-			return;
-		}
-		fragmentComponent = createComponent();
-		injectMe(fragmentComponent);
-	}
 
 	protected abstract C createComponent();
 

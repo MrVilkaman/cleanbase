@@ -5,9 +5,10 @@ import com.github.mrvilkaman.presentationlayer.activities.BaseActivity
 import com.github.mrvilkaman.presentationlayer.fragments.core.BasePresenter
 
 
-
-
-class MainActivity : BaseActivity<BasePresenter<*>>() {
+class MainActivity : BaseActivity<BasePresenter<*>>(){
+//    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+//
+//    @Inject lateinit var fragmentInjector: AndroidInjector<Fragment>
 
 
     override fun afterOnCreate() {
