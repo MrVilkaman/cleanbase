@@ -57,19 +57,12 @@ configurations.all {
 
 dependencies {
     kapt libraries.daggerCompiler
-//Dagger-Android
-    compile 'com.google.dagger:dagger-android:2.11'
     kapt 'com.google.dagger:dagger-android-processor:2.11'
-
-//Если мы собираемся использовать support библиотеку
-    compile 'com.google.dagger:dagger-android-support:2.11'
 
 
     debugCompile libraries.leakcanary
     releaseCompile libraries.leakcanary
     testCompile libraries.leakcanary
-
-    compile 'ru.terrakok.cicerone:cicerone:2.1.0'
 
     compile libraries.supportDesign
     compile project(":core")

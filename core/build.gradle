@@ -73,6 +73,11 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     compile libraries.dagger
+    compile 'com.google.dagger:dagger-android:2.11'
+    compile 'com.google.dagger:dagger-android-support:2.11'
+
+    compile 'ru.terrakok.cicerone:cicerone:2.1.0'
+
     annotationProcessor libraries.daggerCompiler
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
