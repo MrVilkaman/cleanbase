@@ -10,7 +10,8 @@ import com.github.mrvilkaman.presentationlayer.resolution.drawer.LeftDrawerHelpe
 
 import dagger.Module;
 import dagger.Provides;
-import dagger.multibindings.IntoSet;
+import dagger.multibindings.IntKey;
+import dagger.multibindings.IntoMap;
 
 @Module
 public class DrawerModule {
@@ -23,7 +24,8 @@ public class DrawerModule {
 		return new LeftDrawerHelperImpl(activity);
 	}
 
-	@IntoSet
+	@IntoMap
+	@IntKey(INeedActivityViewNotify.INIT_PRIORITY_FIRST)
 	@Provides
 	@PerActivity
 	public INeedActivityViewNotify

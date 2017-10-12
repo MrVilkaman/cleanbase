@@ -37,20 +37,6 @@ class MainActivity : BaseActivity<BasePresenter<*>>(), HasSupportFragmentInjecto
     override fun afterOnCreate() {
     }
 
-//    override
-//    fun createComponent(): ActivityComponent {
-//        val appComponent = DevUtils.getComponent(App.get(this), AppComponent::class.java)
-//        return DaggerActivityComponent.builder()
-//                .appComponent(appComponent)
-//                .commonActivityModule(CommonActivityModule(this, rootView))
-//                .activityModule(ActivityModule(this, containerID))
-//                .toolbarModule(ToolbarModule(this))
-//                .drawerModule(DrawerModule(this) {
-//                    DrawerScreenFragment.open()
-//                })
-//                .build()
-//    }
-
     override fun getActivityLayoutResourceID(): Int = R.layout.cleanbase_activity_content_with_toolbar_and_drawer
 
     override fun onBackPressed() {

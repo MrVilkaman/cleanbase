@@ -9,6 +9,4 @@ public interface INeedActivityViewNotify {
 	int INIT_PRIORITY_NO = Integer.MAX_VALUE;
 
 	void onInit();
-
-	int getInitPriority();
 }

@@ -11,7 +11,8 @@ import com.github.mrvilkaman.ui.screens.testfrags.*
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoSet
+import dagger.multibindings.IntKey
+import dagger.multibindings.IntoMap
 import ru.terrakok.cicerone.Navigator
 
 
@@ -28,8 +29,9 @@ class ActivityModule {
 
     ): Navigator = MainNavigator(activity, R.id.content, toolbarResolver, leftDrawerHelper)
 
-    @IntoSet
     @Provides
+    @IntoMap
+    @IntKey(Int.MAX_VALUE)
     @PerActivity
     fun createLeftDrawerHelperINeedActivityViewNotify(helper: Navigator): INeedActivityViewNotify =
             helper as INeedActivityViewNotify

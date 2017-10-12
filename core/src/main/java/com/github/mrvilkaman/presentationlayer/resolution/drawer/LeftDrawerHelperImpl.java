@@ -25,11 +25,6 @@ public class LeftDrawerHelperImpl implements LeftDrawerHelper, DrawerLayout.Draw
 	}
 
 	@Override
-	public int getInitPriority() {
-		return INeedActivityViewNotify.INIT_PRIORITY_FIRST;
-	}
-
-	@Override
 	public void onInit() {
 		View rootView = DevUtils.getRootView(activity);
 		this.drawerLayout = rootView

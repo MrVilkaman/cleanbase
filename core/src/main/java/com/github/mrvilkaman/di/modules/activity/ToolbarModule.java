@@ -14,7 +14,8 @@ import com.github.mrvilkaman.presentationlayer.resolution.toolbar.ToolbarResolve
 
 import dagger.Module;
 import dagger.Provides;
-import dagger.multibindings.IntoSet;
+import dagger.multibindings.IntKey;
+import dagger.multibindings.IntoMap;
 
 @Module
 public class ToolbarModule {
@@ -27,7 +28,8 @@ public class ToolbarModule {
 		return new ToolbarResolverImpl(activity,menuHelper, drawerHelper);
 	}
 
-	@IntoSet
+	@IntoMap
+	@IntKey(INeedActivityViewNotify.INIT_PRIORITY_SECOND)
 	@Provides
 	@PerActivity
 	public INeedActivityViewNotify

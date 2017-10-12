@@ -36,11 +36,6 @@ public class ToolbarResolverImpl implements ToolbarResolver,INeedActivityViewNot
 	}
 
 	@Override
-	public int getInitPriority() {
-		return INeedActivityViewNotify.INIT_PRIORITY_SECOND;
-	}
-
-	@Override
 	public void onInit() {
 		toolbar = (Toolbar) activity.findViewById(R.id.toolbar_actionbar);
 		if (toolbar == null) {
