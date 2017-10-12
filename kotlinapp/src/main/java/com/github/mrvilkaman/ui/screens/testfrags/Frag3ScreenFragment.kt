@@ -13,11 +13,6 @@ class Frag3ScreenFragment : FragBaseScreenFragment() {
 
     override fun nextScreenKey(): String? = ScreenKey.FRAG4
 
-    override fun daggerInject() {
-//        val component = getComponent(ActivityComponent::class.java)
-//        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
-    }
-
     override fun onBackPressed(): Boolean {
         uiResolver.showToast(R.string.cleanbase_simple_text,"QWETR")
         return super.onBackPressed()

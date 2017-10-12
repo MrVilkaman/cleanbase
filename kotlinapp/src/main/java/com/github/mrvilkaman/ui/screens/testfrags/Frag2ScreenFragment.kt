@@ -12,15 +12,7 @@ class Frag2ScreenFragment : FragBaseScreenFragment() {
 
     override fun nextScreenKey(): String? = ScreenKey.FRAG3
 
-
-    override fun daggerInject() {
-//        val component = getComponent(ActivityComponent::class.java)
-//        DaggerFragScreenComponent.builder().activityComponent(component).build().inject(this)
-    }
-
     companion object {
-
-
         fun open(): Frag2ScreenFragment {
             return Frag2ScreenFragment()
         }

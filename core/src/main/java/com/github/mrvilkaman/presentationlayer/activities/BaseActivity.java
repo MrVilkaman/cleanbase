@@ -2,6 +2,7 @@ package com.github.mrvilkaman.presentationlayer.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,20 +25,30 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import ru.terrakok.cicerone.Navigator;
+import ru.terrakok.cicerone.NavigatorHolder;
+import ru.terrakok.cicerone.Router;
+
 @SuppressWarnings("unchecked")
 public abstract class BaseActivity<P extends BasePresenter>
-		extends AppCompatActivity implements BaseView, IProgressState {
+		extends AppCompatActivity implements BaseView, IProgressState, HasSupportFragmentInjector {
 
 	@Nullable protected P presenter;
 	@Inject @Nullable protected ToolbarResolver toolbarResolver;
-	private List<BasePresenter> presenters = new ArrayList<>(0);
-
-	private @Nullable ProgressWheel progress;
-
 	@Inject LazyActivityInitNotify lazyActivityInitNotify;
+	@Inject Navigator navigator;
+	@Inject NavigatorHolder navigatorHolder;
+	@Inject Router router;
+	@Inject AndroidInjector<Fragment> fragmentInjector;
+	private List<BasePresenter> presenters = new ArrayList<>(0);
+	private @Nullable ProgressWheel progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		AndroidInjection.inject(this);
 		super.onCreate(savedInstanceState);
 		setContentView(getActivityLayoutResourceID());
 		lazyActivityInitNotify.onViewCreate();
@@ -107,8 +118,21 @@ public abstract class BaseActivity<P extends BasePresenter>
 		}
 	}
 
-	protected View getRootView() {
-		return DevUtils.getRootView(this);
+	@Override
+	public void onBackPressed() {
+		router.exit();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		navigatorHolder.setNavigator(navigator);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		navigatorHolder.removeNavigator();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -153,7 +177,6 @@ public abstract class BaseActivity<P extends BasePresenter>
 		}
 	}
 
-
 	protected void attachCustomView(BaseCustomView customWidget) {
 //		attachCustomView(customWidget, getComponent());
 	}
@@ -170,4 +193,10 @@ public abstract class BaseActivity<P extends BasePresenter>
 			presenters.add(presenter);
 		}
 	}
+
+	@Override
+	public AndroidInjector<Fragment> supportFragmentInjector() {
+		return fragmentInjector;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import dagger.android.support.AndroidSupportInjection;
 
 
 @SuppressWarnings("unchecked")
@@ -37,12 +39,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	private List<BasePresenter> presenters = new ArrayList<>(1);
 	private String previousFragment;
 
-
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		daggerInject();
+	public void onAttach(Context context) {
+		AndroidSupportInjection.inject(this);
+		super.onAttach(context);
 	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,8 +91,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 			outState.putString(PREVIOUS_FRAGMENT, previousFragment);
 		}
 	}
-
-	public abstract void daggerInject();
 
 	@Override
 	public void onDestroyView() {

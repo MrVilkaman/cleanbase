@@ -24,11 +24,5 @@ public class StartScreenFragment extends BaseFragment<StartPresenter> implements
 
 	}
 
-	@Override
-	public void daggerInject() {
-//		ActivityComponent component = getComponent(ActivityComponent.class);
-//		component.inject(this);
-	}
-
 
 }
