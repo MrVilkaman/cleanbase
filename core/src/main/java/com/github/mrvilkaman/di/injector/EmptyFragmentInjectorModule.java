@@ -8,7 +8,7 @@ import com.github.mrvilkaman.di.PerActivity;
 
 import dagger.Module;
 import dagger.Provides;
-import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
 
 @Module
 public class EmptyFragmentInjectorModule {
@@ -16,7 +16,7 @@ public class EmptyFragmentInjectorModule {
 	@PerActivity
 	@Provides
 	@Nullable
-	AndroidInjector<Fragment> provideInjector(){
+	DispatchingAndroidInjector<Fragment> provideInjector(){
 		return null;
 	}
 }

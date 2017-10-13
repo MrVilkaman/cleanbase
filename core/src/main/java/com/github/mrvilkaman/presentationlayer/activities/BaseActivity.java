@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -42,7 +43,7 @@ public abstract class BaseActivity<P extends BasePresenter>
 	@Inject Navigator navigator;
 	@Inject NavigatorHolder navigatorHolder;
 	@Inject Router router;
-	@Inject @Nullable AndroidInjector<Fragment> fragmentInjector;
+	@Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
 	private List<BasePresenter> presenters = new ArrayList<>(0);
 	private @Nullable ProgressWheel progress;
 
