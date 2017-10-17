@@ -40,7 +40,7 @@ public abstract class MySimpleBaseAdapter<T, VH extends BaseVH<T>>
 		return holder;
 	}
 
-	protected abstract VH getHolder(View view);
+	protected abstract VH getHolder(@NonNull View view);
 
 	protected abstract int getLayoutId();
 

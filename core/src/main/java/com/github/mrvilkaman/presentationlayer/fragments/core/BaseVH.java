@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,13 +18,13 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setListeners(final View view,final  ItemListener<Type> onClick,
+	public void setListeners(@NonNull final View view, final ItemListener<Type> onClick,
 	                         final ItemListener<Type> onLongClick) {
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view1) {
 				if (onClick != null) {
-					onClick.click((Type) view.getTag());
+					onClick.click(getItem());
 				}
 			}
 		});
@@ -32,7 +33,7 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 			@Override
 			public boolean onLongClick(View view1) {
 				if (onLongClick != null) {
-					onLongClick.click((Type) view.getTag());
+					onLongClick.click(getItem());
 					return true;
 				}
 				return false;
@@ -40,5 +41,10 @@ public abstract class BaseVH<Type> extends RecyclerView.ViewHolder {
 		});
 	}
 
-	public abstract void bind(Type item, int position, Set<String> payloads);
+	@SuppressWarnings({"WeakerAccess", "unchecked"})
+	protected Type getItem() {
+		return (Type) this.itemView.getTag();
+	}
+
+	public abstract void bind(@NonNull Type item, int position, Set<String> payloads);
 }

@@ -1,6 +1,8 @@
 package com.github.mrvilkaman.presentationlayer.fragments.core;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,29 +20,29 @@ public abstract class BaseCustomView<P extends BasePresenter> extends FrameLayou
 	private View progressBar;
 	private Object parentView;
 
-	public BaseCustomView(Context context, AttributeSet attrs) {
+	public BaseCustomView(@NonNull Context context, @Nullable AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public BaseCustomView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public BaseCustomView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init(context, attrs);
 	}
 
-	private void init(Context context, AttributeSet attrs) {
+	private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
 		LayoutInflater mInflater =
 				(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View inflate = mInflater.inflate(getLayoutId(), this, false);
+		View inflate = mInflater.inflate(getLayoutId(), this, true);
 		onViewCreate(inflate,context,attrs);
 		progressBar = inflate.findViewById(getProgressWheelId());
-		addView(inflate);
 	}
 
 	protected int getProgressWheelId() {
 		return R.id.progress_wheel_widget;
 	}
 
-	protected abstract void onViewCreate(View inflate, Context context, AttributeSet attrs);
+	protected abstract void onViewCreate(@NonNull View inflate, @NonNull Context context,
+	                                     @Nullable AttributeSet attrs);
 
 	protected abstract int getLayoutId();
 

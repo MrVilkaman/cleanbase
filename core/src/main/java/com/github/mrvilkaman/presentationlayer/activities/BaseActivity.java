@@ -43,7 +43,7 @@ public abstract class BaseActivity<P extends BasePresenter>
 	@Inject Navigator navigator;
 	@Inject NavigatorHolder navigatorHolder;
 	@Inject Router router;
-	@Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
+	@Inject @Nullable DispatchingAndroidInjector<Fragment> fragmentInjector;
 	private List<BasePresenter> presenters = new ArrayList<>(0);
 	private @Nullable ProgressWheel progress;
 
