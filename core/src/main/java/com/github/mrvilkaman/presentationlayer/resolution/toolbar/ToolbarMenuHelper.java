@@ -12,12 +12,7 @@ public class ToolbarMenuHelper {
 	ArrayMap<Integer, Runnable> runnableMap = new ArrayMap<>();
 
 	public ToolbarMenuHelper(final AppCompatActivity activity) {
-		refrashRun = new Runnable() {
-			@Override
-			public void run() {
-				activity.invalidateOptionsMenu();
-			}
-		};
+		refrashRun = activity::invalidateOptionsMenu;
 	}
 
 	public void onPrepareOptionsMenu(Menu menu) {

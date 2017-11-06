@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import dagger.MembersInjector;
 import dagger.android.support.AndroidSupportInjection;
 
 
@@ -48,7 +49,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
+	                         Bundle savedInstanceState) {
 		View view = inflater.inflate(getLayoutId(), container, false);
 		if (savedInstanceState != null) {
 			previousFragment = savedInstanceState.getString(PREVIOUS_FRAGMENT, previousFragment);
@@ -149,7 +150,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 	}
 
 	@Deprecated
-	protected void onCreateView(View view, @Nullable Bundle savedInstanceState){
+	protected void onCreateView(View view, @Nullable Bundle savedInstanceState) {
 
 	}
 
@@ -161,7 +162,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 	@Nullable
 	public IToolbar getToolbar() {
-		return toolbar != null?toolbar.get(): null;
+		return toolbar != null ? toolbar.get() : null;
 	}
 
 
@@ -176,6 +177,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
 
 	protected void attachCustomView(@NonNull BaseCustomView customWidget) {
+		attachCustomView(customWidget, null);
+	}
+
+	protected <T extends BaseCustomView> void attachCustomView(@NonNull T customWidget,
+	                                @Nullable MembersInjector<T> injector) {
+		if (injector != null) {
+			injector.injectMembers(customWidget);
+		}
 		customWidget.bind(this);
 		BasePresenter presenter = customWidget.getPresenter();
 		if (presenter != null) {

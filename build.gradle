@@ -10,7 +10,6 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath gradlePlugins.retrolambdaPlugin
         classpath gradlePlugins.gradleBuildPlugin
         classpath gradlePlugins.versionsPlugin
         classpath gradlePlugins.dexcountPlugin
