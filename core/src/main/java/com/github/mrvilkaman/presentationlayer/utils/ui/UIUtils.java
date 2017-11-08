@@ -32,6 +32,11 @@ public class UIUtils {
 			view.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 
+	public static void invisibleView(View view) {
+		if (view != null)
+			view.setVisibility(View.INVISIBLE);
+	}
+
 	@SuppressWarnings("deprecation")
 	public static Spanned fromHtml(String source) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
