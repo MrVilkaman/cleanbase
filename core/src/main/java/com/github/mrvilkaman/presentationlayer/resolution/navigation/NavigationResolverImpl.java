@@ -179,10 +179,6 @@ public class NavigationResolverImpl implements NavigationResolver {
 			drawerHelper.close();
 		} else {
 			onBackPressed();
-			if (toolbarResolver != null) {
-				toolbarResolver.updateIcon();
-				toolbarResolver.clear();
-			}
 		}
 	}
 
