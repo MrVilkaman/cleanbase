@@ -17,7 +17,6 @@ import io.reactivex.subjects.PublishSubject;
 
 public class RxLoadWrapperHolder {
 
-
 	private BehaviorSubject<Boolean> progress;
 	private PublishSubject<Throwable> error = PublishSubject.create();
 

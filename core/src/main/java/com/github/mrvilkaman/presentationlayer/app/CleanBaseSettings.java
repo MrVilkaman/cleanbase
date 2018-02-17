@@ -59,6 +59,11 @@ public class CleanBaseSettings {
 			return this;
 		}
 
+        public Builder setAll(boolean enabled) {
+            rxBusLogs = subscribeLogs = imageLoadingLogs = httpLogging = enabled;
+            return this;
+        }
+
 		private void save() {
 			builder = this;
 		}

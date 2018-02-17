@@ -58,7 +58,8 @@ public abstract class BaseNavigator extends SupportAppNavigator implements INeed
 		}
 	};
 
-	public BaseNavigator(@Nullable AppCompatActivity activity, @Nullable int containerId,
+	public BaseNavigator(@Nullable AppCompatActivity activity,
+                         int containerId,
 	                     @Nullable ToolbarResolver toolbarResolver,
 	                     @Nullable LeftDrawerHelper leftDrawerHelper
 	) {
@@ -97,7 +98,6 @@ public abstract class BaseNavigator extends SupportAppNavigator implements INeed
 			OnBackPressedListener listener = (OnBackPressedListener) getCurrentFragment();
 			if (listener != null && listener.onBackPressed()) {
 				return;
-
 			}
 
 			if (1 < fragmentManager.getBackStackEntryCount()) {

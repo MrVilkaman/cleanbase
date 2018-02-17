@@ -8,6 +8,7 @@ import com.github.mrvilkaman.presentationlayer.subscriber.ViewSubscriber;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -67,15 +68,15 @@ public class BasePresenter<V extends BaseView> {
 		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
 				.subscribeWith(subscriber));
 	}
-//
-//	@SuppressWarnings("unchecked")
-//	protected final <T> void subscribeUI(Maybe<T> observable, DisposableMaybeObserver
-//			subscriber) {
-//		injectSubscriberDependencies(subscriber);
-//		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
-//				.subscribeWith(subscriber));
-//	}
-//
+
+	@SuppressWarnings("unchecked")
+	protected final <T> void subscribeUI(Maybe<T> observable, ViewSubscriber<V,T>
+            subscriber) {
+		injectSubscriberDependencies(subscriber);
+		compositeSubscription.add(observable.observeOn(schedulersProvider.mainThread())
+				.subscribeWith(subscriber));
+	}
+
 	@SuppressWarnings("unchecked")
 	protected final void subscribeUI(Completable observable, ViewSubscriber<V,?> subscriber) {
 		injectSubscriberDependencies(subscriber);
