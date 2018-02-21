@@ -3,12 +3,13 @@ ext.versions = [
         minSdk           : 16,
         targetSdk        : 25,
         compileSdk       : 26,
-        buildTools       : '25.0.2',
+//        buildTools       : '25.0.2',
+        buildTools       : '26.0.2',
 
         dagger           : '2.11',
         rxBus            : '2.0.0',
 
-        supportLibs      : '25.2.0',
+        supportLibs      : '26.0.2',
         gcm              : '11.0.2',
         butterKnife      : '8.7.0',
 
@@ -34,7 +35,8 @@ ext.versions = [
 ]
 
 ext.gradlePlugins = [
-        gradleBuildPlugin: 'com.android.tools.build:gradle:2.3.2',
+        gradleBuildPlugin: 'com.android.tools.build:gradle:3.0.1',
+//        gradleBuildPlugin: 'com.android.tools.build:gradle:2.3.2',
         aptPlugin        : "com.neenbedankt.gradle.plugins:android-apt:1.8",
         retrolambdaPlugin: "me.tatarka:gradle-retrolambda:3.7.0",
         versionsPlugin   : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',

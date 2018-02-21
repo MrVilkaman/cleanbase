@@ -1,19 +1,26 @@
-apply plugin: 'com.android.library'
-apply from: '../jacoco.gradle'
-apply from: "$project.rootDir/tools/tools.gradle"
-apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'me.tatarka.retrolambda'
 
-buildscript{
+group = 'com.github.MrVilkaman'
+version = '1.0'
+
+apply plugin: 'com.android.library'
+//apply from: '../jacoco.gradle'
+apply from: "$project.rootDir/tools/tools.gradle"
+//apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.github.dcendents.android-maven'
+
+buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath gradlePlugins.retrolambdaPlugin
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5' // Add this linz
     }
 }
 
 android {
+    defaultPublishConfig "release"
+    publishNonDefault true
+
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
 
@@ -73,44 +80,44 @@ configurations.all {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile libraries.dagger
-    compile 'com.google.dagger:dagger-android:2.11'
-    compile 'com.google.dagger:dagger-android-support:2.11'
+    api libraries.dagger
+    api 'com.google.dagger:dagger-android:2.11'
+    api 'com.google.dagger:dagger-android-support:2.11'
 
-    compile 'ru.terrakok.cicerone:cicerone:2.1.0'
+    implementation 'ru.terrakok.cicerone:cicerone:2.1.0'
 
     annotationProcessor libraries.daggerCompiler
-    compile libraries.supportAnnotations
-    compile libraries.supportAppCompat
-    compile libraries.supportRecyclerView
-    provided libraries.supportDesign
+    api libraries.supportAnnotations
+    api libraries.supportAppCompat
+    api libraries.supportRecyclerView
+    compileOnly libraries.supportDesign
 
-    provided libraries.retrofit2
-    provided libraries.retrofit2rxjava2
+    compileOnly libraries.retrofit2
+    compileOnly libraries.retrofit2rxjava2
 
     // Developer tools (Developer Settings)
 
-    compile libraries.rxJava2
-    compile libraries.rxpermissions2
-    compile libraries.rxAndroid2
+    api libraries.rxJava2
+    api libraries.rxpermissions2
+    api libraries.rxAndroid2
 
-    compile libraries.materialDialog
-    compile libraries.materialProgress
+    api libraries.materialDialog
+    api libraries.materialProgress
 
-    compile libraries.simplecropview
-    compile libraries.picasso
-    compile libraries.picassoOkhttp
-    compile libraries.okHttp3
-    compile libraries.okHttpLoggingInterceptor
+    api libraries.simplecropview
+    api libraries.picasso
+    api libraries.picassoOkhttp
+    api libraries.okHttp3
+    api libraries.okHttpLoggingInterceptor
 
-    provided libraries.playServicesGcm
+    compileOnly libraries.playServicesGcm
 
-    testCompile libraries.retrofit2
-    testCompile libraries.retrofit2rxjava2
+    testImplementation libraries.retrofit2
+    testImplementation libraries.retrofit2rxjava2
 
     //tests
-    testCompile project(':testutils')
+    testImplementation project(':testutils')
 
 }
