@@ -13,13 +13,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5' // Add this linz
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0' // Add this linz
     }
 }
 
 android {
-    defaultPublishConfig "release"
-    publishNonDefault true
+//    defaultPublishConfig "release"
+//    publishNonDefault true
 
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
