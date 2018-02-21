@@ -80,37 +80,37 @@ configurations.all {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation libraries.dagger
-    implementation 'com.google.dagger:dagger-android:2.11'
-    implementation 'com.google.dagger:dagger-android-support:2.11'
+    api libraries.dagger
+    api 'com.google.dagger:dagger-android:2.11'
+    api 'com.google.dagger:dagger-android-support:2.11'
 
-    api 'ru.terrakok.cicerone:cicerone:2.1.0'
+    compileOnly 'ru.terrakok.cicerone:cicerone:2.1.0'
 
     annotationProcessor libraries.daggerCompiler
-    implementation libraries.supportAnnotations
-    implementation libraries.supportAppCompat
-    implementation libraries.supportRecyclerView
+    api libraries.supportAnnotations
+    api libraries.supportAppCompat
+    api libraries.supportRecyclerView
     compileOnly libraries.supportDesign
 
-    compileOnly libraries.retrofit2
-    compileOnly libraries.retrofit2rxjava2
+    api libraries.retrofit2
+    api libraries.retrofit2rxjava2
 
     // Developer tools (Developer Settings)
 
-    implementation libraries.rxJava2
-    implementation libraries.rxpermissions2
-    implementation libraries.rxAndroid2
+    api libraries.rxJava2
+    api libraries.rxpermissions2
+    api libraries.rxAndroid2
 
-    implementation libraries.materialDialog
-    implementation libraries.materialProgress
+    api libraries.materialDialog
+    api libraries.materialProgress
 
-    implementation libraries.simplecropview
-    implementation libraries.picasso
-    implementation libraries.picassoOkhttp
-    implementation libraries.okHttp3
-    implementation libraries.okHttpLoggingInterceptor
+    api libraries.simplecropview
+    api libraries.picasso
+    api libraries.picassoOkhttp
+    api libraries.okHttp3
+    api libraries.okHttpLoggingInterceptor
 
     compileOnly libraries.playServicesGcm
 
